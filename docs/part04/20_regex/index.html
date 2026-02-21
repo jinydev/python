@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 20</title>
-  <meta name="title" content="Chapter 20" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 20"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)</title>
+  <meta name="title" content="Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/20_regex/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/20_regex/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 20"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Chapter 20" />
+<meta property="og:title" content="Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/20_regex/" />
-<meta property="og:url" content="http://localhost:4001/part04/20_regex/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/20_regex/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/20_regex/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Chapter 20" />
+<meta property="twitter:title" content="Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 20","url":"http://localhost:4001/part04/20_regex/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)","url":"https://python.jiny.dev/part04/20_regex/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -673,19 +673,43 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">Chapter 20</li>
+        <li class="breadcrumb-item active" aria-current="page">Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="chapter-20">Chapter 20</h1>
+            <h1 id="chapter-20-비밀-암호-해독기-정규-표현식-regex">Chapter 20. 비밀 암호 해독기: 정규 표현식 (Regex)</h1>
 
-<ul>
-  <li><a href="/part04/20_regex/20_01_section/">20.01_정규</a></li>
-  <li><a href="/part04/20_regex/20_02_section/">20.02_정규</a></li>
-</ul>
+<p><img src="/Users/hojin8/.gemini/antigravity/brain/39fe47ab-9fff-4271-aa37-8b9fbfaf6bdd/regex_concept_upper_ele_16x9_1771691293332.png" alt="정규표현식 컨셉" /></p>
+
+<p>수백만 글자가 뒤섞인 알파벳 바다 속에서, “정확히 숫자 3개, 하이픈(-), 숫자 4개”로 이루어진 전화번호만 쏙쏙 찾아낼 수 있을까요? 파이썬의 기본 문자열 검색 기능으로는 어림없습니다!</p>
+
+<p>이럴 때 프로그래머들은 마법의 돋보기, <strong>정규 표현식(Regular Expression, 줄여서 Regex)</strong>을 꺼내 듭니다. 정규 표현식은 복잡한 문자열 속에서 내가 원하는 패턴(암호)만 쪽집게처럼 찾아내고, 심지어 지우거나 바꿀 수도 있는 강력한 탐정 도구입니다.</p>
+
+<p>준비되셨나요? 이제 파이썬의 <code class="language-plaintext highlighter-rouge">re</code> 모듈을 장착하고 위대한 탐정이 되어 암호를 해독해 봅시다!</p>
+
+<hr />
+
+<h3 id="-목차">📖 목차</h3>
+
+<ol>
+  <li><strong><a href="./20_01_section/">탐정의 돋보기 규칙: 기초 패턴 만들기</a></strong>
+    <ul>
+      <li>문자 클래스(<code class="language-plaintext highlighter-rouge">[]</code>)와 반대(<code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">$</code>)</li>
+      <li>뭉텅이 찾기: 묶음과 수량자(<code class="language-plaintext highlighter-rouge">*</code>, <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">?</code>)</li>
+      <li>앞뒤 살피기: 전방 탐색과 후방 탐색</li>
+    </ul>
+  </li>
+  <li><strong><a href="./20_02_section/">실전 수사 돌입: 정규식 함수와 옵션</a></strong>
+    <ul>
+      <li>고급 레이더 옵션 (대소문자 무시, 띄어쓰기 무시)</li>
+      <li>파이썬 <code class="language-plaintext highlighter-rouge">re</code> 모듈의 수사 도구: <code class="language-plaintext highlighter-rouge">match</code>, <code class="language-plaintext highlighter-rouge">search</code>, <code class="language-plaintext highlighter-rouge">findall</code></li>
+      <li>암호 변조하기: <code class="language-plaintext highlighter-rouge">sub</code>, <code class="language-plaintext highlighter-rouge">subn</code></li>
+    </ul>
+  </li>
+</ol>
 
 
             <!-- Google AdSense -->

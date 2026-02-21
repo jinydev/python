@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>07.05_파이썬</title>
-  <meta name="title" content="07.05_파이썬" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="07.05_파이썬"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>5. 파이썬 내장 함수 (Built-in Functions)</title>
+  <meta name="title" content="5. 파이썬 내장 함수 (Built-in Functions)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="5. 파이썬 내장 함수 (Built-in Functions)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/07_function/07_05_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/07_function/07_05_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="07.05_파이썬"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="5. 파이썬 내장 함수 (Built-in Functions)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="07.05_파이썬" />
+<meta property="og:title" content="파이썬 내장 함수 (Built-in Functions)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/07_function/07_05_section/" />
-<meta property="og:url" content="http://localhost:4001/part02/07_function/07_05_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/07_function/07_05_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/07_function/07_05_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="07.05_파이썬" />
+<meta property="twitter:title" content="파이썬 내장 함수 (Built-in Functions)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"07.05_파이썬","url":"http://localhost:4001/part02/07_function/07_05_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"파이썬 내장 함수 (Built-in Functions)","url":"https://python.jiny.dev/part02/07_function/07_05_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,96 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">07.05_파이썬</li>
+        <li class="breadcrumb-item active" aria-current="page">5. 파이썬 내장 함수 (Built-in Functions)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0705_파이썬">07.05_파이썬</h1>
+            <h1 id="5-파이썬-내장-함수-built-in-functions">5. 파이썬 내장 함수 (Built-in Functions)</h1>
 
-<!-- 이 곳에 07_05_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>우리가 함수를 굳이 직접 <code class="language-plaintext highlighter-rouge">def</code>로 하나하나 정의하지 않아도, 파이썬이 태어날 때부터 기본적으로 뱃속에 품고 있는 든든한 함수들이 있습니다. 이들을 <strong>내장 함수(Built-in Functions)</strong>라고 부릅니다.</p>
+
+<p>내장 함수들은 파이썬의 핵심 모듈인 <code class="language-plaintext highlighter-rouge">__builtins__</code> 네임스페이스 영역에 항상 상주하고 있으므로, 언제 어디서든 <code class="language-plaintext highlighter-rouge">import</code> 명령어 없이 즉시 가져다 사용할 수 있습니다.</p>
+
+<h2 id="51-사칙연산과-수학-제어-함수">5.1 사칙연산과 수학 제어 함수</h2>
+
+<p>복잡한 수식을 일일이 반복문으로 풀지 않아도, 파이썬은 직관적인 함수를 기본 제공합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 합계 합산: sum()
+</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span> <span class="c1"># 345 (반복문 없이 통째로 더함)
+</span>
+<span class="c1"># 2. 몫과 나머지 동시 출력: divmod()
+# 100을 23으로 나눈 몫과 나머지를 '튜플'로 묶어 반환합니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">divmod</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">23</span><span class="p">))</span> <span class="c1"># (4, 8)
+</span>
+<span class="c1"># 3. 절댓값 처리: abs()
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="o">-</span><span class="mf">250.5</span><span class="p">))</span> <span class="c1"># 250.5
+</span>
+<span class="c1"># 4. 반올림 처리: round()
+</span><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.141592</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="c1"># 3.14 (소수점 둘째 자리까지 반올림)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="52-진위-논리-판독-함수-any--all">5.2 진위 논리 판독 함수 (any / all)</h2>
+
+<p>리스트나 튜플 내부에 거짓(False) 판정을 받는 불순물(예: <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">""</code>, <code class="language-plaintext highlighter-rouge">None</code>)이 섞여 있는지 한 번에 스캔하는 지뢰 탐지기 같은 기능입니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">all()</code></strong>: 원소가 <strong>“전부 참(True)”</strong> 이어야만 최종적으로 True (교집합)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">any()</code></strong>: 원소 중 <strong>“단 하나라도 참”</strong> 이 존재하면 최종적으로 True (합집합)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">status_logs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="c1"># 0 은 False 로 간주됨
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">all</span><span class="p">(</span><span class="n">status_logs</span><span class="p">))</span> <span class="c1"># False (불량 값 0 이 섞여 있으므로 전체 실패)
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">any</span><span class="p">(</span><span class="n">status_logs</span><span class="p">))</span> <span class="c1"># True  (참인 값들이 존재하므로 일단 패스)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="53-배열-원본-보존형-정렬-sorted">5.3 배열 원본 보존형 정렬 <code class="language-plaintext highlighter-rouge">sorted()</code></h2>
+
+<p>리스트가 가진 고유 메서드 <code class="language-plaintext highlighter-rouge">.sort()</code>는 배열 원본 자체를 개조(파괴)해버리지만, 내장 함수인 <strong><code class="language-plaintext highlighter-rouge">sorted()</code></strong>는 절대로 원본을 건드리지 않고 정렬이 완료된 완전히 다려진 <strong>‘새로운 복사본’을 창조해서 반환</strong>합니다.</p>
+
+<p>함수를 평가하는 기준(key)으로 또 다른 내장 함수(예: <code class="language-plaintext highlighter-rouge">len</code>)를 넘겨주어 고차원적인 정렬도 가능합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">banana</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">apple</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">pie</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1"># 알파벳순 정렬 (원본 words 는 그대로 보존됨)
+</span><span class="n">ordered</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">ordered</span><span class="p">)</span> <span class="c1"># ['apple', 'banana', 'pie']
+</span>
+<span class="c1"># 단어의 길이(len)를 평가 기준으로 정렬!
+</span><span class="n">length_ordered</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">length_ordered</span><span class="p">)</span> <span class="c1"># ['banana', 'apple', 'pie'] (제일 긴 단어부터 정렬됨)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="54-런타임-코드-실행기와-입력기">5.4 런타임 코드 실행기와 입력기</h2>
+
+<p>실행 도중 사용자의 입력을 실시간으로 묻거나, 심지어 텍스트 문장을 파이썬 코드 그 자체로 해석해서 강제 실행시켜버리는 놀라운 내장 함수들입니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">input("메시지")</code></strong>: 프로그램 실행을 잠깐 정지시키고 텍스트를 입력받습니다. 결과는 무조건 ‘문자열’로 인식되므로 <code class="language-plaintext highlighter-rouge">int()</code> 형 변환이 자주 필요합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">eval("코드")</code> / <code class="language-plaintext highlighter-rouge">exec("명령어")</code></strong>: 문자열 안에 들어있는 파이썬 코드를 런타임 중에 인터프리터에 꽂아 넣어 실시간으로 평가 및 실행해버립니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 문자열이지만 exec()를 만나면 진짜 함수 코드로 부활시킵니다!
+</span><span class="n">code_script</span> <span class="o">=</span> <span class="sh">"""</span><span class="s">
+def magic_add(a, b):
+    return a + b
+</span><span class="sh">"""</span>
+
+<span class="nf">exec</span><span class="p">(</span><span class="n">code_script</span><span class="p">)</span> 
+<span class="c1"># 방금 문자열에서 창조해낸 함수를 바로 써먹을 수 있음
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">magic_add</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span> <span class="c1"># 100
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

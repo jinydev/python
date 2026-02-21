@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>17.02_Exception</title>
-  <meta name="title" content="17.02_Exception" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="17.02_Exception"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 에러 가족의 족보: 예외 클래스</title>
+  <meta name="title" content="2. 에러 가족의 족보: 예외 클래스" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 에러 가족의 족보: 예외 클래스"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/17_exception/17_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/17_exception/17_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="17.02_Exception"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 에러 가족의 족보: 예외 클래스"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="17.02_Exception" />
+<meta property="og:title" content="에러 가족의 족보: 예외 클래스" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/17_exception/17_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/17_exception/17_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/17_exception/17_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/17_exception/17_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="17.02_Exception" />
+<meta property="twitter:title" content="에러 가족의 족보: 예외 클래스" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"17.02_Exception","url":"http://localhost:4001/part04/17_exception/17_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"에러 가족의 족보: 예외 클래스","url":"https://python.jiny.dev/part04/17_exception/17_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,73 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">17.02_Exception</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 에러 가족의 족보: 예외 클래스</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1702_exception">17.02_Exception</h1>
+            <h1 id="2-에러-가족의-족보-예외-클래스">2. 에러 가족의 족보: 예외 클래스</h1>
 
-<!-- 이 곳에 17_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>에러(예외)들도 사실은 파이썬의 <strong>‘클래스(Class)’</strong> 로 만들어진 하나의 큰 가족(가문)이랍니다! 그 족보를 알면 어떤 에러를 어떤 그물(<code class="language-plaintext highlighter-rouge">except</code>)로 잡아야 할지 작전이 보입니다.</p>
+
+<h2 id="21-내장-에러-가문족보-파헤치기">2.1 내장 에러 가문(족보) 파헤치기</h2>
+
+<p>파이썬이 기본으로 가지고 있는 에러 가문의 꼭대기에는 가장 큰 할아버지인 <code class="language-plaintext highlighter-rouge">BaseException</code>과 <code class="language-plaintext highlighter-rouge">Exception</code> 클래스가 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">Exception</code> (모든 에러의 기둥)</strong>
+    <ul>
+      <li>거의 모든 런타임 에러들이 바로 이 <code class="language-plaintext highlighter-rouge">Exception</code> 이라는 아버지 클래스를 상속받아서 만들어집니다.</li>
+      <li>그래서 <code class="language-plaintext highlighter-rouge">except Exception:</code> 그물을 치면, 세상의 거의 모든 잡다한 에러를 다 걸러낼 수 있습니다!</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ArithmeticError</code> (수학 에러 가족)</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Exception</code>의 자식 중 하나입니다. 주로 수학 계산을 하다가 터지는 에러들이 속해 있습니다.</li>
+      <li>0으로 나누려 할 때 터지는 <code class="language-plaintext highlighter-rouge">ZeroDivisionError</code>가 바로 이 가족의 대표적인 손자입니다!</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">LookupError</code> (찾기 실패 에러 가족)</strong>
+    <ul>
+      <li>리스트의 칸 수를 넘어가는 곳을 찾거나(<code class="language-plaintext highlighter-rouge">IndexError</code>), 딕셔너리에 없는 키를 달라고 조를 때(<code class="language-plaintext highlighter-rouge">KeyError</code>) 발생하는 에러들입니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>이처럼 파이썬의 에러들은 꼬리에 꼬리를 무는 부모-자식 상속 구조로 이루어져 있습니다.</p>
+
+<hr />
+
+<h2 id="22-나만의-맞춤형-에러-경고장-만들기">2.2 나만의 맞춤형 에러 경고장 만들기!</h2>
+
+<p>게임에서 플레이어의 레벨이 0보다 떨어지는 것은 원래 파이썬에는 없는 오류입니다. 문법이나 수학적으로는 문제가 없지만 우리 게임 규칙에서는 <strong>엄청난 에러</strong>죠!
+이럴 때는 파이썬의 에러 족보에 ‘우리가 만든 에러’를 입양시킬 수 있습니다.</p>
+
+<p>방법은 아주 간단합니다. 파이썬의 <code class="language-plaintext highlighter-rouge">Exception</code> 클래스를 상속받는 우리만의 클래스를 만드는 것입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 나만의 '레벨 마이너스 방지' 에러 클래스 만들기
+</span><span class="k">class</span> <span class="nc">LevelMinusError</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">bad_level</span><span class="p">):</span>
+        <span class="c1"># 아버지(Exception)한테 메시지를 넘겨줌
+</span>        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">bad_level</span> <span class="o">=</span> <span class="n">bad_level</span> <span class="c1"># 잘못 입력된 레벨도 팁으로 저장해두기
+</span>
+<span class="c1"># 2. 게임에 써먹기!
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="n">player_level</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="k">if</span> <span class="n">player_level</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># 내가 만든 위험 경보 강제로 울리기! (raise)
+</span>        <span class="k">raise</span> <span class="nc">LevelMinusError</span><span class="p">(</span><span class="sh">"</span><span class="s">레벨은 음수가 될 수 없어!</span><span class="sh">"</span><span class="p">,</span> <span class="n">player_level</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">LevelMinusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># 내가 만든 특별한 에러 그물로 잡아내기!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[경고] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">입력된 이상한 레벨 값: </span><span class="si">{</span><span class="n">e</span><span class="p">.</span><span class="n">bad_level</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이렇게 하면, 파이썬이 모르는 우리만의 비즈니스 룰 기반 에러도 멋지게 방어할 수 있습니다!</p>
 
 
             <!-- Google AdSense -->

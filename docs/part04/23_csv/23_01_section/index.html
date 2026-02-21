@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>23.01_CSV</title>
-  <meta name="title" content="23.01_CSV" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="23.01_CSV"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기</title>
+  <meta name="title" content="1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/23_csv/23_01_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/23_csv/23_01_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="23.01_CSV"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="23.01_CSV" />
+<meta property="og:title" content="쉼표로 정리하는 마법: CSV 읽기와 쓰기" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/23_csv/23_01_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/23_csv/23_01_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/23_csv/23_01_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/23_csv/23_01_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="23.01_CSV" />
+<meta property="twitter:title" content="쉼표로 정리하는 마법: CSV 읽기와 쓰기" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"23.01_CSV","url":"http://localhost:4001/part04/23_csv/23_01_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"쉼표로 정리하는 마법: CSV 읽기와 쓰기","url":"https://python.jiny.dev/part04/23_csv/23_01_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,95 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">23.01_CSV</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="2301_csv">23.01_CSV</h1>
+            <h1 id="1-쉼표로-정리하는-마법-csv-읽기와-쓰기">1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기</h1>
 
-<!-- 이 곳에 23_01_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>CSV 파일 안에는 이렇게 무미건조한 텍스트만 잔뜩 들어있습니다.
+<code class="language-plaintext highlighter-rouge">이름,나이,직업</code>
+<code class="language-plaintext highlighter-rouge">파이썬,12,학생</code>
+<code class="language-plaintext highlighter-rouge">자바,14,선생님</code></p>
+
+<p>파이썬의 <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 사용하면 이 문장들을 깔끔한 리스트나 딕셔너리로 쫙쫙 뽑아낼 수 있습니다.</p>
+
+<h2 id="11-기본-리스트로-뽑아내기-reader--writer">1.1 기본 리스트로 뽑아내기 (<code class="language-plaintext highlighter-rouge">reader</code> &amp; <code class="language-plaintext highlighter-rouge">writer</code>)</h2>
+
+<p><code class="language-plaintext highlighter-rouge">csv.reader</code>를 거치면 한 줄 한 줄이 파이썬 리스트로 변신합니다.</p>
+
+<blockquote>
+  <p><strong>[주의!]</strong> CSV <code class="language-plaintext highlighter-rouge">reader</code>는 “반복자(Iterator)” 입니다. 무슨 말이냐고요? 한 번 처음부터 끝까지 다 읽어내고 나면 텅 비어버립니다! 두 번 출력하고 싶다면 파일을 다시 열거나 처음 위치로 되돌려야 해요.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="c1"># 1. 파일 열기!
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">students.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 2. CSV 해독기에 넣기
+</span>    <span class="n">data_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="c1"># 3. 한 줄씩 뽑아보기
+</span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="c1"># 출력: ['이름', '나이', '직업']
+</span>        <span class="c1"># 출력: ['파이썬', '12', '학생']
+</span></code></pre></div></div>
+
+<p>새로운 데이터를 CSV 파일로 저장하려면 <code class="language-plaintext highlighter-rouge">csv.writer</code>의 <code class="language-plaintext highlighter-rouge">writerow</code>를 씁니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="n">new_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="sh">'</span><span class="s">Hero</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Level</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">HP</span><span class="sh">'</span><span class="p">],</span>
+    <span class="p">[</span><span class="sh">'</span><span class="s">Warrior</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">15</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">300</span><span class="sh">'</span><span class="p">],</span>
+    <span class="p">[</span><span class="sh">'</span><span class="s">Mage</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">12</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">150</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="c1"># newline='' 을 넣어야 줄바꿈이 두 번 일어나는 걸 막을 수 있어요!
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">game_stats.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="sh">''</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">new_data</span><span class="p">:</span>
+        <span class="n">writer</span><span class="p">.</span><span class="nf">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="12-이름표-달고-뽑기-dictreader--dictwriter">1.2 이름표 달고 뽑기 (<code class="language-plaintext highlighter-rouge">DictReader</code> &amp; <code class="language-plaintext highlighter-rouge">DictWriter</code>)</h2>
+
+<p>리스트로 보면 <code class="language-plaintext highlighter-rouge">row[0]</code>, <code class="language-plaintext highlighter-rouge">row[1]</code>처럼 숫자(인덱스)로 찾아야 해서 헷갈릴 수 있습니다. 맨 첫 줄에 있는 “이름”, “나이” 같은 제목(헤더)을 활용해서 딕셔너리처럼 뽑아주는 기능이 바로 <code class="language-plaintext highlighter-rouge">DictReader</code> 입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">students.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># DictReader를 쓰면 딕셔너리로 변신합니다!
+</span>    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nc">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="c1"># 이제 숫자 대신 직관적인 '이메일'이나 '이름' 태그로 꺼낼 수 있어요!
+</span>        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="sh">'</span><span class="s">이름</span><span class="sh">'</span><span class="p">],</span> <span class="sh">"</span><span class="s">학생의 나이는</span><span class="sh">"</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="sh">'</span><span class="s">나이</span><span class="sh">'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>반대로 저장할 때도 <code class="language-plaintext highlighter-rouge">DictWriter</code>를 쓰면 됩니다. 단, 파일 맨 앞줄에 제목표(Header)를 써주는 <code class="language-plaintext highlighter-rouge">writeheader()</code> 함수를 꼭 불러줘야 한다는 점 잊지 마세요!</p>
+
+<hr />
+
+<h2 id="13-쌍둥이-형제-tsv-파일">1.3 쌍둥이 형제, TSV 파일</h2>
+
+<p>쉼표(,) 대신 키보드의 <code class="language-plaintext highlighter-rouge">Tab</code> 키(간격 띄우기)로 데이터를 잘라놓은 파일을 <strong>TSV(Tab-Separated Values)</strong> 라고 부릅니다. 
+파이썬에서는 <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 그대로 쓰되, “이 파일은 탭(<code class="language-plaintext highlighter-rouge">\t</code>)으로 잘린 파일이야!” 라고 <code class="language-plaintext highlighter-rouge">delimiter</code> 옵션만 살짝 알려주면 똑같이 마법을 부릴 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">data.tsv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># delimiter='\t' 로 탭 구분자라고 알려줍니다!
+</span>    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sh">'</span><span class="se">\t</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</code></pre></div></div>
 
 
             <!-- Google AdSense -->

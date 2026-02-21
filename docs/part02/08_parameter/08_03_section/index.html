@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>08.03_고정</title>
-  <meta name="title" content="08.03_고정" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="08.03_고정"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 고정 위치 매개변수와 키워드 인자</title>
+  <meta name="title" content="3. 고정 위치 매개변수와 키워드 인자" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 고정 위치 매개변수와 키워드 인자"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/08_parameter/08_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/08_parameter/08_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="08.03_고정"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 고정 위치 매개변수와 키워드 인자"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="08.03_고정" />
+<meta property="og:title" content="고정 위치 매개변수와 키워드 인자" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/08_parameter/08_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part02/08_parameter/08_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/08_parameter/08_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/08_parameter/08_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="08.03_고정" />
+<meta property="twitter:title" content="고정 위치 매개변수와 키워드 인자" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"08.03_고정","url":"http://localhost:4001/part02/08_parameter/08_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"고정 위치 매개변수와 키워드 인자","url":"https://python.jiny.dev/part02/08_parameter/08_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,76 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">08.03_고정</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 고정 위치 매개변수와 키워드 인자</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0803_고정">08.03_고정</h1>
+            <h1 id="3-고정-위치-매개변수와-키워드-인자">3. 고정 위치 매개변수와 키워드 인자</h1>
 
-<!-- 이 곳에 08_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>함수를 호출할 때 외부에서 던져주는 데이터(인자)들이, 함수 내부의 이름표(매개변수)들과 어떤 기준으로 짝을 맺어 찾아가는지 그 매핑(Mapping) 원리를 알아봅니다.</p>
+
+<h2 id="31-위치-기반-매핑-positional-arguments">3.1 위치 기반 매핑 (Positional Arguments)</h2>
+
+<p>가장 기본적이고 원시적인 방법으로, <strong>매개변수가 선언된 ‘순서’에 정확하게 맞추어 데이터를 밀어 넣는 방식</strong>입니다. 순서가 곧 기준이 되므로, 하나라도 순서가 꼬이거나 개수가 모자라면 곧바로 에러가 터집니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_profile</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">city</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">이름: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">, 나이: </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s">, 지역: </span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="sh">"</span>
+
+<span class="c1"># 1. 올바른 위치 매핑
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">make_profile</span><span class="p">(</span><span class="sh">"</span><span class="s">앨리스</span><span class="sh">"</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="sh">"</span><span class="s">서울</span><span class="sh">"</span><span class="p">))</span> 
+
+<span class="c1"># 2. 순서가 꼬였을 때의 참사
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">make_profile</span><span class="p">(</span><span class="sh">"</span><span class="s">부산</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">밥</span><span class="sh">"</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span> <span class="c1"># 이름: 부산, 나이: 밥, 지역: 30
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="32-이름표-기반-매핑-keyword-arguments">3.2 이름표 기반 매핑 (Keyword Arguments)</h2>
+
+<p>위치 인자의 단점을 극복하기 위해, 파이썬은 <strong>매개변수의 ‘이름’을 직접 지정하여 값을 꽂아 넣는 키워드 인자(Keyword Arguments) 방식</strong>을 지원합니다. 이 방식을 쓰면 데이터의 순서가 완전히 뒤죽박죽 섞여도 파이썬이 알아서 찰떡같이 찾아냅니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_profile</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">city</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">이름: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">, 나이: </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s">, 지역: </span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="sh">"</span>
+
+<span class="c1"># 매개변수 이름(Keyword)을 명시적으로 적어줌
+# 순서가 완전히 엉망이 되었지만, 이름표 덕분에 완벽하게 조립됨!
+</span><span class="n">result</span> <span class="o">=</span> <span class="nf">make_profile</span><span class="p">(</span><span class="n">city</span><span class="o">=</span><span class="sh">"</span><span class="s">제주</span><span class="sh">"</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">찰리</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1"># 이름: 찰리, 나이: 28, 지역: 제주
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!TIP]
+키워드 인자 방식을 사용하면 코드를 읽는 사람(동료 개발자) 입장에서 이 데이터가 도대체 어떤 의미로 들어가는지 직관적으로 파악할 수 있어 <strong>코드의 가독성</strong>이 비약적으로 상승합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="33-위치와-키워드의-혼용-규칙-주의사항">3.3 위치와 키워드의 혼용 규칙 (주의사항)</h2>
+
+<p>실무에서는 위치 인자와 키워드 인자를 적절히 섞어서 사용하는 경우가 많습니다. (보통 앞쪽의 핵심 데이터는 위치로, 뒤쪽의 옵션 데이터는 키워드로 넘깁니다.) 
+하지만 반드시 지켜야 할 철칙이 하나 있습니다.</p>
+
+<p><strong>“위치 인자(Positional) 군단은 파괴할 수 없다. 무조건 키워드 인자(Keyword)보다 선봉에 서야 한다.”</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">register_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">is_admin</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1"># [성공] 위치 인자가 먼저 오고, 그 뒤를 키워드 인자가 따름
+</span><span class="nf">register_user</span><span class="p">(</span><span class="mi">101</span><span class="p">,</span> <span class="n">is_admin</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="sh">"</span><span class="s">test@mail.com</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># [실패: SyntaxError 발생]
+# 키워드 인자(email="...")가 나타난 순간, 그 뒤로는 절대로 위치 인자가 올 수 없습니다!
+</span><span class="nf">register_user</span><span class="p">(</span><span class="mi">102</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="sh">"</span><span class="s">admin@mail.com</span><span class="sh">"</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> 
+
+<span class="c1"># [실패: TypeError 발생]
+# 앞에서 이미 위치 인자로 103이 user_id 파라미터로 들어갔는데, 
+# 뒤에서 키워드로 user_id를 또 주입하려 하면 중복 에러가 발생합니다.
+</span><span class="nf">register_user</span><span class="p">(</span><span class="mi">103</span><span class="p">,</span> <span class="sh">"</span><span class="s">test@mail.com</span><span class="sh">"</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="mi">103</span><span class="p">)</span>
+</code></pre></div></div>
 
 
             <!-- Google AdSense -->

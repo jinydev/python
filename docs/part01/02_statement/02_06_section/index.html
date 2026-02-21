@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>02.06_단순한</title>
-  <meta name="title" content="02.06_단순한" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="02.06_단순한"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>6. 단순한 네임스페이스 활용</title>
+  <meta name="title" content="6. 단순한 네임스페이스 활용" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="6. 단순한 네임스페이스 활용"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/02_statement/02_06_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/02_statement/02_06_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="02.06_단순한"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="6. 단순한 네임스페이스 활용"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="02.06_단순한" />
+<meta property="og:title" content="단순한 네임스페이스 활용" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/02_statement/02_06_section/" />
-<meta property="og:url" content="http://localhost:4001/part01/02_statement/02_06_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/02_statement/02_06_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/02_statement/02_06_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="02.06_단순한" />
+<meta property="twitter:title" content="단순한 네임스페이스 활용" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"02.06_단순한","url":"http://localhost:4001/part01/02_statement/02_06_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"단순한 네임스페이스 활용","url":"https://python.jiny.dev/part01/02_statement/02_06_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,69 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">02.06_단순한</li>
+        <li class="breadcrumb-item active" aria-current="page">6. 단순한 네임스페이스 활용</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0206_단순한">02.06_단순한</h1>
+            <h1 id="6-단순한-네임스페이스-활용">6. 단순한 네임스페이스 활용</h1>
 
-<!-- 이 곳에 02_06_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>앞에서 배운 파이썬의 네임스페이스 메커니즘을 보다 직관적으로 이해하고 구조화된 데이터 묶음을 쉽게 만들기 위해, 파이썬 표준 라이브러리인 <code class="language-plaintext highlighter-rouge">types</code> 모듈은 <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> 라는 유용한 클래스를 제공합니다.</p>
+
+<p>이번 장에서는 이 간단한 구조체가 어떻게 작동하는지 알아보고, 이와 유사한 형태의 데이터 관리 클래스를 직접 구현해 보겠습니다.</p>
+
+<h2 id="61-typessimplenamespace-기본-사용법">6.1 <code class="language-plaintext highlighter-rouge">types.SimpleNamespace</code> 기본 사용법</h2>
+
+<p><code class="language-plaintext highlighter-rouge">SimpleNamespace</code>는 이름 그대로 기능이 거의 없이 오로지 <strong>변수 이름표(속성)들을 묶어서 보관하기 위한 빈 껍데기</strong> 역할을 합니다. 딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>)와 매우 유사하게 작동하지만 딕셔너리의 키에 점(<code class="language-plaintext highlighter-rouge">.</code>) 연산자로 접근할 수 있어 가독성이 뛰어납니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">types</span>
+
+<span class="c1"># 1. 속성을 주입하며 인스턴스 생성
+</span><span class="n">user_info</span> <span class="o">=</span> <span class="n">types</span><span class="p">.</span><span class="nc">SimpleNamespace</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="sh">"</span><span class="s">Admin</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">user_info</span><span class="p">))</span> <span class="c1"># &lt;class 'types.SimpleNamespace'&gt;
+</span><span class="nf">print</span><span class="p">(</span><span class="n">user_info</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># "Alice"
+</span>
+<span class="c1"># 2. 런타임에 동적으로 속성 추가하기
+</span><span class="n">user_info</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">99</span>
+
+<span class="c1"># 내부 네임스페이스 점검
+</span><span class="nf">print</span><span class="p">(</span><span class="n">user_info</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="c1"># 출력: {'name': 'Alice', 'role': 'Admin', 'level': 99}
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="62-simplenamespace-작동-방식-모방하기">6.2 SimpleNamespace 작동 방식 모방하기</h2>
+
+<p>내부적으로 <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> 가 어떻게 구성되어 있는지 원리를 파악하기 위해, 파이썬의 기본 클래스로 유사한 동작을 하는 클래스를 직접 정의해 볼 수 있습니다.</p>
+
+<p>파이썬의 모든 클래스 인스턴스는 내부에 <code class="language-plaintext highlighter-rouge">__dict__</code> 라는 딕셔너리를 몰래 가지고 있으며, 이 공간이 곧 그 인스턴스의 네임스페이스입니다. 이 원리를 활용하여 객체가 생성될 때(<code class="language-plaintext highlighter-rouge">__init__</code>) 넘겨받은 값들을 즉시 이 딕셔너리에 합치도록(Update) 구현합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CustomNamespace</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># 넘겨받은 모든 키워드 인자들을 이 인스턴스의 네임스페이스에 통째로 붓습니다.
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="c1"># 객체를 출력할 때 예쁘게 보여주기 위한 장치
+</span>        <span class="n">keys</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">.</span><span class="nf">keys</span><span class="p">())</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s">=</span><span class="si">{</span><span class="nf">repr</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="si">}</span><span class="sh">"</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="nf">type</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">__name__</span><span class="si">}</span><span class="s">(</span><span class="si">{</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span>
+
+<span class="c1"># 직접 만든 클래스 테스팅
+</span><span class="n">config</span> <span class="o">=</span> <span class="nc">CustomNamespace</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="sh">"</span><span class="s">localhost</span><span class="sh">"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">host</span><span class="p">)</span> <span class="c1"># "localhost"
+</span><span class="n">config</span><span class="p">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">repr</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
+<span class="c1"># 출력: CustomNamespace(host='localhost', port=8080, timeout=30)
+</span></code></pre></div></div>
+
+<p>이와 같이 파이썬은 변수와 값이 매칭되는 “이름표 바구니(<code class="language-plaintext highlighter-rouge">__dict__</code>)” 구조를 통해 모든 메커니즘이 투명하고 일관성 있게 운영됩니다.</p>
 
 
             <!-- Google AdSense -->

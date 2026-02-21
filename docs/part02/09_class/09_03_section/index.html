@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>09.03_객체</title>
-  <meta name="title" content="09.03_객체" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="09.03_객체"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 객체의 생명주기와 소멸자</title>
+  <meta name="title" content="3. 객체의 생명주기와 소멸자" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 객체의 생명주기와 소멸자"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/09_class/09_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="09.03_객체"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 객체의 생명주기와 소멸자"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="09.03_객체" />
+<meta property="og:title" content="객체의 생명주기와 소멸자" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/09_class/09_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part02/09_class/09_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/09_class/09_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="09.03_객체" />
+<meta property="twitter:title" content="객체의 생명주기와 소멸자" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"09.03_객체","url":"http://localhost:4001/part02/09_class/09_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"객체의 생명주기와 소멸자","url":"https://python.jiny.dev/part02/09_class/09_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,82 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">09.03_객체</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 객체의 생명주기와 소멸자</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0903_객체">09.03_객체</h1>
+            <h1 id="3-객체의-점dot-연산과-속성-제어">3. 객체의 점(Dot) 연산과 속성 제어</h1>
 
-<!-- 이 곳에 09_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 클래스나 인스턴스의 내부 깊숙한 곳(네임스페이스)에 접근할 수 있는 유일한 열쇠는 바로 <strong>점(<code class="language-plaintext highlighter-rouge">.</code>) 연산자</strong>입니다. 우리가 무심코 사용하는 <code class="language-plaintext highlighter-rouge">p.name</code>이나 <code class="language-plaintext highlighter-rouge">p.age = 20</code> 같은 점 연산의 이면에는 파이썬의 정교한 스페셜 메서드 체계가 숨쉬고 있습니다.</p>
+
+<h2 id="31-점-연산의-숨겨진-호출-구조">3.1 점(.) 연산의 숨겨진 호출 구조</h2>
+
+<p>점(<code class="language-plaintext highlighter-rouge">.</code>)을 찍어 인스턴스의 속성에 접근하거나 값을 바꿀 때, 파이썬 내부에서는 다음과 같이 3개의 스페셜 메서드가 보이지 않게 작동합니다.</p>
+
+<ol>
+  <li><strong>조회</strong>: <code class="language-plaintext highlighter-rouge">__getattribute__</code> (가장 먼저 접근 시도)</li>
+  <li><strong>조회 실패 시 위임</strong>: <code class="language-plaintext highlighter-rouge">__getattr__</code> (<code class="language-plaintext highlighter-rouge">__getattribute__</code>에서 못 찾을 때만 호출됨)</li>
+  <li><strong>할당/갱신</strong>: <code class="language-plaintext highlighter-rouge">__setattr__</code></li>
+  <li><strong>삭제</strong>: <code class="language-plaintext highlighter-rouge">__delattr__</code></li>
+</ol>
+
+<hr />
+
+<h2 id="32-속성-갱신의-통로-__setattr__">3.2 속성 갱신의 통로: <code class="language-plaintext highlighter-rouge">__setattr__</code></h2>
+
+<p>인스턴스에 새로운 값을 할당할 때마다 항상 <code class="language-plaintext highlighter-rouge">__setattr__</code> 스페셜 메서드가 가로채기(Intercept)를 수행합니다. 이를 응용하면 데이터베이스에 값을 쓰거나, 특정 값이 들어올 때 타입 검사를 강제할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SmartDevice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="c1"># self.name = name 을 실행하는 순간 __setattr__ 이 발동됨!
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    
+    <span class="c1"># 속성 할당을 중간에 가로채는 스페셜 메서드
+</span>    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[시스템 로그] </span><span class="sh">'</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="sh">'</span><span class="s"> 속성에 </span><span class="sh">'</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="sh">'</span><span class="s"> 값을 저장합니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="c1"># 무한루프를 방지하기 위해 실제 딕셔너리에 직접 값을 밀어넣음
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="nc">SmartDevice</span><span class="p">(</span><span class="sh">"</span><span class="s">온도조절기</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># [시스템 로그] 'name' 속성에 '온도조절기' 값을 저장합니다.
+</span>
+<span class="n">device</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="sh">"</span><span class="s">활성화</span><span class="sh">"</span>
+<span class="c1"># [시스템 로그] 'status' 속성에 '활성화' 값을 저장합니다.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="33-우아하게-에러-피하기-__getattr__">3.3 우아하게 에러 피하기: <code class="language-plaintext highlighter-rouge">__getattr__</code></h2>
+
+<p>일반적으로 객체에 정의되지 않은 속성을 점(<code class="language-plaintext highlighter-rouge">.</code>)으로 호출하면 자비 없이 <code class="language-plaintext highlighter-rouge">AttributeError</code>가 발생합니다. 하지만 <code class="language-plaintext highlighter-rouge">__getattr__</code> 메서드를 재정의해두면, <strong>찾는 속성이 없을 때 최후의 보루로 이 메서드가 실행되어 에러를 방지하고 기본값을 던져줄 수 있습니다.</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserProfile</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="nb">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="c1"># 파이썬이 네임스페이스를 완전히 뒤져보고 그래도 없을 때만 호출됨
+</span>    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">missing_attr</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[경고] </span><span class="sh">'</span><span class="si">{</span><span class="n">missing_attr</span><span class="si">}</span><span class="sh">'</span><span class="s"> 이라는 속성은 존재하지 않습니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">Not Found</span><span class="sh">"</span>
+
+<span class="c1"># 1. 속성이 정상적으로 존재할 때 (__getattribute__ 정상 작동)
+</span><span class="n">user</span> <span class="o">=</span> <span class="nc">UserProfile</span><span class="p">(</span><span class="mi">101</span><span class="p">,</span> <span class="sh">"</span><span class="s">제임스</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="c1"># 제임스
+</span>
+<span class="c1"># 2. 존재하지 않는 속성을 찾을 때 (에러 대신 __getattr__ 가 막아줌)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">email</span><span class="p">)</span> 
+<span class="c1"># [경고] 'email' 이라는 속성은 존재하지 않습니다.
+# Not Found
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!CAUTION]
+무리하게 <code class="language-plaintext highlighter-rouge">__getattribute__</code>를 가로채려는 시도는 재귀(무한 루프) 함정에 빠지기 십상입니다. 안전하게 처리하려면 가급적 <code class="language-plaintext highlighter-rouge">__getattr__</code> 을 사용하는 패턴을 추천합니다.</p>
+</blockquote>
 
 
             <!-- Google AdSense -->

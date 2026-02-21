@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>13.01_내장</title>
-  <meta name="title" content="13.01_내장" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="13.01_내장"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 추상 클래스 기본기 (abc 모듈)</title>
+  <meta name="title" content="1. 추상 클래스 기본기 (abc 모듈)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 추상 클래스 기본기 (abc 모듈)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_01_builtin/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_01_builtin/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="13.01_내장"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 추상 클래스 기본기 (abc 모듈)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="13.01_내장" />
+<meta property="og:title" content="추상 클래스 기본기 (abc 모듈)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/13_abstract/13_01_builtin/" />
-<meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_01_builtin/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/13_abstract/13_01_builtin/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_01_builtin/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="13.01_내장" />
+<meta property="twitter:title" content="추상 클래스 기본기 (abc 모듈)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"13.01_내장","url":"http://localhost:4001/part03/13_abstract/13_01_builtin/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"추상 클래스 기본기 (abc 모듈)","url":"https://python.jiny.dev/part03/13_abstract/13_01_builtin/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,69 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">13.01_내장</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 추상 클래스 기본기 (abc 모듈)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1301_내장">13.01_내장</h1>
+            <h1 id="1-추상-클래스-기본기-abc-모듈">1. 추상 클래스 기본기 (<code class="language-plaintext highlighter-rouge">abc</code> 모듈)</h1>
 
-<!-- 이 곳에 13_01_builtin_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>로봇 공장 시스템을 만든다고 상상해봅시다. 모든 ‘로봇’은 ‘움직이기’ 기능을 반드시 만들어야 한다는 공통 규칙을 정하고 싶습니다. 이때 사용하는 것이 바로 추상 클래스입니다.</p>
+
+<p>파이썬에서는 <code class="language-plaintext highlighter-rouge">abc</code> (Abstract Base Classes) 모듈을 이용해 추상 클래스를 정의합니다.</p>
+
+<h2 id="11-강제-규칙-만들기-추상-메서드">1.1 강제 규칙 만들기 (추상 메서드)</h2>
+
+<p>추상 클래스 자체는 불완전한 뼈대이므로 인스턴스(실제 로봇)를 만들 수 없습니다. 이것을 상속받는 자식 클래스(구현 클래스)가 지시사항(추상 메서드)을 모두 채워 넣어야만 비로소 완성품이 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="c1"># ABC(Abstract Base Class)를 상속받으면 추상 클래스가 됩니다.
+</span><span class="k">class</span> <span class="nc">RobotBlueprint</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    
+    <span class="c1"># "자식 클래스는 무조건 이 메서드를 구현해라!" 라는 데코레이터
+</span>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># 뼈대이므로 구현하지 않습니다.
+</span>
+<span class="c1"># 자식 클래스 (구현 클래스)
+</span><span class="k">class</span> <span class="nc">TankRobot</span><span class="p">(</span><span class="n">RobotBlueprint</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">캐터필러로 묵직하게 움직입니다!</span><span class="sh">"</span>
+</code></pre></div></div>
+<p>만약 <code class="language-plaintext highlighter-rouge">TankRobot</code>이 <code class="language-plaintext highlighter-rouge">move</code> 메서드를 빼먹고 인스턴스를 만들려고 하면 에러(TypeError)가 나면서 프로그램이 멈춥니다. 안전장치가 완벽하죠!</p>
+
+<hr />
+
+<h2 id="12-넌-이제-내-자식이다---가상-서브클래스-register">1.2 “넌 이제 내 자식이다!” - 가상 서브클래스 (<code class="language-plaintext highlighter-rouge">register</code>)</h2>
+
+<p>직접 상속(<code class="language-plaintext highlighter-rouge">class A(B):</code>)을 받지 않아도, 족보에 강제로 이름을 올려 “가상의 자식”으로 취급하는 재미있는 기능이 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+
+<span class="k">class</span> <span class="nc">PowerCore</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 배터리 클래스는 PowerCore를 상속받은 적이 없지만...
+</span><span class="k">class</span> <span class="nc">Battery</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 명부(register)에 강제 등록합니다.
+</span><span class="n">PowerCore</span><span class="p">.</span><span class="nf">register</span><span class="p">(</span><span class="n">Battery</span><span class="p">)</span>
+
+<span class="c1"># 진짜 자식이냐고 물어보면? True가 나옵니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="n">Battery</span><span class="p">,</span> <span class="n">PowerCore</span><span class="p">))</span> <span class="c1"># True
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="13-암묵적-규칙-프로토콜과-duck-typing">1.3 암묵적 규칙 (프로토콜과 Duck Typing)</h2>
+
+<p>파이썬은 아주 유연한 언어입니다. “오리처럼 걷고 오리처럼 꽥꽥대면, 그건 오리다(Duck Typing)!”라는 철학이 있죠.</p>
+
+<p>즉, 명시적으로 추상 클래스를 상속받지 않았더라도 클래스 내부에 특정 매직 메서드(예: <code class="language-plaintext highlighter-rouge">__len__</code>)를 잘 만들어 두었다면, 파이썬은 이를 길이를 잴 수 있는 <code class="language-plaintext highlighter-rouge">Sized</code> 컬렉션의 자식이라고 암묵적으로 인정해 줍니다. 이렇게 동작과 행동 패턴(메서드 유무)만으로 자격을 판단하는 방식을 ‘프로토콜 인터페이스(Protocol Interface)’라고 부릅니다.</p>
 
 
             <!-- Google AdSense -->

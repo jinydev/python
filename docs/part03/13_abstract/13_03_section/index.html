@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>13.03_컬렉션</title>
-  <meta name="title" content="13.03_컬렉션" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="13.03_컬렉션"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 컬렉션의 뼈대 (collections.abc)</title>
+  <meta name="title" content="3. 컬렉션의 뼈대 (collections.abc)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 컬렉션의 뼈대 (collections.abc)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="13.03_컬렉션"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 컬렉션의 뼈대 (collections.abc)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="13.03_컬렉션" />
+<meta property="og:title" content="컬렉션의 뼈대 (collections.abc)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/13_abstract/13_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/13_abstract/13_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="13.03_컬렉션" />
+<meta property="twitter:title" content="컬렉션의 뼈대 (collections.abc)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"13.03_컬렉션","url":"http://localhost:4001/part03/13_abstract/13_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"컬렉션의 뼈대 (collections.abc)","url":"https://python.jiny.dev/part03/13_abstract/13_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,50 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">13.03_컬렉션</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 컬렉션의 뼈대 (collections.abc)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1303_컬렉션">13.03_컬렉션</h1>
+            <h1 id="3-컬렉션의-뼈대-collectionsabc">3. 컬렉션의 뼈대 (<code class="language-plaintext highlighter-rouge">collections.abc</code>)</h1>
 
-<!-- 이 곳에 13_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>리스트, 튜플, 딕셔너리, 셋(Set) 등 여러 개의 데이터를 묶어 담는 파이썬의 주머니들을 ‘컬렉션(Collection)’이라고 합니다. 이 컬렉션들도 결국 제멋대로 만들어진 것이 아니라, <code class="language-plaintext highlighter-rouge">collections.abc</code> 라는 강력한 가이드라인에 따라 설계되었습니다.</p>
+
+<h2 id="31-삼위일체-컬렉션의-기초-조건">3.1 삼위일체: 컬렉션의 기초 조건</h2>
+
+<p>파이썬에서 ‘컬렉션’ 대접을 받으려면 (즉, <code class="language-plaintext highlighter-rouge">Collection</code> 추상 클래스가 되려면) 다음 세 가지 기능의 뼈대를 무조건 갖춰야 합니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">Sized</code></strong>: 얼마나 들어있는지 길이(<code class="language-plaintext highlighter-rouge">__len__</code>)를 잴 수 있을 것.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Iterable</code></strong>: 하나씩 차례대로 꺼낼 수(<code class="language-plaintext highlighter-rouge">__iter__</code>) 있을 것.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Container</code></strong>: 그 안에 특정 요소가 들어있는지 포함 여부(<code class="language-plaintext highlighter-rouge">__contains__</code>)를 검사할 수 있을 것.</li>
+</ol>
+
+<hr />
+
+<h2 id="32-줄-세우기-sequence-패밀리">3.2 줄 세우기: Sequence 패밀리</h2>
+
+<p>문자열(<code class="language-plaintext highlighter-rouge">str</code>), 튜플(<code class="language-plaintext highlighter-rouge">tuple</code>), 리스트(<code class="language-plaintext highlighter-rouge">list</code>)처럼 순서(인덱스)가 있는 자료형들의 부모가 바로 <code class="language-plaintext highlighter-rouge">Sequence</code> 추상 클래스입니다. 
+순서가 있으니 추가로 대괄호에서 인덱스로 찾기(<code class="language-plaintext highlighter-rouge">__getitem__</code>)가 가능해야 하죠.</p>
+
+<p>이 중에서 내용물을 수정할 수 있는 리스트(<code class="language-plaintext highlighter-rouge">list</code>) 같은 녀석들은 다시금 <code class="language-plaintext highlighter-rouge">MutableSequence</code> 라는 상위 클래스를 상속받아 요소를 삭제하거나 삽입하는 강력한 능력을 얻습니다.</p>
+
+<hr />
+
+<h2 id="33-열쇠와-자물쇠-mapping-패밀리">3.3 열쇠와 자물쇠: Mapping 패밀리</h2>
+
+<p>딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>)처럼 “이름표(Key)”로 데이터를 찾는 자료형들의 부모는 <code class="language-plaintext highlighter-rouge">Mapping</code> 추상 클래스입니다.
+역시 딕셔너리는 내부의 값을 맘대로 바꿀 수 있으므로 <code class="language-plaintext highlighter-rouge">MutableMapping</code> 클래스 아래에 소속되어 있으며, 수정을 담당하는 매직 메서드(<code class="language-plaintext highlighter-rouge">__setitem__</code> 등)를 구현하고 있습니다.</p>
+
+<hr />
+
+<h2 id="34-짝퉁-객체-view-자료형">3.4 짝퉁(?) 객체: View 자료형</h2>
+
+<p>딕셔너리의 키(<code class="language-plaintext highlighter-rouge">dict.keys()</code>)나 값(<code class="language-plaintext highlighter-rouge">dict.values()</code>)을 조회하면 나오는 결과는 리스트가 아닙니다. 이들은 데이터를 복사해서 새로 만든 게 아니라, 원본 데이터베이스에서 그 부분만 들여다볼 수 있는 ‘투명한 유리창(View)’ 역할을 합니다.</p>
+
+<p>파이썬은 이를 위해 <code class="language-plaintext highlighter-rouge">KeysView</code>, <code class="language-plaintext highlighter-rouge">ValuesView</code>, <code class="language-plaintext highlighter-rouge">ItemsView</code> 등의 추상 클래스를 따로 관리합니다. 이런 뷰(View) 형태를 쓰면 매번 덩치가 큰 데이터를 복사할 필요가 없어 컴퓨터 자원을 크게 절약할 수 있습니다.</p>
 
 
             <!-- Google AdSense -->

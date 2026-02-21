@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>09.05_캡슐화(Encapsulation)</title>
-  <meta name="title" content="09.05_캡슐화(Encapsulation)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="09.05_캡슐화(Encapsulation)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>5. 정보 은닉과 프로퍼티 (Encapsulation)</title>
+  <meta name="title" content="5. 정보 은닉과 프로퍼티 (Encapsulation)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="5. 정보 은닉과 프로퍼티 (Encapsulation)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/09_class/09_05_encapsulation/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_05_encapsulation/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="09.05_캡슐화(Encapsulation)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="5. 정보 은닉과 프로퍼티 (Encapsulation)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="09.05_캡슐화(Encapsulation)" />
+<meta property="og:title" content="정보 은닉과 프로퍼티 (Encapsulation)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/09_class/09_05_encapsulation/" />
-<meta property="og:url" content="http://localhost:4001/part02/09_class/09_05_encapsulation/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/09_class/09_05_encapsulation/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_05_encapsulation/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="09.05_캡슐화(Encapsulation)" />
+<meta property="twitter:title" content="정보 은닉과 프로퍼티 (Encapsulation)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"09.05_캡슐화(Encapsulation)","url":"http://localhost:4001/part02/09_class/09_05_encapsulation/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"정보 은닉과 프로퍼티 (Encapsulation)","url":"https://python.jiny.dev/part02/09_class/09_05_encapsulation/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,96 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">09.05_캡슐화(Encapsulation)</li>
+        <li class="breadcrumb-item active" aria-current="page">5. 정보 은닉과 프로퍼티 (Encapsulation)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0905_캡슐화encapsulation">09.05_캡슐화(Encapsulation)</h1>
+            <h1 id="5-정보-은닉과-프로퍼티-encapsulation">5. 정보 은닉과 프로퍼티 (Encapsulation)</h1>
 
-<!-- 이 곳에 09_05_encapsulation_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>클래스를 설계할 때, 객체 내부의 민감한 데이터나 복잡한 상태를 외부에서 함부로 건드리지 못하게 꽁꽁 싸매어 보호하는 기법을 <strong>캡슐화(Encapsulation)</strong> 또는 <strong>정보 은닉(Information Hiding)</strong>이라고 부릅니다. 
+다른 언어(Java 등)는 <code class="language-plaintext highlighter-rouge">private</code>, <code class="language-plaintext highlighter-rouge">public</code> 같은 엄격한 접근 제어자 키워드가 있지만, 파이썬은 <strong>‘우리 모두 다 큰 성인이니 굳이 문을 잠그진 말자’</strong>는 철학을 가져서 진짜 완벽한 은닉은 없습니다. 대신, 독특한 이름표 규칙(Naming Convention)과 데코레이터를 통해 은닉을 훌륭하게 모방합니다.</p>
+
+<h2 id="51-암묵적인-경고-언더스코어-1개-_name">5.1 암묵적인 경고: 언더스코어 1개 (<code class="language-plaintext highlighter-rouge">_name</code>)</h2>
+
+<p>파이썬 개발자들 사이의 굳은 약속입니다. 변수나 메서드 이름 앞에 <strong>언더스코어(<code class="language-plaintext highlighter-rouge">_</code>)를 1개</strong> 붙이면, <em>“이 변수는 내부적으로만 쓸 거니까 외부에서 함부로 점(<code class="language-plaintext highlighter-rouge">.</code>) 찍어서 건드리지 마세요”</em> 라는 강력한 경고 메시지를 뜻합니다. (문법적인 강제성은 없습니다.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">BankAccount</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">balance</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner</span>
+        <span class="c1"># 외부에서 함부로 건드리면 안 되는 민감한 잔고 데이터
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">_balance</span> <span class="o">=</span> <span class="n">balance</span>
+
+<span class="n">account</span> <span class="o">=</span> <span class="nc">BankAccount</span><span class="p">(</span><span class="sh">"</span><span class="s">홍길동</span><span class="sh">"</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># (강제성은 없으므로 읽거나 수정할 수는 있지만, 파이썬 생태계의 금기사항입니다!)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">_balance</span><span class="p">)</span> 
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="52-강렬한-방어막-맹글링-__name">5.2 강렬한 방어막: 맹글링 (<code class="language-plaintext highlighter-rouge">__name</code>)</h2>
+
+<p>정말로 이름을 꽁꽁 숨기고 싶을 때는 변수명 앞에 <strong>언더스코어 2개(<code class="language-plaintext highlighter-rouge">__</code>)</strong>를 연속으로 붙입니다. 
+파이썬은 이 변수를 보는 순간, 몰래 변수 이름을 <code class="language-plaintext highlighter-rouge">_클래스명__변수명</code> 형태로 괴상하게 찌그러뜨려 놓습니다. 이를 <strong>이름 맹글링(Name Mangling)</strong>이라고 부릅니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretAgent</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">code_name</span><span class="p">):</span>
+        <span class="c1"># 맹글링 발동! 외부에선 절대 '__code_name' 으로 찾을 수 없습니다.
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">__code_name</span> <span class="o">=</span> <span class="n">code_name</span>
+        
+    <span class="k">def</span> <span class="nf">reveal</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="c1"># 클래스 내부의 메서드에서는 정상적인 이름으로 접근 가능합니다.
+</span>        <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">내 정체는 </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">__code_name</span><span class="si">}</span><span class="s"> 이다.</span><span class="sh">"</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="nc">SecretAgent</span><span class="p">(</span><span class="sh">"</span><span class="s">007</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># [에러 발생] 외부에서 이 이름으로 찾으려고 하면 찾을 수 없다고 튕겨냅니다.
+# print(agent.__code_name) 
+</span>
+<span class="c1"># (굳이 해킹(?) 하자면 찌그러진 맹글링 이름 전체를 치면 접근할 순 있습니다.)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">agent</span><span class="p">.</span><span class="n">_SecretAgent__code_name</span><span class="p">)</span> <span class="c1"># 007
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="53-우아한-속성-제어-property-데코레이터">5.3 우아한 속성 제어: <code class="language-plaintext highlighter-rouge">@property</code> 데코레이터</h2>
+
+<p>데이터를 은닉(<code class="language-plaintext highlighter-rouge">_변수명</code>)해놓고 외부에는 이를 안전하게 읽고 쓸 수 있는 통로만 열어주고 싶을 때, 자바처럼 <code class="language-plaintext highlighter-rouge">get_name()</code>, <code class="language-plaintext highlighter-rouge">set_name()</code> 같은 투박한 메서드를 만드는 대신 파이썬은 <strong><code class="language-plaintext highlighter-rouge">@property</code></strong> 라는 우아한 마법을 제공합니다.</p>
+
+<p>마치 일반 변수에 접근하는 것처럼 보이지만, 사실은 우리가 숨겨둔 통제(메서드)를 반드시 거치게 만드는 필터 역할을 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="c1"># 실제 나이 데이터는 철저히 은닉 (직접 수정 불가)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">age</span>
+        
+    <span class="c1"># [1. Getter] 프로퍼티를 달아주면 밖에서는 변수처럼 읽을 수 있습니다.
+</span>    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_age</span>
+        
+    <span class="c1"># [2. Setter] 값을 수정할 때 반드시 이 검사소(메서드)를 통과하게 만듭니다.
+</span>    <span class="nd">@age.setter</span>
+    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_age</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">new_age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">[시스템 경고] 나이는 0보다 작을 수 없습니다!</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">new_age</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="nc">Person</span><span class="p">(</span><span class="sh">"</span><span class="s">앨리스</span><span class="sh">"</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+
+<span class="c1"># 마치 변수처럼 값을 읽음 (사실은 @property 메서드 실행됨)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1"># 25
+</span>
+<span class="c1"># 마치 변수처럼 값을 할당함 (사실은 @age.setter 검사소가 발동됨)
+</span><span class="n">p</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span> <span class="c1"># [시스템 경고] 나이는 0보다 작을 수 없습니다!
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1"># 여전히 안전하게 25를 유지함!
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

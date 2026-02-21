@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>09.01_클래스(class)</title>
-  <meta name="title" content="09.01_클래스(class)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="09.01_클래스(class)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 클래스와 인스턴스의 본질</title>
+  <meta name="title" content="1. 클래스와 인스턴스의 본질" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 클래스와 인스턴스의 본질"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/09_class/09_01_class/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_01_class/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="09.01_클래스(class)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 클래스와 인스턴스의 본질"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="09.01_클래스(class)" />
+<meta property="og:title" content="클래스와 인스턴스의 본질" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/09_class/09_01_class/" />
-<meta property="og:url" content="http://localhost:4001/part02/09_class/09_01_class/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/09_class/09_01_class/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_01_class/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="09.01_클래스(class)" />
+<meta property="twitter:title" content="클래스와 인스턴스의 본질" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"09.01_클래스(class)","url":"http://localhost:4001/part02/09_class/09_01_class/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"클래스와 인스턴스의 본질","url":"https://python.jiny.dev/part02/09_class/09_01_class/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,91 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">09.01_클래스(class)</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 클래스와 인스턴스의 본질</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0901_클래스class">09.01_클래스(class)</h1>
+            <h1 id="1-클래스와-인스턴스의-본질">1. 클래스와 인스턴스의 본질</h1>
 
-<!-- 이 곳에 09_01_class_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>프로그래밍에서 복잡한 시스템을 구축하기 위해서는 숫자나 문자열 같은 단순 데이터를 넘어, <strong>‘상태(속성)’</strong>와 <strong>‘행동(메서드)’</strong>을 하나로 묶은 독립적인 생명체인 <strong>객체(Object)</strong>를 만들어내야 합니다. 이 객체들의 협력으로 돌아가는 시스템을 ‘객체지향(Object-Oriented)’ 시스템이라고 부릅니다.</p>
+
+<ul>
+  <li><strong>클래스(Class)</strong>: 객체를 똑같이 찍어내기 위한 ‘설계도’ 혹은 ‘붕어빵 틀’입니다.</li>
+  <li><strong>인스턴스(Instance)</strong>: 설계도를 통해 컴퓨터 메모리 상에 실체화된 개별 ‘객체(붕어빵)’를 말합니다.</li>
+</ul>
+
+<h2 id="11-객체가-가져야-할-3대-특징">1.1 객체가 가져야 할 3대 특징</h2>
+
+<p>완벽한 객체라면 다음의 세 가지 특성을 만족해야 합니다.</p>
+
+<ol>
+  <li><strong>정체성 (Identity)</strong>: 
+ 모든 객체는 고유한 메모리 주소(레퍼런스)를 가집니다. 완전히 똑같은 데이터를 가졌더라도, 쌍둥이처럼 서로 다른 존재로 취급받아야 합니다. 파이썬에서는 <code class="language-plaintext highlighter-rouge">id()</code> 함수를 통해 메모리 바코드(주소)를 확인합니다.</li>
+  <li><strong>상태 (State / Data Type)</strong>: 
+ 객체는 자신만의 고유한 정보를 품고 있습니다. (예: 자동차 객체의 ‘현재 속도’, ‘색상’ 데이터)</li>
+  <li><strong>책임/반응성 (Responsibility / Behavior)</strong>:
+ 외부에서 특정 메시지(호출)를 받았을 때 스스로의 상태를 변화시키거나 응답하는 행동 지침(메서드)을 갖추고 있어야 합니다.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 파이썬의 숫자도 사실은 int 라는 클래스로부터 태어난 완벽한 '객체'입니다!
+</span><span class="n">a</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 객체의 '행동(Behavior)' 호출: 
+# a.+(b) 와 본질적으로 같은 행위가 내장 스페셜 메서드 __add__를 통해 처리됩니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="nf">__add__</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="c1"># 15
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="12-사용자-정의-클래스-만들기-class-키워드">1.2 사용자 정의 클래스 만들기 (<code class="language-plaintext highlighter-rouge">class</code> 키워드)</h2>
+
+<p>파이썬 내장 객체(int, str 등) 외에, 우리 비즈니스 상황에 딱 맞는 독자적인 틀을 만들 때는 <code class="language-plaintext highlighter-rouge">class</code> 키워드를 사용합니다.</p>
+
+<p>클래스의 첫 글자는 대문자를 사용하는 파스칼 케이스(PascalCase) 표기법을 쓰는 것이 약속(PEP 8)입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># '책' 이라는 추상적 사물의 설계도(클래스)를 정의
+</span><span class="k">class</span> <span class="nc">Book</span><span class="p">:</span>
+    <span class="c1"># 붕어빵이 갓 구워져 나왔을 때 초기 속성을 채워넣는 특별한 메서드
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">):</span>
+        <span class="c1"># self.속성명 = 매개변수
+</span>        <span class="c1"># self는 '방금 태어난 나 자신(인스턴스)'을 가리킵니다.
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
+
+<span class="c1"># 설계도를 기반으로 메모리 상에 실물 객체 2개를 탄생시킴 (인스턴스화)
+</span><span class="n">book1</span> <span class="o">=</span> <span class="nc">Book</span><span class="p">(</span><span class="sh">"</span><span class="s">어린왕자</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">생텍쥐페리</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">book2</span> <span class="o">=</span> <span class="nc">Book</span><span class="p">(</span><span class="sh">"</span><span class="s">파이썬 코딩</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">귀도 반 로섬</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">book1</span><span class="p">.</span><span class="n">title</span><span class="p">)</span> <span class="c1"># 어린왕자
+</span>
+<span class="c1"># 두 책은 완전히 독립된 메모리 주소를 가짐 (정체성 확립)
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">book1</span><span class="p">)</span> <span class="o">==</span> <span class="nf">id</span><span class="p">(</span><span class="n">book2</span><span class="p">))</span> <span class="c1"># False
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="13-만물의-조물주-object와-type">1.3 만물의 조물주: <code class="language-plaintext highlighter-rouge">object</code>와 <code class="language-plaintext highlighter-rouge">type</code></h2>
+
+<p>파이썬 객체 생태계 피라미드의 꼭대기에는 두 명의 절대자가 존재합니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">object</code> (최상위 부모 클래스)</strong>
+ 파이썬의 세상의 모든 클래스(수치, 문자열, 사용자가 만든 <code class="language-plaintext highlighter-rouge">Book</code> 클래스 등)는 족보를 거슬러 올라가면 시조새 격인 <code class="language-plaintext highlighter-rouge">object</code> 클래스를 강제로 상속받고 있습니다. 이 때문에 어떠한 객체든 <code class="language-plaintext highlighter-rouge">__str__</code>이나 <code class="language-plaintext highlighter-rouge">__dict__</code> 같은 공통 스페셜 속성들을 숨쉬듯 사용할 수 있는 것입니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">type</code> (메타 클래스)</strong>
+ ‘클래스 모양 자체’를 찍어내는 공장장의 공장입니다. 우리가 짠 <code class="language-plaintext highlighter-rouge">class Book:</code> 코드 블록마저도 사실은 파이썬 내부의 <code class="language-plaintext highlighter-rouge">type</code>이라는 설계도(메타 클래스)가 만들어낸 하나의 인스턴스에 불과합니다.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 파이썬의 클래스는 object의 후손입니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">object</span><span class="p">))</span>  <span class="c1"># True
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="n">Book</span><span class="p">,</span> <span class="nb">object</span><span class="p">))</span> <span class="c1"># True
+</span>
+<span class="c1"># 심지어 클래스(틀) 자신조차도 type 공장에서 찍힌 인스턴스 물건일 뿐입니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">isinstance</span><span class="p">(</span><span class="n">Book</span><span class="p">,</span> <span class="nb">type</span><span class="p">))</span>   <span class="c1"># True
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

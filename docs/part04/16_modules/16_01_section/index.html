@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>16.01_collections</title>
-  <meta name="title" content="16.01_collections" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="16.01_collections"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 업그레이드된 자료구조: collections 모듈</title>
+  <meta name="title" content="1. 업그레이드된 자료구조: collections 모듈" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 업그레이드된 자료구조: collections 모듈"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/16_modules/16_01_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/16_modules/16_01_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="16.01_collections"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 업그레이드된 자료구조: collections 모듈"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="16.01_collections" />
+<meta property="og:title" content="업그레이드된 자료구조: collections 모듈" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/16_modules/16_01_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/16_modules/16_01_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/16_modules/16_01_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/16_modules/16_01_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="16.01_collections" />
+<meta property="twitter:title" content="업그레이드된 자료구조: collections 모듈" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"16.01_collections","url":"http://localhost:4001/part04/16_modules/16_01_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"업그레이드된 자료구조: collections 모듈","url":"https://python.jiny.dev/part04/16_modules/16_01_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,91 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">16.01_collections</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 업그레이드된 자료구조: collections 모듈</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1601_collections">16.01_collections</h1>
+            <h1 id="1-업그레이드된-자료구조-collections-모듈">1. 업그레이드된 자료구조: collections 모듈</h1>
 
-<!-- 이 곳에 16_01_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>기본 딕셔너리와 튜플만으로는 뭔가 아쉬운 적이 있었나요? 파이썬은 <code class="language-plaintext highlighter-rouge">collections</code> (컬렉션즈)라는 마법의 부품 상자를 제공합니다. 이 안에는 아주 신기하고 유용한 자료구조들이 들어있습니다.</p>
+
+<h2 id="11-불평-없는-딕셔너리-defaultdict">1.1 불평 없는 딕셔너리: <code class="language-plaintext highlighter-rouge">defaultdict</code></h2>
+
+<p>기본 딕셔너리에서는 없는 키(Key)를 찾으려고 하면, 파이썬이 <code class="language-plaintext highlighter-rouge">KeyError</code>라며 버럭 화를 냈었죠? <code class="language-plaintext highlighter-rouge">defaultdict</code>(디폴트딕트)는 아주 너그러워서 없는 키를 찾으면 에러를 내는 대신 <strong>알아서 기본값을 만들어줍니다!</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="c1"># '빈 리스트'를 기본값으로 만드는 defaultdict 생성
+</span><span class="n">my_dict</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+<span class="c1"># '사과'라는 키는 없지만, 접근하자마자 자동으로 값 칸에 빈 리스트 []를 만듭니다!
+</span><span class="n">my_dict</span><span class="p">[</span><span class="sh">'</span><span class="s">사과</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">맛있어</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">my_dict</span><span class="p">[</span><span class="sh">'</span><span class="s">바나나</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">길어</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">)</span>
+<span class="c1"># 출력: defaultdict(&lt;class 'list'&gt;, {'사과': ['맛있어'], '바나나': ['길어']})
+</span></code></pre></div></div>
+<p>이렇게 미리 없는 키에 대해 리스트나 정수(0) 등을 뱉게 설정해두면, 복잡한 if문을 쓰지 않아도 돼서 너무 편리합니다!</p>
+
+<hr />
+
+<h2 id="12-순서를-기억하는-딕셔너리-ordereddict">1.2 순서를 기억하는 딕셔너리: <code class="language-plaintext highlighter-rouge">OrderedDict</code></h2>
+
+<p>파이썬 옛날 버전까지는 딕셔너리에 데이터를 넣으면 제멋대로 섞였습니다. (물론 최신 파이썬은 넣은 순서를 기억하긴 합니다). 그래도 순서와 관련된 특별한 기능들을 쓰고 싶을 때는 <code class="language-plaintext highlighter-rouge">OrderedDict</code>(오더드딕트)가 정답입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="c1"># 평범한 딕셔너리를 OrderedDict 로 변환
+</span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sh">'</span><span class="s">b</span><span class="sh">'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sh">'</span><span class="s">c</span><span class="sh">'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="n">od</span> <span class="o">=</span> <span class="nc">OrderedDict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="c1"># move_to_end() : 이 마법은 특정 키를 맨 뒤로(작업줄 끝으로) 보내버립니다!
+</span><span class="n">od</span><span class="p">.</span><span class="nf">move_to_end</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">od</span><span class="p">)</span>
+<span class="c1"># 출력: OrderedDict([('b', 2), ('c', 3), ('a', 1)]) # 'a'가 맨 뒤로 갔죠?
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="13-투표결과-개표기-counter">1.3 투표결과 개표기: <code class="language-plaintext highlighter-rouge">Counter</code></h2>
+
+<p>문자열이나 리스트 안에 똑같은 값이 몇 개씩 들어있는지 세고 싶을 때, 반복문으로 하나씩 셀 필요가 없습니다. <code class="language-plaintext highlighter-rouge">Counter</code>(카운터)를 쓰면 1초 만에 개표가 완료됩니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="c1"># 글자들을 카운터 상자에 쏟아붓습니다.
+</span><span class="n">votes</span> <span class="o">=</span> <span class="nc">Counter</span><span class="p">(</span><span class="sh">"</span><span class="s">aaabbbbcccddddaaaa</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span>
+<span class="c1"># 출력: Counter({'a': 7, 'b': 4, 'd': 4, 'c': 3}) # 각 글자의 개수를 딕셔너리처럼 보여줌!
+</span>
+<span class="c1"># 1등과 2등만 뽑아볼까요? (가장 많은 것 찾기)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">votes</span><span class="p">.</span><span class="nf">most_common</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># 출력: [('a', 7), ('b', 4)]
+</span></code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">Counter</code>끼리는 덧셈(<code class="language-plaintext highlighter-rouge">+</code>), 뺄셈(<code class="language-plaintext highlighter-rouge">-</code>), 교집합(<code class="language-plaintext highlighter-rouge">&amp;</code>) 연산도 상식적으로 척척 해내는 똑똑한 개표기입니다!</p>
+
+<hr />
+
+<h2 id="14-이름이-있는-튜플-namedtuple">1.4 이름이 있는 튜플: <code class="language-plaintext highlighter-rouge">namedtuple</code></h2>
+
+<p>튜플은 <code class="language-plaintext highlighter-rouge">(10, 20)</code> 처럼 인덱스 번호(<code class="language-plaintext highlighter-rouge">튜플[0]</code>)로만 안의 값을 꺼낼 수 있었죠? <code class="language-plaintext highlighter-rouge">namedtuple</code>(네임드튜플)을 쓰면 각 칸에 이름표를 달아 객체(Class)처럼 우아하게 사용할 수 있습니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="c1"># '이름'과 '나이'를 저장하는 'Person' 이라는 네임드튜플 공장 만들기
+</span><span class="n">Person</span> <span class="o">=</span> <span class="nf">namedtuple</span><span class="p">(</span><span class="sh">"</span><span class="s">Person</span><span class="sh">"</span><span class="p">,</span> <span class="p">[</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">age</span><span class="sh">"</span><span class="p">])</span>
+
+<span class="c1"># 공장에서 사람 하나 만들기
+</span><span class="n">p</span> <span class="o">=</span> <span class="nc">Person</span><span class="p">(</span><span class="sh">"</span><span class="s">홍길동</span><span class="sh">"</span><span class="p">,</span> <span class="mi">33</span><span class="p">)</span>
+
+<span class="c1"># 인덱스로도, 이름(점 연산자)으로도 꺼낼 수 있습니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>       <span class="c1"># 홍길동
+</span><span class="nf">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>     <span class="c1"># 홍길동 
+</span></code></pre></div></div>
+<p>딕셔너리보다 메모리도 적게 먹으면서, 점(<code class="language-plaintext highlighter-rouge">.</code>) 연산자로 편리하게 접근할 수 있는 가벼운 객체가 필요할 때 최고입니다!</p>
 
 
             <!-- Google AdSense -->

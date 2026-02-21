@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>20.01_정규</title>
-  <meta name="title" content="20.01_정규" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="20.01_정규"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 탐정의 돋보기 규칙: 기초 패턴 만들기</title>
+  <meta name="title" content="1. 탐정의 돋보기 규칙: 기초 패턴 만들기" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 탐정의 돋보기 규칙: 기초 패턴 만들기"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/20_regex/20_01_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/20_regex/20_01_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="20.01_정규"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 탐정의 돋보기 규칙: 기초 패턴 만들기"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="20.01_정규" />
+<meta property="og:title" content="탐정의 돋보기 규칙: 기초 패턴 만들기" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/20_regex/20_01_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/20_regex/20_01_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/20_regex/20_01_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/20_regex/20_01_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="20.01_정규" />
+<meta property="twitter:title" content="탐정의 돋보기 규칙: 기초 패턴 만들기" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"20.01_정규","url":"http://localhost:4001/part04/20_regex/20_01_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"탐정의 돋보기 규칙: 기초 패턴 만들기","url":"https://python.jiny.dev/part04/20_regex/20_01_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,97 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">20.01_정규</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 탐정의 돋보기 규칙: 기초 패턴 만들기</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="2001_정규">20.01_정규</h1>
+            <h1 id="1-탐정의-돋보기-규칙-기초-패턴-만들기">1. 탐정의 돋보기 규칙: 기초 패턴 만들기</h1>
 
-<!-- 이 곳에 20_01_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 <code class="language-plaintext highlighter-rouge">re</code> 모듈을 불러오면(<code class="language-plaintext highlighter-rouge">import re</code>), 우리는 정규표현식이라는 특수 언어를 쓸 수 있습니다. 이 언어의 핵심은 바로 <strong>메타 문자(Meta Character)</strong>라는 비밀 기호들입니다.</p>
+
+<h2 id="11-비밀-기호-사용법-문자-클래스">1.1 비밀 기호 사용법 (문자 클래스)</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">[ ]</code> (선택)</strong>: 괄호 안의 문자 중 <strong>하나</strong>만 맞으면 합격!
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[abc]</code> : “a, b, c 중 하나라도 있나?”</li>
+      <li><code class="language-plaintext highlighter-rouge">[a-z]</code> : “영어 소문자 아무거나!”</li>
+      <li><code class="language-plaintext highlighter-rouge">[가-힣]</code> : “한글 아무거나!”</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">[^ ]</code> (반대)</strong>: 괄호 안에 <code class="language-plaintext highlighter-rouge">^</code>가 들어가면 “이것 빼고 다 가져와!”라는 뜻입니다.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[^0-9]</code> : “숫자 빼고 전부 다!”</li>
+    </ul>
+  </li>
+  <li><strong>단축키 (축약 기호)</strong>: 매번 <code class="language-plaintext highlighter-rouge">[0-9]</code> 쓰기 귀찮아서 만든 단축키들!
+    <ul>
+      <li><strong><code class="language-plaintext highlighter-rouge">\d</code></strong>: 숫자 (<code class="language-plaintext highlighter-rouge">[0-9]</code>와 동일)</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\D</code></strong>: 숫자 아닌 것들</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\s</code></strong>: 띄어쓰기, 엔터 같은 공백들</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\w</code></strong>: 글자 + 숫자 (특수문자 제외)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="12-몇-개나-있어-수량자">1.2 “몇 개나 있어?” (수량자)</h2>
+
+<p>내가 찾는 문자가 반복될 때는 수량자 기호를 붙입니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">*</code></strong>: 0개 이상 (없어도 되고 엄청 많아도 OK)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">+</code></strong>: 1개 이상 (무조건 1개는 있어야 해!)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">?</code></strong>: 0개 아니면 1개 (있어도 그만, 없어도 그만)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">{m, n}</code></strong>: 딱 m개부터 n개까지만! (예: <code class="language-plaintext highlighter-rouge">\d{3,4}</code> → 숫자 3~4개)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># "a 다음에 b가 1개 이상 있는 패턴"
+</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">ab+</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">abbbb</span><span class="sh">"</span><span class="p">).</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># "abbbb" 찾음!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">acccc</span><span class="sh">"</span><span class="p">))</span>         <span class="c1"># 못 찾아서 터짐(None)!
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="13-좌표-찍기-앵커-문자">1.3 좌표 찍기 (앵커 문자)</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">^</code></strong>: 문장의 <strong>맨 처음</strong>에서만 찾아라! (<code class="language-plaintext highlighter-rouge">^Hello</code> : 첫 단어가 Hello인지 검사)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">$</code></strong>: 문장의 <strong>맨 끝</strong>에서만 찾아라! (<code class="language-plaintext highlighter-rouge">Python$</code> : 마지막 단어가 Python인지 검사)</li>
+</ul>
+
+<hr />
+
+<h2 id="14-소그룹-묶기와-이름-붙이기-grouping">1.4 소그룹 묶기와 이름 붙이기 (Grouping)</h2>
+
+<p>전화번호(“010-1234-5678”)를 찾을 때, 앞자리, 중간자리, 뒷자리를 나중에 따로따로 빼서 보고 싶다면 괄호 <code class="language-plaintext highlighter-rouge">( )</code>로 묶어줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># 괄호 3개로 묶어서 그룹 3개를 만듭니다.
+</span><span class="n">phone_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">(\d+)-(\d+)-(\d+)</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">phone_pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">내 번호는 010-9999-8888 이야</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 전체 찾은 결과
+</span><span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># 010-9999-8888
+</span>
+<span class="c1"># 괄호별로 빼기!
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">국번:</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 9999
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!TIP]
+괄호 맨 앞에 <code class="language-plaintext highlighter-rouge">?P&lt;이름&gt;</code>을 붙이면 그 그룹에 별명을 지어줄 수 있습니다!
+<code class="language-plaintext highlighter-rouge">(?P&lt;middle&gt;\d+)</code> 라고 쓰면, 나중에 <code class="language-plaintext highlighter-rouge">result.group('middle')</code>로 편하게 값을 꺼낼 수 있답니다.</p>
+</blockquote>
 
 
             <!-- Google AdSense -->

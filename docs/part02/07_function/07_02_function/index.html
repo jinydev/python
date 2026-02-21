@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>07.02_함수의</title>
-  <meta name="title" content="07.02_함수의" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="07.02_함수의"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 함수의 변수 스코프 (Scope)</title>
+  <meta name="title" content="2. 함수의 변수 스코프 (Scope)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 함수의 변수 스코프 (Scope)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/07_function/07_02_function/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/07_function/07_02_function/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="07.02_함수의"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 함수의 변수 스코프 (Scope)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="07.02_함수의" />
+<meta property="og:title" content="함수의 변수 스코프 (Scope)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/07_function/07_02_function/" />
-<meta property="og:url" content="http://localhost:4001/part02/07_function/07_02_function/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/07_function/07_02_function/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/07_function/07_02_function/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="07.02_함수의" />
+<meta property="twitter:title" content="함수의 변수 스코프 (Scope)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"07.02_함수의","url":"http://localhost:4001/part02/07_function/07_02_function/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"함수의 변수 스코프 (Scope)","url":"https://python.jiny.dev/part02/07_function/07_02_function/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,98 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">07.02_함수의</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 함수의 변수 스코프 (Scope)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0702_함수의">07.02_함수의</h1>
+            <h1 id="2-함수의-변수-스코프-scope">2. 함수의 변수 스코프 (Scope)</h1>
 
-<!-- 이 곳에 07_02_function_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>함수는 내부에 자신만의 독립적인 방(스코프)을 가지고 있습니다. 이를 통해 함수 안팎에서 동일한 이름의 변수들을 사용해도 서로 엉키지 않게 막아줍니다.</p>
+
+<p>파이썬이 함수 내부에서 변수를 찾고 관리하는 규칙인 <strong>네임스페이스(Namespace)</strong>와 <strong>스코프(Scope)</strong>의 개념을 명확히 이해해야만 예상치 못한 버그를 막을 수 있습니다.</p>
+
+<h2 id="21-파이썬의-변수-탐색-규칙-legb-룰">2.1 파이썬의 변수 탐색 규칙 (LEGB 룰)</h2>
+
+<p>파이썬의 모든 변수 이름표들은 거대한 딕셔너리(사전) 구조인 네임스페이스 속에서 관리됩니다. 프로그램이 특정 변수 이름을 만나면, 다음의 순서대로 방을 뒤져가며 값을 찾습니다.</p>
+
+<ol>
+  <li><strong>Local (지역)</strong>: 함수 내부의 가장 깊은 방. 함수가 호출될 때 생성되고 끝나면 파괴됩니다.</li>
+  <li><strong>Enclosing (내포)</strong>: (나중에 배울 내부 함수의 경우) 나를 감싸고 있는 바깥쪽 함수의 방.</li>
+  <li><strong>Global (전역)</strong>: 파일(모듈) 전체 영역. 스크립트가 실행될 때 생성됩니다.</li>
+  <li><strong>Built-in (내장)</strong>: 파이썬이 기본으로 제공하는 최상위 공간 (<code class="language-plaintext highlighter-rouge">print</code>, <code class="language-plaintext highlighter-rouge">len</code> 등의 내장 함수가 위치함).</li>
+</ol>
+
+<blockquote>
+  <p>[!TIP]
+즉, 내 방(Local)에 찾는 물건이 없으면 거실(Global)로 나가보고, 거실에도 없으면 집 밖(Built-in)을 뒤지는 식입니다. 끝까지 찾아도 없으면 <code class="language-plaintext highlighter-rouge">NameError</code>로 프로그램이 뻗어버립니다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ================= Global (전역) 공간 =================
+</span><span class="n">power</span> <span class="o">=</span> <span class="mi">100</span> 
+
+<span class="k">def</span> <span class="nf">my_func</span><span class="p">():</span>
+    <span class="c1"># ================= Local (지역) 공간 =================
+</span>    <span class="n">power</span> <span class="o">=</span> <span class="mi">50</span> 
+    <span class="nf">print</span><span class="p">(</span><span class="n">power</span><span class="p">)</span> <span class="c1"># 내 방(Local)에 'power'가 있으므로 50이 출력!
+</span>
+<span class="nf">my_func</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">power</span><span class="p">)</span> <span class="c1"># 거실(Global)의 입장에서는 방 안을 볼 수 없으므로 여전히 100
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="22-함수-내부에서-전역-변수-조작하기-global">2.2 함수 내부에서 전역 변수 조작하기 (<code class="language-plaintext highlighter-rouge">global</code>)</h2>
+
+<p>함수 안에서는 밖(Global)에 있는 변수의 <strong>“값을 읽어오기(조회)”는 마음대로 할 수 있습니다.</strong>
+하지만 변수에 새로운 값을 담아버리는 <strong>“수정 및 갱신(할당)”은 기본적으로 철저히 금지</strong>되어 있습니다. 갱신을 시도하는 순간, 파이썬은 그것을 수정이 아닌 ‘동일한 이름의 내 방(Local) 변수 생성’으로 간주해버리기 때문입니다.</p>
+
+<p>이를 무시하고 함수 내부에서 바깥의 변수를 강제로 조종하고 싶을 때 사용하는 치트키가 바로 <strong><code class="language-plaintext highlighter-rouge">global</code></strong> 키워드입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">character_hp</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1"># 전역 변수
+</span>
+<span class="k">def</span> <span class="nf">take_damage</span><span class="p">(</span><span class="n">damage</span><span class="p">):</span>
+    <span class="c1"># "이 함수 안에서 쓰이는 character_hp는 내 방(Local) 것이 아니라, 밖에 있는 놈이다!" 선언
+</span>    <span class="k">global</span> <span class="n">character_hp</span> 
+    
+    <span class="c1"># 이제 자유롭게 바깥 변수를 깎아내릴 수 있습니다.
+</span>    <span class="n">character_hp</span> <span class="o">=</span> <span class="n">character_hp</span> <span class="o">-</span> <span class="n">damage</span> 
+
+<span class="nf">take_damage</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">character_hp</span><span class="p">)</span> <span class="c1"># 350 (전역 변수의 값이 실제로 깎임!)
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!WARNING]
+<code class="language-plaintext highlighter-rouge">global</code> 키워드를 남발하면 코드가 조금만 복잡해져도 도대체 어디서 변수가 꼬여버렸는지 예측하기가 매우 힘들어집니다. 피치 못할 때만 사용하고, 가급적 함수의 <strong>반환값(return)</strong>을 통해 외부 데이터를 다루는 것이 올바른 객체지향적 설계입니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="23-locals와-globals">2.3 <code class="language-plaintext highlighter-rouge">locals()</code>와 <code class="language-plaintext highlighter-rouge">globals()</code></h2>
+
+<p>현재 내 위치를 기준으로, 어떠한 변수들과 함수들이 활동 중인지를 투명하게 들여다볼 수 있는 파이썬 내장 탐지 함수들입니다. (둘 다 딕셔너리 형태로 값을 뱉어냅니다)</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">locals()</code></strong>: 지금 내가 있는 이 지역 방 안의 상태 창을 띄웁니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">globals()</code></strong>: 거실(전역 모듈 전체)의 상태 창을 띄웁니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">check_namespaces</span><span class="p">():</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">--- 내 방(Local) ---</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">locals</span><span class="p">())</span> <span class="c1"># {'y': 20} (바깥의 x는 보이지 않음)
+</span>
+<span class="nf">check_namespaces</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">--- 거실(Global) ---</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 수많은 기본 시스템 변수들과 함께, 내가 만든 x와 check_namespaces 가 들어있습니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">globals</span><span class="p">())</span> 
+</code></pre></div></div>
 
 
             <!-- Google AdSense -->

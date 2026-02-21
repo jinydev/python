@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>02.02_프로그램</title>
-  <meta name="title" content="02.02_프로그램" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="02.02_프로그램"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 프로그램의 제어 흐름</title>
+  <meta name="title" content="2. 프로그램의 제어 흐름" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 프로그램의 제어 흐름"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/02_statement/02_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/02_statement/02_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="02.02_프로그램"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 프로그램의 제어 흐름"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="02.02_프로그램" />
+<meta property="og:title" content="프로그램의 제어 흐름" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/02_statement/02_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part01/02_statement/02_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/02_statement/02_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/02_statement/02_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="02.02_프로그램" />
+<meta property="twitter:title" content="프로그램의 제어 흐름" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"02.02_프로그램","url":"http://localhost:4001/part01/02_statement/02_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"프로그램의 제어 흐름","url":"https://python.jiny.dev/part01/02_statement/02_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,141 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">02.02_프로그램</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 프로그램의 제어 흐름</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0202_프로그램">02.02_프로그램</h1>
+            <h1 id="2-프로그램의-제어-흐름">2. 프로그램의 제어 흐름</h1>
 
-<!-- 이 곳에 02_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>단순한 리터럴이나 사칙연산만으로는 복잡한 문제를 해결할 수 없습니다. 데이터에 이름을 붙여 보관하고(할당), 상황에 따라 분기하며(제어), 특정한 작업을 반복(순환)하게 만드는 흐름 제어가 필요합니다.</p>
+
+<h2 id="21-할당문-assignment">2.1 할당문 (Assignment)</h2>
+
+<p>파이썬에서는 변수 선언 시 타입을 지정하지 않으며, 값(인스턴스 객체의 주소)을 할당하는 순간이 곧 변수의 탄생입니다. 변수 할당은 우변부터 평가되어 좌변의 이름과 연결됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 다중 할당: 우측부터 1을 c, b, a에 차례대로 할당합니다.
+</span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># 함수 실행 결과를 즉시 할당받을 수도 있습니다.
+</span><span class="k">def</span> <span class="nf">fetch_token</span><span class="p">():</span>
+    <span class="k">return</span> <span class="sh">"</span><span class="s">ABC-123</span><span class="sh">"</span>
+
+<span class="n">token</span> <span class="o">=</span> <span class="nf">fetch_token</span><span class="p">()</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>[!WARNING]
+파이썬에서는 이름이 네임스페이스에 한 번이라도 할당(등록)되지 않은 변수에 접근하려고 하거나, 연산(<code class="language-plaintext highlighter-rouge">x = x + 1</code>)을 시도하면 즉시 <code class="language-plaintext highlighter-rouge">NameError</code> 예외가 발생합니다. 반드시 초기값이 정의되어야 합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="22-조건문-if-elif-else">2.2 조건문: <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">elif</code>, <code class="language-plaintext highlighter-rouge">else</code></h2>
+
+<p>제어문은 주어진 조건식이 <code class="language-plaintext highlighter-rouge">True</code> 인지 <code class="language-plaintext highlighter-rouge">False</code> 인지 판별하여 실행 흐름을 둘로 가릅니다.</p>
+
+<h3 id="빈empty-데이터의-false-평가">빈(Empty) 데이터의 False 평가</h3>
+<p>파이썬은 숫자 <code class="language-plaintext highlighter-rouge">0</code>, 빈 문자열 <code class="language-plaintext highlighter-rouge">""</code>, 빈 리스트 <code class="language-plaintext highlighter-rouge">[]</code>, 빈 딕셔너리 <code class="language-plaintext highlighter-rouge">{}</code> 그리고 <code class="language-plaintext highlighter-rouge">None</code> 객체를 모두 조건식에서 <code class="language-plaintext highlighter-rouge">False</code>로 간주합니다. 그 외에 데이터가 차단된 상태면 <code class="language-plaintext highlighter-rouge">True</code>로 봅니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">user_items</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">if</span> <span class="n">user_items</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">아이템이 존재합니다.</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">인벤토리가 비어있습니다. (False 로 평가됨)</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 출력: 인벤토리가 비어있습니다. (False 로 평가됨)
+</span></code></pre></div></div>
+
+<h3 id="복합-제어-elif">복합 제어 (elif)</h3>
+<p>여러 개의 조건을 연쇄적으로 판별해야 할 때는 중첩된 <code class="language-plaintext highlighter-rouge">if</code> 대신 <code class="language-plaintext highlighter-rouge">elif</code> 블록을 구성합니다. 이렇게 하면 코드가 훨씬 논리적이고 깔끔해집니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">score</span> <span class="o">=</span> <span class="mi">85</span>
+
+<span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">90</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">A 학점</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">B 학점</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># 여기가 실행됨
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">C 학점</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="삼항-연산자-ternary-operator">삼항 연산자 (Ternary Operator)</h3>
+<p>IF 문장을 한 줄로 축약하여 변수 할당 시 다이내믹하게 사용할 수 있습니다. <code class="language-plaintext highlighter-rouge">[참일 때 반환값] if [조건식] else [거짓일 때 반환값]</code> 형태로 작성합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">status_code</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">message</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Success</span><span class="sh">"</span> <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="k">else</span> <span class="sh">"</span><span class="s">Error</span><span class="sh">"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1"># 출력: Success
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="23-반복문-for-와-while">2.3 반복문: <code class="language-plaintext highlighter-rouge">for</code> 와 <code class="language-plaintext highlighter-rouge">while</code></h2>
+
+<h3 id="리터레이터-순환-for">리터레이터 순환 (<code class="language-plaintext highlighter-rouge">for</code>)</h3>
+<p>파이썬의 <code class="language-plaintext highlighter-rouge">for</code>문은 전통적인 언어들의 숫자 증가 방식(예: <code class="language-plaintext highlighter-rouge">for(int i=0; i&lt;10; i++)</code>)이 아니라, 리스트나 문자열 같은 <strong>반복 가능한 객체(Iterable)</strong>에서 원소를 하나씩 꺼내어 순환장을 형성합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 문자열의 글자 순환
+</span><span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="sh">"</span><span class="s">Python</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 출력: P y t h o n 
+</span></code></pre></div></div>
+
+<h3 id="조건부-순환-while">조건부 순환 (<code class="language-plaintext highlighter-rouge">while</code>)</h3>
+<p><code class="language-plaintext highlighter-rouge">while</code> 문은 특정 조건식이 <code class="language-plaintext highlighter-rouge">True</code>인 동안 무한히 반복 블록을 실행합니다. 조건이 <code class="language-plaintext highlighter-rouge">False</code>로 바뀌거나 <code class="language-plaintext highlighter-rouge">break</code>를 만나야 종료됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">countdown</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">while</span> <span class="n">countdown</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">countdown</span><span class="p">)</span>
+    <span class="n">countdown</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="c1"># 출력: 3, 2, 1 차례대로 줄바꿈 출력
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="24-순환-흐름-제어-break-continue-else">2.4 순환 흐름 제어: <code class="language-plaintext highlighter-rouge">break</code>, <code class="language-plaintext highlighter-rouge">continue</code>, <code class="language-plaintext highlighter-rouge">else</code></h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">break</code></strong>: 루프(순환문)를 즉시 중단하고 빠져나오게 합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">continue</code></strong>: 남은 로직을 건너뛰고 다음 반복 회차로 곧바로 점프합니다.</li>
+</ul>
+
+<p>파이썬만이 가지는 독특한 문법 중 하나는 반복문에 <strong><code class="language-plaintext highlighter-rouge">else</code> 블록</strong>을 붙일 수 있다는 점입니다. 
+루프가 중간에 <code class="language-plaintext highlighter-rouge">break</code> 당하지 않고 <strong>끝까지 온전히 순환을 전부 마쳤을 때</strong>에만 <code class="language-plaintext highlighter-rouge">else</code> 블록이 실행됩니다. (검색 로직 등에 유용합니다)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">짝수를 찾았습니다!</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">명단에 짝수가 하나도 없습니다. 루프 완전 종료.</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 출력: 명단에 짝수가 하나도 없습니다. 루프 완전 종료.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="25-전역외부-스코프-접근-global-과-nonlocal">2.5 전역/외부 스코프 접근: <code class="language-plaintext highlighter-rouge">global</code> 과 <code class="language-plaintext highlighter-rouge">nonlocal</code></h2>
+
+<p>파이썬 함수 안에서 바깥에 있는 변수를 “읽는 것(조회)”은 자유롭지만, 그 값을 <strong>직접 덮어씌워 갱신(할당)</strong>하려고 하면 함수는 그 변수를 ‘자신만의 지역 변수를 새로 만든 것’으로 착각하게 되어 에러가 납니다. 이것을 방지하기 위한 키워드입니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">global</code></strong>: 함수 내부에서 파일 전체의 전역 변수를 수정하겠다고 선언합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">nonlocal</code></strong>: 함수 속에 함수가 겹쳐져 있을 때(내부 함수), 바로 상위 부모 함수의 지역 변수를 수정하겠다고 선언합니다.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">global_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">update_counter</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">global_count</span> <span class="c1"># 전역 변수를 수정하겠다는 강제 선언
+</span>    <span class="n">global_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nf">update_counter</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">global_count</span><span class="p">)</span> <span class="c1"># 1
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

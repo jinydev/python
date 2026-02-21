@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>13.05_타입</title>
-  <meta name="title" content="13.05_타입" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="13.05_타입"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>5. 타입 힌트와 코드 테스트</title>
+  <meta name="title" content="5. 타입 힌트와 코드 테스트" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="5. 타입 힌트와 코드 테스트"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_05_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_05_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="13.05_타입"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="5. 타입 힌트와 코드 테스트"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="13.05_타입" />
+<meta property="og:title" content="타입 힌트와 코드 테스트" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/13_abstract/13_05_section/" />
-<meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_05_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/13_abstract/13_05_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_05_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="13.05_타입" />
+<meta property="twitter:title" content="타입 힌트와 코드 테스트" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"13.05_타입","url":"http://localhost:4001/part03/13_abstract/13_05_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"타입 힌트와 코드 테스트","url":"https://python.jiny.dev/part03/13_abstract/13_05_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,80 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">13.05_타입</li>
+        <li class="breadcrumb-item active" aria-current="page">5. 타입 힌트와 코드 테스트</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1305_타입">13.05_타입</h1>
+            <h1 id="5-타입-힌트와-코드-테스트">5. 타입 힌트와 코드 테스트</h1>
 
-<!-- 이 곳에 13_05_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬은 변수에 “나는 평생 정수(int)만 받을 거야!” 하고 못 박지 않는 동적인 언어입니다. 아주 편하지만, 가끔 다른 사람이 문자열을 집어넣어 프로그램이 와장창 깨지는 사고가 나기도 하죠. 
+이런 실수를 막기 위해, 코드를 실행하기 전 에디터 화면에 “이 변수는 이런 타입만 넣어줘”라고 팻말을 달아주는 기능이 바로 <strong>타입 힌트(Type Hint)</strong>입니다.</p>
+
+<h2 id="51-코드에-달아주는-명찰-type-annotation">5.1 코드에 달아주는 명찰 (Type Annotation)</h2>
+
+<p>파이썬 3.6부터 변수 뒤에 콜론(<code class="language-plaintext highlighter-rouge">:</code>)을 붙이고, 함수 화살표(<code class="language-plaintext highlighter-rouge">-&gt;</code>)를 사용하여 의도하는 데이터의 종류(타입)를 메모해둘 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># a와 b는 정수(int)를 받고, 결과 결과도 정수(int)가 나온다고 메모!
+</span><span class="k">def</span> <span class="nf">add_numbers</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 문자열을 넣어도 프로그램이 당장 멈추지는 않지만...
+# 똑똑한 백신(에디터의 타입 체커)이 빨간 줄을 그어 경고해줍니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">add_numbers</span><span class="p">(</span><span class="sh">"</span><span class="s">Hello</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">World</span><span class="sh">"</span><span class="p">))</span> 
+</code></pre></div></div>
+<p><em>주의사항: 타입 힌트는 어디까지나 ‘힌트(주석)’일 뿐이라, 실제 파이썬 엔진은 이를 쿨하게 무시하고 코드를 강제로 실행시킵니다. 따라서 코드 규칙 방어용으로 코딩 단계에서 사용합니다.</em></p>
+
+<hr />
+
+<h2 id="52-typing-모듈로-더-정교한-힌트-만들기">5.2 <code class="language-plaintext highlighter-rouge">typing</code> 모듈로 더 정교한 힌트 만들기</h2>
+
+<p>조금 더 디테일한 힌트를 주기 위해 파이썬은 <code class="language-plaintext highlighter-rouge">typing</code>이라는 별개의 모듈을 제공합니다. 
+예를 들어 그냥 리스트가 아니라 <strong>“정수만 들어있는 리스트”</strong>라고 확실히 못 박고 싶을 때 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="c1"># 이 리스트 안에는 문자열(str)만 들어와야 합니다!
+</span><span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Bob</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># 딕셔너리의 키는 문자열(str), 값은 정수(int)만 와야 합니다!
+</span><span class="n">scores</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="sh">"</span><span class="s">Bob</span><span class="sh">"</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="나만의-타입-만들기-typevar-generic">나만의 타입 만들기 (<code class="language-plaintext highlighter-rouge">TypeVar</code>, <code class="language-plaintext highlighter-rouge">Generic</code>)</h3>
+
+<p>어떤 함수는 “문자열과 바이트 둘 다 받을 수 있는데, 들어온 녀석의 타입을 그대로 돌려주고 싶어!” 할 때가 있습니다. 이때는 <code class="language-plaintext highlighter-rouge">TypeVar</code> (타입 변수)를 만들어서 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="c1"># T는 딱 str이나 bytes 둘 중 하나만 된다고 규칙을 만듭니다.
+</span><span class="n">T</span> <span class="o">=</span> <span class="nc">TypeVar</span><span class="p">(</span><span class="sh">'</span><span class="s">T</span><span class="sh">'</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="53-이-설명서가-참인지-확인해줘-doctest">5.3 이 설명서가 참인지 확인해줘! (<code class="language-plaintext highlighter-rouge">doctest</code>)</h2>
+
+<p>함수를 만들 때, 함수 바로 아래 큰 따옴표 3개 <code class="language-plaintext highlighter-rouge">"""</code> 로 묶어서 “이 함수는 이렇게 쓰는 거야~” 하고 작성한 설명서를 <strong>독스트링(Docstring)</strong>이라고 부릅니다.
+여기에 덤으로 Python 대화형 창(<code class="language-plaintext highlighter-rouge">&gt;&gt;&gt;</code>)에서 실행하는 예제 코드를 함께 적어두면, 파이썬이 이 주석을 눈으로 읽고 <strong>“음, 설명서에 적힌 코드의 결과가 실제 결과랑 똑같이 나오는지 내가 검사해줄게!”</strong>라고 알아서 테스트해주는 마법 기능이 <code class="language-plaintext highlighter-rouge">doctest</code>입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    이 함수는 두 숫자를 더합니다.
+</span><span class="gp">    
+    &gt;&gt;&gt;</span> <span class="nf">my_func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="mi">5</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="nf">my_func</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="mi">20</span>
+    <span class="sh">"""</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</code></pre></div></div>
+<p>이렇게 적어두고 터미널에서 <code class="language-plaintext highlighter-rouge">python -m doctest 파일명.py</code> 시스템 명령을 내리면, 만약 내 코드의 덧셈 로직이 틀렸을 경우 주석에 쓴 결과(5, 20)와 다르다며 삑- 하고 에러를 뿜어주어 아주 편리하게 디버깅이 가능합니다.</p>
 
 
             <!-- Google AdSense -->

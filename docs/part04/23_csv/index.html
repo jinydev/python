@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 23</title>
-  <meta name="title" content="Chapter 23" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 23"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 23. 데이터 줄 세우기: CSV 데이터 처리</title>
+  <meta name="title" content="Chapter 23. 데이터 줄 세우기: CSV 데이터 처리" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 23. 데이터 줄 세우기: CSV 데이터 처리"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/23_csv/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/23_csv/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 23"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 23. 데이터 줄 세우기: CSV 데이터 처리"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Chapter 23" />
+<meta property="og:title" content="Chapter 23. 데이터 줄 세우기: CSV 데이터 처리" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/23_csv/" />
-<meta property="og:url" content="http://localhost:4001/part04/23_csv/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/23_csv/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/23_csv/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Chapter 23" />
+<meta property="twitter:title" content="Chapter 23. 데이터 줄 세우기: CSV 데이터 처리" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 23","url":"http://localhost:4001/part04/23_csv/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 23. 데이터 줄 세우기: CSV 데이터 처리","url":"https://python.jiny.dev/part04/23_csv/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -673,19 +673,43 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">Chapter 23</li>
+        <li class="breadcrumb-item active" aria-current="page">Chapter 23. 데이터 줄 세우기: CSV 데이터 처리</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="chapter-23">Chapter 23</h1>
+            <h1 id="chapter-23-데이터-줄-세우기-csv-데이터-처리">Chapter 23. 데이터 줄 세우기: CSV 데이터 처리</h1>
 
-<ul>
-  <li><a href="/part04/23_csv/23_01_section/">23.01_CSV</a></li>
-  <li><a href="/part04/23_csv/23_02_section/">23.02_CSV</a></li>
-</ul>
+<p><img src="/Users/hojin8/.gemini/antigravity/brain/39fe47ab-9fff-4271-aa37-8b9fbfaf6bdd/csv_concept_upper_ele_16x9_1771691637855.png" alt="CSV 컨셉" /></p>
+
+<p>엑셀(Excel) 프로그램을 상상해 보세요. 칸칸이 데이터가 들어있는 아주 멋진 표가 있죠? 하지만 엑셀 파일은 색깔, 글꼴, 셀 병합 같은 너무 많은 꾸밈 정보가 들어 있어서 프로그램으로 가볍게 데이터를 주고받기엔 꽤 뚱뚱하고 무겁습니다.</p>
+
+<p>그래서 온 세상 프로그래머들은 “화려한 껍데기는 다 버리고, 오직 <strong>데이터(값)</strong>만 <strong>쉼표(,)</strong>로 구분해서 가볍게 저장하자!”라는 규칙을 만들었습니다. 이것이 바로 <strong>CSV(Comma-Separated Values)</strong> 파일입니다!</p>
+
+<p>파이썬은 이 쉼표 투성이인 복잡한 텍스트 파일을 아주 예쁜 표(데이터 리스트)로 순식간에 정리해주는 스마트 머신, <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 가지고 있습니다. 지금부터 데이터 정리의 달인이 되어 봅시다!</p>
+
+<hr />
+
+<h3 id="-목차">📖 목차</h3>
+
+<ol>
+  <li><strong><a href="./23_01_section/">쉼표로 정리하는 마법: CSV 읽기와 쓰기</a></strong>
+    <ul>
+      <li>CSV 파일의 규칙과 반복자(Iterator)의 특징</li>
+      <li>리스트로 읽어오기 (<code class="language-plaintext highlighter-rouge">reader</code>), 저장하기 (<code class="language-plaintext highlighter-rouge">writer</code>)</li>
+      <li>딕셔너리로 읽어오기 (<code class="language-plaintext highlighter-rouge">DictReader</code>), 저장하기 (<code class="language-plaintext highlighter-rouge">DictWriter</code>)</li>
+      <li>탭(Tab)으로 구분하는 쌍둥이, TSV 파일</li>
+    </ul>
+  </li>
+  <li><strong><a href="./23_02_section/">내 맘대로 룰 정하기: 커스텀 규칙(Dialect)</a></strong>
+    <ul>
+      <li>쉼표 말고 다른 기호를 쓰고 싶다면?</li>
+      <li>나만의 분리 규칙 등록하기 (<code class="language-plaintext highlighter-rouge">register_dialect</code>)</li>
+    </ul>
+  </li>
+</ol>
 
 
             <!-- Google AdSense -->

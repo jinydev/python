@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>21.02_XML</title>
-  <meta name="title" content="21.02_XML" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="21.02_XML"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 나무를 타고 노는 법: ElementTree</title>
+  <meta name="title" content="2. 나무를 타고 노는 법: ElementTree" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 나무를 타고 노는 법: ElementTree"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/21_xml/21_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/21_xml/21_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="21.02_XML"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 나무를 타고 노는 법: ElementTree"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="21.02_XML" />
+<meta property="og:title" content="나무를 타고 노는 법: ElementTree" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/21_xml/21_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/21_xml/21_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/21_xml/21_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/21_xml/21_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="21.02_XML" />
+<meta property="twitter:title" content="나무를 타고 노는 법: ElementTree" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"21.02_XML","url":"http://localhost:4001/part04/21_xml/21_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"나무를 타고 노는 법: ElementTree","url":"https://python.jiny.dev/part04/21_xml/21_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,86 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">21.02_XML</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 나무를 타고 노는 법: ElementTree</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="2102_xml">21.02_XML</h1>
+            <h1 id="2-나무를-타고-노는-법-elementtree">2. 나무를 타고 노는 법: ElementTree</h1>
 
-<!-- 이 곳에 21_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 방대한 XML 데이터를 조작할 때 가장 사랑받는 도구가 바로 <code class="language-plaintext highlighter-rouge">xml.etree.ElementTree</code> 모듈입니다. 이 마법사는 평범한 XML 텍스트 문서를 데이터들이 구조적으로 연결된 아름다운 <strong>생명의 나무 형태(Tree)</strong>로 변신시켜 줍니다!</p>
+
+<blockquote>
+  <p><strong>팁</strong>: 편의를 위해 보통 <code class="language-plaintext highlighter-rouge">import xml.etree.ElementTree as ET</code> 로 줄여 부릅니다.</p>
+</blockquote>
+
+<h2 id="21-문서-나무-심기-parsing">2.1 문서 나무 심기 (Parsing)</h2>
+
+<p>디스크에 있는 <code class="language-plaintext highlighter-rouge">data.xml</code> 파일을 읽어 멋진 파이썬 나무 트리로 만드는 마법 주문은 <code class="language-plaintext highlighter-rouge">parse</code> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">xml.etree.ElementTree</span> <span class="k">as</span> <span class="n">ET</span>
+
+<span class="c1"># 파일에서 묘목(데이터)을 가져와 나무를 통째로 생성합니다.
+</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="sh">'</span><span class="s">country_data.xml</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># 나무의 가장 꼭대기(줄기)인 Root 요소를 가져옵니다.
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="nf">getroot</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">최상위 태그 이름:</span><span class="sh">"</span><span class="p">,</span> <span class="n">root</span><span class="p">.</span><span class="n">tag</span><span class="p">)</span>
+<span class="c1"># 출력: 최상위 태그 이름: data
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="22-거대한-나무에서-보물태그-찾기">2.2 거대한 나무에서 보물(태그) 찾기</h2>
+
+<p>나무 구조의 장점은 탐색이 무척 빠르고 직관적이라는 것입니다. 가지에서 또 다른 가지로 건너갈 수 있죠.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">for i in root:</code></strong> : 줄기 아래 달린 큰 가지(자식 노드)들을 하나씩 다 확인할 때!</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">find('태그명')</code></strong> : 수많은 가지 중에 ‘태그명’과 똑같은 <strong>첫 번째가지</strong> 딱 하나만 찾고 싶을 때.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">findall('태그명')</code></strong> : ‘태그명’과 똑같은 <strong>모든 가지</strong>를 수확해서 리스트에 몽땅 담아올 때!</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># root 아래에 있는 몬스터 정보를 다 뽑아보자!
+</span><span class="k">for</span> <span class="n">monster</span> <span class="ow">in</span> <span class="n">root</span><span class="p">.</span><span class="nf">findall</span><span class="p">(</span><span class="sh">'</span><span class="s">monster</span><span class="sh">'</span><span class="p">):</span>
+    <span class="c1"># 속성(attribute) 읽어오기
+</span>    <span class="n">name</span> <span class="o">=</span> <span class="n">monster</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="c1"># 텍스트(text) 값 가져오기
+</span>    <span class="n">hp</span> <span class="o">=</span> <span class="n">monster</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="sh">'</span><span class="s">hp</span><span class="sh">'</span><span class="p">).</span><span class="n">text</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">야생의 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">이(가) 나타났다! 체력: </span><span class="si">{</span><span class="n">hp</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="23-내-손으로-나무-기르기-xml-작성">2.3 내 손으로 나무 기르기 (XML 작성)</h2>
+
+<p>우리가 파이썬 코드상에서 새로운 노드를 덧붙여서 완전한 XML 문서를 만들어낼 수도 있습니다. 다 완성된 나무 뼈대는 <code class="language-plaintext highlighter-rouge">tostring</code>으로 텍스트로 뽑아내거나, <code class="language-plaintext highlighter-rouge">write</code>로 파일로 저장하면 끝입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">xml.etree.ElementTree</span> <span class="k">as</span> <span class="n">ET</span>
+
+<span class="c1"># 1. 뿌리 뼈대 세우기
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nc">Element</span><span class="p">(</span><span class="sh">"</span><span class="s">game_data</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 새로운 서브 뼈대(자식) 붙이기
+</span><span class="n">player1</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nc">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="sh">"</span><span class="s">player</span><span class="sh">"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="sh">"</span><span class="s">99</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># level은 속성!
+</span><span class="n">player1</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Dragon Slayer</span><span class="sh">"</span> 
+
+<span class="c1"># 3. 콘솔 화면에 멋지게 텍스트로 뽑아보기!
+</span><span class="n">xml_string</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nf">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">unicode</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">xml_string</span><span class="p">)</span>
+<span class="c1"># 출력: &lt;game_data&gt;&lt;player level="99"&gt;Dragon Slayer&lt;/player&gt;&lt;/game_data&gt;
+</span>
+<span class="c1"># + 4. 파일로 저장하고 싶다면?
+# tree = ET.ElementTree(root)
+# tree.write('my_game.xml')
+</span></code></pre></div></div>
+
+<p>XML로 튼튼한 데이터 창고를 짓는 파이썬 요정의 마법, 훌륭하죠?</p>
 
 
             <!-- Google AdSense -->

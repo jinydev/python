@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>01.01_값(value)</title>
-  <meta name="title" content="01.01_값(value)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="01.01_값(value)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. Python의 값(Value) 처리</title>
+  <meta name="title" content="1. Python의 값(Value) 처리" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. Python의 값(Value) 처리"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/01_basic/01_01_value/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/01_basic/01_01_value/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="01.01_값(value)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. Python의 값(Value) 처리"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="01.01_값(value)" />
+<meta property="og:title" content="Python의 값(Value) 처리" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/01_basic/01_01_value/" />
-<meta property="og:url" content="http://localhost:4001/part01/01_basic/01_01_value/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/01_basic/01_01_value/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/01_basic/01_01_value/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="01.01_값(value)" />
+<meta property="twitter:title" content="Python의 값(Value) 처리" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"01.01_값(value)","url":"http://localhost:4001/part01/01_basic/01_01_value/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Python의 값(Value) 처리","url":"https://python.jiny.dev/part01/01_basic/01_01_value/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,90 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">01.01_값(value)</li>
+        <li class="breadcrumb-item active" aria-current="page">1. Python의 값(Value) 처리</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0101_값value">01.01_값(value)</h1>
+            <h1 id="1-python의-값value-처리">1. Python의 값(Value) 처리</h1>
 
-<!-- 이 곳에 01_01_value_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬 환경에서는 우리가 다루는 모든 데이터가 근본적으로 하나의 <strong>값(Value)</strong>, 즉 <strong>객체(Object)</strong> 형태로 관리됩니다. 이렇게 모든 요소를 객체로 다루게 되면, 코드 전반에서 일관성 있는 처리가 가능해집니다.</p>
+
+<h2 id="11-리터럴-literal">1.1 리터럴 (Literal)</h2>
+
+<p>프로그래밍에서 <strong>리터럴(Literal)</strong>이란, 코드 상에 고정된 형태로 직접 입력되어 그 자체가 값을 나타내는 표기법을 뜻합니다.</p>
+
+<p>파이썬에서는 정수, 실수(부동소수점), 문자열, 불리언(True/False) 등 다양한 형태의 리터럴을 지원하며, 입력 즉시 고유의 객체와 값으로 평가됩니다.</p>
+
+<h3 id="리터럴-실습-예제">리터럴 실습 예제</h3>
+<p>셀(Cell) 또는 터미널에서 리터럴 값을 직접 입력하고 실행하면 파이썬 엔진은 그 값을 그대로 반환하여 출력합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 정수 리터럴
+</span><span class="n">In</span> <span class="p">:</span> <span class="mi">100</span>
+<span class="n">Out</span><span class="p">:</span> <span class="mi">100</span>
+
+<span class="c1"># 2. 실수 리터럴
+</span><span class="n">In</span> <span class="p">:</span> <span class="mf">3.14</span>
+<span class="n">Out</span><span class="p">:</span> <span class="mf">3.14</span>
+
+<span class="c1"># 3. 문자열 리터럴
+</span><span class="n">In</span> <span class="p">:</span> <span class="sh">"</span><span class="s">Hello Python!</span><span class="sh">"</span>
+<span class="n">Out</span><span class="p">:</span> <span class="sh">"</span><span class="s">Hello Python!</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="12-표현식-expression">1.2 표현식 (Expression)</h2>
+
+<p>값(리터럴) 하나만 단독으로 쓸 수도 있지만, 보통 여러 값을 엮어서 특정한 수학적/논리적 결과를 만들어냅니다. 이를 <strong>표현식(Expression)</strong>이라고 부릅니다.</p>
+
+<p>표현식을 만들기 위해서는 계산의 대상이 되는 <strong>피연산자(Operand)</strong>와, 연산을 지시하는 <strong>연산자(Operator)</strong>가 필요합니다.</p>
+<ul>
+  <li><strong>단항 연산(Unary)</strong>: 하나의 값에 작용 (예: <code class="language-plaintext highlighter-rouge">-5</code>)</li>
+  <li><strong>이항 연산(Binary)</strong>: 두 개의 값에 작용 (예: <code class="language-plaintext highlighter-rouge">3 + 4</code>)</li>
+</ul>
+
+<h3 id="표현식의-평가-원리">표현식의 평가 원리</h3>
+<p>파이썬 엔진이 표현식을 읽고 나면, 연산자 우선순위 규칙에 따라 순차적으로 계산을 수행합니다. 제일 중요한 규칙은 <strong>모든 표현식은 실행 후 최종적으로 “단 하나의 값”으로 평가된다</strong>는 점입니다. 함수 호출 역시 그 자체가 반환값을 가지므로 표현식의 일종으로 취급됩니다. 괄호 <code class="language-plaintext highlighter-rouge">( )</code>를 사용하면 연산의 우선순위를 강제할 수 있습니다.</p>
+
+<h3 id="표현식-실습-예제">표현식 실습 예제</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 숫자 연산 표현식
+</span><span class="n">In</span> <span class="p">:</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">Out</span><span class="p">:</span> <span class="mi">50</span>
+
+<span class="c1"># 문자열 연결 표현식
+</span><span class="n">In</span> <span class="p">:</span> <span class="sh">"</span><span class="s">Python </span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">Programming</span><span class="sh">"</span>
+<span class="n">Out</span><span class="p">:</span> <span class="sh">"</span><span class="s">Python Programming</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="13-조건식-condition-expression">1.3 조건식 (Condition Expression)</h2>
+
+<p>일반적인 표현식 모음 중에서도, 결과가 항상 참(True) 또는 거짓(False)인 불리언(Boolean) 형태로 평가되는 특별한 표현식이 있는데 이를 <strong>조건식(Condition Expression)</strong>이라고 합니다. 보통 <code class="language-plaintext highlighter-rouge">if</code> 구문이나 <code class="language-plaintext highlighter-rouge">while</code> 반복문 등 흐름을 제어할 때 사용됩니다.</p>
+
+<h3 id="조건식-실습-예제">조건식 실습 예제</h3>
+<p>빈 문자열이나 숫자 0처럼 데이터가 비어있거나 없는 상태는 파이썬에서 <code class="language-plaintext highlighter-rouge">False</code>로 취급됩니다. 그 외 데이터가 존재하는 경우는 <code class="language-plaintext highlighter-rouge">True</code>가 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 내장 bool() 함수를 이용한 조건 평가
+</span><span class="n">In</span> <span class="p">:</span> <span class="nf">bool</span><span class="p">(</span><span class="sh">""</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">:</span> <span class="bp">False</span>
+
+<span class="n">In</span> <span class="p">:</span> <span class="nf">bool</span><span class="p">(</span><span class="sh">"</span><span class="s">Python</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">:</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">if</code> 문안에 조건식을 직접 배치하여 실행의 흐름을 분기할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">:</span> <span class="n">text_data</span> <span class="o">=</span> <span class="sh">""</span>
+<span class="n">In</span> <span class="p">:</span> <span class="k">if</span> <span class="n">text_data</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">데이터가 존재합니다.</span><span class="sh">"</span><span class="p">)</span>
+     <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">데이터가 비어있습니다. (False로 평가됨)</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">:</span> <span class="n">데이터가</span> <span class="n">비어있습니다</span><span class="p">.</span> <span class="p">(</span><span class="n">False로</span> <span class="n">평가됨</span><span class="p">)</span>
+</code></pre></div></div>
 
 
             <!-- Google AdSense -->

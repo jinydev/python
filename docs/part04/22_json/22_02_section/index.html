@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>22.02_JSON</title>
-  <meta name="title" content="22.02_JSON" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="22.02_JSON"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 디스크 창고에 엽서 보관하기: 파일 입출력</title>
+  <meta name="title" content="2. 디스크 창고에 엽서 보관하기: 파일 입출력" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 디스크 창고에 엽서 보관하기: 파일 입출력"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/22_json/22_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/22_json/22_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="22.02_JSON"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 디스크 창고에 엽서 보관하기: 파일 입출력"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="22.02_JSON" />
+<meta property="og:title" content="디스크 창고에 엽서 보관하기: 파일 입출력" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/22_json/22_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/22_json/22_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/22_json/22_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/22_json/22_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="22.02_JSON" />
+<meta property="twitter:title" content="디스크 창고에 엽서 보관하기: 파일 입출력" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"22.02_JSON","url":"http://localhost:4001/part04/22_json/22_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"디스크 창고에 엽서 보관하기: 파일 입출력","url":"https://python.jiny.dev/part04/22_json/22_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,76 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">22.02_JSON</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 디스크 창고에 엽서 보관하기: 파일 입출력</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="2202_json">22.02_JSON</h1>
+            <h1 id="2-디스크-창고에-엽서-보관하기-파일-입출력">2. 디스크 창고에 엽서 보관하기: 파일 입출력</h1>
 
-<!-- 이 곳에 22_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p><code class="language-plaintext highlighter-rouge">dumps</code>나 <code class="language-plaintext highlighter-rouge">loads</code> 끝에 붙어 있던 작은 <code class="language-plaintext highlighter-rouge">s</code>는 문자열(string)의 약자였습니다! 
+만약 메모장 허공이 아니라 진짜 컴퓨터의 하드디스크 깊은 곳에 ‘파일’로 저장하고 싶거나, 거대한 JSON 파일에서 바로 딕셔너리로 깨우고 싶다면 꼬리표 <code class="language-plaintext highlighter-rouge">s</code>가 빠진 <strong><code class="language-plaintext highlighter-rouge">dump</code></strong> 와 <strong><code class="language-plaintext highlighter-rouge">load</code></strong> 를 씁니다!</p>
+
+<h2 id="21-파일로-냅다-쏘기-dump">2.1 파일로 냅다 쏘기! (<code class="language-plaintext highlighter-rouge">dump</code>)</h2>
+
+<p>파일 문을 열고 거기에 다이렉트로 JSON을 밀어 넣습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">user_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">Hojin</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">points</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">badges</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">Gold</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Silver</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># 1. user_data.json 이라는 빈 파일을 쓰기 'w' 모드로 엶
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">user_data.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="c1"># 2. user_info 파이썬 창고를 JSON으로 찌부시켜 file에 바로 던짐!
+</span>    <span class="n">json</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">user_info</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+    
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파일이 무사히 생성되었습니다!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="22-잠자는-파일-깨우기-load">2.2 잠자는 파일 깨우기! (<code class="language-plaintext highlighter-rouge">load</code>)</h2>
+
+<p>이번엔 반대로 파일 문을 열고 그 안에 잠든 JSON 텍스트를 바로 파이썬 딕셔너리로 부활시킵니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="c1"># 1. 파일 문을 읽기 'r' 모드로 엽니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">user_data.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="c1"># 2. 파일 정보를 쭈욱 빨아들여 파이썬 딕셔너리로 조립 완료!
+</span>    <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">loaded_data</span><span class="p">[</span><span class="sh">'</span><span class="s">points</span><span class="sh">'</span><span class="p">])</span> <span class="c1"># 출력: 5000
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="23--한글이-다-깨져-보인다면-유니코드-방어전">2.3 🚨 한글이 다 깨져 보인다면? (유니코드 방어전)</h2>
+
+<p>파이썬 마법사는 너무 똑똑해서, 한글 “사과”를 JSON으로 인코딩할 때 전 세계 어느 브라우저에서도 박살 나지 않으라고 <code class="language-plaintext highlighter-rouge">"\uc0ac\uacfc"</code> 같은 기괴한 유니코드 암호(이스케이프 문자)로 바꿔서 보냅니다.</p>
+
+<p>코딩 프로그램 안에서는 어차피 파이썬이 다시 예쁘게 읽어오니 상관없지만, 윈도우 메모장으로 그 파일을 직접 열어볼 여러분은 눈이 아플 수 있습니다!</p>
+
+<p>“파이썬아! 한글을 외계어로 바꾸지 말고 <strong>그냥 생긴 대로 깔끔하게 폰트 안 깨지게 저장해 줘!</strong>” 라고 명령하려면 <code class="language-plaintext highlighter-rouge">ensure_ascii=False</code> 마법과 파일의 <code class="language-plaintext highlighter-rouge">encoding='utf-8'</code> 조합을 써야 합니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">korean_data</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">과일</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">사과</span><span class="sh">'</span><span class="p">}</span>
+
+<span class="c1"># 1. 파일 열때 utf-8 로 폰트 깨짐 열쇠를 채우고
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">korean.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    
+    <span class="c1"># 2. ASCII(영어) 강제 변환을 끄라고 지시합니다!! (핵심)
+</span>    <span class="n">json</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">korean_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이제 저장된 <code class="language-plaintext highlighter-rouge">korean.json</code> 파일을 열어보면 외계어 대신 예쁜 글꼴의 “사과”가 반겨줄 것입니다!</p>
 
 
             <!-- Google AdSense -->

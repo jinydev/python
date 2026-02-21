@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>04.06_리스트</title>
-  <meta name="title" content="04.06_리스트" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="04.06_리스트"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>6. 리스트 (List)</title>
+  <meta name="title" content="6. 리스트 (List)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="6. 리스트 (List)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/04_sequence/04_06_list/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/04_sequence/04_06_list/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="04.06_리스트"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="6. 리스트 (List)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="04.06_리스트" />
+<meta property="og:title" content="리스트 (List)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/04_sequence/04_06_list/" />
-<meta property="og:url" content="http://localhost:4001/part01/04_sequence/04_06_list/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/04_sequence/04_06_list/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/04_sequence/04_06_list/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="04.06_리스트" />
+<meta property="twitter:title" content="리스트 (List)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"04.06_리스트","url":"http://localhost:4001/part01/04_sequence/04_06_list/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"리스트 (List)","url":"https://python.jiny.dev/part01/04_sequence/04_06_list/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,118 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">04.06_리스트</li>
+        <li class="breadcrumb-item active" aria-current="page">6. 리스트 (List)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0406_리스트">04.06_리스트</h1>
+            <h1 id="6-리스트-list">6. 리스트 (List)</h1>
 
-<!-- 이 곳에 04_06_list_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 가장 대중적이고 활용도가 높은 자료형이 바로 <strong>리스트(List)</strong>입니다.</p>
+
+<p>리스트는 다른 언어의 배열(Array)과 구조가 유사하지만, 안에 담기는 원소들의 자료형이 서로 달라도 문제가 없으며, 생성된 이후에도 자유롭게 원소를 갱신, 추가, 삭제할 수 있는 <strong>변경 가능(Mutable)</strong>한 특성을 가진 강력한 컬렉션입니다.</p>
+
+<h2 id="61-리스트의-생성과-기본-조작">6.1 리스트의 생성과 기본 조작</h2>
+
+<p>대괄호 <code class="language-plaintext highlighter-rouge">[]</code> 를 이용해 생성하거나 <code class="language-plaintext highlighter-rouge">list()</code> 생성자를 통해 다른 시퀀스(튜플, 문자열 등)를 리스트로 변환할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">empty_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># 문자열을 리스트로 쪼개기
+</span><span class="n">char_list</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="sh">"</span><span class="s">가나다</span><span class="sh">"</span><span class="p">)</span> 
+<span class="nf">print</span><span class="p">(</span><span class="n">char_list</span><span class="p">)</span> <span class="c1"># ['가', '나', '다']
+</span></code></pre></div></div>
+
+<p>리스트가 제공하는 대표적인 내장 조작 메서드는 다음과 같습니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">append(값)</code></strong>: 리스트의 제일 마지막 꼬리에 원소를 하나 추가합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">insert(위치, 값)</code></strong>: 원하는 인덱스 번호 중간에 원소를 끼워 넣습니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">pop(위치)</code></strong>: 지정한 인덱스의 원소를 리스트에서 완전히 뽑아냅니다. (값을 반환함)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">remove(값)</code></strong>: 리스트에서 해당 값을 찾아 삭제합니다. (중복 시 맨 앞 요소 1개만 지움)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">sort()</code> / <code class="language-plaintext highlighter-rouge">reverse()</code></strong>: 리스트 내부의 순서를 오름차순으로 정렬하거나, 반대로 뒤집습니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="62-변경-가능mutable-객체의-함정-별칭alias">6.2 변경 가능(Mutable) 객체의 함정: 별칭(Alias)</h2>
+
+<p>리스트를 다룰 때 초보자가 가장 흔하게 겪는 버그는 <strong>메모리 참조(Reference)</strong>에 관련된 문제입니다. 파이썬에서 변수에 객체를 할당하는 행위는 값을 복사해 넣는 것이 아니라 ‘객체에 이름표를 붙이는 행위’이기 때문입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># 할당 연산자(=)는 값을 복사하지 않습니다! 
+# 단지 original과 "동일한 메모리"를 가리키는 별칭(Alias)을 하나 더 만들 뿐입니다.
+</span><span class="n">alias_list</span> <span class="o">=</span> <span class="n">original</span> 
+
+<span class="c1"># 별칭 리스트의 원소를 바꿨는데...
+</span><span class="n">alias_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span> 
+
+<span class="c1"># 원본 리스트도 같이 바뀌어버립니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">original</span><span class="p">)</span> <span class="c1"># [999, 2, 3]
+</span></code></pre></div></div>
+
+<p>단순히 <code class="language-plaintext highlighter-rouge">A = B</code> 형태로 리스트를 대입하면 두 변수는 완벽히 운명 공동체가 됩니다. 이를 방지하고 싶다면 반드시 <strong>복사(Copy)</strong>를 수행해야 합니다.</p>
+
+<hr />
+
+<h2 id="63-리스트-복사-copy-와-얕은-복사의-한계">6.3 리스트 복사 (<code class="language-plaintext highlighter-rouge">copy()</code>) 와 얕은 복사의 한계</h2>
+
+<p>원본과 별개의 독립적인 리스트를 만들고 싶을 때는 <code class="language-plaintext highlighter-rouge">copy()</code> 메서드를 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">copied</span> <span class="o">=</span> <span class="n">original</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+
+<span class="n">copied</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">original</span><span class="p">)</span> <span class="c1"># [1, 2, 3] (원본은 타격받지 않음)
+</span></code></pre></div></div>
+
+<h3 id="얕은-복사shallow-copy의-한계">얕은 복사(Shallow Copy)의 한계</h3>
+<p>하지만 리스트 내부에 또 다른 리스트가 들어있는 <strong>중첩 리스트(2차원 배열 등)</strong> 상황에서는 <code class="language-plaintext highlighter-rouge">copy()</code> 만으로 완벽한 분리가 불가능합니다. 껍데기 리스트만 새로 만들어질 뿐, 그 안에 담긴 내부 리스트의 주소는 여전히 공유(얕은 복사)되기 때문입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 내부에 또 다른 리스트를 품은 2차원 리스트
+</span><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+
+<span class="c1"># 껍데기를 복사
+</span><span class="n">shallow</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+
+<span class="c1"># 내부 리스트의 값을 건드리는 순간?
+</span><span class="n">shallow</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
+
+<span class="c1"># 원본 내부까지 같이 오염됩니다. (얕은 복사의 한계)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="c1"># [[999, 2], [3, 4]]
+</span></code></pre></div></div>
+
+<p>이러한 다차원 구조에서 내부 객체들의 뼈대까지 샅샅이 뒤져 “완벽히 독립된 도플갱어”를 만들어야 할 때는 파이썬 표준 라이브러리인 <code class="language-plaintext highlighter-rouge">copy</code> 모듈의 <code class="language-plaintext highlighter-rouge">deepcopy()</code> (깊은 복사) 기능을 사용해야만 합니다.</p>
+
+<hr />
+
+<h2 id="64-리스트-곱셈-연산-시의-초기화-버그">6.4 리스트 곱셈 연산 시의 초기화 버그</h2>
+
+<p>다차원 리스트를 만들기 위해 정수 곱셈(<code class="language-plaintext highlighter-rouge">*</code>)을 사용할 때도 위와 동일한 참조(Reference) 얕은 복사 문제가 발생합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># [3, 3, 3] 을 만들고, 그걸 3번 반복해서 2차원 리스트를 만듦
+</span><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="c1"># [[3, 3, 3], [3, 3, 3], [3, 3, 3]]
+</span>
+<span class="c1"># 첫 번째 행, 첫 번째 열을 99로 바꿨는데...
+</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">99</span>
+
+<span class="c1"># 모든 행의 첫 번째 열이 99로 바뀝니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="c1"># [[99, 3, 3], [99, 3, 3], [99, 3, 3]]
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">* 3</code> 으로 늘린 3개의 내부 리스트는 모두 똑같은 메모리 주소를 가리키는 <strong>거울 속 쌍둥이</strong>일 뿐이기 때문입니다. 이런 일을 막으려면 지능형 리스트(리스트 컴프리헨션)를 이용해 순환할 때마다 <code class="language-plaintext highlighter-rouge">[3] * 3</code>을 새로 생성하도록 짜야 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># "안전한" 2차원 리스트 초기화 방법 (리스트 컴프리헨션)
+</span><span class="n">matrix_safe</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+
+<span class="n">matrix_safe</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">matrix_safe</span><span class="p">)</span> <span class="c1"># [[99, 3, 3], [3, 3, 3], [3, 3, 3]] (오직 첫 요소만 정상 변경)
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

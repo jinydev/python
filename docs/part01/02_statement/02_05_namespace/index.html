@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>02.05_네임스페이스(Namespace)</title>
-  <meta name="title" content="02.05_네임스페이스(Namespace)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="02.05_네임스페이스(Namespace)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>5. 네임스페이스 (Namespace) 심화</title>
+  <meta name="title" content="5. 네임스페이스 (Namespace) 심화" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="5. 네임스페이스 (Namespace) 심화"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/02_statement/02_05_namespace/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/02_statement/02_05_namespace/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="02.05_네임스페이스(Namespace)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="5. 네임스페이스 (Namespace) 심화"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="02.05_네임스페이스(Namespace)" />
+<meta property="og:title" content="네임스페이스 (Namespace) 심화" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/02_statement/02_05_namespace/" />
-<meta property="og:url" content="http://localhost:4001/part01/02_statement/02_05_namespace/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/02_statement/02_05_namespace/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/02_statement/02_05_namespace/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="02.05_네임스페이스(Namespace)" />
+<meta property="twitter:title" content="네임스페이스 (Namespace) 심화" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"02.05_네임스페이스(Namespace)","url":"http://localhost:4001/part01/02_statement/02_05_namespace/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"네임스페이스 (Namespace) 심화","url":"https://python.jiny.dev/part01/02_statement/02_05_namespace/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,74 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">02.05_네임스페이스(Namespace)</li>
+        <li class="breadcrumb-item active" aria-current="page">5. 네임스페이스 (Namespace) 심화</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0205_네임스페이스namespace">02.05_네임스페이스(Namespace)</h1>
+            <h1 id="5-네임스페이스-namespace-심화">5. 네임스페이스 (Namespace) 심화</h1>
 
-<!-- 이 곳에 02_05_namespace_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>앞서 파이썬은 변수 이름과 실제 객체(데이터)를 서로 연결(Binding)하여 관리한다고 배웠습니다. 이렇게 연결된 “이름표”들이 모여있는 격리된 저장 공간을 <strong>네임스페이스(Namespace)</strong>라고 부릅니다.</p>
+
+<p>네임스페이스는 내부적으로 파이썬의 핵심 딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>) 구조로 구현되어 있으며, 변수의 이름이 Key가 되고 변수에 할당된 객체가 Value가 됩니다.</p>
+
+<h2 id="51-네임스페이스에-할당과-조회">5.1 네임스페이스에 할당과 조회</h2>
+
+<p>모듈(.py 파일) 수준에서 변수를 만들거나, 함수 문법(<code class="language-plaintext highlighter-rouge">def</code>)을 통해 함수를 선언하거나, 클래스 문법(<code class="language-plaintext highlighter-rouge">class</code>)을 통해 클래스를 선언하면 모두 이 네임스페이스에 각자의 이름표가 등록됩니다.</p>
+
+<p>다시 한 번 전역 네임스페이스를 관리해주는 내장 함수 <code class="language-plaintext highlighter-rouge">globals()</code> 를 이용해 작동 원리를 살펴보겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반 변수 등록
+</span><span class="n">system_mode</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Production</span><span class="sh">"</span>
+
+<span class="c1"># 함수 등록
+</span><span class="k">def</span> <span class="nf">calculate_tax</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 클래스 등록
+</span><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 현재 네임스페이스(globals)에 등록된 모든 이름들을 조회해 볼 수 있습니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">globals</span><span class="p">().</span><span class="nf">keys</span><span class="p">())[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+<span class="c1"># 출력 결과: ['system_mode', 'calculate_tax', 'Customer']
+</span></code></pre></div></div>
+<p>우리가 정의한 변수부터 함수, 심지어 클래스의 이름까지 빠짐없이 딕셔너리의 Key로 등록된 것을 볼 수 있습니다.</p>
+
+<hr />
+
+<h2 id="52-전역-접근-규칙과-독립성">5.2 전역 접근 규칙과 독립성</h2>
+
+<p>각 파이썬 모듈 파일(<code class="language-plaintext highlighter-rouge">.py</code>)은 태생적으로 <strong>자신만의 고유한 전역(Global) 네임스페이스</strong>를 갖습니다. 즉, A 모듈과 B 모듈에 동일한 이름표(예: <code class="language-plaintext highlighter-rouge">x = 100</code>)가 존재하더라도, 두 이름표는 완전히 격리된 별개의 공간에서 관리되므로 서로 충돌하지 않습니다.</p>
+
+<h3 id="함수가-바라보는-전역-네임스페이스의-기준">함수가 바라보는 전역 네임스페이스의 기준</h3>
+
+<p>가장 헷갈리기 쉬운 부분은, 모듈 안에 정의된 함수가 변수를 검색할 때 바라보는 전역 공간의 기준입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># file_A.py 모듈
+</span><span class="n">base_value</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">print_value</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">base_value</span><span class="p">)</span>
+
+<span class="c1"># -----------------
+</span>
+<span class="c1"># file_B.py 모듈 (현재 실행 중인 파일)
+</span><span class="kn">import</span> <span class="n">file_A</span>
+
+<span class="n">base_value</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># 외부 모듈의 함수를 호출
+</span><span class="n">file_A</span><span class="p">.</span><span class="nf">print_value</span><span class="p">()</span> 
+<span class="c1"># 출력은 500이 아니라 100이 됩니다!
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!IMPORTANT]
+함수는 외부 파일에서 불러와서(<code class="language-plaintext highlighter-rouge">import</code>) 실행하더라도, 언제나 자신이 <strong>최초에 태어난 원본 모듈(위 예제의 file_A)</strong>의 전역 네임스페이스를 최우선으로 검색합니다. 따라서 현재 실행 중인 파일(<code class="language-plaintext highlighter-rouge">file_B</code>)에서 변수값을 덮어쓰더라도 원본 모듈의 함수에는 아무런 영향을 주지 못합니다.</p>
+</blockquote>
 
 
             <!-- Google AdSense -->

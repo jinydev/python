@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>15.02_사용자</title>
-  <meta name="title" content="15.02_사용자" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="15.02_사용자"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 내 손으로 만드는 데코레이터 공장</title>
+  <meta name="title" content="2. 내 손으로 만드는 데코레이터 공장" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 내 손으로 만드는 데코레이터 공장"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/15_property/15_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/15_property/15_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="15.02_사용자"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 내 손으로 만드는 데코레이터 공장"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="15.02_사용자" />
+<meta property="og:title" content="내 손으로 만드는 데코레이터 공장" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/15_property/15_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part03/15_property/15_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/15_property/15_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/15_property/15_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="15.02_사용자" />
+<meta property="twitter:title" content="내 손으로 만드는 데코레이터 공장" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"15.02_사용자","url":"http://localhost:4001/part03/15_property/15_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"내 손으로 만드는 데코레이터 공장","url":"https://python.jiny.dev/part03/15_property/15_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,75 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">15.02_사용자</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 내 손으로 만드는 데코레이터 공장</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1502_사용자">15.02_사용자</h1>
+            <h1 id="2-내-손으로-만드는-데코레이터-공장">2. 내 손으로 만드는 데코레이터 공장</h1>
 
-<!-- 이 곳에 15_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 친절하게 기본으로 제공하는 <code class="language-plaintext highlighter-rouge">@property</code> 라는 데코레이터를 이용해 멋진 보안 문지기를 만들었죠? 그렇다면 이 <code class="language-plaintext highlighter-rouge">property</code> 는 속이 어떻게 생겼길래 이런 마법을 부리는 걸까요?
+우리가 직접 그 내부와 쏙 빼닮은 나만의 “수제 프로퍼티 클래스”를 만들어보면서 원리를 뜯어보겠습니다.</p>
+
+<h2 id="21-커스텀-property-클래스의-구조">2.1 커스텀 Property 클래스의 구조</h2>
+
+<p>파이썬의 <code class="language-plaintext highlighter-rouge">property</code>는 사실 함수가 아니라 거대한 <strong>통제실 클래스</strong>입니다. 
+이 통제실 안에는 데이터를 읽고(<code class="language-plaintext highlighter-rouge">fget</code>), 쓰고(<code class="language-plaintext highlighter-rouge">fset</code>), 지우는(<code class="language-plaintext highlighter-rouge">fdel</code>) 3명의 요원이 대기하고 있습니다.</p>
+
+<p>이 원리를 따라 우리만의 통제실 <code class="language-plaintext highlighter-rouge">MyProperty</code> 인스턴스를 직접 만들어 보면 이렇습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyProperty</span><span class="p">:</span>
+    <span class="c1"># 3명의 요원(함수)을 초기에 등록받는 역할을 합니다.
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">fget</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fdel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fget</span> <span class="o">=</span> <span class="n">fget</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fset</span> <span class="o">=</span> <span class="n">fset</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fdel</span> <span class="o">=</span> <span class="n">fdel</span>
+
+    <span class="c1"># '읽기' 명령이 들어왔을 때 fget 요원 출동!
+</span>    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">fget</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">AttributeError</span><span class="p">(</span><span class="sh">"</span><span class="s">읽을 수 없는 속성입니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">fget</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="c1"># '쓰기' 명령이 들어왔을 때 fset 요원 출동!
+</span>    <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">fset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">AttributeError</span><span class="p">(</span><span class="sh">"</span><span class="s">변경할 수 없는 속성입니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">fset</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># '지우기' 명령이 들어왔을 때 fdel 요원 출동!
+</span>    <span class="k">def</span> <span class="nf">__delete__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">fdel</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nc">AttributeError</span><span class="p">(</span><span class="sh">"</span><span class="s">지울 수 없는 속성입니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">fdel</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 코드가 바로 파이썬에 내장되어 있는 <code class="language-plaintext highlighter-rouge">property</code> 클래스의 아주 단순화된 핵심 심장부입니다. 이 통제실의 핵심은 바로 <code class="language-plaintext highlighter-rouge">__get__</code>, <code class="language-plaintext highlighter-rouge">__set__</code>, <code class="language-plaintext highlighter-rouge">__delete__</code> 라는 파이썬 고유의 마법 주문(스페셜 메서드)들에 있습니다.</p>
+
+<hr />
+
+<h2 id="22-데코레이터를-등록해주는-도구-만들기">2.2 데코레이터를 등록해주는 도구 만들기</h2>
+
+<p>여기에, 내장 <code class="language-plaintext highlighter-rouge">@property</code> 처럼 우리도 함수 바로 위에 <code class="language-plaintext highlighter-rouge">@내이름.setter</code>를 붙일 수 있도록 데코레이터 지원 파트를 마저 붙여주는 것이 좋습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyProperty</span><span class="p">:</span>
+    <span class="c1"># (앞선 __init__, __get__, __set__ 생략...)
+</span>    
+    <span class="c1"># 누군가 @이름.setter 데코레이터를 쓸 수 있게 열어주기!
+</span>    <span class="k">def</span> <span class="nf">setter</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">fset_func</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">&gt;&gt; 새 setter 요원 등록 완료!</span><span class="sh">"</span><span class="p">)</span>
+        <span class="c1"># 기존 요원들(fget, fdel)은 살려두고, 
+</span>        <span class="c1"># 새로운 쓰기 요원(fset_func)을 장착한 MyProperty 기계를 새로 복사해서 줍니다.
+</span>        <span class="k">return</span> <span class="nf">type</span><span class="p">(</span><span class="n">self</span><span class="p">)(</span><span class="n">self</span><span class="p">.</span><span class="n">fget</span><span class="p">,</span> <span class="n">fset_func</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">fdel</span><span class="p">)</span>
+
+    <span class="c1"># 누군가 @이름.getter 데코레이터를 쓸 수 있게 열어주기!
+</span>    <span class="k">def</span> <span class="nf">getter</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">fget_func</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">type</span><span class="p">(</span><span class="n">self</span><span class="p">)(</span><span class="n">fget_func</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">fset</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">fdel</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이처럼 프로퍼티란, 파이썬이 던져주는 <strong>3가지 특별한 스위치(<code class="language-plaintext highlighter-rouge">__get__</code>, <code class="language-plaintext highlighter-rouge">__set__</code>, <code class="language-plaintext highlighter-rouge">__delete__</code>)가 장착된 리모컨 객체(=디스크립터)</strong>를 변수 이름에 씌워놓은 것에 불과합니다. 이제 대망의 ‘디스크립터(Descriptor)’가 무엇인지 다음 장에서 더 깊이 알아보겠습니다!</p>
 
 
             <!-- Google AdSense -->

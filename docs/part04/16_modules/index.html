@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 16</title>
-  <meta name="title" content="Chapter 16" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 16"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈</title>
+  <meta name="title" content="Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/16_modules/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/16_modules/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 16"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Chapter 16" />
+<meta property="og:title" content="Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/16_modules/" />
-<meta property="og:url" content="http://localhost:4001/part04/16_modules/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/16_modules/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/16_modules/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Chapter 16" />
+<meta property="twitter:title" content="Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 16","url":"http://localhost:4001/part04/16_modules/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈","url":"https://python.jiny.dev/part04/16_modules/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -673,20 +673,48 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">Chapter 16</li>
+        <li class="breadcrumb-item active" aria-current="page">Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="chapter-16">Chapter 16</h1>
+            <h1 id="chapter-16-강력한-도구-상자-파이썬-특수-모듈">Chapter 16. 강력한 도구 상자: 파이썬 특수 모듈</h1>
 
-<ul>
-  <li><a href="/part04/16_modules/16_01_section/">16.01_collections</a></li>
-  <li><a href="/part04/16_modules/16_02_section/">16.02_stack_queue_heap</a></li>
-  <li><a href="/part04/16_modules/16_03_section/">16.03_bisect</a></li>
-</ul>
+<p><img src="/Users/hojin8/.gemini/antigravity/brain/39fe47ab-9fff-4271-aa37-8b9fbfaf6bdd/module_concept_upper_ele_16x9_1771690635607.png" alt="파이썬 모듈 컨셉" /></p>
+
+<p>게임을 만들거나 복잡한 코딩을 할 때, 모든 것을 처음부터 다 만들 필요는 없습니다. 파이썬은 천재 발명가처럼 우리가 자주 쓰는 멋진 로봇 부품(코드 꾸러미)들을 이미 거대한 창고에 잘 정리해 두었습니다. 이런 부품 상자들을 <strong>모듈(Module)</strong>이라고 부릅니다!</p>
+
+<p>이번 장에서는 기본 딕셔너리와 리스트를 강력하게 업그레이드해주는 파이썬의 핵심 <strong>자료 구조 모듈</strong>들에 대해 파헤쳐 봅니다. 줄서기, 투표 세기, 정렬하기 등 여러분의 코딩을 10배 더 빠르고 똑똑하게 만들어줄 마법의 도구들을 만나보세요!</p>
+
+<hr />
+
+<h3 id="-목차">📖 목차</h3>
+
+<ol>
+  <li><strong><a href="./16_01_section/">업그레이드된 자료구조: collections 모듈</a></strong>
+    <ul>
+      <li>불평 없는 딕셔너리: <code class="language-plaintext highlighter-rouge">defaultdict</code></li>
+      <li>순서를 기억하는 딕셔너리: <code class="language-plaintext highlighter-rouge">OrderedDict</code></li>
+      <li>투표 개표기: <code class="language-plaintext highlighter-rouge">Counter</code></li>
+      <li>이름이 있는 튜플: <code class="language-plaintext highlighter-rouge">namedtuple</code></li>
+    </ul>
+  </li>
+  <li><strong><a href="./16_02_section/">줄서기와 쌓기: stack, queue, heapq 모듈</a></strong>
+    <ul>
+      <li>쌓고 빼는 스택(Stack)과 줄 서는 큐(Queue)</li>
+      <li>파이썬이 제공하는 <code class="language-plaintext highlighter-rouge">queue</code> 모듈</li>
+      <li>양쪽으로 뚫린 터널: <code class="language-plaintext highlighter-rouge">collections.deque</code></li>
+      <li>가장 작은 것을 쏙쏙 뽑는 마법: <code class="language-plaintext highlighter-rouge">heapq</code> 모듈</li>
+    </ul>
+  </li>
+  <li><strong><a href="./16_03_section/">깔끔한 정리 정돈: bisect 모듈</a></strong>
+    <ul>
+      <li>차례대로 끼워 넣는 이진 탐색 로직</li>
+    </ul>
+  </li>
+</ol>
 
 
             <!-- Google AdSense -->

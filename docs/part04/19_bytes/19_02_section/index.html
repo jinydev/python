@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>19.02_파일</title>
-  <meta name="title" content="19.02_파일" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="19.02_파일"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 텍스트의 변신과 압축: 유니코드와 struct</title>
+  <meta name="title" content="2. 텍스트의 변신과 압축: 유니코드와 struct" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 텍스트의 변신과 압축: 유니코드와 struct"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/19_bytes/19_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/19_bytes/19_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="19.02_파일"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 텍스트의 변신과 압축: 유니코드와 struct"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="19.02_파일" />
+<meta property="og:title" content="텍스트의 변신과 압축: 유니코드와 struct" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/19_bytes/19_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/19_bytes/19_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/19_bytes/19_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/19_bytes/19_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="19.02_파일" />
+<meta property="twitter:title" content="텍스트의 변신과 압축: 유니코드와 struct" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"19.02_파일","url":"http://localhost:4001/part04/19_bytes/19_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"텍스트의 변신과 압축: 유니코드와 struct","url":"https://python.jiny.dev/part04/19_bytes/19_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,66 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">19.02_파일</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 텍스트의 변신과 압축: 유니코드와 struct</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1902_파일">19.02_파일</h1>
+            <h1 id="2-텍스트의-변신과-압축-유니코드와-struct">2. 텍스트의 변신과 압축: 유니코드와 struct</h1>
 
-<!-- 이 곳에 19_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>우리가 키보드로 친 “안녕”이라는 예쁜 글씨들. 사실 기계 안에서는 이리저리 코드가 쪼개지고 숫자로 변신하며 돌아다니고 있습니다. 그 신비한 변신의 세계를 슬쩍 들여다보죠!</p>
+
+<h2 id="21-문자들의-전-세계-공용어-유니코드">2.1 문자들의 전 세계 공용어: 유니코드</h2>
+
+<p>“A”는 숫자 65번, “B”는 66번. 옛날에는 이렇게 영어를 숫자로 바꿨지만, 한글이나 이모지(😀)는 어떻게 할까요? 
+전 세계 사람들이 회의를 해서 “지구상의 모든 문자에 고유한 숫자(코드)를 부여하자!”라고 만든 거대한 사전이 바로 <strong>유니코드(Unicode)</strong>입니다.</p>
+
+<p>파이썬의 글자들은 기본적으로 이 유니코드 사전의 번호표를 당당히 달고 있습니다.</p>
+
+<p>하지만 이 글자들을 컴퓨터 하드웨어나 인터넷 선에 밀어 넣으려면 더 잘게, 0과 1로 된 ‘바이트(Byte)’ 스트림 가루로 빻아야 합니다. 이걸 <strong>인코딩(Encoding)</strong>이라고 부릅니다. 
+가장 유명한 인코딩 규칙이 바로 <code class="language-plaintext highlighter-rouge">UTF-8</code>입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_word</span> <span class="o">=</span> <span class="sh">"</span><span class="s">파이썬!</span><span class="sh">"</span>
+
+<span class="c1"># 유니코드를 마법의 가루통(UTF-8)에 넣고 바이트(기계어)로 빻기! (인코딩)
+</span><span class="n">machine_code</span> <span class="o">=</span> <span class="n">my_word</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">기계어 변신:</span><span class="sh">"</span><span class="p">,</span> <span class="n">machine_code</span><span class="p">)</span>
+<span class="c1"># 출력: b'\xed\x8c\x8c\xec\x9d\xb4\xec\x8d\xac!' (사람이 읽을 수 없음)
+</span>
+<span class="c1"># 이 기계어를 가져와 다시 사람이 읽을 수 있는 유니코드로 조립! (디코딩)
+</span><span class="n">human_code</span> <span class="o">=</span> <span class="n">machine_code</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">사람 말로 복구:</span><span class="sh">"</span><span class="p">,</span> <span class="n">human_code</span><span class="p">)</span>
+<span class="c1"># 출력: 파이썬!
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="22-부품들을-압축-포장하는-공장-struct-모듈">2.2 부품들을 압축 포장하는 공장: <code class="language-plaintext highlighter-rouge">struct</code> 모듈</h2>
+
+<p>가끔 “정수 1, 2, 3을 가장 작은 바이트 박스에 빈틈없이 구겨 넣어서 다른 컴퓨터로 전송하라!”는 명령이 떨어집니다. 이럴 때 자르고 붙이는 포장 공장 역할을 하는 것이 <strong><code class="language-plaintext highlighter-rouge">struct</code></strong> 모듈입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span>
+
+<span class="c1"># 'hhl' 이 암호는 설계도(Format String)입니다. 
+# h는 작은 상자(2바이트 정수), l은 큰 상자(4바이트 정수)입니다.
+# 즉 "작은 상자 2개, 큰 상자 1개"로 포장하라는 뜻!
+</span>
+<span class="c1"># 1, 2, 3 이라는 데이터를 진짜로 포장(packing)합니다.
+</span><span class="n">packed_data</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="sh">'</span><span class="s">hhl</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">포장 완료:</span><span class="sh">"</span><span class="p">,</span> <span class="n">packed_data</span><span class="p">)</span>
+<span class="c1"># 출력: b'\x01\x00\x02\x00\x03\x00\x00\x00\x00\x00\x00\x00' (전기 신호들)
+</span>
+<span class="c1"># 이 찌그러진 박스를 받아서 다시 원래 모습으로 뜯어내기! (unpacking)
+</span><span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">'</span><span class="s">hhl</span><span class="sh">'</span><span class="p">,</span> <span class="n">packed_data</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">박스 뜯기 완료:</span><span class="sh">"</span><span class="p">,</span> <span class="n">unpacked_data</span><span class="p">)</span>
+<span class="c1"># 출력: (1, 2, 3)
+</span></code></pre></div></div>
+
+<p>게임에서 아주 적은 데이터로 플레이어의 좌표, 체력, 마나 등을 동시에 포장해서 인터넷으로 휙 쏴버릴 때 아주 유용하게 쓰이는 고급 스킬입니다!</p>
 
 
             <!-- Google AdSense -->

@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>09.08_메타</title>
-  <meta name="title" content="09.08_메타" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="09.08_메타"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>8. 메타 클래스의 이해</title>
+  <meta name="title" content="8. 메타 클래스의 이해" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="8. 메타 클래스의 이해"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/09_class/09_08_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_08_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="09.08_메타"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="8. 메타 클래스의 이해"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="09.08_메타" />
+<meta property="og:title" content="메타 클래스의 이해" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/09_class/09_08_section/" />
-<meta property="og:url" content="http://localhost:4001/part02/09_class/09_08_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/09_class/09_08_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_08_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="09.08_메타" />
+<meta property="twitter:title" content="메타 클래스의 이해" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"09.08_메타","url":"http://localhost:4001/part02/09_class/09_08_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"메타 클래스의 이해","url":"https://python.jiny.dev/part02/09_class/09_08_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,79 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">09.08_메타</li>
+        <li class="breadcrumb-item active" aria-current="page">8. 메타 클래스의 이해</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0908_메타">09.08_메타</h1>
+            <h1 id="8-메타-클래스의-이해">8. 메타 클래스의 이해</h1>
 
-<!-- 이 곳에 09_08_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>지금까지 우리는 붕어빵 틀(클래스)로 붕어빵(인스턴스)을 찍어냈습니다. 그런데 문득 궁금증이 생깁니다. <strong>“도대체 그 붕어빵 ‘틀’ 자체는 누가 찍어내는 거지?”</strong> 
+이 호기심의 종착지에 바로 <strong>메타 클래스(Metaclass)</strong>라는 개념이 기다리고 있습니다.</p>
+
+<h2 id="81-붕어빵-틀-공장-type">8.1 붕어빵 틀 공장: <code class="language-plaintext highlighter-rouge">type</code></h2>
+
+<p>우리가 객체의 자료형을 확인할 때 무심결에 쓰는 <code class="language-plaintext highlighter-rouge">type()</code> 함수는 사실 함수가 아니라 <strong>파이썬의 가장 거대한 공장(메타 클래스)</strong>입니다.</p>
+
+<p>우리가 에디터에 <code class="language-plaintext highlighter-rouge">class MyClass:</code> 라고 치면, 파이썬은 내부적으로 몰래 <code class="language-plaintext highlighter-rouge">type</code> 공장을 가동시켜 <code class="language-plaintext highlighter-rouge">MyClass</code>라는 붕어빵 틀을 쇳물에서 주조해냅니다. 즉, 파이썬의 모든 클래스는 <code class="language-plaintext highlighter-rouge">type</code>이 만들어낸 하나의 인스턴스에 불과합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반적인 붕어빵 틀(클래스) 정의
+</span><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">강아지</span><span class="sh">"</span>
+
+<span class="c1"># 이 '틀' 자체의 자료형(누가 만들었지?)을 물어봄
+# [결과] &lt;class 'type'&gt; -&gt; "type 이라는 메타 클래스가 만들었습니다."
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">Dog</span><span class="p">))</span> 
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="82-코딩-없이-클래스-찍어내기">8.2 코딩 없이 클래스 찍어내기</h2>
+
+<p>메타 클래스 <code class="language-plaintext highlighter-rouge">type</code>의 진짜 힘은 코드 문자열과 딕셔너리만으로 <strong>런타임(실행 중)에 동적으로 새로운 클래스를 창조</strong>할 수 있다는 점입니다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">type(이름, 상속받을부모튜플, 속성딕셔너리)</code> 형태로 설계도를 넘겨주면, 눈 깜짝할 새에 새로운 클래스가 뚝딱 튀어나옵니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 속성들을 담은 딕셔너리 준비
+</span><span class="n">namespace</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">스카이넷</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">hp</span><span class="sh">'</span><span class="p">:</span> <span class="mi">9999</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. type 메타 클래스를 가동하여 'Robot' 이라는 새로운 클래스 창조!
+# (상속받을 튜플이 비어있으므로 (object,) 가 기본값)
+</span><span class="n">RobotClass</span> <span class="o">=</span> <span class="nf">type</span><span class="p">(</span><span class="sh">'</span><span class="s">Robot</span><span class="sh">'</span><span class="p">,</span> <span class="p">(),</span> <span class="n">namespace</span><span class="p">)</span>
+
+<span class="c1"># 마치 'class Robot:' 으로 만든 것과 똑같이 완벽하게 작동합니다.
+</span><span class="n">terminator</span> <span class="o">=</span> <span class="nc">RobotClass</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">terminator</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="c1"># 스카이넷
+</span><span class="nf">print</span><span class="p">(</span><span class="n">terminator</span><span class="p">.</span><span class="n">hp</span><span class="p">)</span>   <span class="c1"># 9999
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="83-나만의-메타-클래스-만들기">8.3 나만의 메타 클래스 만들기</h2>
+
+<p>기본 공장인 <code class="language-plaintext highlighter-rouge">type</code> 대신 우리가 직접 <strong>맞춤형 붕어빵 틀 공장(Custom Metaclass)</strong>을 지을 수도 있습니다. 
+<code class="language-plaintext highlighter-rouge">type</code>을 상속받아 나만의 메타 클래스를 작성한 뒤, 일반 클래스를 만들 때 <code class="language-plaintext highlighter-rouge">metaclass=</code> 옵션을 달아주면 파이썬은 기본 공장 대신 내 공장으로 주문서를 넘깁니다.</p>
+
+<p>이 기법은 웹 프레임워크(Django 등) 핵심 개발자들이 ORM 테이블 구조를 마법같이 생성할 때 사용하는 궁극기 중 하나입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 나만의 붕어빵 틀 공장 건축 (반드시 type을 상속)
+</span><span class="k">class</span> <span class="nc">MyCustomMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="c1"># 클래스가 탄생(?)하기 직전에 호출됨
+</span>    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">namespace</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[메타 공장] </span><span class="sh">'</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="sh">'</span><span class="s"> 클래스 조립을 시작합니다...</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nf">super</span><span class="p">().</span><span class="nf">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+
+<span class="c1"># 2. 클래스 주문 시 내 공장에 하청 주기
+</span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">MyCustomMeta</span><span class="p">):</span>
+    <span class="k">pass</span>
+    
+<span class="c1"># 화면 출력: [메타 공장] 'User' 클래스 조립을 시작합니다...
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

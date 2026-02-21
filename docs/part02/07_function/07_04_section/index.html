@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>07.04_내부</title>
-  <meta name="title" content="07.04_내부" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="07.04_내부"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>4. 내부 함수 (Inner Function)</title>
+  <meta name="title" content="4. 내부 함수 (Inner Function)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="4. 내부 함수 (Inner Function)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/07_function/07_04_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/07_function/07_04_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="07.04_내부"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="4. 내부 함수 (Inner Function)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="07.04_내부" />
+<meta property="og:title" content="내부 함수 (Inner Function)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/07_function/07_04_section/" />
-<meta property="og:url" content="http://localhost:4001/part02/07_function/07_04_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/07_function/07_04_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/07_function/07_04_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="07.04_내부" />
+<meta property="twitter:title" content="내부 함수 (Inner Function)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"07.04_내부","url":"http://localhost:4001/part02/07_function/07_04_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"내부 함수 (Inner Function)","url":"https://python.jiny.dev/part02/07_function/07_04_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,101 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">07.04_내부</li>
+        <li class="breadcrumb-item active" aria-current="page">4. 내부 함수 (Inner Function)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0704_내부">07.04_내부</h1>
+            <h1 id="4-내부-함수-inner-function">4. 내부 함수 (Inner Function)</h1>
 
-<!-- 이 곳에 07_04_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬의 함수는 단순히 코드만 묶어두는 문법 구조가 아니라, 메모리상에 독립적으로 존재하는 값(객체)입니다. 숫자나 문자열처럼 변수에 담거나 다른 함수로 건네줄 수 있으며, 심지어 <strong>함수 내부에서 또 다른 함수를 잉태(정의)하는 것</strong>도 자유롭습니다.</p>
+
+<p>이렇게 함수 안에 선언된 함수를 <strong>내부 함수(Inner Function)</strong> 혹은 중첩 함수(Nested Function)라고 부릅니다.</p>
+
+<h2 id="41-내부-함수의-기본-구조와-클로저closure-기초">4.1 내부 함수의 기본 구조와 클로저(Closure) 기초</h2>
+
+<p>바깥쪽 함수(외부 함수)는 내부 함수의 공장 역할을 합니다. 외부 함수 내부에 보조 역할을 할 꼬마 함수들을 여러 개 만들어두고, 외부의 조건에 따라 알맞은 내부 함수를 선택해 <strong>‘함수 객체 그 자체’</strong>를 외부로 반환(return)할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 외부 함수 (조건에 따라 적절한 계산기 '함수'를 만들어주는 공장)
+</span><span class="k">def</span> <span class="nf">make_calculator</span><span class="p">(</span><span class="n">op_type</span><span class="p">):</span>
+    
+    <span class="c1"># 내부 함수 1
+</span>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    
+    <span class="c1"># 내부 함수 2
+</span>    <span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+    
+    <span class="c1"># 인자에 따라 적절한 내부 함수 "객체 자체"를 반환 (괄호() 없이 이름만 넘김!)
+</span>    <span class="k">if</span> <span class="n">op_type</span> <span class="o">==</span> <span class="sh">"</span><span class="s">+</span><span class="sh">"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">add</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mul</span>
+
+<span class="c1"># 1. 덧셈 역할을 하는 함수를 주문해서 받아옴
+</span><span class="n">my_add_func</span> <span class="o">=</span> <span class="nf">make_calculator</span><span class="p">(</span><span class="sh">"</span><span class="s">+</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 받아온 함수를 실제로 실행!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">my_add_func</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span> <span class="c1"># 30
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!NOTE]
+내부 함수는 부모(외부 함수)의 보호를 받기 때문에, 외부 함수의 바깥(전역 공간)에서는 내부 함수를 직접 호출하거나 간섭할 수 없습니다. 철저히 캡슐화되어 외부의 오염으로부터 안전합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="42-외부-함수의-변수를-기억하는-내부-함수">4.2 외부 함수의 변수를 기억하는 내부 함수</h2>
+
+<p>내부 함수의 가장 소름 돋는 마법 중 하나는 부모(외부 함수)의 변수를 <strong>‘기억’</strong>한다는 점입니다. 
+외부 함수가 실행을 마치고 메모리에서 소멸되더라도, 바깥으로 반환된 내부 함수는 자신이 탄생했을 당시 부모가 가지고 있던 환경 변수를 캡슐처럼 감싸 안고 살아남습니다. (이러한 현상을 <strong>클로저(Closure)</strong>라고 합니다.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_greeting</span><span class="p">(</span><span class="n">word</span><span class="p">):</span> <span class="c1"># 외부 함수
+</span>    <span class="c1"># 이 word 변수는 외부 함수가 끝날 때 같이 죽어야 하지만...
+</span>
+    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span> <span class="c1"># 내부 함수
+</span>        <span class="c1"># 내부 함수가 부모의 word 변수를 여기서 사용하고 있음!
+</span>        <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">님!</span><span class="sh">"</span>
+    
+    <span class="k">return</span> <span class="n">say_hello</span>
+
+<span class="c1"># "안녕하세요" 라는 환경을 캡슐화한 함수 생성 (외부 함수는 여기서 임무 종료)
+</span><span class="n">korean_hello</span> <span class="o">=</span> <span class="nf">make_greeting</span><span class="p">(</span><span class="sh">"</span><span class="s">안녕하세요</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 죽은 줄 알았던 외부 함수의 "안녕하세요"가 내부 함수 속에 끈질기게 살아있음!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">korean_hello</span><span class="p">(</span><span class="sh">"</span><span class="s">김철수</span><span class="sh">"</span><span class="p">))</span> <span class="c1"># 안녕하세요, 김철수님!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">korean_hello</span><span class="p">(</span><span class="sh">"</span><span class="s">홍길동</span><span class="sh">"</span><span class="p">))</span> <span class="c1"># 안녕하세요, 홍길동님!
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="43-nonlocal-키워드-부모-변수-조작하기">4.3 <code class="language-plaintext highlighter-rouge">nonlocal</code> 키워드 (부모 변수 조작하기)</h2>
+
+<p>전역 변수를 깔짝거릴 때 <code class="language-plaintext highlighter-rouge">global</code>을 썼듯이, 내부 함수 안에서 <strong>부모(외부 함수)의 변수를 갱신(수정)</strong>하려 들면 오류가 발생합니다. 파이썬은 변수 값이 바뀌는 순간 내부 함수 공간에 새로운 지역 변수를 하나 더 만들어버리기 때문입니다.</p>
+
+<p>내부 함수에서 부모 방의 변수를 진짜로 수정하고 싶을 때는 <strong><code class="language-plaintext highlighter-rouge">nonlocal</code></strong> 이라는 선언을 반드시 해주어야 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">counter_factory</span><span class="p">():</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 부모의 변수
+</span>    
+    <span class="k">def</span> <span class="nf">click_button</span><span class="p">():</span>
+        <span class="c1"># "이 count는 내 방에 있는게 아니라, 내 부모의 방에 있는 count다!" 명시
+</span>        <span class="k">nonlocal</span> <span class="n">count</span> 
+        
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># 부모 함수의 변수를 갱신!
+</span>        <span class="k">return</span> <span class="n">count</span>
+        
+    <span class="k">return</span> <span class="n">click_button</span>
+
+<span class="c1"># 버튼 카운터 객체 생성
+</span><span class="n">my_counter</span> <span class="o">=</span> <span class="nf">counter_factory</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">my_counter</span><span class="p">())</span> <span class="c1"># 1
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">my_counter</span><span class="p">())</span> <span class="c1"># 2
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">my_counter</span><span class="p">())</span> <span class="c1"># 3 (계속해서 상태가 누적되어 기억됨)
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

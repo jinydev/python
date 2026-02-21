@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>09.02_생성자(constructor)와</title>
-  <meta name="title" content="09.02_생성자(constructor)와" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="09.02_생성자(constructor)와"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 생성자(__new__)와 초기화(__init__)</title>
+  <meta name="title" content="2. 생성자(__new__)와 초기화(__init__)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 생성자(__new__)와 초기화(__init__)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/09_class/09_02_constructor/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_02_constructor/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="09.02_생성자(constructor)와"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 생성자(__new__)와 초기화(__init__)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="09.02_생성자(constructor)와" />
+<meta property="og:title" content="생성자(new)와 초기화(init)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/09_class/09_02_constructor/" />
-<meta property="og:url" content="http://localhost:4001/part02/09_class/09_02_constructor/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/09_class/09_02_constructor/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_02_constructor/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="09.02_생성자(constructor)와" />
+<meta property="twitter:title" content="생성자(new)와 초기화(init)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"09.02_생성자(constructor)와","url":"http://localhost:4001/part02/09_class/09_02_constructor/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"생성자(new)와 초기화(init)","url":"https://python.jiny.dev/part02/09_class/09_02_constructor/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,106 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">09.02_생성자(constructor)와</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 생성자(__new__)와 초기화(__init__)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0902_생성자constructor와">09.02_생성자(constructor)와</h1>
+            <h1 id="2-생성자__new__와-초기화__init__">2. 생성자(<code class="language-plaintext highlighter-rouge">__new__</code>)와 초기화(<code class="language-plaintext highlighter-rouge">__init__</code>)</h1>
 
-<!-- 이 곳에 09_02_constructor_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 흔히 <code class="language-plaintext highlighter-rouge">__init__</code>을 ‘생성자’라고 부르지만, 엄밀한 파이썬의 구조적 관점에서는 이는 <strong>초기화(Initializer)</strong> 메서드일 뿐입니다. 진짜 객체를 메모리에 탄생시키는 창조주 역할은 <code class="language-plaintext highlighter-rouge">__new__</code>라는 <strong>생성자(Constructor)</strong> 스페셜 메서드가 담당합니다.</p>
+
+<h2 id="21-진정한-창조주-__new__-메서드">2.1 진정한 창조주: <code class="language-plaintext highlighter-rouge">__new__</code> 메서드</h2>
+
+<p>우리가 <code class="language-plaintext highlighter-rouge">Book("파이썬")</code> 형식으로 클래스 이름표를 호출할 때, 사실 파이썬 내부에서는 가장 먼저 <code class="language-plaintext highlighter-rouge">__new__</code> 메서드가 발동됩니다. 
+이 메서드는 메모리 상에 아무것도 칠해지지 않은 텅 빈 인스턴스(객체)를 만들어서 반환하는 역할을 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Alien</span><span class="p">:</span>
+    <span class="c1"># 인스턴스 객체를 메모리에 생성하는 진짜 '생성자'
+</span>    <span class="c1"># 첫 번째 매개변수로 클래스 자기 자신(cls)을 받습니다.
+</span>    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">1. __new__ 호출: 텅 빈 인스턴스를 메모리에 창조합니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="c1"># 부모인 object 클래스의 __new__를 빌려와 객체를 실체화함
+</span>        <span class="n">instance</span> <span class="o">=</span> <span class="nf">super</span><span class="p">().</span><span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">instance</span>
+
+    <span class="c1"># 생성된 인스턴스에 값을 채워넣는 '초기화' 메서드
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2. __init__ 호출: 생성된 인스턴스에 이름을 부여합니다.</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<span class="c1"># 객체 생성 과정
+</span><span class="n">alien1</span> <span class="o">=</span> <span class="nc">Alien</span><span class="p">(</span><span class="sh">"</span><span class="s">외계인 A</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>[!NOTE]
+일반적인 프로그래밍에서는 <code class="language-plaintext highlighter-rouge">__new__</code>를 직접 건드릴 일이 거의 없습니다. 하지만 <strong>싱글턴 패턴(Singletion Pattern)</strong>처럼 메모리에 단 하나의 객체만 존재하도록 객체 생성을 통제해야 할 때는 <code class="language-plaintext highlighter-rouge">__new__</code>를 오버라이딩하여 제어합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="22-인스턴스-변수-세팅-__init__-메서드">2.2 인스턴스 변수 세팅: <code class="language-plaintext highlighter-rouge">__init__</code> 메서드</h2>
+
+<p><code class="language-plaintext highlighter-rouge">__new__</code>가 텅 빈 인스턴스를 반환하면, 파이썬은 즉시 그 반환된 인스턴스를 파라미터 <code class="language-plaintext highlighter-rouge">self</code> 자리에 담아 <code class="language-plaintext highlighter-rouge">__init__</code> 메서드로 넘겨줍니다. 
+여기서 비로소 인스턴스만의 고유한 속성(이름, 나이 등)을 딕셔너리(<code class="language-plaintext highlighter-rouge">__dict__</code>) 네임스페이스에 채워 넣게 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Robot</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model_num</span><span class="p">):</span>
+        <span class="c1"># 각각의 로봇(self)은 자기만의 고유한 모델 번호를 가집니다.
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">model_num</span> <span class="o">=</span> <span class="n">model_num</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">battery</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># 기본값 세팅
+</span>
+<span class="n">robotX</span> <span class="o">=</span> <span class="nc">Robot</span><span class="p">(</span><span class="sh">"</span><span class="s">X-99</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">robotX</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span> <span class="c1"># {'model_num': 'X-99', 'battery': 100}
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="23-객체의-최후-소멸자-__del__">2.3 객체의 최후: 소멸자 <code class="language-plaintext highlighter-rouge">__del__</code></h2>
+
+<p>객체의 임무가 끝나고 메모리에서 사라질 때(가비지 컬렉터에 의해 수거될 때) 마지막 유언을 남기듯 실행되는 메서드가 바로 <strong>소멸자 <code class="language-plaintext highlighter-rouge">__del__</code></strong> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ServerConnection</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">ip</span> <span class="o">=</span> <span class="n">ip</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">ip</span><span class="si">}</span><span class="s">] 서버에 연결을 시작합니다.</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># 객체가 파괴될 때 자동으로 실행됨
+</span>    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">ip</span><span class="si">}</span><span class="s">] 안전하게 연결을 종료하고 메모리를 해제합니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 연결 객체 생성
+</span><span class="n">conn</span> <span class="o">=</span> <span class="nc">ServerConnection</span><span class="p">(</span><span class="sh">"</span><span class="s">192.168.0.1</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 연결 객체를 명시적으로 파괴 (또는 프로그램이 끝날 때 자동 파괴됨)
+</span><span class="k">del</span> <span class="n">conn</span> 
+<span class="c1"># 출력: [192.168.0.1] 안전하게 연결을 종료하고 메모리를 해제합니다.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="24-메모리-다이어트-__slots__">2.4 메모리 다이어트: <code class="language-plaintext highlighter-rouge">__slots__</code></h2>
+
+<p>파이썬의 각 인스턴스는 자유롭게 속성을 무한히 추가할 수 있도록 내부에 <code class="language-plaintext highlighter-rouge">__dict__</code>라는 해시 테이블을 몰래 들고 다닙니다. 이로 인해 클래스가 굉장히 유연해지지만, 객체를 수십만 개씩 만들어야 할 때는 메모리 소모가 극심해집니다.</p>
+
+<p>이때, 클래스에 <strong><code class="language-plaintext highlighter-rouge">__slots__</code></strong> 리스트를 선언하면 거대한 <code class="language-plaintext highlighter-rouge">__dict__</code> 대신 속성의 자리를 미리 고정시켜 메모리 사용량을 획기적으로 줄일 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MemoryEfficientPoint</span><span class="p">:</span>
+    <span class="c1"># 이 인스턴스는 오직 x, y 속성만을 가질 수 있다고 족쇄를 채움!
+</span>    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">x</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">y</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="n">point</span> <span class="o">=</span> <span class="nc">MemoryEfficientPoint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># [에러 발생] __slots__에 정의되지 않은 새로운 속성을 몰래 추가할 수 없음!
+# point.z = 30 
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

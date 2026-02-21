@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>21.01_XML</title>
-  <meta name="title" content="21.01_XML" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="21.01_XML"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. XML 왕국의 기본 법칙</title>
+  <meta name="title" content="1. XML 왕국의 기본 법칙" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. XML 왕국의 기본 법칙"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/21_xml/21_01_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/21_xml/21_01_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="21.01_XML"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. XML 왕국의 기본 법칙"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="21.01_XML" />
+<meta property="og:title" content="XML 왕국의 기본 법칙" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/21_xml/21_01_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/21_xml/21_01_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/21_xml/21_01_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/21_xml/21_01_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="21.01_XML" />
+<meta property="twitter:title" content="XML 왕국의 기본 법칙" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"21.01_XML","url":"http://localhost:4001/part04/21_xml/21_01_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"XML 왕국의 기본 법칙","url":"https://python.jiny.dev/part04/21_xml/21_01_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,67 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">21.01_XML</li>
+        <li class="breadcrumb-item active" aria-current="page">1. XML 왕국의 기본 법칙</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="2101_xml">21.01_XML</h1>
+            <h1 id="1-xml-왕국의-기본-법칙">1. XML 왕국의 기본 법칙</h1>
 
-<!-- 이 곳에 21_01_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>XML은 꺾쇠 괄호 <code class="language-plaintext highlighter-rouge">&lt; &gt;</code> 로 데이터를 예쁘게 이름표(Tag) 붙여 포장하는 방법입니다. 누구나 자기 마음대로 이름표를 만들 수 있지만, 기계들이 서로 해석하려면 깐깐한 몇 가지 규칙을 지켜야 합니다.</p>
+
+<p>이 규칙들을 완벽하게 지킨 단정한 문서를 <strong>웰 폼(Well-formed) 문서</strong>라고 부릅니다.</p>
+
+<h2 id="11-지켜야-할-철칙-3가지">1.1 지켜야 할 철칙 3가지</h2>
+
+<ol>
+  <li><strong>머리말 쓰기 (Prolog)</strong>: 문서 맨 꼭대기에 “나는 XML이고, 버전 1.0이야!”라고 외쳐야 합니다.
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>오직 단 하나의 대왕 뿌리 (Root)</strong>: 문서 전체를 감싸는 최상위 껍질(Root)은 딱 하나만 있어야 합니다.
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;root&gt;</span>
+    <span class="c">&lt;!-- 모든 데이터는 이 안에 들어가야 합니다! --&gt;</span>
+    <span class="nt">&lt;child&gt;</span>안녕하세요<span class="nt">&lt;/child&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>열었으면 반드시 닫기!</strong>: <code class="language-plaintext highlighter-rouge">&lt;태그&gt;</code>로 문을 열었으면, 반드시 <code class="language-plaintext highlighter-rouge">&lt;/태그&gt;</code>로 닫아야 합니다.
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;name&gt;</span>파이썬<span class="nt">&lt;/name&gt;</span>   <span class="c">&lt;!-- 올바름! --&gt;</span>
+<span class="nt">&lt;name&gt;</span>자바스크립트    <span class="c">&lt;!-- 틀림! 닫는 태그 부족 폭발! --&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="12-이름-충돌-막기-네임스페이스namespace">1.2 이름 충돌 막기: 네임스페이스(Namespace)</h2>
+
+<p>여러 명이 만든 데이터를 합치다 보면, 우연히 똑같은 <code class="language-plaintext highlighter-rouge">&lt;table/&gt;</code> 이라는 태그를 쓸 수도 있습니다. 하나는 ‘데이터 표(table)’고, 하나는 ‘가구 책상(table)’일 수 있죠.</p>
+
+<p>이런 충돌을 막기 위해 가문의 성씨 역할을 하는 <strong>네임스페이스</strong>를 붙입니다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;root</span> 
+  <span class="na">xmlns:html=</span><span class="s">"http://www.w3.org/TR/html14/"</span>  
+  <span class="na">xmlns:furn=</span><span class="s">"http://www.w3schools.com/furniture"</span><span class="nt">&gt;</span>
+  
+  <span class="c">&lt;!-- html 가문의 표(table) --&gt;</span>
+  <span class="nt">&lt;html:table&gt;</span>
+    <span class="nt">&lt;html:tr&gt;&lt;html:td&gt;</span>사과<span class="nt">&lt;/html:td&gt;&lt;/html:tr&gt;</span>
+  <span class="nt">&lt;/html:table&gt;</span>
+
+  <span class="c">&lt;!-- 가구 가문의 책상(table) --&gt;</span>
+  <span class="nt">&lt;furn:table&gt;</span>
+    <span class="nt">&lt;furn:name&gt;</span>멋진 나무 탁자<span class="nt">&lt;/furn:name&gt;</span>
+    <span class="nt">&lt;furn:width&gt;</span>80<span class="nt">&lt;/furn:width&gt;</span>
+  <span class="nt">&lt;/furn:table&gt;</span>
+
+<span class="nt">&lt;/root&gt;</span>
+</code></pre></div></div>
+
+<p>이렇게 하면 컴퓨터가 태그 이름이 같아도 절대 헷갈리지 않고 착착 분류해냅니다!</p>
 
 
             <!-- Google AdSense -->

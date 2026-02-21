@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>19.03_직렬화</title>
-  <meta name="title" content="19.03_직렬화" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="19.03_직렬화"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 파이썬 전용 수축 광선 총: pickle 모듈</title>
+  <meta name="title" content="3. 파이썬 전용 수축 광선 총: pickle 모듈" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 파이썬 전용 수축 광선 총: pickle 모듈"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/19_bytes/19_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/19_bytes/19_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="19.03_직렬화"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 파이썬 전용 수축 광선 총: pickle 모듈"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="19.03_직렬화" />
+<meta property="og:title" content="파이썬 전용 수축 광선 총: pickle 모듈" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/19_bytes/19_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/19_bytes/19_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/19_bytes/19_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/19_bytes/19_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="19.03_직렬화" />
+<meta property="twitter:title" content="파이썬 전용 수축 광선 총: pickle 모듈" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"19.03_직렬화","url":"http://localhost:4001/part04/19_bytes/19_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"파이썬 전용 수축 광선 총: pickle 모듈","url":"https://python.jiny.dev/part04/19_bytes/19_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,63 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">19.03_직렬화</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 파이썬 전용 수축 광선 총: pickle 모듈</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1903_직렬화">19.03_직렬화</h1>
+            <h1 id="3-파이썬-전용-수축-광선-총-pickle-모듈">3. 파이썬 전용 수축 광선 총: <code class="language-plaintext highlighter-rouge">pickle</code> 모듈</h1>
 
-<!-- 이 곳에 19_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p><code class="language-plaintext highlighter-rouge">struct</code>는 엄청 작고 효율적이게 C언어 기계들과 대화하는 용도라면, 파이썬이 독자적으로 만든 궁극의 수축 광선 총이 있습니다. 바로 <strong><code class="language-plaintext highlighter-rouge">pickle</code> (피클)</strong> 모듈입니다.</p>
+
+<p>오직 다른 파이썬 프로그램들과 교류할 때만 쓰는 마법인데, 딕셔너리, 리스트 심지어 여러분이 만든 복잡한 몬스터 ‘클래스 객체’까지 그 모습 그대로 피클(절임 병)에 쏙 담아서 파일로 저장해버릴 수 있습니다!</p>
+
+<p>이를 <strong>직렬화(Serialization)</strong>라고 부릅니다.</p>
+
+<hr />
+
+<h2 id="31-얍-피클로-얼려서-보관하기-덤프-dump">3.1 얍! 피클로 얼려서 보관하기 (덤프, Dump)</h2>
+
+<p>복잡한 데이터 꾸러미를 바이트 코드로 수축시켜 디스크 창고에 던져 넣는 마법은 <code class="language-plaintext highlighter-rouge">dump</code> 라고 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pickle</span>
+
+<span class="c1"># 복잡한 파이썬 전용 데이터 덩어리
+</span><span class="n">my_bag</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">멋진 기사</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">level</span><span class="sh">'</span><span class="p">:</span> <span class="mi">99</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">items</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">전설의 검</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">물약</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">갑옷</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># 피클 보관용 병(파일)을 바이트 쓰기('wb') 모드로 엽니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">save_data.pkl</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 수축 광선총 발사! 객체를 병 f 에 완전히 던져(dump) 넣습니다.
+</span>    <span class="n">pickle</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">my_bag</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">서랍 속에 안전하게 세이브 완료!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="32-봉인-해제-원래-모습으로-되돌리기-로드-load">3.2 봉인 해제! 원래 모습으로 되돌리기 (로드, Load)</h2>
+
+<p>저장해둔 세이브 파일을 불러와 원래의 파이썬 객체로 소환(봉인 해제)하는 마법은 <code class="language-plaintext highlighter-rouge">load</code> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pickle</span>
+
+<span class="c1"># 피클 병(파일)을 바이트 읽기('rb') 모드로 엽니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">save_data.pkl</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 짠! 파일 안의 바이트들을 원래 객체로 통째로 부활시킵니다!
+</span>    <span class="n">loaded_bag</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">로드된 데이터:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">이름:</span><span class="sh">"</span><span class="p">,</span> <span class="n">loaded_bag</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">가진 아이템:</span><span class="sh">"</span><span class="p">,</span> <span class="n">loaded_bag</span><span class="p">[</span><span class="sh">'</span><span class="s">items</span><span class="sh">'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>인터넷 너머로 다른 파이썬 컴퓨터에 데이터를 고스란히 쏴주거나, 머신러닝의 어마어마한 학습 결과(가중치)들을 세이브하고 로드할 때 이 <code class="language-plaintext highlighter-rouge">pickle</code> 광선총은 파이썬 최고 존엄의 무기가 된답니다!</p>
 
 
             <!-- Google AdSense -->

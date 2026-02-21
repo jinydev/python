@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>14.04_코루틴(coroutine)</title>
-  <meta name="title" content="14.04_코루틴(coroutine)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="14.04_코루틴(coroutine)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>4. 핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)</title>
+  <meta name="title" content="4. 핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="4. 핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/14_iterator/14_04_coroutine/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/14_iterator/14_04_coroutine/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="14.04_코루틴(coroutine)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="4. 핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="14.04_코루틴(coroutine)" />
+<meta property="og:title" content="핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/14_iterator/14_04_coroutine/" />
-<meta property="og:url" content="http://localhost:4001/part03/14_iterator/14_04_coroutine/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/14_iterator/14_04_coroutine/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/14_iterator/14_04_coroutine/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="14.04_코루틴(coroutine)" />
+<meta property="twitter:title" content="핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"14.04_코루틴(coroutine)","url":"http://localhost:4001/part03/14_iterator/14_04_coroutine/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)","url":"https://python.jiny.dev/part03/14_iterator/14_04_coroutine/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,100 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">14.04_코루틴(coroutine)</li>
+        <li class="breadcrumb-item active" aria-current="page">4. 핑퐁 게임하듯 대화하는 함수: 코루틴 (coroutine)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1404_코루틴coroutine">14.04_코루틴(coroutine)</h1>
+            <h1 id="4-핑퐁-게임하듯-대화하는-함수-코루틴-coroutine">4. 핑퐁 게임하듯 대화하는 함수: 코루틴 (<code class="language-plaintext highlighter-rouge">coroutine</code>)</h1>
 
-<!-- 이 곳에 14_04_coroutine_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>방금 배운 제너레이터는 함수의 흐름을 일시 정지하고 밖에 있는 사람(우리가 쓴 메인 코드)에게 짠! 하고 “데이터를 꺼내주는” 멋진 재주(<code class="language-plaintext highlighter-rouge">yield</code>)를 갖고 있었습니다.
+그런데 파이썬 개발자들은 문득 이런 재밌는 생각을 했습니다.</p>
+
+<p><em>“함수 밖으로 데이터를 꺼내는 것뿐만 아니라, 거꾸로 일시 정지해 있는 함수 안으로 <strong>새 데이터를 쏙 밀어 넣을 수는</strong> 없을까?”</em></p>
+
+<p>이 기발한 역발상으로 탄생한 것이 바로 핑퐁 게임처럼 밖과 안이 데이터를 주고받으며 대화하는 <strong>코루틴(Coroutine)</strong>입니다!</p>
+
+<h2 id="41-받기만-하는-yield">4.1. 받기만 하는 <code class="language-plaintext highlighter-rouge">yield</code></h2>
+
+<p>제너레이터에서는 <code class="language-plaintext highlighter-rouge">yield 값</code> 형태로 응답을 밖으로 보냈었죠? 코루틴에서는 <code class="language-plaintext highlighter-rouge">변수 = yield</code> 형태로 바뀌어, 함수 밖에서 자기를 향해 던져주는 데이터를 두 팔 벌려 받습니다.</p>
+
+<p>밖에서 이 일시 정지된 코루틴 함수 안으로 데이터를 던져 넣을 땐 <strong><code class="language-plaintext highlighter-rouge">send()</code></strong> 라는 강력한 메서드를 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ping_pong_robot</span><span class="p">():</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c1"># 누군가 밖에서 나한테 데이터를 파싱해주면 그 값을 ball에 저장합니다.
+</span>        <span class="n">ball</span> <span class="o">=</span> <span class="k">yield</span> 
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">야호! 로봇이 [</span><span class="si">{</span><span class="n">ball</span><span class="si">}</span><span class="s">]을 튕겨냅니다!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 코루틴 로봇 준비
+</span><span class="n">robot</span> <span class="o">=</span> <span class="nf">ping_pong_robot</span><span class="p">()</span>
+
+<span class="c1"># [주의사항!] 로봇을 처음 가동시키기 위해선 준비 과정이 필요합니다.
+# 처음에는 비어있는 값(None)을 던져서 yield 부분까지 도착하게 만들어야 합니다!
+</span><span class="n">robot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span> 
+
+<span class="c1"># 이제 로봇에게 핑퐁 공(데이터)을 던져 넣어봅시다!
+</span><span class="n">robot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="sh">"</span><span class="s">핑</span><span class="sh">"</span><span class="p">)</span>     <span class="c1"># 야호! 로봇이 [핑]을 튕겨냅니다!
+</span><span class="n">robot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="sh">"</span><span class="s">퐁!</span><span class="sh">"</span><span class="p">)</span>    <span class="c1"># 야호! 로봇이 [퐁!]을 튕겨냅니다!
+</span><span class="n">robot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="sh">"</span><span class="s">스매시!</span><span class="sh">"</span><span class="p">)</span><span class="c1"># 야호! 로봇이 [스매시!]을 튕겨냅니다!
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="42-코루틴의-라이프-사이클-관리-close-throw">4.2 코루틴의 라이프 사이클 관리 (<code class="language-plaintext highlighter-rouge">close</code>, <code class="language-plaintext highlighter-rouge">throw</code>)</h2>
+
+<p>이 핑퐁 로봇은 계속 대기 상태(<code class="language-plaintext highlighter-rouge">while True</code>)에 있기 때문에 놔두면 프로그램이 끝날 때까지 멈춰있습니다. 친절하게 전원을 꺼주는 작업이 필요합니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">close()</code></strong>: 코루틴을 강제로 종료시킵니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">throw()</code></strong>: 코루틴 안쪽으로 폭탄(예외/Error)을 던져 넣어 강제 예외 처리를 유발하게 만듭니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 퇴근할 시간이 되면 로봇을 끕니다.
+</span><span class="n">robot</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+
+<span class="c1"># 끈 로봇한테 또 데이터를 던지면?
+# "더 이상 못 받아요!" 라는 StopIteration 에러가 터집니다.
+# robot.send("막타")  (에러 발생!)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="43-핑퐁을-치며-계산-누적하기-산출과-입력을-동시에">4.3 핑퐁을 치며 계산 누적하기 (산출과 입력을 동시에!)</h2>
+
+<p>코루틴의 진짜 마법은 데이터를 받는 것(<code class="language-plaintext highlighter-rouge">yield</code> 왼쪽에 변수)과 동시에 다른 값을 밖으로 산출(<code class="language-plaintext highlighter-rouge">yield</code> 오른쪽에 결과값)할 수 있다는 점입니다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">반환받는값 = yield 산출할값</code> 처럼 적으면, 나에게 들어온 공(입력)을 받아 내부에서 멋지게 가공한 다음, 다시 밖으로 스파이크(결과)를 날릴 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">running_average_bot</span><span class="p">():</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">average</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c1"># 시작 시 average(0)를 밖으로 주고 일시 정지합니다.
+</span>        <span class="c1"># 누군가 나에게 새 숫자를 send() 하면 그걸 new_number에 저장합니다.
+</span>        <span class="n">new_number</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">average</span>
+        
+        <span class="c1"># 내부 로직 가동!
+</span>        <span class="n">total</span> <span class="o">+=</span> <span class="n">new_number</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">average</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="n">count</span>
+
+<span class="c1"># 평균 계산기 가동
+</span><span class="n">avg_bot</span> <span class="o">=</span> <span class="nf">running_average_bot</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">avg_bot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="bp">None</span><span class="p">))</span> <span class="c1"># 준비 완료 후 최초 초기값(0) 반환
+</span>
+<span class="c1"># 숫자들을 쭉 던져주면 그동안의 평균을 계산해서 바로바로 응답합니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">avg_bot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1"># 평균 10.0
+</span><span class="nf">print</span><span class="p">(</span><span class="n">avg_bot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span> <span class="c1"># 평균 15.0
+</span><span class="nf">print</span><span class="p">(</span><span class="n">avg_bot</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="mi">90</span><span class="p">))</span> <span class="c1"># 평균 40.0
+</span></code></pre></div></div>
+
+<p>이 코루틴의 특유의 “정지-응답-재개-통신” 구조는 훗날 서버 네트워크 접속, 데이터 동시 다운로드 같은 아주 복잡한 일(비동기 프로그래밍, <code class="language-plaintext highlighter-rouge">async</code>/<code class="language-plaintext highlighter-rouge">await</code>)을 매끄럽게 돌아가게 해주는 핵심 심장부가 됩니다!</p>
 
 
             <!-- Google AdSense -->

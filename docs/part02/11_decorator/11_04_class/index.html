@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>11.04_클래스를</title>
-  <meta name="title" content="11.04_클래스를" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="11.04_클래스를"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>4. 클래스로 만드는 데코레이터</title>
+  <meta name="title" content="4. 클래스로 만드는 데코레이터" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="4. 클래스로 만드는 데코레이터"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/11_decorator/11_04_class/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/11_decorator/11_04_class/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="11.04_클래스를"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="4. 클래스로 만드는 데코레이터"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="11.04_클래스를" />
+<meta property="og:title" content="클래스로 만드는 데코레이터" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/11_decorator/11_04_class/" />
-<meta property="og:url" content="http://localhost:4001/part02/11_decorator/11_04_class/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/11_decorator/11_04_class/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/11_decorator/11_04_class/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="11.04_클래스를" />
+<meta property="twitter:title" content="클래스로 만드는 데코레이터" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"11.04_클래스를","url":"http://localhost:4001/part02/11_decorator/11_04_class/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"클래스로 만드는 데코레이터","url":"https://python.jiny.dev/part02/11_decorator/11_04_class/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,58 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">11.04_클래스를</li>
+        <li class="breadcrumb-item active" aria-current="page">4. 클래스로 만드는 데코레이터</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1104_클래스를">11.04_클래스를</h1>
+            <h1 id="4-클래스로-만드는-데코레이터">4. 클래스로 만드는 데코레이터</h1>
 
-<!-- 이 곳에 11_04_class_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>지금까지는 “함수”로 데코레이터를 만들었지만, 복잡하게 상태를 제어하거나 더 큰 규모의 아이템을 만들 때는 “클래스”로도 데코레이터를 제조할 수 있습니다.</p>
+
+<p>단지 <code class="language-plaintext highlighter-rouge">__call__</code> 스페셜 메서드 하나만 잘 오버로딩하면 됩니다. (이전 장에서 배운 <code class="language-plaintext highlighter-rouge">callable</code> 개념이 여기서 빛을 발합니다!)</p>
+
+<h2 id="41-__init__과-__call__의-합작">4.1 <code class="language-plaintext highlighter-rouge">__init__</code>과 <code class="language-plaintext highlighter-rouge">__call__</code>의 합작</h2>
+
+<p>클래스로 데코레이터를 만들 때는 두 가지 문만 기억하면 됩니다.</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">__init__</code>: 타겟 함수를 인자로 받아서, 초기 속성으로 <strong>저장</strong>합니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">__call__</code>: 클래스의 인스턴스가 괄호 문법 <code class="language-plaintext highlighter-rouge">()</code>으로 실행될 때, 포장지 역할을 하면서 저장해둔 본래 <strong>함수를 호출</strong>합니다.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PowerUpItem</span><span class="p">:</span>
+    <span class="c1"># 1. 대상 함수 func를 뱃속에 담아둡니다.
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        
+    <span class="c1"># 2. 아이템이 장착된 함수가 실행될 때 호출됩니다. (wrapper 역할)
+</span>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">func</span><span class="p">.</span><span class="n">__name__</span><span class="si">}</span><span class="s">] 함수에 로켓 엔진 가동!</span><span class="sh">"</span><span class="p">)</span>
+        <span class="c1"># 본래 함수 실행!
+</span>        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="c1"># 함수가 아닌 내가 직접 조립한 클래스 객체로 데코레이터 장착!
+</span><span class="nd">@PowerUpItem</span>
+<span class="k">def</span> <span class="nf">sprint</span><span class="p">(</span><span class="n">speed</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">시속 </span><span class="si">{</span><span class="n">speed</span><span class="si">}</span><span class="s">km로 달립니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># sprint 함수를 호출하면, 사실은 PowerUpItem의 __call__이 실행됩니다!
+</span><span class="nf">sprint</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+
+<span class="c1"># [실행 결과]
+# [sprint] 함수에 로켓 엔진 가동!
+# 시속 150km로 달립니다.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="42-내장된-클래스-데코레이터">4.2 내장된 클래스 데코레이터</h2>
+
+<p>우리가 파이썬 코드에서 익숙하게 봐왔던 <code class="language-plaintext highlighter-rouge">@classmethod</code>, <code class="language-plaintext highlighter-rouge">@staticmethod</code>, 그리고 변수처럼 함수를 쓰게 해주는 <code class="language-plaintext highlighter-rouge">@property</code> 역시, 파이썬이 내부적으로 C언어로 구현해둔 <strong>클래스 기반의 강력한 데코레이터</strong>들입니다.</p>
+
+<p>원리만 파악하면 여러분도 Django 웹 프레임워크나 딥러닝 패키지에 존재하는 거대한 마법(데코레이터)들을 여러분의 코드에 아주 쉽게 이식하고 사용할 수 있습니다.</p>
 
 
             <!-- Google AdSense -->

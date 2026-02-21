@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>16.03_bisect</title>
-  <meta name="title" content="16.03_bisect" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="16.03_bisect"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 깔끔한 정리 정돈: bisect 모듈</title>
+  <meta name="title" content="3. 깔끔한 정리 정돈: bisect 모듈" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 깔끔한 정리 정돈: bisect 모듈"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/16_modules/16_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/16_modules/16_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="16.03_bisect"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 깔끔한 정리 정돈: bisect 모듈"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="16.03_bisect" />
+<meta property="og:title" content="깔끔한 정리 정돈: bisect 모듈" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/16_modules/16_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/16_modules/16_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/16_modules/16_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/16_modules/16_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="16.03_bisect" />
+<meta property="twitter:title" content="깔끔한 정리 정돈: bisect 모듈" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"16.03_bisect","url":"http://localhost:4001/part04/16_modules/16_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"깔끔한 정리 정돈: bisect 모듈","url":"https://python.jiny.dev/part04/16_modules/16_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,56 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">16.03_bisect</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 깔끔한 정리 정돈: bisect 모듈</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1603_bisect">16.03_bisect</h1>
+            <h1 id="3-깔끔한-정리-정돈-bisect-모듈">3. 깔끔한 정리 정돈: bisect 모듈</h1>
 
-<!-- 이 곳에 16_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>우리가 이미 키 순서대로 줄 세워둔 리스트가 있다고 상상해 보세요. <code class="language-plaintext highlighter-rouge">[1번, 2번, 3번, 5번, 6번]</code>
+이때 새로운 ‘4번’ 친구가 나타났습니다. 이 친구가 줄에 끼어들려면 어떻게 해야 할까요?</p>
+
+<p>처음부터 1번과 비교하고, 2번과 비교하고 하나씩 비교하다 보면 시간이 너무 오래 걸리겠죠? 파이썬은 이미 완벽하게 정렬된 줄에 새로운 녀석을 순서 파괴 없이 <strong>가장 빠르게 쏙! 끼워 넣는</strong> 마법의 모듈, <code class="language-plaintext highlighter-rouge">bisect</code>(이진 탐색) 모듈을 제공합니다.</p>
+
+<h2 id="31-넌-어디로-들어가야-해-bisect">3.1 넌 어디로 들어가야 해? (<code class="language-plaintext highlighter-rouge">bisect</code>)</h2>
+
+<p>먼저, 새로운 숫자가 줄의 몇 번째 자리에 들어가야 줄이 망가지지 않는지 위치(Index)를 물어볼 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">bisect</span>
+
+<span class="c1"># 완벽하게 오름차순으로 정렬된 줄
+</span><span class="n">line</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+
+<span class="c1"># "4는 이 줄의 몇 번째 인덱스로 들어가야 정렬이 유지되니?"
+</span><span class="n">position</span> <span class="o">=</span> <span class="n">bisect</span><span class="p">.</span><span class="nf">bisect</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">4가 들어갈 자리는 </span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s">번 인덱스입니다!</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 출력: 4가 들어갈 자리는 3번 인덱스입니다!
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="32-곧바로-줄에-끼워-넣기-insort">3.2 곧바로 줄에 끼워 넣기 (<code class="language-plaintext highlighter-rouge">insort</code>)</h2>
+
+<p>어느 자리에 들어갈지 물어보는 것을 넘어, 한 큐에 딱 그 자리에 녀석을 밀어 넣고 싶다면 <code class="language-plaintext highlighter-rouge">insort</code> (insert + sort 합침) 마법을 쓰면 됩니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">bisect</span>
+
+<span class="n">line</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+
+<span class="c1"># 4를 줄의 알맞은 위치에 확 끼워 넣어라!
+</span><span class="n">bisect</span><span class="p">.</span><span class="nf">insort</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># 짠! 줄은 여전히 차례대로 정렬되어 있습니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>  
+<span class="c1"># 출력: [1, 2, 3, 4, 5, 6]
+</span></code></pre></div></div>
+
+<p>만약 동일한 숫자를 넣을 때 “기존 친구 앞쪽에 설래? 뒷쪽에 설래?”를 정해주고 싶다면 <code class="language-plaintext highlighter-rouge">bisect_left</code>(앞쪽), <code class="language-plaintext highlighter-rouge">bisect_right</code>(뒤쪽) 같이 섬세한 방향 옵션도 고를 수 있답니다. 
+정렬된 데이터에 계속해서 새로운 것을 주입해야 하는 프로그래밍 대회 코딩 문제나 고속 스피드가 생명인 게임 엔진에서 <code class="language-plaintext highlighter-rouge">bisect</code>는 엄청난 위력을 발휘합니다!</p>
 
 
             <!-- Google AdSense -->

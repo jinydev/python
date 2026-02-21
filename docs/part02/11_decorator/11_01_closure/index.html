@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>11.01_클로저(Closure)</title>
-  <meta name="title" content="11.01_클로저(Closure)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="11.01_클로저(Closure)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 함수가 품은 보물상자: 클로저 (Closure)</title>
+  <meta name="title" content="1. 함수가 품은 보물상자: 클로저 (Closure)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 함수가 품은 보물상자: 클로저 (Closure)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/11_decorator/11_01_closure/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/11_decorator/11_01_closure/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="11.01_클로저(Closure)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 함수가 품은 보물상자: 클로저 (Closure)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="11.01_클로저(Closure)" />
+<meta property="og:title" content="함수가 품은 보물상자: 클로저 (Closure)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/11_decorator/11_01_closure/" />
-<meta property="og:url" content="http://localhost:4001/part02/11_decorator/11_01_closure/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/11_decorator/11_01_closure/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/11_decorator/11_01_closure/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="11.01_클로저(Closure)" />
+<meta property="twitter:title" content="함수가 품은 보물상자: 클로저 (Closure)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"11.01_클로저(Closure)","url":"http://localhost:4001/part02/11_decorator/11_01_closure/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"함수가 품은 보물상자: 클로저 (Closure)","url":"https://python.jiny.dev/part02/11_decorator/11_01_closure/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,56 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">11.01_클로저(Closure)</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 함수가 품은 보물상자: 클로저 (Closure)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1101_클로저closure">11.01_클로저(Closure)</h1>
+            <h1 id="1-함수가-품은-보물상자-클로저-closure">1. 함수가 품은 보물상자: 클로저 (Closure)</h1>
 
-<!-- 이 곳에 11_01_closure_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>데이터뿐만 아니라 <strong>‘함수’ 자체도 변수에 담거나 남에게 던져줄(Return) 수 있다</strong>는 사실을 아시나요? 파이썬에서 함수는 일급 시민(First-class citizen)이기 때문입니다. 데코레이터를 이해하기 위한 첫 관문은 바로 클로저(Closure) 현상입니다.</p>
+
+<h2 id="11-함수-안의-함수-nested-function">1.1 함수 안의 함수 (Nested Function)</h2>
+
+<p>파이썬은 함수 내부에 또 다른 함수를 만들 수 있습니다. 그리고 이 내부 함수를 외부로 반환(return)할 때 아주 재미있는 현상이 일어납니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_multiplier</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># n은 외부 함수의 지역 변수입니다.
+</span>    
+    <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="c1"># 내부 함수에서 외부 변수 n을 참조합니다!
+</span>        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">n</span>
+        
+    <span class="c1"># 내부 '함수 자체'를 반환합니다. (괄호를 치지 않음)
+</span>    <span class="k">return</span> <span class="n">multiplier</span>
+
+<span class="c1"># 1. n=3으로 세팅된 곱하기 기계를 만듭니다.
+</span><span class="n">times3</span> <span class="o">=</span> <span class="nf">make_multiplier</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># 원래대로라면 make_multiplier가 끝났으니 n=3도 사라져야 하지만...
+# 2. 내부 함수가 실행될 때 여전히 n=3을 기억하고 있습니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">times3</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1"># 30
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">times3</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 15
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="12-자유-변수-free-variable를-품은-클로저">1.2 자유 변수 (Free Variable)를 품은 클로저</h2>
+
+<p>함수가 끝나면 그 안의 변수들은 보통 메모리에서 우주 먼지처럼 사라집니다. 하지만 위의 예제처럼, <strong>내부 함수가 외부 함수의 변수(<code class="language-plaintext highlighter-rouge">n</code>)를 물고 밖으로 튀어나오면</strong>, 파이썬은 그 변수를 지우지 않고 내부 함수만의 ‘비밀 보물상자’에 영원히 가둬둡니다.</p>
+
+<p>이렇게 “자신이 만들어진 환경(변수)을 닫아서(Close) 기억하고 있는 함수” 현상을 <strong>클로저(Closure)</strong>라고 부릅니다. 이때 기억된 외부 변수를 <strong>자유 변수</strong>라고 합니다.</p>
+
+<p>내부 함수의 <code class="language-plaintext highlighter-rouge">__closure__</code> 속성을 뜯어보면 실제로 값이 저장되어 있는 것을 확인할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># times3 함수 안에 저장된 클로저(비밀 상자) 열어보기
+# cell_contents 안에 숫자 3이 살아있는 것을 확인할 수 있습니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">times3</span><span class="p">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">cell_contents</span><span class="p">)</span> <span class="c1"># 3
+</span></code></pre></div></div>
+
+<p>이 클로저의 강력한 기억력을 바탕으로, 데코레이터는 기존 함수의 상태나 매개변수를 잃어버리지 않고 기억하며 마법을 부릴 수 있게 됩니다.</p>
 
 
             <!-- Google AdSense -->

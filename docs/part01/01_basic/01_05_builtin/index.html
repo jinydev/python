@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>01.05_내장</title>
-  <meta name="title" content="01.05_내장" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="01.05_내장"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>5. 파이썬 내장 객체(Built-ins)</title>
+  <meta name="title" content="5. 파이썬 내장 객체(Built-ins)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="5. 파이썬 내장 객체(Built-ins)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/01_basic/01_05_builtin/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/01_basic/01_05_builtin/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="01.05_내장"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="5. 파이썬 내장 객체(Built-ins)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="01.05_내장" />
+<meta property="og:title" content="파이썬 내장 객체(Built-ins)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/01_basic/01_05_builtin/" />
-<meta property="og:url" content="http://localhost:4001/part01/01_basic/01_05_builtin/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/01_basic/01_05_builtin/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/01_basic/01_05_builtin/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="01.05_내장" />
+<meta property="twitter:title" content="파이썬 내장 객체(Built-ins)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"01.05_내장","url":"http://localhost:4001/part01/01_basic/01_05_builtin/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"파이썬 내장 객체(Built-ins)","url":"https://python.jiny.dev/part01/01_basic/01_05_builtin/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,60 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">01.05_내장</li>
+        <li class="breadcrumb-item active" aria-current="page">5. 파이썬 내장 객체(Built-ins)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0105_내장">01.05_내장</h1>
+            <h1 id="5-파이썬-내장-객체built-ins">5. 파이썬 내장 객체(Built-ins)</h1>
 
-<!-- 이 곳에 01_05_builtin_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>우리가 이전에 다루었던 <code class="language-plaintext highlighter-rouge">int</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">list</code>와 같은 기본 자료형 클래스들이나 <code class="language-plaintext highlighter-rouge">print()</code>, <code class="language-plaintext highlighter-rouge">dir()</code>, <code class="language-plaintext highlighter-rouge">help()</code> 같은 필수 함수들은 우리가 별도로 <code class="language-plaintext highlighter-rouge">import</code> 선언을 하지 않아도 언제나 전역에서 자유롭게 꺼내 쓸 수 있습니다.</p>
+
+<p>어떻게 파이썬은 이런 일들을 내부적으로 처리하고 있는 걸까요? 정답은 바로 파이썬의 핵심 내장 모듈인 <strong><code class="language-plaintext highlighter-rouge">__builtins__</code></strong> 공간에 있습니다.</p>
+
+<h2 id="51-__builtins__-네임스페이스-이해하기">5.1 <code class="language-plaintext highlighter-rouge">__builtins__</code> 네임스페이스 이해하기</h2>
+
+<p>파이썬 인터프리터가 실행되면서 가장 먼저 메모리에 적재되는 시스템 모듈이 <code class="language-plaintext highlighter-rouge">__builtins__</code> 입니다. 이 모듈 안에는 프로그래밍에 필수적인 모든 내장 객체들이 담겨 있습니다.</p>
+
+<p>파이썬 엔진은 사용자가 어떤 식별자(함수명, 변수명)를 호출할 때, 우리가 만든 일반적인 변수 네임스페이스를 먼저 뒤져본 뒤, 찾을 수 없으면 최후의 수단으로 이 <code class="language-plaintext highlighter-rouge">__builtins__</code> 공간을 검색합니다.</p>
+
+<h3 id="내장-자료형-스캔-예제">내장 자료형 스캔 예제</h3>
+
+<p>실제로 이 모듈의 내부 딕셔너리(<code class="language-plaintext highlighter-rouge">__dict__</code>)를 열어보면, 우리가 자주 쓰던 클래스들이 등록되어 있는 것을 확인할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 자주 쓰이는 내장 자료형(클래스) 이름 리스트
+</span><span class="n">type_names</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">int</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">float</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">complex</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">str</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">list</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tuple</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dict</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">bytes</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">bytearray</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1"># __builtins__ 공간을 뒤져서 각 이름이 가리키는 실제 클래스 객체를 출력
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">■ 내장 자료형 목록 확인 ■</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t_name</span> <span class="ow">in</span> <span class="n">type_names</span><span class="p">:</span>
+    <span class="n">actual_class</span> <span class="o">=</span> <span class="n">__builtins__</span><span class="p">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">t_name</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">t_name</span><span class="si">}</span><span class="s"> -&gt; </span><span class="si">{</span><span class="n">actual_class</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p><em>(실행 시 <code class="language-plaintext highlighter-rouge">&lt;class 'int'&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;class 'list'&gt;</code> 등의 원본 클래스 메타 정보가 매핑되어 있는 모습을 볼 수 있습니다.)</em></p>
+
+<hr />
+
+<h2 id="52-내장-함수-스캔-예제">5.2 내장 함수 스캔 예제</h2>
+
+<p>함수 역시 동일한 원리로 관리됩니다. <code class="language-plaintext highlighter-rouge">print</code>, <code class="language-plaintext highlighter-rouge">help</code>, <code class="language-plaintext highlighter-rouge">isinstance</code> 같은 호출형 도구들도 모두 이 내장 딕셔너리에 등록되어 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 기본 내장 함수들의 이름 리스트
+</span><span class="n">func_names</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">dir</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">help</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">print</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">isinstance</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">■ 내장 함수 목록 확인 ■</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f_name</span> <span class="ow">in</span> <span class="n">func_names</span><span class="p">:</span>
+    <span class="n">actual_function</span> <span class="o">=</span> <span class="n">__builtins__</span><span class="p">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">f_name</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s"> -&gt; </span><span class="si">{</span><span class="n">actual_function</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p><em>(실행 시 <code class="language-plaintext highlighter-rouge">&lt;built-in function print&gt;</code> 와 같이 파이썬 코어로 구현된 네이티브 함수 정보가 표시됩니다.)</em></p>
+
+<blockquote>
+  <p><strong>📌 핵심 요약</strong><br />
+파이썬의 모든 ‘기본 제공’ 요소들은 마법처럼 허공에서 나타나는 것이 아니라, <code class="language-plaintext highlighter-rouge">__builtins__</code> 라는 거대한 부품 상자(모듈) 안에 체계적으로 정리되어 배포되는 일반적인 파이썬 객체일 뿐입니다.</p>
+</blockquote>
 
 
             <!-- Google AdSense -->

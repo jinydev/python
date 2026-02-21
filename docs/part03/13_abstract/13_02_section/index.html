@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>13.02_수에</title>
-  <meta name="title" content="13.02_수에" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="13.02_수에"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 숫자들의 가계도 (numbers)</title>
+  <meta name="title" content="2. 숫자들의 가계도 (numbers)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 숫자들의 가계도 (numbers)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="13.02_수에"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 숫자들의 가계도 (numbers)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="13.02_수에" />
+<meta property="og:title" content="숫자들의 가계도 (numbers)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/13_abstract/13_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part03/13_abstract/13_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/13_abstract/13_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/13_abstract/13_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="13.02_수에" />
+<meta property="twitter:title" content="숫자들의 가계도 (numbers)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"13.02_수에","url":"http://localhost:4001/part03/13_abstract/13_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"숫자들의 가계도 (numbers)","url":"https://python.jiny.dev/part03/13_abstract/13_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,57 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">13.02_수에</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 숫자들의 가계도 (numbers)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1302_수에">13.02_수에</h1>
+            <h1 id="2-숫자들의-가계도-numbers">2. 숫자들의 가계도 (<code class="language-plaintext highlighter-rouge">numbers</code>)</h1>
 
-<!-- 이 곳에 13_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>우리가 매일 쓰는 1, 3.14 같은 단순한 숫자들도 파이썬 내부에서는 아주 거대한 족보(추상 클래스 체계)를 가지고 있습니다. 파이썬의 <code class="language-plaintext highlighter-rouge">numbers</code> 모듈을 들여다보면 수학의 수 체계가 그대로 코드로 구현되어 있습니다.</p>
+
+<h2 id="21-숫자의-가장-큰-조상-number">2.1 숫자의 가장 큰 조상, Number</h2>
+
+<p>모든 숫자의 단군 할아버지(?) 격인 추상 클래스는 <code class="language-plaintext highlighter-rouge">Number</code>입니다. 정수(<code class="language-plaintext highlighter-rouge">int</code>), 실수(<code class="language-plaintext highlighter-rouge">float</code>), 복소수(<code class="language-plaintext highlighter-rouge">complex</code>) 등 파이썬 내의 모든 숫자 자료형은 결국 이 <code class="language-plaintext highlighter-rouge">Number</code> 소속입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numbers</span>
+
+<span class="c1"># 정수 10은 Number의 후손이 맞을까?
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">isinstance</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Number</span><span class="p">))</span> <span class="c1"># True
+</span>
+<span class="c1"># 3.14 (실수)도 Number의 후손일까?
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">isinstance</span><span class="p">(</span><span class="mf">3.14</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Number</span><span class="p">))</span> <span class="c1"># True
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="22-구체적인-숫자-계급표">2.2 구체적인 숫자 계급표</h2>
+
+<p><code class="language-plaintext highlighter-rouge">numbers</code> 모듈 안에는 점차 구체화되는 4단계의 숫자 추상 클래스 계급이 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">Number</code> (수)</strong>: 가장 큰 범주 (더하기, 빼기 등을 포괄적 정의)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Complex</code> (복소수)</strong>: 내장 <code class="language-plaintext highlighter-rouge">complex</code> 타입과 연관 (실수부, 허수부 등)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Real</code> (실수)</strong>: 내장 <code class="language-plaintext highlighter-rouge">float</code> 타입과 연관</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Rational</code> (유리수)</strong>: 분수 표기가 가능한 숫자 (예: <code class="language-plaintext highlighter-rouge">fractions.Fraction</code>)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Integral</code> (정수)</strong>: 내장 <code class="language-plaintext highlighter-rouge">int</code> 타입과 연관</li>
+</ol>
+
+<p>(아래로 내려갈수록 상위 클래스의 성질을 물려받아 더 좁은 범위의 숫자가 됩니다.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numbers</span>
+<span class="kn">import</span> <span class="n">fractions</span>
+
+<span class="c1"># int(정수)는 Integral(정수 추상 클래스)의 자식입니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Integral</span><span class="p">))</span> <span class="c1"># True
+</span>
+<span class="c1"># 분수(Fraction)는 실수(Real)의 자식입니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="n">fractions</span><span class="p">.</span><span class="n">Fraction</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Real</span><span class="p">))</span> <span class="c1"># True
+</span></code></pre></div></div>
+
+<p>파이썬의 내장 함수나 연산자들은 내부적으로 숫자가 들어올 때 “아, 이 녀석이 <code class="language-plaintext highlighter-rouge">Real</code> 추상 클래스의 규격을 만족하는 (즉, 더하고 뺄 수 있는) 진짜 숫자가 맞구나!”라고 판단하여 똑똑하게 계산을 처리합니다.</p>
 
 
             <!-- Google AdSense -->

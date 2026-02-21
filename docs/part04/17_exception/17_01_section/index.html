@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>17.01_syntax</title>
-  <meta name="title" content="17.01_syntax" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="17.01_syntax"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 에러 잡는 마법의 그물: try ~ except</title>
+  <meta name="title" content="1. 에러 잡는 마법의 그물: try ~ except" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 에러 잡는 마법의 그물: try ~ except"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/17_exception/17_01_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/17_exception/17_01_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="17.01_syntax"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 에러 잡는 마법의 그물: try ~ except"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="17.01_syntax" />
+<meta property="og:title" content="에러 잡는 마법의 그물: try ~ except" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/17_exception/17_01_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/17_exception/17_01_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/17_exception/17_01_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/17_exception/17_01_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="17.01_syntax" />
+<meta property="twitter:title" content="에러 잡는 마법의 그물: try ~ except" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"17.01_syntax","url":"http://localhost:4001/part04/17_exception/17_01_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"에러 잡는 마법의 그물: try ~ except","url":"https://python.jiny.dev/part04/17_exception/17_01_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,74 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">17.01_syntax</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 에러 잡는 마법의 그물: try ~ except</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1701_syntax">17.01_syntax</h1>
+            <h1 id="1-에러-잡는-마법의-그물-try--except">1. 에러 잡는 마법의 그물: <code class="language-plaintext highlighter-rouge">try ~ except</code></h1>
 
-<!-- 이 곳에 17_01_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>우리가 파이썬에게 일을 시키다 보면, 크게 두 가지 종류의 에러를 만납니다. 하나는 ‘말이 안 되는 문법’을 썼을 때 파이썬이 아예 이해를 못 하는 문법 에러! 다른 하나는 문법은 맞는데 실행하다가 문제가 생기는 런타임 에러입니다.</p>
+
+<h2 id="11-내가-글을-잘못-썼네-블록문-오타-에러">1.1 내가 글을 잘못 썼네! (블록문, 오타 에러)</h2>
+<p>이 에러들은 우리가 파이썬의 맞춤법을 틀렸을 때 파이썬이 처음부터 차갑게 실행을 거부하는 에러들입니다. 보통 빨간 줄이 쭉 그어집니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">SyntaxError</code> (문법 오류)</strong>: 괄호를 안 닫았거나, 콜론(<code class="language-plaintext highlighter-rouge">:</code>)을 빼먹은 경우!</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">IndentationError</code> (들여쓰기 오류)</strong>: <code class="language-plaintext highlighter-rouge">if</code>문이나 <code class="language-plaintext highlighter-rouge">for</code>문 안에 들여쓰기를 제대로 맞추지 않아 줄이 삐뚤빼뚤할 때 발생합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">NameError</code> (이름 오류)</strong>: 아직 만들지도 않은 변수 이름을 부르면 “걔가 누군데요?” 하면서 화를 냅니다.</li>
+</ul>
+
+<p>이런 에러들은 그물이 아니라, 우리 스스로 오타를 즉시 찾아내서 고쳐주어야 합니다!</p>
+
+<hr />
+
+<h2 id="12-안전-그물-던지기-try-except">1.2 안전 그물 던지기: <code class="language-plaintext highlighter-rouge">try</code>, <code class="language-plaintext highlighter-rouge">except</code></h2>
+
+<p>맞춤법(문법)은 완벽해도, 막상 코드를 돌리다 보면 유저가 이상한 값을 넣어서 에러가 터질 때가 있습니다. 이럴 땐 프로그램이 튕기지 않도록 <strong>안전 그물</strong>을 쳐야 합니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">try</code> : “일단 이 코드를 시도(Try)해 봐!”</li>
+  <li><code class="language-plaintext highlighter-rouge">except</code> : “만약 에러가 터지면 튕기지 말고, 여기 쓰인 코드를 대신 실행해!”</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># 에러가 발생할지도 모르는 위험한 구역!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">사냥을 시작해 볼까?</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span> <span class="c1"># 수학에서 0으로 나누는 건 불가능하므로 에러 발생!
+</span>    
+<span class="k">except</span> <span class="nb">ZeroDivisionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> 
+    <span class="c1"># 0으로 나눴을 때 발생하는 특별한 에러를 잡는 그물!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">삐용삐용! 에러가 잡혔습니다: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 코드를 실행하면 프로그램이 강제 종료되는 대신, 부드럽게 메시지만 남기고 다음 코드로 잘 넘어갑니다.</p>
+
+<hr />
+
+<h2 id="13-어찌됐든-무조건-실행해-finally와-else">1.3 어찌됐든 무조건 실행해! (<code class="language-plaintext highlighter-rouge">finally</code>와 <code class="language-plaintext highlighter-rouge">else</code>)</h2>
+
+<p><code class="language-plaintext highlighter-rouge">try</code>와 <code class="language-plaintext highlighter-rouge">except</code> 뒤에 추가로 붙여서 더욱 똑똑한 에러 처리를 할 수도 있습니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">else</code> : 에러가 <strong>안 터지고 무사히 끝났을 때만</strong> 기분 좋게 실행되는 보너스 구역입니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">finally</code> : 에러가 터지든 안 터지든 <strong>마지막에 무조건 100% 실행</strong>되는 구역입니다. 주로 열려있는 파일을 닫거나 뒷정리를 할 때 꼭 씁니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">게임을 로딩합니다...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="c1"># raise 구문은 일부러 에러를 강제로 던져서 테스트할 때 씁니다!
+</span>    <span class="c1"># raise Exception("강제 에러 던지기!")
+</span><span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">에러 발생! 로딩 실패!</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">에러가 한 번도 안 터졌네? 게임 시작!</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">게임이 성공하든 터지든 이 문장은 무조건 출력돼!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 4가지 키워드만 알면 여러분은 어떤 에러 폭탄이 터져도 끄떡없는 무적의 프로그램을 짤 수 있습니다!</p>
 
 
             <!-- Google AdSense -->

@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>01.02_이름(name)</title>
-  <meta name="title" content="01.02_이름(name)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="01.02_이름(name)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 이름(Name)과 네임스페이스</title>
+  <meta name="title" content="2. 이름(Name)과 네임스페이스" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 이름(Name)과 네임스페이스"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/01_basic/01_02_name/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/01_basic/01_02_name/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="01.02_이름(name)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 이름(Name)과 네임스페이스"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="01.02_이름(name)" />
+<meta property="og:title" content="이름(Name)과 네임스페이스" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/01_basic/01_02_name/" />
-<meta property="og:url" content="http://localhost:4001/part01/01_basic/01_02_name/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/01_basic/01_02_name/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/01_basic/01_02_name/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="01.02_이름(name)" />
+<meta property="twitter:title" content="이름(Name)과 네임스페이스" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"01.02_이름(name)","url":"http://localhost:4001/part01/01_basic/01_02_name/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"이름(Name)과 네임스페이스","url":"https://python.jiny.dev/part01/01_basic/01_02_name/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,129 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">01.02_이름(name)</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 이름(Name)과 네임스페이스</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0102_이름name">01.02_이름(name)</h1>
+            <h1 id="2-이름name과-네임스페이스">2. 이름(Name)과 네임스페이스</h1>
 
-<!-- 이 곳에 01_02_name_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬에서 생성된 모든 <strong>값(Value)</strong>을 재사용하려면 그것들을 호출할 수 있는 명칭이 필요합니다. 우리는 데이터를 메모리에 적재한 후, 그 메모리 주소를 가리키는 라벨을 붙이게 되는데, 이를 <strong>이름(Name)</strong> 또는 <strong>식별자(Identifier)</strong>라고 부릅니다.</p>
+
+<p>파이썬은 작성된 모든 식별자들을 <strong>네임스페이스(Namespace)</strong>라는 고유한 관리 공간에 등록하여 충돌 없이 사용할 수 있도록 통제합니다. 식별자로 쓰일 수 있는 대상에는 변수, 함수, 클래스, 모듈, 패키지 등이 존재합니다.</p>
+
+<h2 id="21-예약어keyword-확인하기">2.1 예약어(Keyword) 확인하기</h2>
+
+<p>문법의 구조를 파악하기 위해 파이썬 시스템 내부에서 미리 독점하여 사용 중인 단어들을 <strong>예약어(Keyword)</strong>라고 합니다. 예약어는 일반적인 변수나 함수의 식별자로 사용할 수 없습니다.</p>
+
+<p>어떤 단어들이 예약어인지 파악하기 위해 <code class="language-plaintext highlighter-rouge">keyword</code> 내장 모듈을 사용할 수 있으며, <code class="language-plaintext highlighter-rouge">pprint</code>(Pretty Print) 모듈을 엮어 결과를 깔끔하게 출력해 볼 수 있습니다.</p>
+
+<h3 id="예약어-출력-예제">예약어 출력 예제</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">keyword</span>
+<span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="c1"># 현재 파이썬 버전에 등록된 30여 개의 예약어 목록 가져오기
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파이썬 예약어 목록:</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">.</span><span class="nf">pprint</span><span class="p">(</span><span class="n">keyword</span><span class="p">.</span><span class="n">kwlist</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<p><em>실행 결과 (<code class="language-plaintext highlighter-rouge">and</code>, <code class="language-plaintext highlighter-rouge">break</code>, <code class="language-plaintext highlighter-rouge">class</code>, <code class="language-plaintext highlighter-rouge">def</code>, <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">True</code>, <code class="language-plaintext highlighter-rouge">False</code> 등 내부 핵심 문법 용어들이 출력됩니다.)</em></p>
+
+<blockquote>
+  <p><strong>SyntaxError 주의</strong><br />
+<code class="language-plaintext highlighter-rouge">for</code>나 <code class="language-plaintext highlighter-rouge">in</code> 같은 예약어를 변수명으로 강제 할당하려고 하면, 파이썬 인터프리터는 구문 에류(<code class="language-plaintext highlighter-rouge">SyntaxError: invalid syntax</code>)를 뱉고 실행을 거부합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="22-파이썬-명명-규칙-naming-convention">2.2 파이썬 명명 규칙 (Naming Convention)</h2>
+
+<p>식별자는 코드의 가독성과 협업을 위해 언어 생태계 전반에서 합의된 권장 표기법(PEP 8 등)을 따르는 것이 좋습니다. 기본적으로 식별자는 <strong>알파벳, 숫자, 언더바(<code class="language-plaintext highlighter-rouge">_</code>)</strong>로만 구성해야 하며 빈칸이나 특수문자를 포함할 수 없습니다.</p>
+
+<h3 id="주요-명명-규칙-요약표">주요 명명 규칙 요약표</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">종류</th>
+      <th style="text-align: left">규칙 설명</th>
+      <th style="text-align: left">예시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>상수</strong></td>
+      <td style="text-align: left">모든 글자를 대문자로 표기하며 언더바로 띄어쓰기</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">MAX_COUNT</code>, <code class="language-plaintext highlighter-rouge">PORT</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>변수/함수</strong></td>
+      <td style="text-align: left">모든 글자를 소문자로 표기하며 언더바로 띄어쓰기 (스네이크 케이스)</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">user_name</code>, <code class="language-plaintext highlighter-rouge">get_data()</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>클래스</strong></td>
+      <td style="text-align: left">단어의 첫 글자마다 대문자로 표기 (파스칼 또는 카멜 케이스)</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">DatabaseManager</code>, <code class="language-plaintext highlighter-rouge">UserAccount</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>비공개 속성</strong></td>
+      <td style="text-align: left">변수나 메서드 이름 앞에 언더바 두 개 장착</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">__secret_key</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p><strong>이름 선언 제약 사항</strong><br />
+모든 식별자(이름)의 맨 첫 글자는 절대 <strong>숫자(0~9)로 시작할 수 없습니다.</strong> 에러가 발생합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="23-변수variable의-작동-원리">2.3 변수(Variable)의 작동 원리</h2>
+
+<p>C언어나 Java와 같은 과거의 정적 타입 언어들과 달리, 파이썬의 변수는 박스 형태의 저장 공간이 아니라 단순히 데이터 객체가 머무는 메모리의 주소를 보관하는 <strong>이름표(주소 레퍼런스)</strong>에 불과합니다.</p>
+
+<ul>
+  <li>변수를 선언할 때 자료형(정수, 실수 등)을 미리 선언할 필요가 없습니다.</li>
+  <li>단순히 선언된 이름에 <code class="language-plaintext highlighter-rouge">=</code> 연산자를 이용해 값을 연결(묶음)해주기만 하면 됩니다.</li>
+</ul>
+
+<h3 id="변수-할당-에러-nameerror">변수 할당 에러 (NameError)</h3>
+<p>가상 공간에 변수 이름만 던져놓고 아무런 값을 할당하지 않은 채 호출하게 되면, 파이썬의 네임스페이스에는 해당 식별자가 존재하지 않기 때문에 언제나 <code class="language-plaintext highlighter-rouge">NameError: name '...' is not defined</code> 에러가 발생합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러가 발생하는 경우
+</span><span class="n">In</span> <span class="p">:</span> <span class="n">temp_value</span>
+<span class="n">Out</span><span class="p">:</span> <span class="nb">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="sh">'</span><span class="s">temp_value</span><span class="sh">'</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+
+<span class="c1"># 올바른 사용법
+</span><span class="n">In</span> <span class="p">:</span> <span class="n">temp_value</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">In</span> <span class="p">:</span> <span class="n">temp_value</span>
+<span class="n">Out</span><span class="p">:</span> <span class="mi">100</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="24-함수와-클래스의-고유-이름-__name__">2.4 함수와 클래스의 고유 이름 (<code class="language-plaintext highlighter-rouge">__name__</code>)</h2>
+
+<p>변수뿐만 아니라 함수와 클래스 객체 역시 생성 시점에 자신들만의 식별자를 네임스페이스에 저장합니다. 이때 파이썬 인터프리터는 객체 내부에 <code class="language-plaintext highlighter-rouge">__name__</code> 이라는 특수한 속성을 자동으로 부여하여 해당 객체의 본래 이름을 텍스트(문자열)로 간직합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 함수 정의
+</span><span class="k">def</span> <span class="nf">calculate_sum</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">calculate_sum</span><span class="p">.</span><span class="n">__name__</span><span class="p">)</span>  <span class="c1"># 출력 결과: "calculate_sum"
+</span>
+<span class="c1"># 클래스 정의
+</span><span class="k">class</span> <span class="nc">MachineLearningModel</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">MachineLearningModel</span><span class="p">.</span><span class="n">__name__</span><span class="p">)</span>  <span class="c1"># 출력 결과: "MachineLearningModel"
+</span></code></pre></div></div>
+
+<p>이와 같이 파이썬에서는 모든 요소가 이름(Name)을 부여받은 객체로서 네임스페이스 내부에서 안전하고 일관적으로 관리됩니다.</p>
 
 
             <!-- Google AdSense -->

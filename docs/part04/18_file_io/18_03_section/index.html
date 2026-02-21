@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>18.03_TextIO</title>
-  <meta name="title" content="18.03_TextIO" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="18.03_TextIO"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 우리의 언어: 텍스트 파일과 마법 주문 with</title>
+  <meta name="title" content="3. 우리의 언어: 텍스트 파일과 마법 주문 with" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 우리의 언어: 텍스트 파일과 마법 주문 with"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/18_file_io/18_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/18_file_io/18_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="18.03_TextIO"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 우리의 언어: 텍스트 파일과 마법 주문 with"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="18.03_TextIO" />
+<meta property="og:title" content="우리의 언어: 텍스트 파일과 마법 주문 with" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/18_file_io/18_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/18_file_io/18_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/18_file_io/18_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/18_file_io/18_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="18.03_TextIO" />
+<meta property="twitter:title" content="우리의 언어: 텍스트 파일과 마법 주문 with" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"18.03_TextIO","url":"http://localhost:4001/part04/18_file_io/18_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"우리의 언어: 텍스트 파일과 마법 주문 with","url":"https://python.jiny.dev/part04/18_file_io/18_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,89 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">18.03_TextIO</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 우리의 언어: 텍스트 파일과 마법 주문 with</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1803_textio">18.03_TextIO</h1>
+            <h1 id="3-우리의-언어-텍스트-파일과-마법-주문-with">3. 우리의 언어: 텍스트 파일과 마법 주문 with</h1>
 
-<!-- 이 곳에 18_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>이번엔 진짜 우리가 읽을 수 있는 일반 메모장 텍스트 파일 다루기입니다. 사실 너무 간단하지만, 실수하지 말아야 할 초보자 필수 스킬들이 숨어있습니다.</p>
+
+<h2 id="31-텍스트-처리와-인코딩-textiowrapper">3.1 텍스트 처리와 인코딩 (TextIOWrapper)</h2>
+
+<p>읽기 전용 텍스트 파일(<code class="language-plaintext highlighter-rouge">rt</code>)을 열면 <code class="language-plaintext highlighter-rouge">TextIOWrapper</code>가 등장합니다. 이 기능은 안쪽에 있는 더러운 기계어를 유니코드라는 아주 예쁘고 일관된 글꼴로 바꾸어서 파이썬 화면에 뿌려주는 역할을 합니다.</p>
+
+<p>특히 한글이 깨지는 것을 막으려면 외계어처럼 이상한 글자가 나오지 않도록 <code class="language-plaintext highlighter-rouge">encoding='utf-8'</code> 옵션을 습관적으로 걸어주는 것이 좋습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 한글이 절대 안깨지는 방탄 텍스트 파일 열기!
+</span><span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">오늘은 파이썬 IO를 배웠다. 재미있다!</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="32-허공의-진짜-메모장-stringio">3.2 허공의 진짜 메모장: StringIO</h2>
+
+<p>바이너리 쪽에 <code class="language-plaintext highlighter-rouge">BytesIO</code>가 있었다면 텍스트 쪽에는 똑같은 역할을 하는 녀석이 있습니다. 파일은 안 남기면서 파이썬 화면 메모리 상에서만 글자를 썼다 지우는 마법의 칠판, 바로 <strong><code class="language-plaintext highlighter-rouge">StringIO</code></strong>입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">io</span>
+
+<span class="n">fake_memo</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="nc">StringIO</span><span class="p">()</span>
+<span class="n">fake_memo</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">이건 허공에 쓴 일기야.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">fake_memo</span><span class="p">.</span><span class="nf">getvalue</span><span class="p">())</span> <span class="c1"># 읽어오기!
+</span><span class="n">fake_memo</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="33-문단속을-철저히-마법의-키워드-with">3.3 문단속을 철저히! 마법의 키워드 <code class="language-plaintext highlighter-rouge">with</code></h2>
+
+<p>파일을 열었으면 반드시 닫아야(<code class="language-plaintext highlighter-rouge">close()</code>) 합니다. 안 닫으면 좀비처럼 파일이 켜진 채 남아 에러를 뿜어냅니다. 그런데 매번 닫는 걸 까먹기 십상이죠?</p>
+
+<p><code class="language-plaintext highlighter-rouge">with</code> 라는 마법 주문을 앞에 쓰면, 파이썬이 “아! 들여쓰기가 끝나는 순간 내가 알아서 자동으로 파일 문을 닫아줄게!” 라고 약속해 줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 파일을 엽니다. as f는 '이 파일을 f라는 별명으로 부를게'라는 뜻입니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파일 내용:</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="c1"># 이 구역(블록)을 빠져나가는 순간 f.close()가 알아서 실행됩니다!
+</span>
+<span class="c1"># 파일이 이미 잘 닫혔습니다!
+# print(f.read())  # 이렇게 블럭 밖에서 다시 읽으려 시도하면 에러가 납니다!
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="34-돋보기로-위치-콕-seek-tell">3.4 돋보기로 위치 콕! (<code class="language-plaintext highlighter-rouge">seek</code>, <code class="language-plaintext highlighter-rouge">tell</code>)</h2>
+
+<p>공책을 처음 열면 읽는 눈동자의 커서가 맨 처음에 있습니다. <code class="language-plaintext highlighter-rouge">tell</code>은 “지금 내 커서 번호가 어딘지 말해줘!” 이고, <code class="language-plaintext highlighter-rouge">seek</code>은 “야, 10번째 글자 뒤로 바로 순간이동 해!”라는 명령입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">내 위치:</span><span class="sh">"</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">tell</span><span class="p">())</span> <span class="c1"># 0 출력
+</span>    
+    <span class="c1"># 0번(처음) 으로 강제 이동해!
+</span>    <span class="n">f</span><span class="p">.</span><span class="nf">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># 라인 하나만 쓱 읽어오기
+</span>    <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">readline</span><span class="p">())</span> 
+</code></pre></div></div>
+
+<h3 id="-시작-전-확인-진짜-파일이-존재할까">🚨 시작 전 확인: 진짜 파일이 존재할까?</h3>
+<p>만약 <code class="language-plaintext highlighter-rouge">rt</code> 모드로 열려는데 파일이 없다면 프로그램이 터집니다! 그러니 문을 벌컥 열기 전 똑똑하게 확인해 봐야 합니다.
+<code class="language-plaintext highlighter-rouge">os.path.exists()</code>를 쓰면 진짜 그 파일이 폴더 안에 있는지 진실을 말해줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파일 찾았어! 열게!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="c1"># 파일 열기 진행 ... 
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">아무것도 없어. 창고가 비었네!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
 
 
             <!-- Google AdSense -->

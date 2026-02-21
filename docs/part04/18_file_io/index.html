@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 18</title>
-  <meta name="title" content="Chapter 18" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 18"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장</title>
+  <meta name="title" content="Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/18_file_io/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/18_file_io/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 18"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Chapter 18" />
+<meta property="og:title" content="Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/18_file_io/" />
-<meta property="og:url" content="http://localhost:4001/part04/18_file_io/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/18_file_io/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/18_file_io/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Chapter 18" />
+<meta property="twitter:title" content="Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 18","url":"http://localhost:4001/part04/18_file_io/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장","url":"https://python.jiny.dev/part04/18_file_io/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -673,20 +673,47 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">Chapter 18</li>
+        <li class="breadcrumb-item active" aria-current="page">Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="chapter-18">Chapter 18</h1>
+            <h1 id="chapter-18-컴퓨터의-기억-장고-파일과-데이터-저장">Chapter 18. 컴퓨터의 기억 장고: 파일과 데이터 저장</h1>
 
-<ul>
-  <li><a href="/part04/18_file_io/18_01_section/">18.01_IO</a></li>
-  <li><a href="/part04/18_file_io/18_02_section/">18.02_BinaryIO</a></li>
-  <li><a href="/part04/18_file_io/18_03_section/">18.03_TextIO</a></li>
-</ul>
+<p><img src="/Users/hojin8/.gemini/antigravity/brain/39fe47ab-9fff-4271-aa37-8b9fbfaf6bdd/file_io_concept_upper_ele_16x9_1771691012418.png" alt="파일 입출력 컨셉" /></p>
+
+<p>파이썬 코드에서 변수에 저장한 데이터는 컴퓨터를 끄면 마법처럼 뿅 하고 사라집니다. 소중한 데이터를 영원히 보관하려면, 프로그램 밖의 거대한 창고(하드디스크, SSD)에 ‘파일’ 형태로 도장을 찍어 기록해야 합니다.</p>
+
+<p>이번 장에서는 프로그램이 하드디스크의 창고 문을 열고(<code class="language-plaintext highlighter-rouge">open</code>), 새로운 기록을 남기며(<code class="language-plaintext highlighter-rouge">write</code>), 예전 기록을 꺼내 읽어오는(<code class="language-plaintext highlighter-rouge">read</code>) <strong>파일 입출력(File I/O)</strong>의 모든 것을 배웁니다. 데이터를 능수능란하게 다루는 진짜 디지털 기록 보관자가 되어 봅시다!</p>
+
+<hr />
+
+<h3 id="-목차">📖 목차</h3>
+
+<ol>
+  <li><strong><a href="./18_01_section/">창고의 규칙: 파일 IO의 기초</a></strong>
+    <ul>
+      <li>읽기 모드? 쓰기 모드? (파일 모드 설정)</li>
+      <li>파이썬이 파일을 다루는 뼈대 구조 (IOBase)</li>
+    </ul>
+  </li>
+  <li><strong><a href="./18_02_section/">컴퓨터의 언어: 바이너리(바이트) 처리</a></strong>
+    <ul>
+      <li>이미지나 음악을 다루는 바이트(Bytes) 모드</li>
+      <li>메모리를 파일처럼 쓰는 마법: <code class="language-plaintext highlighter-rouge">BytesIO</code></li>
+    </ul>
+  </li>
+  <li><strong><a href="./18_03_section/">우리의 언어: 텍스트 파일과 마법 주문 with</a></strong>
+    <ul>
+      <li>글자(Text) 다루기와 유니코드</li>
+      <li>창고 문을 알아서 닫아주는 <code class="language-plaintext highlighter-rouge">with</code> 문법</li>
+      <li>돋보기로 위치 찾기 (<code class="language-plaintext highlighter-rouge">seek</code>, <code class="language-plaintext highlighter-rouge">tell</code>)</li>
+      <li>파일이 진짜 있긴 한 걸까? (exisits 검사)</li>
+    </ul>
+  </li>
+</ol>
 
 
             <!-- Google AdSense -->

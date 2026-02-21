@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>12.03_멀티플</title>
-  <meta name="title" content="12.03_멀티플" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="12.03_멀티플"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 이름은 하나, 행동은 여러 개</title>
+  <meta name="title" content="3. 이름은 하나, 행동은 여러 개" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 이름은 하나, 행동은 여러 개"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part03/12_functional/12_03_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part03/12_functional/12_03_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="12.03_멀티플"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 이름은 하나, 행동은 여러 개"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="12.03_멀티플" />
+<meta property="og:title" content="이름은 하나, 행동은 여러 개" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part03/12_functional/12_03_section/" />
-<meta property="og:url" content="http://localhost:4001/part03/12_functional/12_03_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part03/12_functional/12_03_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part03/12_functional/12_03_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="12.03_멀티플" />
+<meta property="twitter:title" content="이름은 하나, 행동은 여러 개" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"12.03_멀티플","url":"http://localhost:4001/part03/12_functional/12_03_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"이름은 하나, 행동은 여러 개","url":"https://python.jiny.dev/part03/12_functional/12_03_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -556,16 +556,73 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">12.03_멀티플</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 이름은 하나, 행동은 여러 개</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1203_멀티플">12.03_멀티플</h1>
+            <h1 id="3-이름은-하나-행동은-여러-개-여러-함수로-분기하기">3. 이름은 하나, 행동은 여러 개: 여러 함수로 분기하기</h1>
 
-<!-- 이 곳에 12_03_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>C 언어나 Java 같은 언어에서는 함수 이름이 같더라도, 집어넣는 재료(매개변수)의 개수나 데이터 타입이 다르면 알아서 상황에 맞는 함수가 착착 실행됩니다. 이를 함수 <strong>오버로딩(Overloading)</strong> 이라고 부릅니다.</p>
+
+<p>하지만 파이썬은 변수의 ‘자료형’을 미리 정해놓지 않기 때문에, 똑같은 이름으로 함수를 여러 개 만들면 가장 마지막에 쓴 함수가 앞에 쓴 함수들을 <strong>그대로 덮어씌워버려서</strong> 기존 기능이 날아가 버립니다.</p>
+
+<p>이럴 때 파이썬의 외부 마법 도구(외부 모듈)인 <code class="language-plaintext highlighter-rouge">multipledispatch</code>를 사용하면, 파이썬에서도 우아하게 “알아서 재료에 맞는 함수를 고르는 기계”를 만들 수 있습니다.</p>
+
+<hr />
+
+<h2 id="31-multipledispatch-모듈로-마법-부리기">3.1 <code class="language-plaintext highlighter-rouge">multipledispatch</code> 모듈로 마법 부리기</h2>
+
+<p>이 도구는 기본 내장 도구가 아니므로, 만약 설치되어 있지 않다면 터미널에서 설치해야 합니다. (<code class="language-plaintext highlighter-rouge">pip install multipledispatch</code>)</p>
+
+<p>이 모듈의 <code class="language-plaintext highlighter-rouge">dispatch</code> 데코레이터를 이용하면, 같은 함수 이름(<code class="language-plaintext highlighter-rouge">add</code>)을 쓰더라도 괄호 안에 들어올 데이터 타입(시그니처)을 데코레이터에 명시해주어 알아서 갈림길을 나눠줄 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">multipledispatch</span> <span class="kn">import</span> <span class="n">dispatch</span>
+
+<span class="c1"># 1번 기계: 정수(int) 두 개가 들어올 때는 여기서 덧셈을 합니다!
+</span><span class="nd">@dispatch</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">▶ 정수 계산기를 돌립니다.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c1"># 2번 기계: 문자열(str) 두 개가 들어올 때는 글자를 이어 붙입니다!
+</span><span class="nd">@dispatch</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">▶ 문자열 이어붙이기를 돌립니다.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c1"># 3번 기계: 리스트(list) 두 개가 들어올 때는 리스트를 합칩니다!
+</span><span class="nd">@dispatch</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">▶ 리스트 병합을 돌립니다.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</code></pre></div></div>
+
+<h3 id="마법의-결과-확인하기">마법의 결과 확인하기</h3>
+
+<p>함수 이름은 무조건 <code class="language-plaintext highlighter-rouge">add</code> 하나만 호출하지만, 파이썬이 던져준 재료들을 킁킁 냄새 맡고(자료형 확인) 알아맞혀서, 자기가 가야 할 기계로 배송해줍니다.</p>
+
+<p>결과가 덮어씌워지지 않고, 각각 고유한 로직이 실행됩니다. 이를 <strong>멀티플 디스패치(Multiple Dispatch)</strong>라고 부릅니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1번 기계로 배송됨
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> 
+<span class="c1"># ▶ 정수 계산기를 돌립니다.
+# 15
+</span>
+<span class="c1"># 2번 기계로 배송됨
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">add</span><span class="p">(</span><span class="sh">"</span><span class="s">Hello </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">World</span><span class="sh">"</span><span class="p">))</span>
+<span class="c1"># ▶ 문자열 이어붙이기를 돌립니다.
+# "Hello World"
+</span>
+<span class="c1"># 3번 기계로 배송됨
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">add</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<span class="c1"># ▶ 리스트 병합을 돌립니다.
+# [1, 2, 3, 4]
+</span></code></pre></div></div>
+
+<p>비록 파이썬은 동적 타이핑이라 오버로딩을 기본적으로 권장하지 않고 하나의 함수 안에서 <code class="language-plaintext highlighter-rouge">isinstance</code> 등으로 분기 처리를 하도록 안내하지만, 분기할 조건이 너무 복잡하거나 모듈 단위로 행동을 깔끔하게 나눠야 하는 강력한 구조 설계가 필요할 때 훌륭한 대안이 됩니다.</p>
 
 
             <!-- Google AdSense -->

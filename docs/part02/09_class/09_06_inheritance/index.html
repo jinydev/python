@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>09.06_상속(Inheritance)</title>
-  <meta name="title" content="09.06_상속(Inheritance)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="09.06_상속(Inheritance)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>6. 속성과 행위의 대물림: 상속 (Inheritance)</title>
+  <meta name="title" content="6. 속성과 행위의 대물림: 상속 (Inheritance)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="6. 속성과 행위의 대물림: 상속 (Inheritance)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part02/09_class/09_06_inheritance/">
+  <meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_06_inheritance/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="09.06_상속(Inheritance)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="6. 속성과 행위의 대물림: 상속 (Inheritance)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="09.06_상속(Inheritance)" />
+<meta property="og:title" content="속성과 행위의 대물림: 상속 (Inheritance)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part02/09_class/09_06_inheritance/" />
-<meta property="og:url" content="http://localhost:4001/part02/09_class/09_06_inheritance/" />
+<link rel="canonical" href="https://python.jiny.dev/part02/09_class/09_06_inheritance/" />
+<meta property="og:url" content="https://python.jiny.dev/part02/09_class/09_06_inheritance/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="09.06_상속(Inheritance)" />
+<meta property="twitter:title" content="속성과 행위의 대물림: 상속 (Inheritance)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"09.06_상속(Inheritance)","url":"http://localhost:4001/part02/09_class/09_06_inheritance/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"속성과 행위의 대물림: 상속 (Inheritance)","url":"https://python.jiny.dev/part02/09_class/09_06_inheritance/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -656,16 +656,115 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">09.06_상속(Inheritance)</li>
+        <li class="breadcrumb-item active" aria-current="page">6. 속성과 행위의 대물림: 상속 (Inheritance)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0906_상속inheritance">09.06_상속(Inheritance)</h1>
+            <h1 id="6-속성과-행위의-대물림-상속-inheritance">6. 속성과 행위의 대물림: 상속 (Inheritance)</h1>
 
-<!-- 이 곳에 09_06_inheritance_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>객체지향 프로그래밍의 가장 강력한 무기 중 하나는 바로 <strong>재사용성</strong>입니다. 이미 잘 만들어진 클래스(부모, Super Class)가 있다면, 그 기능을 처음부터 다시 짜지 않고 그대로 물려받아(상속) 새로운 클래스(자식, Sub Class)를 만들 수 있습니다.</p>
+
+<p>파이썬은 클래스 이름 뒤에 소괄호 <code class="language-plaintext highlighter-rouge">()</code>를 치고 부모 이름을 적어넣는 아주 직관적인 문법으로 상속을 지원합니다.</p>
+
+<h2 id="61-기본-상속과-네임스페이스-검색-구조">6.1 기본 상속과 네임스페이스 검색 구조</h2>
+
+<p>자식 클래스에 없는 속성이나 메서드를 호출하면, 파이썬은 에러를 내뱉기 전에 <strong>부모 클래스의 네임스페이스를 먼저 검색</strong>하여 훔쳐옵니다(?).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        
+    <span class="k">def</span> <span class="nf">eat</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s">이(가) 밥을 먹습니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Animal 클래스의 모든 기능을 그대로 물려받음
+</span><span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">bark</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">멍멍!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Dog에는 __init__이 없지만, 부모인 Animal의 __init__이 자동 실행됩니다.
+</span><span class="n">badugi</span> <span class="o">=</span> <span class="nc">Dog</span><span class="p">(</span><span class="sh">"</span><span class="s">바둑이</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">badugi</span><span class="p">.</span><span class="nf">eat</span><span class="p">()</span>  <span class="c1"># 바둑이이(가) 밥을 먹습니다. (부모 메서드 재사용)
+</span><span class="n">badugi</span><span class="p">.</span><span class="nf">bark</span><span class="p">()</span> <span class="c1"># 멍멍! (자식 고유 메서드)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="62-부모를-소환하라-super">6.2 부모를 소환하라: <code class="language-plaintext highlighter-rouge">super()</code></h2>
+
+<p>자식 클래스에서 부모 클래스의 메서드(특히 <code class="language-plaintext highlighter-rouge">__init__</code>)를 완전히 엎어버리지(Override) 않고, <strong>부모의 기능을 일부 활용하면서 살을 덧붙이고 싶을 때</strong>는 <code class="language-plaintext highlighter-rouge">super()</code> 함수를 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Warrior</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">hp</span> <span class="o">=</span> <span class="n">hp</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">attack_power</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Knight</span><span class="p">(</span><span class="n">Warrior</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">shield_power</span><span class="p">):</span>
+        <span class="c1"># 1. 부모의 초기화 로직을 호출해서 hp와 attack_power를 먼저 세팅함
+</span>        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span>
+        <span class="c1"># 2. 자식만의 고유한 속성 추가
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">shield_power</span> <span class="o">=</span> <span class="n">shield_power</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="nc">Knight</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">k</span><span class="p">.</span><span class="n">hp</span><span class="p">,</span> <span class="n">k</span><span class="p">.</span><span class="n">attack_power</span><span class="p">,</span> <span class="n">k</span><span class="p">.</span><span class="n">shield_power</span><span class="p">)</span> <span class="c1"># 100 10 50
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="63-욕심쟁이-상속-다중-상속-multiple-inheritance">6.3 욕심쟁이 상속: 다중 상속 (Multiple Inheritance)</h2>
+
+<p>Java 같은 언어들은 다중 상속을 엄격히 금지하지만, 파이썬은 쿨하게 <strong>여러 부모로부터 동시에 상속받는 것을 허용</strong>합니다. 
+콤마(<code class="language-plaintext highlighter-rouge">,</code>)로 여러 부모 클래스를 나열하기만 하면 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Flyable</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">fly</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">하늘을 납니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Swimmable</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">swim</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">물 속을 헤엄칩니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 두 가지 능력을 다 물려받은 슈퍼 오리
+</span><span class="k">class</span> <span class="nc">Duck</span><span class="p">(</span><span class="n">Flyable</span><span class="p">,</span> <span class="n">Swimmable</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">donald</span> <span class="o">=</span> <span class="nc">Duck</span><span class="p">()</span>
+<span class="n">donald</span><span class="p">.</span><span class="nf">fly</span><span class="p">()</span>  <span class="c1"># 하늘을 납니다.
+</span><span class="n">donald</span><span class="p">.</span><span class="nf">swim</span><span class="p">()</span> <span class="c1"># 물 속을 헤엄칩니다.
+</span></code></pre></div></div>
+
+<h3 id="족보의-룰-mro-method-resolution-order">족보의 룰: MRO (Method Resolution Order)</h3>
+
+<p>다중 상속을 받다가 두 부모가 <strong>동일한 이름의 메서드</strong>를 가지고 있다면 자식은 누구의 말을 들어야 할까요? 
+파이썬은 혼란을 막기 위해 <strong>MRO(메서드 탐색 순서)</strong>라는 엄격한 족보 탐색 서열을 내부적으로 관리합니다. 보통 괄호 안에 적어준 순서(왼쪽에서 오른쪽)를 우선시합니다. 클래스의 <code class="language-plaintext highlighter-rouge">.mro()</code> 메서드를 출력해보면 서열을 직접 확인할 수 있습니다.</p>
+
+<hr />
+
+<h2 id="64-부품-갈아-끼우기-믹스인-mixin-패턴">6.4 부품 갈아 끼우기: 믹스인 (Mixin) 패턴</h2>
+
+<p>다중 상속의 유연함을 극대화한 파이썬 특유의 설계 패턴입니다. 속성(상태 데이터)은 전혀 가지지 않고 오직 <strong>‘특정 동작(메서드) 뭉치’만 모아둔 클래스</strong>를 만들어두고, 레고 블록 조립하듯 본체 클래스에 다중 상속으로 끼워 넣는 방식입니다. 이런 클래스 이름 뒤에는 관례적으로 <code class="language-plaintext highlighter-rouge">Mixin</code>을 붙입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 날개 모듈 (부품)
+</span><span class="k">class</span> <span class="nc">WingMixin</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">flap</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">파닥파닥 날갯짓</span><span class="sh">"</span>
+
+<span class="c1"># 본체 클래스
+</span><span class="k">class</span> <span class="nc">Airplane</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+<span class="c1"># 조립 과정 (다중 상속)
+</span><span class="k">class</span> <span class="nc">FighterJet</span><span class="p">(</span><span class="n">Airplane</span><span class="p">,</span> <span class="n">WingMixin</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">f16</span> <span class="o">=</span> <span class="nc">FighterJet</span><span class="p">(</span><span class="sh">"</span><span class="s">F-16</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">f16</span><span class="p">.</span><span class="nf">flap</span><span class="p">())</span> <span class="c1"># 파닥파닥 날갯짓
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

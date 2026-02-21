@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>06.03_지능형(comprehension)</title>
-  <meta name="title" content="06.03_지능형(comprehension)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="06.03_지능형(comprehension)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>3. 지능형 컬렉션 생성 (Comprehension)</title>
+  <meta name="title" content="3. 지능형 컬렉션 생성 (Comprehension)" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="3. 지능형 컬렉션 생성 (Comprehension)"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/06_formatting/06_03_comprehension/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/06_formatting/06_03_comprehension/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="06.03_지능형(comprehension)"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="3. 지능형 컬렉션 생성 (Comprehension)"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="06.03_지능형(comprehension)" />
+<meta property="og:title" content="지능형 컬렉션 생성 (Comprehension)" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/06_formatting/06_03_comprehension/" />
-<meta property="og:url" content="http://localhost:4001/part01/06_formatting/06_03_comprehension/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/06_formatting/06_03_comprehension/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/06_formatting/06_03_comprehension/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="06.03_지능형(comprehension)" />
+<meta property="twitter:title" content="지능형 컬렉션 생성 (Comprehension)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"06.03_지능형(comprehension)","url":"http://localhost:4001/part01/06_formatting/06_03_comprehension/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"지능형 컬렉션 생성 (Comprehension)","url":"https://python.jiny.dev/part01/06_formatting/06_03_comprehension/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,83 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">06.03_지능형(comprehension)</li>
+        <li class="breadcrumb-item active" aria-current="page">3. 지능형 컬렉션 생성 (Comprehension)</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0603_지능형comprehension">06.03_지능형(comprehension)</h1>
+            <h1 id="3-지능형-컬렉션-생성-comprehension">3. 지능형 컬렉션 생성 (Comprehension)</h1>
 
-<!-- 이 곳에 06_03_comprehension_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>수학에서 집합을 정의할 때 ‘조건 제시법’을 쓰듯, 파이썬도 여러 줄의 <code class="language-plaintext highlighter-rouge">for</code>문과 <code class="language-plaintext highlighter-rouge">if</code>문을 거쳐 배열을 만드는 대신 단 한 줄의 표현식만으로 컬렉션 내부 요소 전체를 동적으로 찍어내는 <strong>지능형(Comprehension)</strong> 생성 문법을 제공합니다.</p>
+
+<p>이 방식은 단순히 코드가 짧아지는 것을 넘어 파이썬 내부 C 최적화 엔진을 직접 통과하므로 일반 <code class="language-plaintext highlighter-rouge">for</code>문에 비해 <strong>실행 속도도 월등히 빠르며</strong>, 변수의 범위(Namespace)가 블록 내부로 엄격히 제한되어 외부 변수를 오염시키지도 않습니다.</p>
+
+<h2 id="31-지능형-리스트-list-comprehension">3.1 지능형 리스트 (List Comprehension)</h2>
+
+<p>파이썬 코딩의 꽃이자 가장 빈번하게 사용되는 패턴입니다. 대괄호 <code class="language-plaintext highlighter-rouge">[]</code> 안에 가공할 출력값, <code class="language-plaintext highlighter-rouge">for</code>문, 그리고 필터 역할을 할 <code class="language-plaintext highlighter-rouge">if</code>문을 순서대로 배치합니다.</p>
+
+<p><strong>기본 문법: <code class="language-plaintext highlighter-rouge">[표현식 for 변수 in 반복가능객체 if 조건식]</code></strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 일반적인 for문 사용 방식
+</span><span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 짝수일 때만
+</span>        <span class="n">squares</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="c1"># 제곱해서 넣기
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span> <span class="c1"># [0, 4, 16, 36, 64]
+</span>
+
+<span class="c1"># 2. 지능형 리스트 방식 (단 1줄로 완벽히 대체)
+</span><span class="n">clever_squares</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">clever_squares</span><span class="p">)</span> <span class="c1"># [0, 4, 16, 36, 64]
+</span></code></pre></div></div>
+
+<h3 id="다중-반복문-nested-for">다중 반복문 (Nested For)</h3>
+<p>지능형 문법 내에서 <code class="language-plaintext highlighter-rouge">for</code>문을 여러 개 이어 붙이면 리스트 안에 튜플 쌍을 만들거나, 2차원 리스트 형태를 매우 쉽게 뽑아낼 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 구구단 조합 만들기
+</span><span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span> 
+<span class="c1"># [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2)]
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="32-지능형-딕셔너리-dict-comprehension">3.2 지능형 딕셔너리 (Dict Comprehension)</h2>
+
+<p>지능형 문법은 리스트뿐만 아니라 딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>) 포맷에도 그대로 적용됩니다.</p>
+
+<p>중괄호 <code class="language-plaintext highlighter-rouge">{}</code> 를 사용하며 출력값 부분에 반드시 콜론(<code class="language-plaintext highlighter-rouge">:</code>)을 이용한 <strong><code class="language-plaintext highlighter-rouge">Key: Value</code></strong> 쌍 형태의 표현식이 들어가야 합니다. 리스트 요소들의 인덱스와 값을 뒤집어 딕셔너리를 만들거나, 두 리스트를 결합할 때 탁월합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">word</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Python</span><span class="sh">"</span>
+
+<span class="c1"># 문자열에서 문자(char)를 Key로, 해당 글자의 인덱스 번호를 Value로 하는 사전 생성
+</span><span class="n">char_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">char</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">word</span><span class="p">)}</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">char_dict</span><span class="p">)</span>
+<span class="c1"># {'P': 0, 'y': 1, 't': 2, 'h': 3, 'o': 4, 'n': 5}
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="33-지능형-집합-set-comprehension">3.3 지능형 집합 (Set Comprehension)</h2>
+
+<p>지능형 딕셔너리와 같이 중괄호 <code class="language-plaintext highlighter-rouge">{}</code>를 사용하지만, 콜론 없이 요소 1개만 반환하도록 명시하면 파이썬은 이를 <strong>‘지능형 집합(Set)’</strong>으로 알아서 인식합니다.</p>
+
+<p>집합의 특성 덕분에 결과물 배열 내의 모든 데이터는 자동으로 “중복”이 말끔히 제거됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">raw_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># 절댓값 처리(abs)를 진행한 뒤 집합에 쏟아 넣기
+</span><span class="n">unique_absolutes</span> <span class="o">=</span> <span class="p">{</span><span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">raw_data</span><span class="p">}</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">unique_absolutes</span><span class="p">)</span> 
+<span class="c1"># {1, 2, 3} (결괏값의 중복이 자동으로 제거됨)
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

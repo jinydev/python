@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>05.01_파이썬</title>
-  <meta name="title" content="05.01_파이썬" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="05.01_파이썬"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>1. 딕셔너리(Dict)의 기본 구조와 생성 기준</title>
+  <meta name="title" content="1. 딕셔너리(Dict)의 기본 구조와 생성 기준" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="1. 딕셔너리(Dict)의 기본 구조와 생성 기준"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part01/05_mapping/05_01_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part01/05_mapping/05_01_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="05.01_파이썬"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="1. 딕셔너리(Dict)의 기본 구조와 생성 기준"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="05.01_파이썬" />
+<meta property="og:title" content="딕셔너리(Dict)의 기본 구조와 생성 기준" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part01/05_mapping/05_01_section/" />
-<meta property="og:url" content="http://localhost:4001/part01/05_mapping/05_01_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part01/05_mapping/05_01_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part01/05_mapping/05_01_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="05.01_파이썬" />
+<meta property="twitter:title" content="딕셔너리(Dict)의 기본 구조와 생성 기준" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"05.01_파이썬","url":"http://localhost:4001/part01/05_mapping/05_01_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"딕셔너리(Dict)의 기본 구조와 생성 기준","url":"https://python.jiny.dev/part01/05_mapping/05_01_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -700,16 +700,93 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">05.01_파이썬</li>
+        <li class="breadcrumb-item active" aria-current="page">1. 딕셔너리(Dict)의 기본 구조와 생성 기준</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="0501_파이썬">05.01_파이썬</h1>
+            <h1 id="1-딕셔너리dict의-기본-구조와-생성-기준">1. 딕셔너리(Dict)의 기본 구조와 생성 기준</h1>
 
-<!-- 이 곳에 05_01_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>파이썬의 <strong>딕셔너리(Dictionary)</strong>는 이름(Key)표를 찾아 이름표가 가리키는 실제 데이터(Value)를 즉시 추적하는 ‘매핑(Mapping)’ 시스템을 제공합니다. 이는 실제 종이 사전에서 단어를 찾으면 뜻이 나오는 원리와 완벽히 일치합니다.</p>
+
+<p>이러한 매핑형 데이터 구조는 인덱스 번호가 아닌 철저히 <strong>키(Key)</strong>를 중심으로 요소를 파악하므로 매우 빠른 데이터 탐색(Search) 속도를 보장합니다.</p>
+
+<h2 id="11-딕셔너리의-키-key-할당-규칙">1.1 딕셔너리의 키 (Key) 할당 규칙</h2>
+
+<p>딕셔너리의 Key는 수만 개의 데이터를 검색할 때 길잡이가 되는 이정표 역할을 합니다. 파이썬에서는 이름표 구분을 명확히 하기 위해 Key를 생성할 때 철저하게 <strong>‘해시(Hash) 알고리즘’</strong>을 적용합니다.</p>
+
+<p>해시는 변경이 발생하면 완전히 다른 값으로 틀어지는 민감한 알고리즘입니다. 따라서 딕셔너리의 Key 자리에는 파이썬에서 <strong>절대 데이터가 변하지 않는(Immutable) 자료형</strong>만이 들어올 수 있습니다.</p>
+
+<p><strong>Key로 쓸 수 있는 자료형 (생성 가능)</strong></p>
+<ul>
+  <li>정수(<code class="language-plaintext highlighter-rouge">int</code>), 실수(<code class="language-plaintext highlighter-rouge">float</code>)</li>
+  <li>문자열(<code class="language-plaintext highlighter-rouge">str</code>), 바이트(<code class="language-plaintext highlighter-rouge">bytes</code>)</li>
+  <li>불변 집합(<code class="language-plaintext highlighter-rouge">frozenset</code>)</li>
+  <li>모든 원소가 불변(Immutable) 객체로만 이루어진 튜플(<code class="language-plaintext highlighter-rouge">tuple</code>)</li>
+  <li>함수(<code class="language-plaintext highlighter-rouge">def</code>), 클래스(<code class="language-plaintext highlighter-rouge">class</code>), 인스턴스 (고유 메모리 주소를 가짐)</li>
+</ul>
+
+<p><strong>Key로 쓸 수 없는 자료형 (생성 실패 - TypeError)</strong></p>
+<ul>
+  <li>리스트(<code class="language-plaintext highlighter-rouge">list</code>), 딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>), 가변 집합(<code class="language-plaintext highlighter-rouge">set</code>)</li>
+  <li>가변 원소(list 등)를 내부에 하나라도 포함하고 있는 튜플</li>
+</ul>
+
+<hr />
+
+<h2 id="12-딕셔너리의-생성과-데이터-중복-처리">1.2 딕셔너리의 생성과 데이터 중복 처리</h2>
+
+<p>빈 딕셔너리는 가장 널리 쓰이는 표기법인 대괄호 대신 중괄호 <code class="language-plaintext highlighter-rouge">{}</code> 형태의 리터럴로 생성하거나 명시적 내장 함수인 <code class="language-plaintext highlighter-rouge">dict()</code>를 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 빈 딕셔너리 생성
+</span><span class="n">empty_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">also_empty</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">empty_dict</span><span class="p">))</span> <span class="c1"># &lt;class 'dict'&gt;
+</span>
+<span class="c1"># 2. 리터럴 기반 데이터 할당
+</span><span class="n">user</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">John</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">age</span><span class="sh">'</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="다양한-방식의-딕셔너리-객체화-구조">다양한 방식의 딕셔너리 객체화 구조</h3>
+<p>파이썬은 개발자 편의성을 위해 다른 시퀀스 자료형들을 딕셔너리 구조로 둔갑시키는 강력한 팩토리(Factory) 패턴들을 내장하고 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 키워드 인자(Keyword arguments) 형태
+</span><span class="n">d1</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="c1"># 출력: {'a': 10, 'b': 20, 'c': 30}
+</span>
+<span class="c1"># 2. (Key, Value) 쌍의 튜플로 이루어진 리스트를 강제 변환
+</span><span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Alice</span><span class="sh">'</span><span class="p">),</span> <span class="p">(</span><span class="sh">'</span><span class="s">role</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Admin</span><span class="sh">'</span><span class="p">)]</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+<span class="c1"># 출력: {'name': 'Alice', 'role': 'Admin'}
+</span></code></pre></div></div>
+
+<h3 id="중복된-key값이-주어졌을-경우의-방어-메커니즘">중복된 Key값이 주어졌을 경우의 방어 메커니즘</h3>
+<p>동일한 딕셔너리 안에 완전히 같은 Key가 두 개 이상 나타나는 것은 매핑 자료구조의 본질에 어긋납니다. 파이썬은 이런 모순을 겪을 때 코드를 정지시키지 않고 <strong>‘마지막으로 확인된 값을 최종값으로 덮어씌우는(Overwrite)’</strong> 방식으로 문제를 회피합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 키 'a'에 1을 할당했다가, 나중에 3으로 덮어씀
+</span><span class="n">raw_list</span> <span class="o">=</span> <span class="p">[(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="sh">'</span><span class="s">b</span><span class="sh">'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="n">resolved_dict</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">(</span><span class="n">raw_list</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">resolved_dict</span><span class="p">)</span> 
+<span class="c1"># 출력 결과: {'a': 3, 'b': 2} (마지막 정보인 3이 최종 승리함)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="13-기본값이-일괄-적용된-빈-딕셔너리-생성-fromkeys">1.3 기본값이 일괄 적용된 빈 딕셔너리 생성 (<code class="language-plaintext highlighter-rouge">fromkeys</code>)</h2>
+
+<p>게시판의 댓글 수, 방문자 수 집계처럼 특정 데이터 꾸러미(리스트, 튜플)를 가져와서 Key만 등록한 뒤 동일한 초기 빈방(None 이나 0)을 할당해 통계 준비용 딕셔너리를 뽑아낼 때 유용한 메서드입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">keys_to_set</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">Seoul</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Busan</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Jeju</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># fromkeys() 를 이용해 모든 Value를 동일한 None으로 일괄 초기화
+</span><span class="n">city_stats</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">.</span><span class="nf">fromkeys</span><span class="p">(</span><span class="n">keys_to_set</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">city_stats</span><span class="p">)</span>
+<span class="c1"># {'Seoul': None, 'Busan': None, 'Jeju': None}
+</span></code></pre></div></div>
 
 
             <!-- Google AdSense -->

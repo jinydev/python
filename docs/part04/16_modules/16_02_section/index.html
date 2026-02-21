@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>16.02_stack_queue_heap</title>
-  <meta name="title" content="16.02_stack_queue_heap" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="16.02_stack_queue_heap"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>2. 줄서기와 쌓기: stack, queue, heapq</title>
+  <meta name="title" content="2. 줄서기와 쌓기: stack, queue, heapq" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="2. 줄서기와 쌓기: stack, queue, heapq"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/16_modules/16_02_section/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/16_modules/16_02_section/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="16.02_stack_queue_heap"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="2. 줄서기와 쌓기: stack, queue, heapq"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="16.02_stack_queue_heap" />
+<meta property="og:title" content="줄서기와 쌓기: stack, queue, heapq" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/16_modules/16_02_section/" />
-<meta property="og:url" content="http://localhost:4001/part04/16_modules/16_02_section/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/16_modules/16_02_section/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/16_modules/16_02_section/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="16.02_stack_queue_heap" />
+<meta property="twitter:title" content="줄서기와 쌓기: stack, queue, heapq" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"16.02_stack_queue_heap","url":"http://localhost:4001/part04/16_modules/16_02_section/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"줄서기와 쌓기: stack, queue, heapq","url":"https://python.jiny.dev/part04/16_modules/16_02_section/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -683,16 +683,90 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">16.02_stack_queue_heap</li>
+        <li class="breadcrumb-item active" aria-current="page">2. 줄서기와 쌓기: stack, queue, heapq</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="1602_stack_queue_heap">16.02_stack_queue_heap</h1>
+            <h1 id="2-줄서기와-쌓기-stack-queue-heapq">2. 줄서기와 쌓기: stack, queue, heapq</h1>
 
-<!-- 이 곳에 16_02_section_src.md 내용을 기반으로 새롭게 작성된 내용이 들어갈 예정입니다. -->
+<p>컴퓨터가 수많은 일들을 처리할 때는, 데이터를 어떻게 줄 세울 것인지가 엄청나게 중요합니다. 파이썬이 제공하는 특급 <strong>줄서기 도구</strong>들을 알아볼까요?</p>
+
+<h2 id="21-스택stack과-큐queue의-기초">2.1 스택(Stack)과 큐(Queue)의 기초</h2>
+
+<ul>
+  <li><strong>스택(Stack)</strong>: 프링글스 감자칩 통을 상상해 보세요! 밑이 꽉 막힌 통에 데이터를 넣기 때문에, <strong>제일 나중에 넣은 데이터가 제일 먼저 나옵니다.</strong> (LIFO: Last In First Out)</li>
+  <li><strong>큐(Queue)</strong>: 놀이공원에 줄 서는 것을 생각하면 됩니다. <strong>가장 먼저 줄을 선 데이터가 가장 먼저 놀이기구를 탑니다.</strong> (FIFO: First In First Out)</li>
+</ul>
+
+<p>파이썬의 기본 리스트(<code class="language-plaintext highlighter-rouge">.append()</code>, <code class="language-plaintext highlighter-rouge">.pop()</code>)를 이용해 대충 흉내 낼 수도 있지만, 파이썬은 진짜 프로들이 쓰는 멋진 툴을 따로 준비해 뒀습니다.</p>
+
+<hr />
+
+<h2 id="22-실전-줄서기-queue-모듈">2.2 실전 줄서기: <code class="language-plaintext highlighter-rouge">queue</code> 모듈</h2>
+
+<p><code class="language-plaintext highlighter-rouge">queue</code> 모듈은 말 그대로 줄을 세우는 전문 도구 상자입니다. 용량이 꽉 차거나 텅텅 비었을 때를 완벽하게 통제해 줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">queue</span>
+
+<span class="c1"># 최대 2명만 설 수 있는 줄(Queue)을 만듭니다!
+</span><span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="nc">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 줄 서기!
+</span><span class="n">q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># 줄 서기!
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">full</span><span class="p">())</span>  <span class="c1"># 꽉 찼나요? -&gt; True
+</span><span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">qsize</span><span class="p">())</span> <span class="c1"># 몇 명 있나요? -&gt; 2
+</span>
+<span class="c1"># 맨 앞사람 빼기
+</span><span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">get</span><span class="p">())</span> <span class="c1"># 1번이 놀이기구 타러 나감
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="23-양쪽-뚫린-마법-터널-collectionsdeque">2.3 양쪽 뚫린 마법 터널: <code class="language-plaintext highlighter-rouge">collections.deque</code></h2>
+
+<p>양쪽으로 들어오고 나갈 수 있는 마법의 파이프 큐를 <strong>Deque</strong>(데크)라고 부릅니다. 리스트의 <code class="language-plaintext highlighter-rouge">.insert(0, X)</code>는 매우 느리지만, <code class="language-plaintext highlighter-rouge">deque</code>는 아주 빛의 속도로 앞뒤 어디서든 데이터를 넣고 뺄 수 있습니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="c1"># 양쪽 뚫린 파이프(데크) 만들기
+</span><span class="n">pipe</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">pipe</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>     <span class="c1"># 오른쪽(보통)으로 밀어 넣기
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([2, 3, 4])
+</span>
+<span class="n">pipe</span><span class="p">.</span><span class="nf">appendleft</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 특별히 왼쪽(앞)으로 밀어 넣기!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([1, 2, 3, 4])
+</span>
+<span class="n">pipe</span><span class="p">.</span><span class="nf">popleft</span><span class="p">()</span>     <span class="c1"># 왼쪽에서 빼기!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([2, 3, 4])
+</span></code></pre></div></div>
+<p>이 녀석은 <code class="language-plaintext highlighter-rouge">rotate</code>를 써서 마치 회전초밥 기계처럼 데이터를 뱅글뱅글 위상을 섞어 돌릴 수도 있답니다!</p>
+
+<hr />
+
+<h2 id="24-가장-작은-녀석만-쏙쏙-heapq-모듈">2.4 가장 작은 녀석만 쏙쏙: <code class="language-plaintext highlighter-rouge">heapq</code> 모듈</h2>
+
+<p>만약 상자 안에 무작위로 여러 숫자가 막 섞여 있는데, 계속해서 “상자 안에 있는 것 중 <strong>가장 작은 놈</strong> 당장 나와!”라고 명령해야 한다면 어떨까요?
+<code class="language-plaintext highlighter-rouge">heapq</code>(힙 큐) 모듈은 이럴 때 쓰는 전용 도구입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">heapq</span>
+
+<span class="c1"># 섞인 숫자들의 모임
+</span><span class="n">box</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+
+<span class="c1"># 1. 힙 정렬 명령! (파이썬이 마법의 구도로 재배치합니다)
+</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heapify</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> <span class="c1"># [10, 20, 30, 50, 40] -&gt; 제일 앞에 가장 작은 값이 튀어나옵니다!
+</span>
+<span class="c1"># 2. 제일 작은 놈 나와! (heappop)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 10이 빠져나옴!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 20이 빠져나옴!
+</span></code></pre></div></div>
+<p>그 외에도 <code class="language-plaintext highlighter-rouge">heappush</code>로 새로운 숫자를 상자에 던져 넣으면, 알아서 자리를 찾아 쏙쏙 들어가고 가장 작은 값을 언제나 1번으로 대기시켜주는 초강력 정렬 마법 상자랍니다!</p>
 
 
             <!-- Google AdSense -->

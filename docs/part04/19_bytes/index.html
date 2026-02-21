@@ -5,26 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 19</title>
-  <meta name="title" content="Chapter 19" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 19"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
+  <!-- 기본 메타데이터 --><meta name="description" content="Jiny linux"><meta name="author" content="HojinLee"><!-- 제목 설정 --><title>Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀</title>
+  <meta name="title" content="Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀" /><!-- 키워드 설정 --><!-- Open Graph 메타데이터 --><meta property="og:title" content="Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀"><meta property="og:description" content="Jiny linux"><meta property="og:type" content="website"><meta property="og:locale" content="ko">
   <meta property="og:site_name" content="linux">
-  <meta property="og:url" content="http://localhost:4001/part04/19_bytes/">
+  <meta property="og:url" content="https://python.jiny.dev/part04/19_bytes/">
 
-  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 19"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <!-- Twitter 카드 메타데이터 --><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Chapter 19" />
+<meta property="og:title" content="Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀" />
 <meta name="author" content="Hojin" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="파이썬 언어의 이해와 실습" />
 <meta property="og:description" content="파이썬 언어의 이해와 실습" />
-<link rel="canonical" href="http://localhost:4001/part04/19_bytes/" />
-<meta property="og:url" content="http://localhost:4001/part04/19_bytes/" />
+<link rel="canonical" href="https://python.jiny.dev/part04/19_bytes/" />
+<meta property="og:url" content="https://python.jiny.dev/part04/19_bytes/" />
 <meta property="og:site_name" content="손에 잡히는 파이썬 (Hands-on Python)" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Chapter 19" />
+<meta property="twitter:title" content="Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 19","url":"http://localhost:4001/part04/19_bytes/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"파이썬 언어의 이해와 실습","headline":"Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀","url":"https://python.jiny.dev/part04/19_bytes/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -673,20 +673,44 @@
         
         
         
-        <li class="breadcrumb-item active" aria-current="page">Chapter 19</li>
+        <li class="breadcrumb-item active" aria-current="page">Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀</li>
         
         
         
     </ol>
 </nav>
         <div class="bd-content ps-lg-2">
-            <h1 id="chapter-19">Chapter 19</h1>
+            <h1 id="chapter-19-마법의-수축-광선-바이트와-직렬화pickle의-비밀">Chapter 19. 마법의 수축 광선: 바이트와 직렬화(Pickle)의 비밀</h1>
 
-<ul>
-  <li><a href="/part04/19_bytes/19_01_section/">19.01_파이썬</a></li>
-  <li><a href="/part04/19_bytes/19_02_section/">19.02_파일</a></li>
-  <li><a href="/part04/19_bytes/19_03_section/">19.03_직렬화</a></li>
-</ul>
+<p><img src="/Users/hojin8/.gemini/antigravity/brain/39fe47ab-9fff-4271-aa37-8b9fbfaf6bdd/serialization_concept_upper_ele_16x9_1771691128454.png" alt="파이썬 직렬화 컨셉" /></p>
+
+<p>우리가 파이썬으로 만든 근사한 로봇(클래스), 거대한 무기 창고(리스트), 그리고 설계도(딕셔너리)를 그대로 파일에 저장하거나 인터넷 바다로 전송하고 싶다면 어떻게 해야 할까요?</p>
+
+<p>컴퓨터 안의 랜선이나 하드디스크 구멍은 아주 좁아서, 커다란 객체를 통째로 구겨 넣을 순 없습니다. 이럴 때 프로그래머들은 마법의 수축 광선 총을 쏩니다! 객체를 납작한 바이트(Bytes) 조각으로 압축하고 분해하는 놀라운 기술! 이번 장에서는 파이썬의 핵심 데이터 변환 마법과, 파이썬 전용 수축 광선인 <strong>‘직렬화(Pickle)’</strong>에 대해 파헤쳐 봅니다!</p>
+
+<hr />
+
+<h3 id="-목차">📖 목차</h3>
+
+<ol>
+  <li><strong><a href="./19_01_section/">기계들의 빡빡한 규칙: <code class="language-plaintext highlighter-rouge">array</code>와 <code class="language-plaintext highlighter-rouge">memoryview</code></a></strong>
+    <ul>
+      <li>C 언어처럼 깐깐하게 관리되는 배열(Array) 데이터</li>
+      <li>메모리 복사 없이 훔쳐보는 마법거울 <code class="language-plaintext highlighter-rouge">memoryview</code></li>
+    </ul>
+  </li>
+  <li><strong><a href="./19_02_section/">텍스트의 변신과 압축: 유니코드와 <code class="language-plaintext highlighter-rouge">struct</code></a></strong>
+    <ul>
+      <li>글자(유니코드)가 전기 신호(바이트)로 변하는 신기한 과정</li>
+      <li>뭉치고 쪼개는 마법의 포장 조립기 <code class="language-plaintext highlighter-rouge">struct</code></li>
+    </ul>
+  </li>
+  <li><strong><a href="./19_03_section/">파이썬 전용 수축 광선 총: <code class="language-plaintext highlighter-rouge">pickle</code> 모듈</a></strong>
+    <ul>
+      <li>거대 객체를 통째로 병(파일)에 담는 직렬화(Serialization) 마법</li>
+    </ul>
+  </li>
+</ol>
 
 
             <!-- Google AdSense -->
