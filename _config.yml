@@ -1,0 +1,49 @@
+title: "손에 잡히는 파이썬 (Hands-on Python)"
+description: "파이썬 언어의 이해와 실습"
+author: "Hojin"
+email: infohojin@naver.com
+baseurl: ""
+url: "https://python.jiny.dev"
+twitter_username: infohojin
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-gist
+
+# Navigation
+nav_sort: 'priorities'
+
+# Build Settings
+destination: docs
+source: src
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "docs"
+
+# Sass 설정
+sass:
+  load_paths:
+    - _sass
+    - ../node_modules/bootstrap/scss
+
+# GitHub Pages 호환성을 위한 설정
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/
+  - .github/
+  - .git/
+  - README.md
+  - package.json
+  - package-lock.json
+  - AI_GUIDE.md
+  - "**/*_src.md"

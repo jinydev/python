@@ -1,0 +1,43 @@
+main:
+  - title: "Chapter 12. 함수형 프로그래밍"
+    url: /part03/12_functional/
+    subitems:
+      - title: "12.01_함수형"
+        url: /part03/12_functional/12_01_function/
+      - title: "12.02_내장"
+        url: /part03/12_functional/12_02_builtin/
+      - title: "12.03_멀티플"
+        url: /part03/12_functional/12_03_section/
+  - title: "Chapter 13. 추상 클래스"
+    url: /part03/13_abstract/
+    subitems:
+      - title: "13.01_내장"
+        url: /part03/13_abstract/13_01_builtin/
+      - title: "13.02_수에"
+        url: /part03/13_abstract/13_02_section/
+      - title: "13.03_컬렉션"
+        url: /part03/13_abstract/13_03_section/
+      - title: "13.04_Sequence"
+        url: /part03/13_abstract/13_04_section/
+      - title: "13.05_타입"
+        url: /part03/13_abstract/13_05_section/
+  - title: "Chapter 14. 제너레이터"
+    url: /part03/14_iterator/
+    subitems:
+      - title: "14.01_반복형과"
+        url: /part03/14_iterator/14_01_section/
+      - title: "14.02_itertools"
+        url: /part03/14_iterator/14_02_section/
+      - title: "14.03_제너레이터(generator)"
+        url: /part03/14_iterator/14_03_generator/
+      - title: "14.04_코루틴(coroutine)"
+        url: /part03/14_iterator/14_04_coroutine/
+  - title: "Chapter 15. 프로퍼티"
+    url: /part03/15_property/
+    subitems:
+      - title: "15.01_프로퍼티(property)"
+        url: /part03/15_property/15_01_property/
+      - title: "15.02_사용자"
+        url: /part03/15_property/15_02_section/
+      - title: "15.03_디스크립터(descriptor)"
+        url: /part03/15_property/15_03_descriptor/
