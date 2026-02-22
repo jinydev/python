@@ -795,6 +795,86 @@ Out: [</span><span class="sh">'</span><span class="n">__class__</span><span clas
 <h3 id="변경-불가-immutable-자료형">변경 불가 (Immutable) 자료형</h3>
 <p><strong>숫자형(<code class="language-plaintext highlighter-rouge">int</code>, <code class="language-plaintext highlighter-rouge">float</code>), 문자열(<code class="language-plaintext highlighter-rouge">str</code>), 튜플(<code class="language-plaintext highlighter-rouge">tuple</code>)</strong> 등이 속합니다.<br />
 값을 바꾸는 것처럼 코드를 짜더라도, 사실 내부적으로는 아예 새로운 객체를 새로 창조해 메모리에 띄우고 이름표만 바꿔 다는 식으로 동작합니다.</p>
+
+<div class="text-center my-4">
+  <svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .box { rx: 8; stroke-width: 2; }
+      .text-val { font-size: 18px; font-weight: bold; font-family: monospace; }
+      .label { font-size: 14px; font-family: sans-serif; fill: #666; }
+      .arrow { stroke: #555; stroke-width: 2; fill: none; marker-end: url(#arr); }
+    </style>
+    <defs>
+      <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#555" />
+      </marker>
+    </defs>
+
+    <!-- IMMUTABLE EXAMPLE -->
+    <g transform="translate(50, 40)">
+      <text x="70" y="-15" font-weight="bold" fill="#D32F2F">Immutable (문자열)</text>
+      <!-- Label -->
+      <rect x="0" y="0" width="60" height="30" fill="#FFCDD2" stroke="#E53935" class="box" />
+      <text x="30" y="20" text-anchor="middle" class="text-val" fill="#B71C1C">word</text>
+
+      <!-- Original Box -->
+      <rect x="120" y="-10" width="100" height="50" fill="#E3F2FD" stroke="#1E88E5" class="box">
+        <animate attributeName="opacity" values="1;1;0.3;0.3;1" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+      </rect>
+      <text x="170" y="20" text-anchor="middle" class="text-val" fill="#0D47A1">
+        <animate attributeName="opacity" values="1;1;0.3;0.3;1" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+        "Hello"
+      </text>
+      <text x="170" y="55" text-anchor="middle" class="label">id: 111</text>
+
+      <!-- New Box (After concatenation) -->
+      <rect x="120" y="60" width="140" height="50" fill="#E8F5E9" stroke="#43A047" class="box" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+      </rect>
+      <text x="190" y="90" text-anchor="middle" class="text-val" fill="#1B5E20" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+        "Hello World"
+      </text>
+      <text x="190" y="125" text-anchor="middle" class="label" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+        id: 222 (New!)
+      </text>
+
+      <!-- Arrow -->
+      <path d="M 60,15 L 110,15" class="arrow">
+        <animate attributeName="d" values="M 60,15 L 110,15; M 60,15 L 110,15; M 60,20 L 110,80; M 60,20 L 110,80; M 60,15 L 110,15" keyTimes="0; 0.4; 0.5; 0.9; 1" dur="5s" repeatCount="indefinite" />
+      </path>
+    </g>
+
+    <!-- MUTABLE EXAMPLE -->
+    <g transform="translate(350, 40)">
+      <text x="70" y="-15" font-weight="bold" fill="#1976D2">Mutable (리스트)</text>
+      <!-- Label -->
+      <rect x="0" y="0" width="60" height="30" fill="#BBDEFB" stroke="#1E88E5" class="box" />
+      <text x="30" y="20" text-anchor="middle" class="text-val" fill="#0D47A1">bag</text>
+
+      <!-- Persistent Box -->
+      <rect x="120" y="-10" width="120" height="120" fill="#FFF3E0" stroke="#FB8C00" class="box" />
+      <text x="180" y="125" text-anchor="middle" class="label">id: 333 (Same)</text>
+
+      <!-- Original Item -->
+      <rect x="130" y="0" width="100" height="30" fill="#FFE082" stroke="#FFB300" class="box" />
+      <text x="180" y="20" text-anchor="middle" class="text-val" fill="#E65100">'apple'</text>
+      
+      <!-- Appended Item -->
+      <rect x="130" y="40" width="100" height="30" fill="#FFE082" stroke="#FFB300" class="box" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+      </rect>
+      <text x="180" y="60" text-anchor="middle" class="text-val" fill="#E65100" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.5;0.9;1" dur="5s" repeatCount="indefinite" />
+        'cherry'
+      </text>
+
+      <!-- Arrow stays the same -->
+      <path d="M 60,15 L 110,40" class="arrow" />
+    </g>
+  </svg>
+</div>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">:</span> <span class="n">word</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Hello</span><span class="sh">"</span>
 <span class="n">In</span> <span class="p">:</span> <span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
 <span class="n">Out</span><span class="p">:</span> <span class="mi">1111000</span>
