@@ -1,77 +1,98 @@
 main:
-  - title: "Chapter 1. 파이썬 기본 핵심 understanding"
-    url: /part01/01_basic/
+  - title: "0. 파이썬 개발환경 구축"
+    url: /part01/setup/
     subitems:
+      - title: 학습목표
+        url: /part01/setup/
+      - title: "00.01_파이썬 설치 가이드 (2026)"
+        url: /part01/setup/install/
+      - title: "00.02_가상환경 (Virtual Environment)"
+        url: /part01/setup/venv/
+  - title: "1. 파이썬 기본 핵심 understanding"
+    url: /part01/basic/
+    subitems:
+      - title: 학습목표
+        url: /part01/basic/
       - title: "01.01_값(value)"
-        url: /part01/01_basic/01_01_value/
+        url: /part01/basic/value/
       - title: "01.02_이름(name)"
-        url: /part01/01_basic/01_02_name/
+        url: /part01/basic/name/
       - title: "01.03_데이터"
-        url: /part01/01_basic/01_03_data/
+        url: /part01/basic/data/
       - title: "01.04_바인딩(binding)"
-        url: /part01/01_basic/01_04_binding/
+        url: /part01/basic/binding/
       - title: "01.05_내장"
-        url: /part01/01_basic/01_05_builtin/
-  - title: "Chapter 2. 파이썬 문장"
-    url: /part01/02_statement/
+        url: /part01/basic/builtin/
+  - title: "2. 파이썬 문장"
+    url: /part01/statement/
     subitems:
+      - title: 학습목표
+        url: /part01/statement/
       - title: "02.01_문장"
-        url: /part01/02_statement/02_01_section/
+        url: /part01/statement/section1/
       - title: "02.02_프로그램"
-        url: /part01/02_statement/02_02_section/
+        url: /part01/statement/section2/
       - title: "02.03_함수"
-        url: /part01/02_statement/02_03_function/
+        url: /part01/statement/function/
       - title: "02.04_모듈(module)_패키지(package)"
-        url: /part01/02_statement/02_04_module/
+        url: /part01/statement/module/
       - title: "02.05_네임스페이스(Namespace)"
-        url: /part01/02_statement/02_05_namespace/
+        url: /part01/statement/namespace/
       - title: "02.06_단순한"
-        url: /part01/02_statement/02_06_section/
-  - title: "Chapter 3. 숫자 자료형"
-    url: /part01/03_datatype/
+        url: /part01/statement/section3/
+  - title: "3. 숫자 자료형"
+    url: /part01/datatype/
     subitems:
+      - title: 학습목표
+        url: /part01/datatype/
       - title: "03.00_3.0"
-        url: /part01/03_datatype/03_00_section/
+        url: /part01/datatype/section1/
       - title: "03.01_숫자"
-        url: /part01/03_datatype/03_01_section/
+        url: /part01/datatype/section2/
       - title: "03.02_내장"
-        url: /part01/03_datatype/03_02_builtin/
+        url: /part01/datatype/builtin/
       - title: "03.03_연산자(Operator)"
-        url: /part01/03_datatype/03_03_operator/
-  - title: "Chapter 4. Sequence 자료형"
-    url: /part01/04_sequence/
+        url: /part01/datatype/operator/
+  - title: "4. Sequence 자료형"
+    url: /part01/sequence/
     subitems:
+      - title: 학습목표
+        url: /part01/sequence/
       - title: "04.01_Sequence"
-        url: /part01/04_sequence/04_01_section/
+        url: /part01/sequence/section1/
       - title: "04.02_문자열"
-        url: /part01/04_sequence/04_02_string/
+        url: /part01/sequence/string/
       - title: "04.03_바이트"
-        url: /part01/04_sequence/04_03_section/
+        url: /part01/sequence/section2/
       - title: "04.04_바이트"
-        url: /part01/04_sequence/04_04_section/
+        url: /part01/sequence/section3/
       - title: "04.05_튜플"
-        url: /part01/04_sequence/04_05_tuple/
+        url: /part01/sequence/tuple/
       - title: "04.06_리스트"
-        url: /part01/04_sequence/04_06_list/
+        url: /part01/sequence/list/
       - title: "04.07_Sequence"
-        url: /part01/04_sequence/04_07_section/
-  - title: "Chapter 5. Mapping/Set 자료형"
-    url: /part01/05_mapping/
+        url: /part01/sequence/section4/
+  - title: "5. Mapping/Set 자료형"
+    url: /part01/mapping/
     subitems:
+      - title: 학습목표
+        url: /part01/mapping/
       - title: "05.01_파이썬"
-        url: /part01/05_mapping/05_01_section/
+        url: /part01/mapping/section1/
       - title: "05.02_딕셔너리(dict)"
-        url: /part01/05_mapping/05_02_dict/
+        url: /part01/mapping/dict/
       - title: "05.03_set"
-        url: /part01/05_mapping/05_03_section/
-  - title: "Chapter 6. 정수형 검색"
-    url: /part01/06_formatting/
+        url: /part01/mapping/section2/
+  - title: "6. 정수형 검색"
+    url: /part01/formatting/
     subitems:
+      - title: 학습목표
+        url: /part01/formatting/
       - title: "06.01_정수"
-        url: /part01/06_formatting/06_01_integer/
+        url: /part01/formatting/integer/
       - title: "06.02_슬라이싱(slicing)"
-        url: /part01/06_formatting/06_02_slicing/
+        url: /part01/formatting/slicing/
       - title: "06.03_지능형(comprehension)"
-        url: /part01/06_formatting/06_03_comprehension/
+        url: /part01/formatting/comprehension/
       - title: "06.04_문자열"
-        url: /part01/06_formatting/06_04_string/
+        url: /part01/formatting/string/

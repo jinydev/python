@@ -1,43 +1,51 @@
 main:
-  - title: "Chapter 12. 함수형 프로그래밍"
-    url: /part03/12_functional/
+  - title: "12. 함수형 프로그래밍"
+    url: /part03/functional/
     subitems:
+      - title: 학습목표
+        url: /part03/functional/
       - title: "12.01_함수형"
-        url: /part03/12_functional/12_01_function/
+        url: /part03/functional/function/
       - title: "12.02_내장"
-        url: /part03/12_functional/12_02_builtin/
+        url: /part03/functional/builtin/
       - title: "12.03_멀티플"
-        url: /part03/12_functional/12_03_section/
-  - title: "Chapter 13. 추상 클래스"
-    url: /part03/13_abstract/
+        url: /part03/functional/section/
+  - title: "13. 추상 클래스"
+    url: /part03/abstract/
     subitems:
+      - title: 학습목표
+        url: /part03/abstract/
       - title: "13.01_내장"
-        url: /part03/13_abstract/13_01_builtin/
+        url: /part03/abstract/builtin/
       - title: "13.02_수에"
-        url: /part03/13_abstract/13_02_section/
+        url: /part03/abstract/section1/
       - title: "13.03_컬렉션"
-        url: /part03/13_abstract/13_03_section/
+        url: /part03/abstract/section2/
       - title: "13.04_Sequence"
-        url: /part03/13_abstract/13_04_section/
+        url: /part03/abstract/section3/
       - title: "13.05_타입"
-        url: /part03/13_abstract/13_05_section/
-  - title: "Chapter 14. 제너레이터"
-    url: /part03/14_iterator/
+        url: /part03/abstract/section4/
+  - title: "14. 제너레이터"
+    url: /part03/iterator/
     subitems:
+      - title: 학습목표
+        url: /part03/iterator/
       - title: "14.01_반복형과"
-        url: /part03/14_iterator/14_01_section/
+        url: /part03/iterator/section1/
       - title: "14.02_itertools"
-        url: /part03/14_iterator/14_02_section/
+        url: /part03/iterator/section2/
       - title: "14.03_제너레이터(generator)"
-        url: /part03/14_iterator/14_03_generator/
+        url: /part03/iterator/generator/
       - title: "14.04_코루틴(coroutine)"
-        url: /part03/14_iterator/14_04_coroutine/
-  - title: "Chapter 15. 프로퍼티"
-    url: /part03/15_property/
+        url: /part03/iterator/coroutine/
+  - title: "15. 프로퍼티"
+    url: /part03/property/
     subitems:
+      - title: 학습목표
+        url: /part03/property/
       - title: "15.01_프로퍼티(property)"
-        url: /part03/15_property/15_01_property/
+        url: /part03/property/property/
       - title: "15.02_사용자"
-        url: /part03/15_property/15_02_section/
+        url: /part03/property/section/
       - title: "15.03_디스크립터(descriptor)"
-        url: /part03/15_property/15_03_descriptor/
+        url: /part03/property/descriptor/
