@@ -1,0 +1,141 @@
+main:
+- title: 🐍 파이썬 언어 소개
+  url: /intro/
+- title: '📌 [기초] 1학기: 파이썬 기초 및 CS 원리'
+  url: /semester1/
+  subitems:
+  - title: '1주차: 파이썬과 개발 환경 🐍'
+    url: /semester1/week01/
+    subitems:
+    - title: 주차 개요
+      url: /semester1/week01/
+    - title: '1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀'
+      url: /semester1/week01/session1.html
+    - title: '1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️'
+      url: /semester1/week01/session2.html
+    - title: '1주차 3세션: 파이썬 기초 문법과 문제 해결 📦'
+      url: /semester1/week01/session3.html
+  - title: '2주차: 변수와 메모리의 비밀 🧠'
+    url: /semester1/week02/
+    subitems:
+    - title: 주차 개요
+      url: /semester1/week02/
+    - title: '2주차 1세션: 변수의 개념과 값 할당 📦'
+      url: /semester1/week02/session1.html
+    - title: '2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠'
+      url: /semester1/week02/session2.html
+    - title: '2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠'
+      url: /semester1/week02/session3.html
+  - title: '3주차: 기본 자료형 (1) - 숫자와 문자열 🔢'
+    url: /semester1/week03/
+  - title: '4주차: 기본 자료형 (2) - 컨테이너 자료형 📦'
+    url: /semester1/week04/
+  - title: '5주차: 제어문 (1) - 조건문과 논리 연산 🚦'
+    url: /semester1/week05/
+  - title: '6주차: 제어문 (2) - 반복문과 이터레이터 🔄'
+    url: /semester1/week06/
+  - title: '7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️'
+    url: /semester1/week07/
+  - title: '8주차: 1학기 중간고사 📝'
+    url: /semester1/week08/
+  - title: '9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠'
+    url: /semester1/week09/
+  - title: '10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦'
+    url: /semester1/week10/
+  - title: '11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾'
+    url: /semester1/week11/
+  - title: '12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️'
+    url: /semester1/week12/
+  - title: '13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️'
+    url: /semester1/week13/
+  - title: '14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍'
+    url: /semester1/week14/
+  - title: '15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️'
+    url: /semester1/week15/
+  - title: '16주차: 1학기 기말고사 및 마무리 🎓'
+    url: /semester1/week16/
+- title: '📌 [고급] 2학기: 객체지향(OOP) 및 설계'
+  url: /semester2/
+  subitems:
+  - title: '1주차: OOP 패러다임 - 객체지향 설계의 시작 🏗️'
+    url: /semester2/week01/
+  - title: '2주차: 클래스 기초 - 인스턴스와 self의 정체 ⚙️'
+    url: /semester2/week02/
+  - title: '3주차: 캡슐화와 정보 은닉 - 안전한 데이터 관리 🔒'
+    url: /semester2/week03/
+  - title: '4주차: 상속과 다형성 - 유연하고 확장 가능한 설계 🌿'
+    url: /semester2/week04/
+  - title: '5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️'
+    url: /semester2/week05/
+  - title: '6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️'
+    url: /semester2/week06/
+  - title: '7주차: 매직 메서드 (Dunder Methods) - 파이썬답게 만들기 ✨'
+    url: /semester2/week07/
+  - title: '8주차: 2학기 중간고사 📝'
+    url: /semester2/week08/
+  - title: '9주차: 디자인 패턴 (1) - 싱글톤과 팩토리 패턴 🏗️'
+    url: /semester2/week09/
+  - title: '10주차: 디자인 패턴 (2) - 전략과 옵저버 패턴 ⚙️'
+    url: /semester2/week10/
+  - title: '11주차: 패키지 구조 설계 - 대규모 프로젝트 관리 📦'
+    url: /semester2/week11/
+  - title: '12주차: 타입 힌팅 (Type Hinting) - 코드의 문서화와 안정성 🏷️'
+    url: /semester2/week12/
+  - title: '13주차: 유닛 테스트 - 버그 없는 코드 만들기 🧪'
+    url: /semester2/week13/
+  - title: '14주차: 배포 및 패키징 (1) - 내 코드를 라이브러리로 만들기 📦'
+    url: /semester2/week14/
+  - title: '15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍'
+    url: /semester2/week15/
+  - title: '16주차: 2학기 기말고사 및 마무리 🎓'
+    url: /semester2/week16/
+- title: '📌 [심화] 3학기: 응용 및 시스템 개발'
+  url: /semester3/
+  subitems:
+  - title: '1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️'
+    url: /semester3/week01/
+    subitems:
+    - title: 주차 개요
+      url: /semester3/week01/
+    - title: '1주차 1교시: GUI 개발 기초 - 화면에 생명력 불어넣기 (1/3) 🖥️'
+      url: /semester3/week01/session1.html
+    - title: '1주차 2교시: Tkinter 기초 - 첫 번째 윈도우 만들기 (2/3) 🖥️'
+      url: /semester3/week01/session2.html
+    - title: '1주차 3교시: 이벤트 연결과 동적 UI 업데이트 (3/3) 🖥️'
+      url: /semester3/week01/session3.html
+  - title: '2주차: GUI 심화 - 위젯 배치 알고리즘과 데이터 시각화 뷰어 📊'
+    url: /semester3/week02/
+  - title: '3주차: 네트워크 프로그래밍 (1) - 소켓 통신 기초 🌐'
+    url: /semester3/week03/
+  - title: '4주차: 네트워크 프로그래밍 (2) - HTTP와 REST API 🌐'
+    url: /semester3/week04/
+  - title: '5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦'
+    url: /semester3/week05/
+  - title: '6주차: 데이터베이스 기초 - 영구적인 데이터 저장소 🗄️'
+    url: /semester3/week06/
+  - title: '7주차: ORM (Object Relational Mapping) - 객체와 DB의 연결 🔗'
+    url: /semester3/week07/
+  - title: '8주차: 3학기 중간고사 📝'
+    url: /semester3/week08/
+  - title: '9주차: 멀티스레딩 (Threading) - 동시성 프로그래밍 🧵'
+    url: /semester3/week09/
+  - title: '10주차: 멀티프로세싱 (Multiprocessing) - 진정한 병렬 처리 🚀'
+    url: /semester3/week10/
+  - title: '11주차: 비동기 프로그래밍 (1) - asyncio와 코루틴 ⚡'
+    url: /semester3/week11/
+  - title: '12주차: 비동기 프로그래밍 (2) - 고성능 크롤러 제작 🌐'
+    url: /semester3/week12/
+  - title: '13주차: 게임 개발 원리 - 실시간 상호작용 구현 🎮'
+    url: /semester3/week13/
+  - title: '14주차: 최종 프로젝트 기획 - 나만의 서비스 설계 📝'
+    url: /semester3/week14/
+  - title: '15주차: 최종 프로젝트 구현 - 코딩과 디버깅 💻'
+    url: /semester3/week15/
+  - title: '16주차: 최종 마무리 및 마스터 인증 🎓'
+    url: /semester3/week16/
+- title: 🐍 PEP 8 스타일 가이드
+  url: /pep8/
+- title: 📋 전체 강의 계획서 (Syllabus)
+  url: /syllabus/
+- title: 🧭 탐험대 캐릭터 소개
+  url: /character/

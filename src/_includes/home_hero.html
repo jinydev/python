@@ -1,0 +1,202 @@
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        padding: 4.5rem 2rem;
+        border-radius: 0;
+        margin-bottom: 3.5rem;
+        border-bottom: 1px solid #334155;
+        color: #f8fafc;
+    }
+
+    .hero-title {
+        font-size: 2.85rem;
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-title .accent-python {
+        background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 50%, #facc15 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        margin-top: 1.25rem;
+        margin-bottom: 2.25rem;
+        line-height: 1.6;
+    }
+
+    .btn-hero-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: #ffffff !important;
+        border: none;
+        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        transition: all 0.2s ease;
+    }
+
+    .btn-hero-primary:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        transform: translateY(-2px);
+    }
+
+    .btn-hero-outline {
+        border: 2px solid #475569;
+        color: #e2e8f0;
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(8px);
+        transition: all 0.2s ease;
+    }
+
+    .btn-hero-outline:hover {
+        background-color: #334155;
+        border-color: #64748b;
+        color: #ffffff !important;
+        transform: translateY(-2px);
+    }
+
+    .hero-code-box {
+        background-color: #0b0f19;
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        text-align: left;
+    }
+
+    .hero-code-header {
+        background-color: #1e293b;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 1px solid #334155;
+    }
+
+    .mac-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .mac-dot-red { background-color: #ef4444; }
+    .mac-dot-yellow { background-color: #f59e0b; }
+    .mac-dot-green { background-color: #10b981; }
+
+    .hero-code-body {
+        padding: 1.25rem 1.5rem;
+        font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        color: #e2e8f0;
+        margin: 0;
+    }
+
+    .road-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #e2e8f0;
+        border-radius: 1.25rem;
+        height: 100%;
+        background-color: #ffffff;
+    }
+
+    .road-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        border-color: #3b82f6;
+    }
+
+    .badge-sem1 {
+        background-color: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .badge-sem2 {
+        background-color: #fef3c7;
+        color: #b45309;
+    }
+
+    .badge-sem3 {
+        background-color: #dcfce7;
+        color: #15803d;
+    }
+
+    .badge-guide {
+        background-color: #f3e8ff;
+        color: #7e22ce;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill bg-slate-800 border border-secondary text-info small fw-bold">
+                    <span>✨</span>
+                    <span>3학기 48주 풀스택 파이썬 마스터 커리큘럼</span>
+                </div>
+                <h1 class="hero-title">
+                    파이썬의 기초부터<br>
+                    <span class="accent-python">컴퓨터 과학 & 객체지향, 시스템 응용</span>까지
+                </h1>
+                <p class="hero-subtitle">
+                    단순한 문법 암기를 넘어 메모리 참조 원리, CPython의 내부 구조,<br class="d-none d-md-inline">
+                    유지보수 가능한 객체지향(OOP) 소프트웨어 설계와 실전 비동기·네트워크 서비스를 완벽히 체화합니다.
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                    <a href="{{ '/semester1/' | relative_url }}"
+                        class="btn btn-hero-primary btn-lg px-4 py-3 rounded-pill fw-bold">
+                        1학기 기초 & CS ➔
+                    </a>
+                    <a href="{{ '/semester2/' | relative_url }}"
+                        class="btn btn-hero-outline btn-lg px-4 py-3 rounded-pill fw-bold">
+                        2학기 OOP 설계 ➔
+                    </a>
+                    <a href="{{ '/semester3/' | relative_url }}"
+                        class="btn btn-hero-outline btn-lg px-4 py-3 rounded-pill fw-bold">
+                        3학기 응용 개발 ➔
+                    </a>
+                    <a href="{{ '/syllabus/' | relative_url }}"
+                        class="btn btn-outline-light btn-lg px-3 py-3 rounded-pill fw-bold">
+                        📋 전체 커리큘럼
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-code-box">
+                    <div class="hero-code-header justify-content-between">
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="mac-dot mac-dot-red"></span>
+                            <span class="mac-dot mac-dot-yellow"></span>
+                            <span class="mac-dot mac-dot-green"></span>
+                            <span class="ms-2 small text-secondary">python_master_class.py</span>
+                        </div>
+                        <span class="badge bg-dark text-info font-monospace small">Python 3.12+</span>
+                    </div>
+                    <pre class="hero-code-body"><code><span style="color:#7dd3fc;">import</span> asyncio
+
+<span style="color:#f472b6;">class</span> <span style="color:#60a5fa;">PythonMaster</span>:
+    <span style="color:#9ca3af;">"""3학기 48주 완성 파이썬 바이블"""</span>
+    <span style="color:#f472b6;">def</span> <span style="color:#60a5fa;">__init__</span>(<span style="color:#f87171;">self</span>):
+        <span style="color:#f87171;">self</span>.semesters = [
+            <span style="color:#86efac;">"1. 기초 & CS 원리"</span>,
+            <span style="color:#86efac;">"2. 객체지향(OOP) & 설계"</span>,
+            <span style="color:#86efac;">"3. 시스템 & 비동기 응용"</span>
+        ]
+
+    <span style="color:#f472b6;">async def</span> <span style="color:#60a5fa;">master_journey</span>(<span style="color:#f87171;">self</span>):
+        <span style="color:#f472b6;">for</span> sem <span style="color:#f472b6;">in</span> <span style="color:#f87171;">self</span>.semesters:
+            <span style="color:#f472b6;">await</span> asyncio.sleep(<span style="color:#fcd34d;">0.1</span>)
+            print(<span style="color:#86efac;">f" 정복 완료: {sem}"</span>)
+
+<span style="color:#9ca3af;"># 시작하기</span>
+hero = PythonMaster()
+asyncio.run(hero.master_journey())</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

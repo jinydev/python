@@ -1,0 +1,44 @@
+main:
+- title: '📌 [심화] 3학기: 응용 및 시스템 개발'
+  url: /semester3/
+- title: '1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️'
+  url: /semester3/week01/
+  subitems:
+  - title: 주차 개요
+    url: /semester3/week01/
+  - title: '1주차 1교시: GUI 개발 기초 - 화면에 생명력 불어넣기 (1/3) 🖥️'
+    url: /semester3/week01/session1.html
+  - title: '1주차 2교시: Tkinter 기초 - 첫 번째 윈도우 만들기 (2/3) 🖥️'
+    url: /semester3/week01/session2.html
+  - title: '1주차 3교시: 이벤트 연결과 동적 UI 업데이트 (3/3) 🖥️'
+    url: /semester3/week01/session3.html
+- title: '2주차: GUI 심화 - 위젯 배치 알고리즘과 데이터 시각화 뷰어 📊'
+  url: /semester3/week02/
+- title: '3주차: 네트워크 프로그래밍 (1) - 소켓 통신 기초 🌐'
+  url: /semester3/week03/
+- title: '4주차: 네트워크 프로그래밍 (2) - HTTP와 REST API 🌐'
+  url: /semester3/week04/
+- title: '5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦'
+  url: /semester3/week05/
+- title: '6주차: 데이터베이스 기초 - 영구적인 데이터 저장소 🗄️'
+  url: /semester3/week06/
+- title: '7주차: ORM (Object Relational Mapping) - 객체와 DB의 연결 🔗'
+  url: /semester3/week07/
+- title: '8주차: 3학기 중간고사 📝'
+  url: /semester3/week08/
+- title: '9주차: 멀티스레딩 (Threading) - 동시성 프로그래밍 🧵'
+  url: /semester3/week09/
+- title: '10주차: 멀티프로세싱 (Multiprocessing) - 진정한 병렬 처리 🚀'
+  url: /semester3/week10/
+- title: '11주차: 비동기 프로그래밍 (1) - asyncio와 코루틴 ⚡'
+  url: /semester3/week11/
+- title: '12주차: 비동기 프로그래밍 (2) - 고성능 크롤러 제작 🌐'
+  url: /semester3/week12/
+- title: '13주차: 게임 개발 원리 - 실시간 상호작용 구현 🎮'
+  url: /semester3/week13/
+- title: '14주차: 최종 프로젝트 기획 - 나만의 서비스 설계 📝'
+  url: /semester3/week14/
+- title: '15주차: 최종 프로젝트 구현 - 코딩과 디버깅 💻'
+  url: /semester3/week15/
+- title: '16주차: 최종 마무리 및 마스터 인증 🎓'
+  url: /semester3/week16/

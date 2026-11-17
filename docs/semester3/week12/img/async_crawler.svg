@@ -1,0 +1,41 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">동기 vs 비동기 크롤러 성능 비교</text>
+  
+  <!-- Sync Crawler -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="240" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="120" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">동기 크롤러 (Sync)</text>
+    
+    <path d="M 50 60 L 150 60" stroke="#d32f2f" stroke-width="3" marker-end="url(#arrowhead)" />
+    <text x="100" y="50" font-family="Arial" font-size="12" text-anchor="middle" fill="#d32f2f">요청 1 &rarr; 응답 대기</text>
+    
+    <path d="M 50 100 L 150 100" stroke="#d32f2f" stroke-width="3" marker-end="url(#arrowhead)" />
+    <text x="100" y="90" font-//Arial" font-size="12" text-anchor="middle" fill="#d32f2f">요청 2 &rarr; 응답 대기</text>
+    
+    <path d="M 50 140 L 150 140" stroke="#d32f2f" stroke-width="3" marker-end="url(#arrowhead)" />
+    <text x="100" y="130" font-family="Arial" font-size="12" text-anchor="middle" fill="#d32f2f">요청 3 &rarr; 응답 대기</text>
+    
+    <text x="120" y="170" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">순차적 처리 (매우 느림)</text>
+  </g>
+  
+  <!-- Async Crawler -->
+  <g transform="translate(350, 80)">
+    <rect x="0" y="0" width="240" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="120" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">비동기 크롤러 (Async)</text>
+    
+    <path d="M 50 60 L 150 60" stroke="#4caf50" stroke-width="3" marker-end="url(#arrowhead)" />
+    <path d="M 50 80 L 150 80" stroke="#4caf50" stroke-width="3" marker-end="url(#arrowhead)" />
+    <path d="M 50 100 L 150 100" stroke="#4caf50" stroke-width="3" marker-end="url(#arrowhead)" />
+    <text x="100" y="120" font-family="Arial" font-size="14" text-anchor="middle" fill="#4caf50">동시에 여러 요청 전송!</text>
+    
+    <text x="120" y="170" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">응답 오는 순서대로 처리 (매우 빠름)</text>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

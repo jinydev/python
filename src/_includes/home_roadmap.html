@@ -1,0 +1,116 @@
+<div class="mb-5 text-center">
+    <h2 class="fw-bold mb-3" style="color: #1e293b;">🗺️ 파이썬 마스터 클래스 로드맵 (기초 · 고급 · 심화 48주)</h2>
+    <p class="text-secondary max-w-700 mx-auto">
+        컴퓨터 공학 기초 원리부터 객체지향 소프트웨어 아키텍처, 실전 비동기·시스템 개발까지 3단계(기초, 고급, 심화)로 설계된 전문 커리큘럼입니다.
+    </p>
+</div>
+
+<div class="row g-4 mb-5">
+    <!-- 1학기: 기초 -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card road-card p-4 d-flex flex-column h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge rounded-pill badge-sem1 px-3 py-2 fw-bold">기초 과정 (1학기 · 16주)</span>
+                <span class="text-muted small">기초 & CS 원리</span>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">파이썬 기초 및 컴퓨터 과학</h4>
+            <p class="text-secondary small flex-grow-1">
+                변수와 메모리 참조(Reference), CPython 동적 타이핑과 가비지 컬렉션, 자료구조(해시 테이블), 제어문 및 이터레이터, 함수 스코프(LEGB)와 파일 I/O를 정복합니다.
+            </p>
+            <div class="border-top pt-3 mt-3">
+                <div class="small text-muted mb-2">📌 주요 주제: CPython, 메모리 모델, 자료형, 함수 심화</div>
+                <a href="{{ '/semester1/' | relative_url }}" class="btn btn-outline-primary btn-sm rounded-pill fw-bold w-100">
+                    기초 과정 학습하기 ➔
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2학기: 고급 -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card road-card p-4 d-flex flex-column h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge rounded-pill badge-sem2 px-3 py-2 fw-bold">고급 과정 (2학기 · 16주)</span>
+                <span class="text-muted small">OOP & 소프트웨어 설계</span>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">객체지향 및 소프트웨어 설계</h4>
+            <p class="text-secondary small flex-grow-1">
+                클래스와 인스턴스, 상속·다형성·추상화, 매직 메서드(Dunder), 디자인 패턴(싱글톤, 팩토리, 옵서버), 모듈/패키지 아키텍처 및 단위 테스트(TDD)를 체득합니다.
+            </p>
+            <div class="border-top pt-3 mt-3">
+                <div class="small text-muted mb-2">📌 주요 주제: OOP 원칙, Dunder 메서드, 디자인 패턴, TDD</div>
+                <a href="{{ '/semester2/' | relative_url }}" class="btn btn-outline-warning text-dark btn-sm rounded-pill fw-bold w-100">
+                    고급 과정 학습하기 ➔
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3학기: 심화 -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card road-card p-4 d-flex flex-column h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge rounded-pill badge-sem3 px-3 py-2 fw-bold">심화 과정 (3학기 · 16주)</span>
+                <span class="text-muted small">응용 & 시스템 개발</span>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">응용 개발 및 시스템 프로그래밍</h4>
+            <p class="text-secondary small flex-grow-1">
+                GUI 데스크톱 애플리케이션(Tkinter/PyQt), SQLite 관계형 DB 연동, 소켓 네트워크 통신, 멀티스레딩 & 멀티프로세싱, 그리고 AsyncIO 비동기 프로그래밍을 구축합니다.
+            </p>
+            <div class="border-top pt-3 mt-3">
+                <div class="small text-muted mb-2">📌 주요 주제: GUI 앱, SQLite, 소켓 통신, AsyncIO 비동기</div>
+                <a href="{{ '/semester3/' | relative_url }}" class="btn btn-outline-success btn-sm rounded-pill fw-bold w-100">
+                    심화 과정 학습하기 ➔
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 부록 및 전체 안내 2단 카드 -->
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card road-card p-4 h-100 border-start border-4 border-info">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge rounded-pill badge-guide px-3 py-1 fw-bold">🐍 STYLE GUIDE</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">PEP 8 파이썬 공식 스타일 가이드</h5>
+            <p class="text-secondary small mb-3">
+                "코드는 작성하는 시간보다 읽히는 시간이 훨씬 길다." 네이밍 컨벤션, 들여쓰기, 공백 규칙 등 현업 표준 클린 코드 가이드입니다.
+            </p>
+            <a href="{{ '/pep8/' | relative_url }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold">
+                PEP 8 보기 ➔
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card road-card p-4 h-100 border-start border-4 border-primary">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge rounded-pill bg-light text-primary border px-3 py-1 fw-bold">📋 SYLLABUS</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">전체 48주 강의 계획서</h5>
+            <p class="text-secondary small mb-3">
+                기초, 고급, 심화 전 과정에 대한 주차별 세부 학습 목표, 이론 및 실습 과제, 심화 프로그래밍 원리 총망라 안내서입니다.
+            </p>
+            <a href="{{ '/syllabus/' | relative_url }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold">
+                강의 계획서 보기 ➔
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card road-card p-4 h-100 border-start border-4 border-warning">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis border px-3 py-1 fw-bold">🧭 CHARACTERS</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">탐험대 캐릭터 소개</h5>
+            <p class="text-secondary small mb-3">
+                이호진 교수님, 도로시, 조교 지니, 토토, 티니 로봇과 함께하는 즐거운 파이썬 탐험대 세계관을 살펴봅니다.
+            </p>
+            <a href="{{ '/character/' | relative_url }}" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold">
+                캐릭터 소개 보기 ➔
+            </a>
+        </div>
+    </div>
+</div>

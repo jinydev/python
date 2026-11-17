@@ -1,0 +1,33 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">HTTP 요청과 응답 (Request &amp; Response)</text>
+  
+  <!-- Client -->
+  <rect x="50" y="100" width="120" height="80" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+  <text x="110" y="145" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">클라이언트</text>
+  
+  <!-- Server -->
+  <rect x="430" y="100" width="120" height="80" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+  <text x="490" y="145" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">서버</text>
+  
+  <!-- Request Arrow -->
+  <path d="M 170 130 L 430 130" stroke="#2196f3" stroke-width="3" marker-end="url(#arrowhead)" />
+  <text x="300" y="120" font-family="Arial" font-size="14" text-anchor="middle" fill="#2196f3">HTTP Request (GET /api/user)</text>
+  
+  <!-- Response Arrow -->
+  <path d="M 430 160 L 170 160" stroke="#4caf50" stroke-width="3" marker-end="url(#arrowhead)" />
+  <text x="300" y="180" font-family="Arial" font-size="14" text-anchor="middle" fill="#4caf50">HTTP Response (200 OK, JSON Data)</text>
+  
+  <!-- JSON Box -->
+  <rect x="220" y="200" width="160" height="80" rx="10" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" />
+  <text x="300" y="225" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef6c00">JSON 데이터 예시</text>
+  <text x="300" y="250" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">{ "name": "지니", "age": 15 }</text>
+  <text x="300" y="270" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">텍스트 기반의 가벼운 데이터 포맷</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

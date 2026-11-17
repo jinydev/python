@@ -1,0 +1,1544 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦 | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester1/week10/" />
+<meta property="og:url" content="https://python.jiny.dev/semester1/week10/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦에 대한 파이썬(Python) 강좌 문서입니다.","headline":"10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦","url":"https://python.jiny.dev/semester1/week10/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          1학기 기초 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester1/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [기초] 1학기: 파이썬 기초 및 CS 원리
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="false">
+              1주차: 파이썬과 개발 환경 🐍
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week01/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3세션: 파이썬 기초 문법과 문제 해결 📦
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-3"
+              aria-expanded="false">
+              2주차: 변수와 메모리의 비밀 🧠
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-3">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week02/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 1세션: 변수의 개념과 값 할당 📦
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 기본 자료형 (1) - 숫자와 문자열 🔢
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 기본 자료형 (2) - 컨테이너 자료형 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 제어문 (1) - 조건문과 논리 연산 🚦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 제어문 (2) - 반복문과 이터레이터 🔄
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 1학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week10/"
+              class="bd-links-link d-inline-block rounded active">
+              10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 1학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester1/">📌 [기초] 1학기: 파이썬 기초 및 CS 원리</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="10주차-모듈과-패키지---대규모-프로젝트-개발의-기초-">10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦</h1>
+
+<p>다양한 파이썬 코드를 기능별로 쪼개어 보관하는 <strong>모듈(Module)</strong>과 이들의 묶음인 <strong>패키지(Package)</strong>, 그리고 충돌 없는 가상환경 개발 장부인 <strong>가상환경(venv)</strong>의 모든 작동 원리를 배웁니다.</p>
+
+<hr />
+
+<h2 id="학습목표">학습목표</h2>
+<p>내가 짠 파이썬 코드 길이가 수백 줄을 넘어가면, 마치 수학의 인수분해처럼 코드를 의미 있는 단위(파일)로 쪼개어 다른 파일에서 수입(<code class="language-plaintext highlighter-rouge">import</code>)해 쓰는 아키텍처적 사고가 필요합니다. 본 장에서는 나만의 커스텀 모듈을 만들 때 필수적인 흑마법 방어막 <strong><code class="language-plaintext highlighter-rouge">if __name__ == "__main__":</code></strong> 의 정체를 파악합니다. 나아가 데이터 분석 여정에서 피할 수 없는 ‘의존성 지옥(Dependency Hell)’을 막아주는 안전한 방공호, <strong>가상환경(<code class="language-plaintext highlighter-rouge">venv</code>)</strong>과 패키지 관리장부(<code class="language-plaintext highlighter-rouge">requirements.txt</code>) 세팅법을 확립합니다.</p>
+
+<p><img src="./img/concept_webtoon.png" alt="가상환경 Venv 개념" /></p>
+<div align="center">
+  <img src="./img/concept_anim.svg" alt="Virtual Environment Isolation" width="100%" />
+</div>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약">💡 TL;DR (1분 핵심 요약)</h2>
+
+<ul>
+  <li><strong>커스텀 모듈</strong>: 내가 짜놓은 <code class="language-plaintext highlighter-rouge">my_math.py</code> 파일은 언제든 다른 파일에서 <code class="language-plaintext highlighter-rouge">import my_math</code> 로 불러와 쓸 수 있는 훌륭한 부품이 됩니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">__name__ == "__main__"</code></strong>: 내가 직접 이 파일을 실행했을 때만 동작하고, 남이 나를 <code class="language-plaintext highlighter-rouge">import</code> 해서 부품으로 쓸 때는 함부로 켜지지 않게 막아주는 방어막 씰(Seal)입니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">venv</code> (가상환경)</strong>: A 프로젝트는 Pandas 1.0이, B 프로젝트는 Pandas 2.0이 필요할 때 파이썬끼리 싸우지 않도록 폴더마다 독립된 원룸을 배정해주는 기술입니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="1-나만의-모듈module-만들기-기초">1. 나만의 모듈(Module) 만들기 기초</h2>
+
+<p>파이썬에서는 거창한 선언 없이, <strong>그저 <code class="language-plaintext highlighter-rouge">.py</code> 확장자로 저장한 모든 파일이 모듈(Module)</strong>이 됩니다.</p>
+
+<p><strong>[상황]</strong>
+같은 폴더에 두 개의 파이썬 파일이 존재합니다.</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">my_tools.py</code> (도구를 모아놓은 창고 파일)</li>
+  <li><code class="language-plaintext highlighter-rouge">main.py</code> (실제 도구를 가져다 쓰는 사령부 파일)</li>
+</ol>
+
+<h3 id="my_toolspy-작성"><code class="language-plaintext highlighter-rouge">my_tools.py</code> 작성</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># my_tools.py
+</span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">my_tools 공장이 가동되었습니다!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="mainpy-에서-불러다-쓰기"><code class="language-plaintext highlighter-rouge">main.py</code> 에서 불러다 쓰기</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># main.py
+</span><span class="kn">import</span> <span class="n">my_tools</span>
+
+<span class="c1"># 남의 파일(모듈)에 있는 함수 사용하기!
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">my_tools</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">결과: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>🚨 문제 발생!</strong>
+<code class="language-plaintext highlighter-rouge">main.py</code>를 실행하면 콘솔에 다음과 같이 뜹니다.</p>
+  <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_tools 공장이 가동되었습니다!
+결과: 30
+</code></pre></div>  </div>
+  <p>나는 단순히 함수 부품만 가져오고 싶었는데(<code class="language-plaintext highlighter-rouge">import</code>), 파이썬은 모듈을 import 하는 순간 그 파일 전체를 한 번 스윽 읽어버립니다. 그래서 원치 않던 <code class="language-plaintext highlighter-rouge">print</code> 문까지 강제로 터져버리는 부작용이 생깁니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="2-방어막-전개-if-__name__--__main__">2. 방어막 전개: <code class="language-plaintext highlighter-rouge">if __name__ == "__main__":</code></h2>
+
+<p>위와 같은 “부작용 터짐 현상”을 막기 위해 파이썬 창시자들이 만들어 둔 룰이 있습니다. 바로 <strong>“이 코드가 직접 실행된 진짜 주인공(Main) 일 때만 작동하라!”</strong>라는 마법의 주문입니다.</p>
+
+<h3 id="my_toolspy-수정본-방어막-적용"><code class="language-plaintext highlighter-rouge">my_tools.py</code> 수정본 (방어막 적용)</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># my_tools.py
+</span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># ---- 흑마법 방어막 경계선 ----
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="c1"># 이 아래의 코드들은 'my_tools.py'를 [직접 실행] 했을 때만 작동합니다.
+</span>    <span class="c1"># 남이 import 해서 쓸 때는 코딱지도 건드려지지 않고 철저히 무시됩니다!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">my_tools 공장이 [직접 실행]으로 가동되었습니다!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="nf">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>이제 다시 <code class="language-plaintext highlighter-rouge">main.py</code>를 실행해 보면, 쓸데없는 프린트 문장이 뜨지 않고 깔끔하게 덧셈 결과만 출력됩니다!</p>
+
+<hr />
+
+<h2 id="-java-vs--python-스나이퍼-대결">☕ Java vs 🐍 Python 스나이퍼 대결</h2>
+
+<p><strong>진입점(Entry Point) 비교</strong></p>
+
+<ul>
+  <li><strong>Java</strong>: 프로그램이 무조건 시작되는 지점은 <code class="language-plaintext highlighter-rouge">public static void main(String[] args)</code> 라는 거대한 선언문이 독점합니다.</li>
+  <li><strong>Python</strong>: 파일 실행 시 묻지도 따지지도 않고 최상단부터 순차 실행됩니다. 단축키 격인 보이지 않는 <code class="language-plaintext highlighter-rouge">__name__</code> 변수에 파이썬이 몰래 <code class="language-plaintext highlighter-rouge">"__main__"</code> 이라는 명찰을 달아줍니다. 남에게 부품으로 불려왔을 때는 명찰이 <code class="language-plaintext highlighter-rouge">"__main__"</code> 이 아니기 때문에 방어벽(<code class="language-plaintext highlighter-rouge">if</code>)을 뚫을 수 없습니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="3-의존성-지옥과-가상환경virtual-environment">3. 의존성 지옥과 가상환경(Virtual Environment)</h2>
+
+<p>실무 개발에서는 여러 외주 프로젝트를 동시에 뜁니다.</p>
+<ul>
+  <li>A 회사 프로젝트: 원시적인 <code class="language-plaintext highlighter-rouge">Pandas v0.25</code> 구버전이 필요함</li>
+  <li>B 회사 프로젝트: 최신 <code class="language-plaintext highlighter-rouge">Pandas v2.2</code> 신버전이 필요함</li>
+</ul>
+
+<p>이때 내 컴퓨터 파이썬 폴더에 <code class="language-plaintext highlighter-rouge">pip install pandas</code>를 함부로 때리면, 이전 버전을 갈아엎고 신버전만 깔리면서 A 회사 프로젝트에 접속하는 순간 에러를 뿜으며 대폭발(Dependency Hell)합니다.</p>
+
+<p>이를 막기 위해 파이썬은 해당 소스코드 폴더 안에 <strong>나만의 원룸(가상환경)</strong>을 파주는 <code class="language-plaintext highlighter-rouge">venv</code> 모듈을 기본 제공합니다.</p>
+
+<h3 id="️-필수-가상환경-세팅-3단계-명령-터미널">🛠️ 필수 가상환경 세팅 3단계 명령 (터미널)</h3>
+
+<ol>
+  <li><strong>내 방(원룸) 계약하기 (생성)</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> venv my_env
+<span class="c"># 작업 폴더 안에 'my_env' 라는 작은 파이썬 복사본 폴더가 통째로 지어집니다.</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>내 방 불 켜기 (활성화 - Windows VS Code 기준)</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+<span class="c"># 터미널 프롬프트 앞에 (my_env) 라는 녹색 마크가 뜨면 성공! 이제부터 까는 패키지는 내 컴퓨터(Global)가 아니라 이 원룸에만 격리되어 깔립니다.</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>원룸에 가구(패키지) 들여놓기</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>my_env<span class="o">)</span> pip <span class="nb">install </span>pandas matplotlib
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="-영수증-발급-requirementstxt">📄 영수증 발급: <code class="language-plaintext highlighter-rouge">requirements.txt</code></h3>
+
+<p>이 프로젝트를 남(팀원 구글 드라이브나 GitHub)에게 넘길 때, 쓸데없이 수백 메가바이트짜리 가상환경 폴더(<code class="language-plaintext highlighter-rouge">my_env</code>)를 통째로 압축해 보내면 욕을 먹습니다. 
+대신, “이 프로젝트를 돌리려면 이 가구(버전) 목록이 필요합니다”라는 <strong>영수증 파일</strong>만 뽑아서 소스코드와 함께 한 장 떨궈주면 됩니다.</p>
+
+<ul>
+  <li><strong>영수증 발급 (내가 치는 명령어)</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip freeze <span class="o">&gt;</span> requirements.txt
+</code></pre></div>    </div>
+  </li>
+  <li><strong>영수증대로 가구 자동 세팅 (팀원이 치는 명령어)</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬 <code class="language-plaintext highlighter-rouge">venv</code> 가상환경을 잡았는데 터미널에서 빨간색으로 <code class="language-plaintext highlighter-rouge">PSSC 실행 정책 요류 (허가되지 않은 스크립트 실행 불가)</code> 같은 보안 에러 뜨면서 <code class="language-plaintext highlighter-rouge">activate</code>가 안 먹혀. 이거 윈도우 파워쉘 보안 문제 같은데 어떻게 우회해서 켤 수 있는지 알려줘.” <em>(💡 VS Code 초기 세팅 시 가장 많이 부딪히는 실전 버그 투표 1위입니다!)</em></p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Dependency Hell (디펜던시 헬)</strong>: 의존성 지옥. (내 코드가 A모듈에 의존하고, A모듈은 B모듈 버전1에 의존하는데, 내가 새로 깐 C모듈이 B모듈 버전2를 깔아 덮어버리면서 전체 프로그램이 연쇄 붕괴하는 악몽 같은 상황입니다. 가상환경이 피난처입니다.)</li>
+  <li><strong>Virtual Environment (버추얼 엔바이런먼트 / venv)</strong>: 가상 환경. (현실의 내 컴퓨터(자원)를 더럽히지 않고 샌드박스처럼 격리된 파이썬 실행 환경. 폴더 단위로 1채씩 지어집니다.)</li>
+  <li><strong>Freeze (프리즈)</strong>: 얼리다, 고정하다. (<code class="language-plaintext highlighter-rouge">pip freeze</code>는 지금 당장 내 원룸에 깔려있는 패키지와 그 정확한 버전 번호(예: <code class="language-plaintext highlighter-rouge">pandas==2.0.3</code>)를 스냅샷 사진 찍듯 딱 얼려서 출력해주는 명령어입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> <code class="language-plaintext highlighter-rouge">.venv</code> 가상환경을 구축하고 이를 터미널에서 활성화하는 명령어를 macOS와 Windows 각각에 맞추어 정리해 보세요.</p>
+
+<p><strong>문제 2.</strong> <code class="language-plaintext highlighter-rouge">calc.py</code>라는 모듈을 만들고 덧셈/뺄셈 함수를 작성한 뒤, 이 모듈이 직접 실행될 때만 실행되는 테스트 코드를 <code class="language-plaintext highlighter-rouge">if __name__ == "__main__":</code> 문을 활용해 구현해 보세요.</p>
+
+<p><strong>문제 3.</strong> (심화) <code class="language-plaintext highlighter-rouge">sys.path</code>의 정체가 무엇이며, 파이썬이 임포트할 모듈을 검색할 때 이 리스트가 어떤 역할을 하는지 3단계 검색 메커니즘을 들어 설명해 보세요.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-24-내장-모듈-가져다-쓰기-import">📖 교재 상세 학습: 24 내장 모듈 가져다 쓰기 (import)</h2>
+
+<h2 id="24-남이-만든-훌륭한-도구-빌려오기-모듈과-import">24 남이 만든 훌륭한 도구 빌려오기: 모듈과 import</h2>
+
+<p>진정한 개발자라면 모든 기능을 바닥부터 스스로 짜는 수고를 덜어야 합니다. 파이썬 생태계에는 이미 수학 연산, 무작위 뽑기 기능, 웹 통신 기능 등을 담아둔 수많은 마법의 상자가 완벽하게 준비되어 있습니다. 
+우리는 이런 완성된 도구 상자들을 가리켜 <strong>모듈(Module)</strong>이라고 부릅니다.</p>
+
+<p>내 파이썬 스크립트 안으로 이런 외부 도구를 영입해 오는 필수 명령어가 바로 <strong><code class="language-plaintext highlighter-rouge">import</code></strong>입니다.</p>
+
+<h4 id="1-math-모듈-정교한-수학-공학용-계산기">1. math 모듈: 정교한 수학 공학용 계산기</h4>
+<p>원주율(파이, $\pi$)을 소수점 끝까지 직접 외워서 3.1415… 라며 타이핑할 필요가 전혀 없습니다. 파이썬의 핵심 수학 관련 모듈인 <code class="language-plaintext highlighter-rouge">math</code>를 불러서 맡기면 됩니다.</p>
+
+<p><strong>REPL 실습: math 모듈 써보기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="n">math</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">circle_area</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span>  <span class="c1"># pi 상수를 이용한 원의 넓이
+</span><span class="o">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="n">circle_area</span><span class="p">)</span>
+<span class="mf">314.1592653589793</span>
+</code></pre></div></div>
+<p>모듈이 품고 있는 특정 기능이나 변수를 호출하려면 항상 <strong><code class="language-plaintext highlighter-rouge">모듈명.기능명</code></strong> 형식처럼 중간에 마침표(<code class="language-plaintext highlighter-rouge">.</code>)로 다리를 놔주어야 합니다.
+<code class="language-plaintext highlighter-rouge">math</code> 모듈 안에는 억지로 소수점을 끌어올리는 올림 함수 <code class="language-plaintext highlighter-rouge">math.ceil()</code>과, 냉정하게 깎아내리는 내림 함수 <code class="language-plaintext highlighter-rouge">math.floor()</code> 등 유용한 도구들이 가득합니다.</p>
+
+<blockquote>
+  <p><strong>⚠️ 팁:</strong> 일반적으로 실생활에서 자주 쓰이는 ‘반올림’ 연산은 굳이 <code class="language-plaintext highlighter-rouge">math</code> 모듈을 임포트하지 않아도 되는 파이썬의 영구 내장 함수 <code class="language-plaintext highlighter-rouge">round()</code>가 기본 담당하고 있습니다.</p>
+</blockquote>
+
+<h4 id="2-random-모듈-예측-불가능한-주사위-굴리기">2. random 모듈: 예측 불가능한 주사위 굴리기</h4>
+<p>RPG 게임에서 드랍되는 몬스터의 아이템이나 오늘 점심 메뉴를 무작위로 고르려면 <code class="language-plaintext highlighter-rouge">random</code> 모듈이 필수적입니다.
+그중에서도 리스트 내부에 늘어선 여러 후보 중 하나를 임의로 콕 집어주는 <code class="language-plaintext highlighter-rouge">choice</code> 함수는 매우 활용도가 높습니다.</p>
+
+<p><strong>코드: random_picker.py</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">random</span>
+
+<span class="n">lucky_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
+<span class="n">my_pick</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">lucky_numbers</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">시스템이 추천하는 오늘의 번호는: </span><span class="si">{</span><span class="n">my_pick</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="3-통신-모듈로-인터넷-훔쳐보기-맛보기">3. 통신 모듈로 인터넷 훔쳐보기 (맛보기)</h4>
+<p>파이썬 기본 내장 모듈들의 기능은 무궁무진합니다. 심지어 인터넷 사이트의 코드(HTML)를 단 몇 줄의 코딩으로 쭉 빨아들이는 것도 가능합니다. (아래 코드는 “이렇게도 쓸 수 있구나” 정도로 감상만 하고 넘어가시면 됩니다.)</p>
+
+<p><strong>코드: 웹 페이지 데이터 추출 맛보기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">urllib.request</span>
+
+<span class="n">target_url</span> <span class="o">=</span> <span class="sh">"</span><span class="s">http://example.com/</span><span class="sh">"</span>
+<span class="n">response_data</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlopen</span><span class="p">(</span><span class="n">target_url</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">response_data</span><span class="p">.</span><span class="nf">read</span><span class="p">().</span><span class="nf">decode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">))</span>
+</code></pre></div></div>
+<p>이렇듯 단 한 줄의 <code class="language-plaintext highlighter-rouge">import</code> 구문은 내 코드를 전 세계 파이썬 고수들이 쌓아올린 거대한 지식의 탑과 연결해 줍니다.</p>
+
+<hr />
+
+<h3 id="-미니-실습-외부-모듈-활용하기">💻 미니 실습: 외부 모듈 활용하기</h3>
+
+<p><strong>Quiz 1</strong> <code class="language-plaintext highlighter-rouge">math</code> 모듈을 제일 먼저 불러온 뒤, <code class="language-plaintext highlighter-rouge">50.7</code>이라는 실수의 소수점을 무자비하게 날려버리는(내림 연산) 함수를 찾아내 터미널에 결과를 띄워보세요.</p>
+
+<hr />
+<details>
+<summary><b>모범 답안 보기</b></summary>
+
+**풀이 1**
+```python
+import math
+print(math.floor(50.7))  # 결과: 50
+```
+</details>
+
+<hr />
+
+<h2 id="-교재-상세-학습-25-나만의-모듈-직접-만들기">📖 교재 상세 학습: 25 나만의 모듈 직접 만들기</h2>
+
+<h2 id="25-나만의-전용-특수-모듈-개발하기">25 나만의 전용 특수 모듈 개발하기</h2>
+
+<p>파이썬 개발자들이 만들어 둔 모듈만 받아 쓰려니 조금 아쉽지 않나요? 내가 심혈을 기울여 만든 유용한 함수나 중요한 데이터들을 잘 모아서 묶어둔 평범한 파이썬 스크립트 파일(<code class="language-plaintext highlighter-rouge">.py</code>) 하나하나가 모두 훌륭한 <strong>독자적 모듈</strong>로 대우받습니다! 관련 있는 여러 모듈 폴더를 모아놓은 거대한 묶음은 <strong>패키지(Package)</strong>라고 부릅니다.</p>
+
+<p>나만의 도구상자 파일을 직접 창조해 봅시다.</p>
+
+<h4 id="1단계-도구-상자모듈-파일-기획-및-제작">1단계: 도구 상자(모듈 파일) 기획 및 제작</h4>
+<p>내가 코딩을 하는 작업 폴더 아래에 <code class="language-plaintext highlighter-rouge">my_toolkit.py</code> 라는 새로운 파이썬 파일을 생성하고, 여기저기서 편하게 꺼내 쓸 만한 상숫값이나 함수들을 선언해 줍니다.</p>
+
+<p><strong>제작할 코드: my_toolkit.py</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 향후 여러 스크립트에서 공용으로 돌려 쓸 나만의 도구 창고입니다.
+</span><span class="n">MAX_WIND</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">SERVER_LIMIT</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">greet_user</span><span class="p">(</span><span class="n">nickname</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="s">환영합니다, </span><span class="si">{</span><span class="n">nickname</span><span class="si">}</span><span class="s"> 님! 서버에 접속하셨습니다.</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">throw_dice</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="n">random</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h4 id="2단계-메인-파일에서-도구상자-불러-쓰기">2단계: 메인 파일에서 도구상자 불러 쓰기</h4>
+<p>이제 방금 만든 공간 파일과 동일한 디렉토리에 메인 로직을 담당할 <code class="language-plaintext highlighter-rouge">game_start.py</code> 파이썬 파일을 추가합니다. 그리고 맨 윗줄에서 아까 지어준 파일 이름을 <code class="language-plaintext highlighter-rouge">import</code>로 소환하기만 하면 끝입니다.</p>
+
+<p><strong>활용할 코드: game_start.py</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">my_toolkit</span>  <span class="c1"># 중요: 뒤에 .py 확장자는 절대로 붙여선 안 됩니다!
+</span>
+<span class="c1"># 만든 모듈 파일에서 글로벌 변수 꺼내기
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">현재 채팅방 최대 수용 인원은 </span><span class="si">{</span><span class="n">my_toolkit</span><span class="p">.</span><span class="n">SERVER_LIMIT</span><span class="si">}</span><span class="s">명 입니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 만든 모듈 파일에서 함수(기능) 빌려 쓰기
+</span><span class="n">welcome_msg</span> <span class="o">=</span> <span class="n">my_toolkit</span><span class="p">.</span><span class="nf">greet_user</span><span class="p">(</span><span class="sh">"</span><span class="s">파이썬초보</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">welcome_msg</span><span class="p">)</span>
+
+<span class="n">dice_val</span> <span class="o">=</span> <span class="n">my_toolkit</span><span class="p">.</span><span class="nf">throw_dice</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">내가 굴린 주사위 눈금: </span><span class="si">{</span><span class="n">dice_val</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 <code class="language-plaintext highlighter-rouge">game_start.py</code>를 실행하면, 아까 다른 파일에서 설계했던 기능들이 한 치의 오차 없이 완벽하게 구동되는 것을 목격할 수 있습니다. 이 기법을 도입하면 수천 줄짜리 코드를 기능별로 쪼개어 파일로 관리하는 ‘코드의 분업화’가 비로소 완성됩니다.</p>
+
+<hr />
+
+<h4 id="-파이썬-모듈의-숨겨진-원리-__main__과-공간-분리">💡 파이썬 모듈의 숨겨진 원리: <code class="language-plaintext highlighter-rouge">__main__</code>과 공간 분리</h4>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">__name__ == "__main__"</code> 테스트 블록</strong>
+파이썬은 어떤 스크립트 파일이 에디터 등에서 <strong>직접 실행</strong>되었을 때만 그 파일의 내장 변수인 <code class="language-plaintext highlighter-rouge">__name__</code>에 <code class="language-plaintext highlighter-rouge">"__main__"</code>이라는 특별한 문자표를 부여해 줍니다. 반대로 <code class="language-plaintext highlighter-rouge">import</code>를 통해 남의 파일로 불려 들어갔을 때는 진짜 자기 파일 이름표를 가집니다. 이를 응용해 모듈 제작 시 아래와 같은 테스트 뼈대를 맨 밑에 자주 숨겨둡니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># my_toolkit.py 맨 밑에 추가됨
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="c1"># 이 부분은 내가 이 파일을 '단독으로' 실행해 볼 때만 테스트용으로 작동합니다.
+</span>    <span class="c1"># game_start.py에서 나를 import 할 때는 이 코드가 몰래 무시되고 넘어갑니다.
+</span>    <span class="nf">print</span><span class="p">(</span><span class="nf">throw_dice</span><span class="p">())</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>네임스페이스(Namespace)에 의한 독립성</strong>
+모듈 파일에서 선언한 변수나 함수들은 모두 해당 모듈만의 철저히 독립적인 <strong>네임스페이스(이름 공간)</strong>에 안전하게 갇히게 됩니다. 그래서 여러분이 A 모듈과 B 모듈에 모두 <code class="language-plaintext highlighter-rouge">MAX_WIND = 10</code>이라고 똑같은 변수 이름을 만들더라도, 절대로 서로 충돌하거나 망가지지 않고 완벽한 독립 상태가 유지됩니다.</p>
+  </li>
+  <li>
+    <p><strong>패키지 조립을 위한 특별한 예약어 (<code class="language-plaintext highlighter-rouge">__init__.py</code>)</strong>
+나중에 여러 모듈을 하나의 거대한 <code class="language-plaintext highlighter-rouge">my_game</code> 폴더(패키지) 안에 체계적으로 분류하고 싶다면, 파이썬에게 “여기는 평범한 폴더가 아니라 관련 코드를 묶어놓은 패키지 폴더입니다!”라고 알려주어야 합니다. 이를 위해 폴더 안에 내용이 텅 빈 <strong><code class="language-plaintext highlighter-rouge">__init__.py</code></strong> 라는 마법의 파일을 하나 쓱 만들어 두는 것이 개발자들의 모범 사례입니다. (파이썬 3.3부터는 없어도 되지만 명확한 구조 구분을 위해 생성해 두는 것을 강력히 추천합니다.)</p>
+  </li>
+</ul>
+
+<hr />
+
+<h4 id="-모듈-기획-시-지켜야-할-철칙">🚨 모듈 기획 시 지켜야 할 철칙</h4>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">.py</code> 이름표는 떼고 부를 것</strong>
+다른 스크립트에서 모듈을 부를 때 <code class="language-plaintext highlighter-rouge">import my_toolkit.py</code>라고 부르면 파이썬은 모듈을 인식하지 못하고 문법 에러를 토합니다. 오직 파일의 순수 ‘이름’ 부분만 호명해야 합니다.</li>
+  <li><strong>같은 보금자리에 둘 것</strong>
+현재 초급 단계에서는, 부품 역할을 하는 도구 상자 파일(<code class="language-plaintext highlighter-rouge">my_toolkit.py</code>)과 전체를 관장하는 메인 파일(<code class="language-plaintext highlighter-rouge">game_start.py</code>)이 기필코 <strong>같은 폴더 안</strong>에 이웃하고 있어야 파이썬 엔진이 손쉽게 파일을 주워 담을 수 있습니다.</li>
+  <li><strong>유명한 거인들의 이름을 사칭하지 말 것</strong>
+파이썬이 태생적으로 품고 있는 공식 모듈들과 똑같은 파일명을 내 모듈에 붙이면 절대 안 됩니다. 예를 들어 내 파일 이름을 실수로 <code class="language-plaintext highlighter-rouge">math.py</code> 나 <code class="language-plaintext highlighter-rouge">sys.py</code>로 짓고 실행하면, 파이썬이 원래의 진짜 모듈 대신 내 빈 깡통 파일을 우선으로 잘못 불러오게 되어 시스템이 망가지는 치명적 장애가 생길 수 있습니다! 항상 겹치지 않는 독창적인 파일명(예: <code class="language-plaintext highlighter-rouge">math_custom.py</code>)을 선호하세요.</li>
+</ol>
+
+<hr />
+
+<h2 id="-교재-상세-학습-59-시간의-흐름을-지배하는-모듈-datetime">📖 교재 상세 학습: 59 시간의 흐름을 지배하는 모듈: datetime</h2>
+
+<h2 id="59-특정-시점point-in-time의-좌표를-포착하다-datetime-모듈">59 특정 시점(Point in Time)의 좌표를 포착하다: datetime 모듈</h2>
+<p>&lt;/div&gt;</p>
+
+<h4 id="현실의-현재-시각-스캔하기">현실의 현재 시각 스캔하기</h4>
+<p>우리가 스마트폰 액정을 켜서 시계를 힐끗 보듯, 파이썬 스크립트 도중에도 <code class="language-plaintext highlighter-rouge">datetime</code> 시스템을 호출해 현재 흐르고 있는 우주의 정확한 시각을 포착해 낼 수 있습니다.</p>
+
+<p><strong>REPL 실습 창: 시간아 멈춰라!</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="n">datetime</span> <span class="c1"># 시간 관리 전담 부서를 호출합니다.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">current_time</span>
+<span class="n">datetime</span><span class="p">.</span><span class="nf">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">123456</span><span class="p">)</span>
+</code></pre></div></div>
+<p>출력된 좌표는 왼쪽부터 차례대로 <code class="language-plaintext highlighter-rouge">연도, 월, 일, 시각, 분, 초, 미세한 마이크로초</code> 단위까지 정밀하게 쪼개져 있습니다.</p>
+
+<h4 id="내-맘대로-과거나-미래-특정-좌표-세팅하기">내 맘대로 과거나 미래 특정 좌표 세팅하기</h4>
+<p>마치 타임머신 계기판에 가고 싶은 연도를 입력하거나 폰 알람을 내일 아침으로 직접 맞추는 것처럼, 프로그래머가 인위적으로 날짜와 시간을 강제로 부여해 인스턴스(시간 캡슐)를 찍어낼 수도 있습니다.</p>
+
+<p><strong>REPL 실습 창: 타임머신 좌표 설정</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">target_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 내년 1월 1일 자정으로 세팅!
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">target_date</span>
+<span class="n">datetime</span><span class="p">.</span><span class="nf">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="시점-사이의-간격-측정하기-남은-d-day-계산">시점 사이의 간격 측정하기 (남은 D-Day 계산)</h4>
+<p>우리가 설정한 새해 첫날(<code class="language-plaintext highlighter-rouge">target_date</code>)이 현재 시점(<code class="language-plaintext highlighter-rouge">current_time</code>)으로부터 도대체 얼마나 남았는지 산술적으로 빼기를 하면 그 거리를 적나라하게 측정할 수 있습니다.</p>
+
+<p><strong>REPL 실습 창: 디데이 폭파 시간 계산기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">gap</span> <span class="o">=</span> <span class="n">target_date</span> <span class="o">-</span> <span class="n">current_time</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gap</span>
+<span class="n">datetime</span><span class="p">.</span><span class="nf">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">68</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">30600</span><span class="p">,</span> <span class="n">microseconds</span><span class="o">=</span><span class="mi">876544</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">새해까지 정확히 </span><span class="si">{</span><span class="n">gap</span><span class="p">.</span><span class="n">days</span><span class="si">}</span><span class="s">일 남았네요!</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">새해까지</span> <span class="n">정확히</span> <span class="mi">68</span><span class="n">일</span> <span class="n">남았네요</span><span class="err">!</span>
+</code></pre></div></div>
+
+<p>이 연산을 거쳐 탄생한 녀석은 더 이상 콕 집은 ‘시점(<code class="language-plaintext highlighter-rouge">datetime</code>)’이 아닙니다. 두 점액통 사이를 연결하는 “순수한 기간과 길이”만을 의미하는, 시계열의 또 다른 황태자 <strong><code class="language-plaintext highlighter-rouge">timedelta</code></strong> 타입으로 변모합니다.</p>
+
+<hr />
+
+<h3 id="-미니-실습-나만의-d-day-자동-계산기">💻 미니 실습: 나만의 D-Day 자동 계산기</h3>
+
+<p><strong>Quiz 1</strong> 여러분이 간절히 기다리는 특정 기념일(예: 2024년 10월 31일 할로윈)을 <code class="language-plaintext highlighter-rouge">event_day</code> 변수에 좌표로 찍어두고, 평범한 오늘 시점 기준으로 대체 며칠이나 참아야 하는지 숫자만 쿨하게 출력해 내는 스크립트를 짜보세요.</p>
+
+<details>
+<summary><b>모범 답안 보기</b></summary>
+
+**풀이 1**
+```python
+import datetime
+
+# 올해 할로윈 파티를 디데이 타겟으로 세팅!
+event_day = datetime.datetime(2024, 10, 31)
+today_now = datetime.datetime.now()
+
+# 두 시간 좌표를 빼서 순수 '간격(길이)'을 뽑아낸 뒤, '.days' 속성으로 날짜 수만 쏙 빼냅니다.
+remaining_days = (event_day - today_now).days
+
+print(f"광란의 할로윈 파티까지 고작 {remaining_days}일 남았습니다.")
+```
+</details>
+
+<p><br /></p>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7feabf48-a00e-4ca0-bc10-0ecaccdfe747" width="400" />
+
+
+---
+
+## 📖 교재 상세 학습: 60 덩어리진 시간을 덧붙이고 빼기: timedelta
+
+## 60 덩어리진 시간(Duration)을 마음대로 조종하기: timedelta
+</div>
+
+<p>앞서 배운 <code class="language-plaintext highlighter-rouge">datetime.datetime</code> 모듈이 거대한 우주 달력에 압정을 콱 박아 표시한 <strong>콕 집은 특정 시점(좌표)</strong>이라면, 이번에 다룰 <code class="language-plaintext highlighter-rouge">datetime.timedelta</code>는 하루, 열흘, 혹은 365일 같이 쭉 뻗은 <strong>길이나 양(Duration)</strong> 그 자체를 의미합니다.</p>
+
+<p>과거나 현재의 특정 ‘시점’ 좌푯값에 이 ‘길이’ 덩어리를 더하면, 미래에 도달할 새로운 좌푯값을 너끈히 알아낼 수 있습니다!</p>
+
+<h4 id="사귄-지-100일째-되는-기념일-파워-로직-계산">사귄 지 100일째 되는 기념일 파워 로직 계산</h4>
+<p>방금 막 1일 차가 된 풋풋한 커플이 100일 파티를 예약할 날짜는 정확히 언제 며칠일까요?</p>
+
+<p><strong>REPL 실습 창: 기념일 계산기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">current_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span>
+
+<span class="c1"># '100일'이라는 압도적인 덩어리(길이)를 창조해 냅니다.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">hundred_span</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># 현재 달력 시점(좌표) + 100일(길이) = 다가올 미래의 도착일(좌표)
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">party_day</span> <span class="o">=</span> <span class="n">current_date</span> <span class="o">+</span> <span class="n">hundred_span</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">두근두근 100일 기념일은 </span><span class="si">{</span><span class="n">party_day</span><span class="p">.</span><span class="n">year</span><span class="si">}</span><span class="s">년 </span><span class="si">{</span><span class="n">party_day</span><span class="p">.</span><span class="n">month</span><span class="si">}</span><span class="s">월 </span><span class="si">{</span><span class="n">party_day</span><span class="p">.</span><span class="n">day</span><span class="si">}</span><span class="s">일입니다!</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">두근두근</span> <span class="mi">100</span><span class="n">일</span> <span class="n">기념일은</span> <span class="mi">2024</span><span class="n">년</span> <span class="mi">2</span><span class="n">월</span> <span class="mi">1</span><span class="n">일입니다</span><span class="err">!</span> <span class="p">(</span><span class="n">실행하는</span> <span class="n">시능에</span> <span class="n">따라</span> <span class="n">결괏값은</span> <span class="n">요동칩니다</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="아침-9시-정각으로-고집스럽게-고정하기-replace">아침 9시 정각으로 고집스럽게 고정하기 (<code class="language-plaintext highlighter-rouge">replace</code>)</h4>
+<p>특정 디데이 계산기나 업무용 타이머의 기준이 늘 ‘오전 9시 정각 출근 시간’이라면, 날짜를 뭉텅이로 더하기 전에 엉망인 현재 시, 분, 초 단위들을 오전 9시로 강제 덮어쓰기(<code class="language-plaintext highlighter-rouge">replace</code>) 해두면 계산이 아주 깔끔하게 떨어집니다.</p>
+
+<p><strong>REPL 실습 창: 시간 리셋의 연금술</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 지금 우주 시계가 오후든 새벽이든 무시하고, '시, 분, 초'를 무자비하게 09:00:00 으로 억지로 밀어버립니다.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">today_work_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 이 깨끗하게 리셋된 상태에서 1일이라는 '길이'를 살포시 더해주면, 한 치의 오차도 없이 완벽한 낼 아침 9시 좌표가 툭 튀어나옵니다.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">tomorrow_work_start</span> <span class="o">=</span> <span class="n">today_work_start</span> <span class="o">+</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>달력을 보며 손가락으로 짚어가던 복잡한 아날로그 방식은 버리세요. 이제 여러분은 <code class="language-plaintext highlighter-rouge">datetime</code> 클래스와 <code class="language-plaintext highlighter-rouge">timedelta</code> 클래스의 이중 플레이를 통해 완벽한 시간의 지배자로 거듭났습니다.</p>
+
+<hr />
+
+<h3 id="-미니-실습-업무-마감일-수명-연장-프로젝트">💻 미니 실습: 업무 마감일 수명 연장 프로젝트</h3>
+
+<p><strong>Quiz 1</strong> 여러분의 과한 업무를 위해 오늘 자정 직전인 밤 11시 59분 59초에 맞춰진 <code class="language-plaintext highlighter-rouge">death_line</code> 변수를 하나 생성하세요. 그런 다음, 이 피 말리는 <code class="language-plaintext highlighter-rouge">death_line</code>에 은혜롭게도 정확히 <strong>단 7일의 시간</strong>을 극적으로 연장해 준 <code class="language-plaintext highlighter-rouge">new_death_line</code> 변수를 탄생시키고 그 은총 가득한 날짜를 출력해 보세요.</p>
+
+<details>
+<summary><b>모범 답안 보기</b></summary>
+
+**풀이 1**
+```python
+import datetime
+
+# 1. 오늘 날짜를 기준으로 시간 파츠만 23시 59분 59초로 가혹하게 튜닝합니다.
+death_line = datetime.datetime.now().replace(hour=23, minute=59, second=59)
+
+# 2. 7일 치만큼의 생명줄(길이 단위)을 덧붙여줍니다!
+new_death_line = death_line + datetime.timedelta(days=7)
+
+print(f"극적으로 연장된 새로운 데드라인은 {new_death_line} 입니다. 살았다!")
+```
+</details>
+
+<hr />
+
+<h2 id="-교재-상세-학습-4-모듈module과-패키지package">📖 교재 상세 학습: 4. 모듈(Module)과 패키지(Package)</h2>
+
+<h2 id="4-모듈module과-패키지package">4. 모듈(Module)과 패키지(Package)</h2>
+
+<p>프로그램의 덩치가 커지면 모든 코드를 하나의 파일에 담아둘 수 없습니다. 파이썬에서는 관련 있는 함수와 클래스들을 하나의 파이썬 파일(<code class="language-plaintext highlighter-rouge">.py</code>)로 묶어 <strong>모듈(Module)</strong> 단위로 관리하며, 여러 모듈들을 다시 하나의 폴더로 묶은 것을 <strong>패키지(Package)</strong>라고 부릅니다.</p>
+
+<h3 id="41-import-구문의-활용">4.1 <code class="language-plaintext highlighter-rouge">import</code> 구문의 활용</h3>
+
+<p>외부에 작성된 파이썬 모듈을 현재 내 코드에서 불러와 사용하려면 <code class="language-plaintext highlighter-rouge">import</code> 문을 사용합니다. 파이썬이 기본으로 제공하는 내장 모듈들(예: <code class="language-plaintext highlighter-rouge">math</code>, <code class="language-plaintext highlighter-rouge">os</code>) 뿐만 아니라 개발자가 직접 만든 파일들도 동일한 방식으로 호출할 수 있습니다.</p>
+
+<h4 id="다양한-import-방식">다양한 import 방식</h4>
+
+<ol>
+  <li><strong>모듈 전체 불러오기</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">math</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span> <span class="c1"># 3.141592...
+</span></code></pre></div>    </div>
+  </li>
+  <li><strong>별칭(alias) 지정하기</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>특정 요소만 골라서 불러오기</strong><br />
+모듈 이름 대신 내부의 객체 이름만으로 직접 접근하고 싶을 때 사용합니다.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">math</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">sin</span><span class="p">(</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="c1"># 1.0
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<blockquote>
+  <p>[!TIP]
+<code class="language-plaintext highlighter-rouge">import</code> 문은 원칙적으로 파이썬 스크립트 파일의 맨 최상단에 모아서 작성하는 것(PEP 8 권장)이 모범 사례입니다. 가독성을 높이고 의존성을 한눈에 파악할 수 있기 때문입니다.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="42-메인-모듈의-시작점--__main__-">4.2 메인 모듈의 시작점 ( <code class="language-plaintext highlighter-rouge">__main__</code> )</h3>
+
+<p>자바(Java)나 C언어에는 프로그램의 진입점을 알리는 고정된 <code class="language-plaintext highlighter-rouge">main()</code> 함수가 존재하지만, 파이썬은 파일이 곧바로 실행되는 스크립트 특성을 가집니다.</p>
+
+<p>파이썬 인터프리터는 현재 <strong>직접 실행된</strong> 최초의 파이썬 파일 객체에 한해서만 <code class="language-plaintext highlighter-rouge">__name__</code> 이라는 특수 변수에 <code class="language-plaintext highlighter-rouge">"__main__"</code> 이라는 문자열표시를 부여해 줍니다. 반면 <code class="language-plaintext highlighter-rouge">import</code> 로 불려온 파일의 <code class="language-plaintext highlighter-rouge">__name__</code> 에는 본래 파일명(모듈명)이 들어갑니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># calculator.py
+</span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 이 파일이 외부에서 import된 것이 아니라 직접 실행(python calculator.py)될 때만 아래 블록이 실행됩니다.
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nf">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">단독 실행 테스트 결과:</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 패턴은 자신이 작성한 모듈을 테스트하는 용도로도 널리 사용됩니다.</p>
+
+<hr />
+
+<h3 id="43-모듈-네임스페이스-점검-globals-locals">4.3 모듈 네임스페이스 점검 (<code class="language-plaintext highlighter-rouge">globals</code>, <code class="language-plaintext highlighter-rouge">locals</code>)</h3>
+
+<p>현재 활성화된 컨텍스트 공간에 어떤 변수와 함수들이 로드되어 있는지 상태를 스캔하기 위해 내장 함수를 사용할 수 있습니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">globals()</code>: 현재 모듈 파일 전체의 변수 목록을 딕셔너리로 반환합니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">locals()</code>: 현재 위치한 스코프(함수 내부 등)의 지역 변수 목록을 반환합니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">check_space</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">지역:</span><span class="sh">"</span><span class="p">,</span> <span class="nf">locals</span><span class="p">())</span>
+
+<span class="nf">check_space</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="c1"># 출력: 지역: {'y': 200}
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">전역 x 확인:</span><span class="sh">"</span><span class="p">,</span> <span class="nf">globals</span><span class="p">()[</span><span class="sh">'</span><span class="s">x</span><span class="sh">'</span><span class="p">])</span> <span class="c1"># 100
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="44-패키지package-아키텍처-구성">4.4 패키지(Package) 아키텍처 구성</h3>
+
+<p>관련 모듈들(<code class="language-plaintext highlighter-rouge">.py</code>)을 디렉터리로 묶어 구조화하려면 해당 디렉터리 내부에 반드시 <strong><code class="language-plaintext highlighter-rouge">__init__.py</code></strong> 라는 특별한 파일을 생성해 두어야 합니다. (파이썬 3.3 이후부터는 없어도 암묵적 패키지로 취급하지만, 호환성과 명시성을 위해 선언하는 것을 권장합니다.)</p>
+
+<h4 id="구조-예시">구조 예시</h4>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_game/                  # Top-level 패키지 디렉터리
+    __init__.py
+    sound/                # Sub-package
+        __init__.py
+        effects.py
+        bgm.py
+    graphic/              # Sub-package
+        __init__.py
+        render.py
+</code></pre></div></div>
+
+<p>이렇게 계층화된 패키지는 점(<code class="language-plaintext highlighter-rouge">.</code>) 연산자를 통해 경로를 거슬러 올라가며 모듈을 자유롭게 엮어 쓸 수 있습니다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">my_game.sound.effects</span>
+<span class="c1"># 또는
+</span><span class="kn">from</span> <span class="n">my_game.graphic</span> <span class="kn">import</span> <span class="n">render</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-교재-상세-학습-5-네임스페이스-namespace-심화">📖 교재 상세 학습: 5. 네임스페이스 (Namespace) 심화</h2>
+
+<h2 id="5-네임스페이스-namespace-심화">5. 네임스페이스 (Namespace) 심화</h2>
+
+<p>앞서 파이썬은 변수 이름과 실제 객체(데이터)를 서로 연결(Binding)하여 관리한다고 배웠습니다. 이렇게 연결된 “이름표”들이 모여있는 격리된 저장 공간을 <strong>네임스페이스(Namespace)</strong>라고 부릅니다.</p>
+
+<p>네임스페이스는 내부적으로 파이썬의 핵심 딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>) 구조로 구현되어 있으며, 변수의 이름이 Key가 되고 변수에 할당된 객체가 Value가 됩니다.</p>
+
+<h3 id="51-네임스페이스에-할당과-조회">5.1 네임스페이스에 할당과 조회</h3>
+
+<p>모듈(.py 파일) 수준에서 변수를 만들거나, 함수 문법(<code class="language-plaintext highlighter-rouge">def</code>)을 통해 함수를 선언하거나, 클래스 문법(<code class="language-plaintext highlighter-rouge">class</code>)을 통해 클래스를 선언하면 모두 이 네임스페이스에 각자의 이름표가 등록됩니다.</p>
+
+<p>다시 한 번 전역 네임스페이스를 관리해주는 내장 함수 <code class="language-plaintext highlighter-rouge">globals()</code> 를 이용해 작동 원리를 살펴보겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반 변수 등록
+</span><span class="n">system_mode</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Production</span><span class="sh">"</span>
+
+<span class="c1"># 함수 등록
+</span><span class="k">def</span> <span class="nf">calculate_tax</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 클래스 등록
+</span><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 현재 네임스페이스(globals)에 등록된 모든 이름들을 조회해 볼 수 있습니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">globals</span><span class="p">().</span><span class="nf">keys</span><span class="p">())[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+<span class="c1"># 출력 결과: ['system_mode', 'calculate_tax', 'Customer']
+</span></code></pre></div></div>
+<p>우리가 정의한 변수부터 함수, 심지어 클래스의 이름까지 빠짐없이 딕셔너리의 Key로 등록된 것을 볼 수 있습니다.</p>
+
+<hr />
+
+<h3 id="52-전역-접근-규칙과-독립성">5.2 전역 접근 규칙과 독립성</h3>
+
+<p>각 파이썬 모듈 파일(<code class="language-plaintext highlighter-rouge">.py</code>)은 태생적으로 <strong>자신만의 고유한 전역(Global) 네임스페이스</strong>를 갖습니다. 즉, A 모듈과 B 모듈에 동일한 이름표(예: <code class="language-plaintext highlighter-rouge">x = 100</code>)가 존재하더라도, 두 이름표는 완전히 격리된 별개의 공간에서 관리되므로 서로 충돌하지 않습니다.</p>
+
+<h4 id="함수가-바라보는-전역-네임스페이스의-기준">함수가 바라보는 전역 네임스페이스의 기준</h4>
+
+<p>가장 헷갈리기 쉬운 부분은, 모듈 안에 정의된 함수가 변수를 검색할 때 바라보는 전역 공간의 기준입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># file_A.py 모듈
+</span><span class="n">base_value</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">print_value</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">base_value</span><span class="p">)</span>
+
+<span class="c1"># -----------------
+</span>
+<span class="c1"># file_B.py 모듈 (현재 실행 중인 파일)
+</span><span class="kn">import</span> <span class="n">file_A</span>
+
+<span class="n">base_value</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># 외부 모듈의 함수를 호출
+</span><span class="n">file_A</span><span class="p">.</span><span class="nf">print_value</span><span class="p">()</span> 
+<span class="c1"># 출력은 500이 아니라 100이 됩니다!
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!IMPORTANT]
+함수는 외부 파일에서 불러와서(<code class="language-plaintext highlighter-rouge">import</code>) 실행하더라도, 언제나 자신이 <strong>최초에 태어난 원본 모듈(위 예제의 file_A)</strong>의 전역 네임스페이스를 최우선으로 검색합니다. 따라서 현재 실행 중인 파일(<code class="language-plaintext highlighter-rouge">file_B</code>)에서 변수값을 덮어쓰더라도 원본 모듈의 함수에는 아무런 영향을 주지 못합니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-교재-상세-학습-6-단순한-네임스페이스-활용">📖 교재 상세 학습: 6. 단순한 네임스페이스 활용</h2>
+
+<h2 id="6-단순한-네임스페이스-활용">6. 단순한 네임스페이스 활용</h2>
+
+<p>앞에서 배운 파이썬의 네임스페이스 메커니즘을 보다 직관적으로 이해하고 구조화된 데이터 묶음을 쉽게 만들기 위해, 파이썬 표준 라이브러리인 <code class="language-plaintext highlighter-rouge">types</code> 모듈은 <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> 라는 유용한 클래스를 제공합니다.</p>
+
+<p>이번 장에서는 이 간단한 구조체가 어떻게 작동하는지 알아보고, 이와 유사한 형태의 데이터 관리 클래스를 직접 구현해 보겠습니다.</p>
+
+<h3 id="61-typessimplenamespace-기본-사용법">6.1 <code class="language-plaintext highlighter-rouge">types.SimpleNamespace</code> 기본 사용법</h3>
+
+<p><code class="language-plaintext highlighter-rouge">SimpleNamespace</code>는 이름 그대로 기능이 거의 없이 오로지 <strong>변수 이름표(속성)들을 묶어서 보관하기 위한 빈 껍데기</strong> 역할을 합니다. 딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>)와 매우 유사하게 작동하지만 딕셔너리의 키에 점(<code class="language-plaintext highlighter-rouge">.</code>) 연산자로 접근할 수 있어 가독성이 뛰어납니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">types</span>
+
+<span class="c1"># 1. 속성을 주입하며 인스턴스 생성
+</span><span class="n">user_info</span> <span class="o">=</span> <span class="n">types</span><span class="p">.</span><span class="nc">SimpleNamespace</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="sh">"</span><span class="s">Admin</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">user_info</span><span class="p">))</span> <span class="c1"># &lt;class 'types.SimpleNamespace'&gt;
+</span><span class="nf">print</span><span class="p">(</span><span class="n">user_info</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># "Alice"
+</span>
+<span class="c1"># 2. 런타임에 동적으로 속성 추가하기
+</span><span class="n">user_info</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">99</span>
+
+<span class="c1"># 내부 네임스페이스 점검
+</span><span class="nf">print</span><span class="p">(</span><span class="n">user_info</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="c1"># 출력: {'name': 'Alice', 'role': 'Admin', 'level': 99}
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="62-simplenamespace-작동-방식-모방하기">6.2 SimpleNamespace 작동 방식 모방하기</h3>
+
+<p>내부적으로 <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> 가 어떻게 구성되어 있는지 원리를 파악하기 위해, 파이썬의 기본 클래스로 유사한 동작을 하는 클래스를 직접 정의해 볼 수 있습니다.</p>
+
+<p>파이썬의 모든 클래스 인스턴스는 내부에 <code class="language-plaintext highlighter-rouge">__dict__</code> 라는 딕셔너리를 몰래 가지고 있으며, 이 공간이 곧 그 인스턴스의 네임스페이스입니다. 이 원리를 활용하여 객체가 생성될 때(<code class="language-plaintext highlighter-rouge">__init__</code>) 넘겨받은 값들을 즉시 이 딕셔너리에 합치도록(Update) 구현합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CustomNamespace</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># 넘겨받은 모든 키워드 인자들을 이 인스턴스의 네임스페이스에 통째로 붓습니다.
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="c1"># 객체를 출력할 때 예쁘게 보여주기 위한 장치
+</span>        <span class="n">keys</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">.</span><span class="nf">keys</span><span class="p">())</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s">=</span><span class="si">{</span><span class="nf">repr</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="si">}</span><span class="sh">"</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="nf">type</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">__name__</span><span class="si">}</span><span class="s">(</span><span class="si">{</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span>
+
+<span class="c1"># 직접 만든 클래스 테스팅
+</span><span class="n">config</span> <span class="o">=</span> <span class="nc">CustomNamespace</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="sh">"</span><span class="s">localhost</span><span class="sh">"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">host</span><span class="p">)</span> <span class="c1"># "localhost"
+</span><span class="n">config</span><span class="p">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">repr</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
+<span class="c1"># 출력: CustomNamespace(host='localhost', port=8080, timeout=30)
+</span></code></pre></div></div>
+
+<p>이와 같이 파이썬은 변수와 값이 매칭되는 “이름표 바구니(<code class="language-plaintext highlighter-rouge">__dict__</code>)” 구조를 통해 모든 메커니즘이 투명하고 일관성 있게 운영됩니다.</p>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

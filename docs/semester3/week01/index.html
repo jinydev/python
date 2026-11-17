@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️ | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester3/week01/" />
+<meta property="og:url" content="https://python.jiny.dev/semester3/week01/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️에 대한 파이썬(Python) 강좌 문서입니다.","headline":"1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️","url":"https://python.jiny.dev/semester3/week01/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          3학기 심화 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester3/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [심화] 3학기: 응용 및 시스템 개발
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0  w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="true">
+              1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse show" id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester3/week01/"
+                    class="bd-links-link d-inline-block rounded active">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester3/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1교시: GUI 개발 기초 - 화면에 생명력 불어넣기 (1/3) 🖥️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester3/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2교시: Tkinter 기초 - 첫 번째 윈도우 만들기 (2/3) 🖥️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester3/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3교시: 이벤트 연결과 동적 UI 업데이트 (3/3) 🖥️
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week02/"
+              class="bd-links-link d-inline-block rounded ">
+              2주차: GUI 심화 - 위젯 배치 알고리즘과 데이터 시각화 뷰어 📊
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 네트워크 프로그래밍 (1) - 소켓 통신 기초 🌐
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 네트워크 프로그래밍 (2) - HTTP와 REST API 🌐
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 데이터베이스 기초 - 영구적인 데이터 저장소 🗄️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: ORM (Object Relational Mapping) - 객체와 DB의 연결 🔗
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 3학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 멀티스레딩 (Threading) - 동시성 프로그래밍 🧵
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 멀티프로세싱 (Multiprocessing) - 진정한 병렬 처리 🚀
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 비동기 프로그래밍 (1) - asyncio와 코루틴 ⚡
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 비동기 프로그래밍 (2) - 고성능 크롤러 제작 🌐
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 게임 개발 원리 - 실시간 상호작용 구현 🎮
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 최종 프로젝트 기획 - 나만의 서비스 설계 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 최종 프로젝트 구현 - 코딩과 디버깅 💻
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 최종 마무리 및 마스터 인증 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester3/">📌 [심화] 3학기: 응용 및 시스템 개발</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="1주차-gui-개발-기초---윈도우-인터페이스와-이벤트-루프-️">1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️</h1>
+
+<p>3학기 시작을 축하합니다! 이번 학기에는 텍스트 위주의 CLI 환경을 벗어나 사용자와 눈을 맞추는 <strong>GUI(Graphical User Interface)</strong> 개발 및 <strong>시스템 프로그래밍</strong>을 다룹니다. 이벤트가 끊임없이 순회하는 GUI의 기본 구동 원리부터 차근차근 배워 봅시다.</p>
+
+<hr />
+
+<h2 id="학습목표">학습목표</h2>
+<p>수만 줄의 복잡한 로직을 짜더라도, 결국 일반 고객(User)은 터미널의 까만 화면을 이해하지 못합니다. 본 장에서는 코드가 한 번 실행되고 멈추는 터미널과 달리, 무한의 시간 속에서 마우스 클릭을 대기하는 <strong>이벤트 드리븐(Event-Driven)</strong> 방식의 철학을 확립합니다. 또한 파이썬에서 GUI를 개발하기 위한 양대 산맥인 <strong>Tkinter와 PyQt의 차이점</strong>을 분석하고, VS Code 환경에서 쾌적하게 개발하기 위한 기본 세팅법을 간략히 짚고 넘어갑니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-gui란-무엇인가">💡 TL;DR (1분 핵심 요약): GUI란 무엇인가?</h2>
+
+<ol>
+  <li><strong>GUI (Graphical User Interface)</strong>: 일반 사용자들이 컴퓨터를 쉽게 쓸 수 있도록 버튼, 텍스트 입력창, 스크롤바 등을 시각적으로 띄워 마우스로 클릭할 수 있게 만든 그래픽 창입니다.</li>
+  <li><strong>이벤트 드리븐 (Event-Driven)</strong>: 일반적인 스크립트 코드처럼 위에서 아래로 한 번 쭉 떨어지고(폭포수) 끝나는 방식이 지고, <strong>무한 대기</strong> 상태로 돌면서 <strong>사용자가 행동(사건, Event)을 일으킬 때만 번개처럼 반응</strong>하는 현대 프로그래밍의 가장 중요한 아키텍처입니다.</li>
+  <li><strong>가상 환경 세팅</strong>: 외부 GUI 패키지(예: PyQt)를 쓸 때는 시스템 꼬임을 막기 위해 무조건 Python 가상 환경(<code class="language-plaintext highlighter-rouge">venv</code> 등)을 격리시킨 후 설치하는 것이 프로의 기본기입니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-터미널의-기차-vs-gui의-무한-회전목마">1. 터미널의 기차 vs GUI의 무한 회전목마</h2>
+
+<p>파이썬의 가장 원초적인 실행 공간인 터미널(콘솔)을 상상해 봅시다. 기차가 출발역(1번 줄 코드)에서 종착역(마지막 줄 코드)까지 직진으로 달리면, 기차는 엔진이 꺼지며 프로그램이 완전 종료(Exit) 상태가 됩니다.</p>
+
+<p>반면 GUI 윈도우 창은 사용자가 <code class="language-plaintext highlighter-rouge">X(닫기)</code> 버튼을 누르기 전까지는 살아서 <strong>영원히 화면에 떠 있어야</strong> 합니다. 즉, <strong>무한 루프(Mainloop)</strong>라는 거대한 쳇바퀴를 팽팽 돌면서 대기압 상태를 유지합니다.</p>
+
+<p>GUI 세계에서는 이 쳇바퀴 옆에서 사용자가 <code class="language-plaintext highlighter-rouge">버튼을 찰칵 클릭</code>하거나, <code class="language-plaintext highlighter-rouge">키보드를 타닥 타건</code>하는 행위 하나하나를 <strong>사건(Event)</strong>이라고 부릅니다. 이 사건이 떨어질 때마다 연결된 함수를 단발성으로 찔끔찔끔 실행하는 것이 바로 현대 스마트폰 앱과 윈도우 프로그램의 근간인 <strong>이벤트 드리븐(Event-Driven)</strong> 방식입니다.</p>
+
+<hr />
+
+<h2 id="2-파이썬-gui-양대-산맥-tkinter-vs-pyqt">2. 파이썬 GUI 양대 산맥: Tkinter vs PyQt</h2>
+
+<p>파이썬으로 GUI 화면을 그리기로 마음먹었다면, 크게 2가지 길 중에서 갈림길을 선택하게 됩니다.</p>
+
+<p><img src="./img/gui_frameworks_comparison.svg" width="100%" /></p>
+
+<h3 id="1-가볍고-빠른-순정품-tkinter-본-단원-학습-대상">1) 가볍고 빠른 순정품: <code class="language-plaintext highlighter-rouge">Tkinter</code> (본 단원 학습 대상)</h3>
+<ul>
+  <li><strong>태생</strong>: 파이썬을 설치하면 기본으로 딸려오는 스탠다드 라이브러리(Standard Library)입니다.</li>
+  <li><strong>장점</strong>: <strong>설치가 아예 필요 없습니다.</strong> (<code class="language-plaintext highlighter-rouge">pip install</code> 불필요). 코드가 매우 짧고 직관적이어서 초보자의 GUI 입문에 최고존엄입니다.</li>
+  <li><strong>단점</strong>: 기본으로 제공되는 디자인 위젯(버튼, 스크롤바 등)의 텍스처 퀄리티가 10년 전 수준으로 좀 투박하고 못생겼습니다.</li>
+</ul>
+
+<h3 id="2-화려하고-거대한-외인구단-pyqt--pyside">2) 화려하고 거대한 외인구단: <code class="language-plaintext highlighter-rouge">PyQt</code> / <code class="language-plaintext highlighter-rouge">PySide</code></h3>
+<ul>
+  <li><strong>태생</strong>: C++ 베이스의 거대 상용 UI 프레임워크인 <code class="language-plaintext highlighter-rouge">Qt</code>를 파이썬 옷을 입혀 래핑한 외부 패키지입니다.</li>
+  <li><strong>장점</strong>: <code class="language-plaintext highlighter-rouge">Qt Designer</code>라는 압도적인 성능의 그래픽 툴을 제공하여, 마우스 드래그 앤 드롭만으로 포토샵 하듯 손쉽게 UI를 그릴 수 있습니다. 디자인이 수려하고 강력합니다.</li>
+  <li><strong>단점</strong>: 너무 무거우며, 초기 학습 진입 장벽(객체지향, 오버라이딩 필수)이 굉장히 높습니다. 또한 <code class="language-plaintext highlighter-rouge">PyQt</code>는 상업 목적으로 앱 배포 시 라이선스 비용 문제가 발생할 수 있어 기업에서는 조심스럽게 다뤄야 합니다 (대안으로 오픈소스인 <code class="language-plaintext highlighter-rouge">PySide</code>를 권장합니다).</li>
+</ul>
+
+<blockquote>
+  <p>💡 <strong>본 파이썬 기초 활용 단원의 선택은?</strong><br />
+데이터 분석의 코어 지식으로 넘어가기 전 코딩 기초 뼈대를 다지는 이 강의의 타깃에 가장 부합하는 기본 내장 라이브러리인 <strong><code class="language-plaintext highlighter-rouge">Tkinter</code></strong>를 가벼운 마음으로 맛볼 것입니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="3-vs-code와-환경-준비-환경-오염-막기">3. VS Code와 환경 준비 (환경 오염 막기)</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Tkinter</code>는 파이썬 내장 기능이기 때문에 추가 패키지 설치를 할 필요가 전혀 없지만, 향후 <code class="language-plaintext highlighter-rouge">PyQt</code>, <code class="language-plaintext highlighter-rouge">Pandas</code>, <code class="language-plaintext highlighter-rouge">Matplotlib</code> 등 수많은 패키지 설치 시 파이썬 폴더가 온갖 부산물로 뒤섞여 충돌하는 끔찍한 사태(의존성 지옥)를 피하려면 반드시 가상 공간을 만들어 그 안에서만 노는 버릇을 들여야 합니다.</p>
+
+<p><strong>[VS Code 터미널에서 프로 개발자처럼 안전하게 작업하는 3단계]</strong></p>
+
+<ol>
+  <li><strong>가상 환경 캡슐 만들기</strong><br />
+터미널에 <code class="language-plaintext highlighter-rouge">python -m venv myenv</code> 입력 (myenv라는 투명한 캡슐 폴더 생성)</li>
+  <li><strong>캡슐 안으로 들어가기 (활성화)</strong><br />
+윈도우 기준: <code class="language-plaintext highlighter-rouge">myenv\Scripts\activate</code> 입력<br />
+(이때 터미널 앞줄에 <code class="language-plaintext highlighter-rouge">(myenv)</code> 라는 초록색 글자가 뜨면 방독면을 쓰고 안전하게 캡슐 안으로 입장했다는 뜻입니다.)</li>
+  <li><strong>이제 자유롭게 패키지 설치</strong><br />
+만일 PyQt5를 쓴다면 <code class="language-plaintext highlighter-rouge">pip install PyQt5</code> 입력 (현재 프로젝트의 캡슐 안에만 격리 설치됨)</li>
+</ol>
+
+<hr />
+
+<h2 id="-java-vs--python-스나이퍼-비교">☕ Java vs 🐍 Python 스나이퍼 비교</h2>
+
+<h3 id="1-화면-생태계의-복잡도">1. 화면 생태계의 복잡도</h3>
+<ul>
+  <li><strong>Java</strong>: 자바 진영의 GUI (AWT -&gt; Swing -&gt; JavaFX)는 그 방대한 인터페이스 철학과 객체지향 뼈대, 분리된 XML(<code class="language-plaintext highlighter-rouge">FXML</code>) 디자인 방식 등으로 인해 러닝 커브가 험난합니다. 기업용 강력한 데스크톱 앱을 만들 때는 뛰어나나, 초보자가 “확인 버튼” 하나 띄우기 위해 치러야 할 타이핑 노동의 고통이 상당합니다.</li>
+  <li><strong>Python (<code class="language-plaintext highlighter-rouge">Tkinter</code>)</strong>: 오직 <code class="language-plaintext highlighter-rouge">import tkinter</code> 한 줄이면 가동 준비가 완료되고, 위에서 아래로 스크립트 작성하듯 매우 캐주얼(Casual)하고 멍청하게 작성해도 화면이 찰떡같이 뜹니다. 빠른 아이디어(프로토타이핑) 스케치 도구로는 가히 지구 최고 수준입니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>GUI (Graphical User Interface)</strong>: 그래픽 유저 인터페이스. (수십 개의 터미널 명령어를 외우는 미친 짓을 그만두고, 시각적인 윈도우 창, 아이콘, 팝업 버튼 등을 클릭하며 컴맹도 직관적으로 사용할 수 있게 만든 혁명적인 인터페이스 방식입니다. 반대말은 CLI(Command Line Interface)입니다.)</li>
+  <li><strong>Event (사건)</strong>: 마우스를 1회 딸깍 클릭하는 것, 키보드 A 버튼을 꾹 누르는 것, 창 크기를 드래그해서 넓히는 것 등, 사용자가 컴퓨터 화면 속에서 툭툭 건드려 일으키는 모든 종류의 간섭 파동 체계를 ‘이벤트’라고 부릅니다.</li>
+  <li><strong>Environment (가상환경, venv)</strong>: 환경. (코딩을 하다 보면 온갖 남이 만든 라이브러리(패키지)를 무작정 내 PC에 내려받게 되는데, 이것들이 엉키면 컴퓨터가 망가집니다. 프로젝트마다 깨끗하고 텅 빈 ‘격리 병동(가상 캡슐)’을 만들어 두고 그곳에만 라이브러리를 설치하는 기술 방벽을 환경 세팅이라 합니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="학습목표-1">학습목표</h2>
+<p>Tkinter 라이브러리를 임포트(Import)하여, 수초 만에 내 컴퓨터 모니터 정중앙에 나만의 윈도우 그래픽 창(Window)을 띄우는 역사적인 “Hello World” 스크립트를 작성합니다. 특히 코드가 종료되지 않고 백그라운드에서 영원히 불침번을 서며 마우스 클릭 이벤트(Event)를 무한 대기하는 핵심 원리인 <strong><code class="language-plaintext highlighter-rouge">mainloop()</code></strong> 함수를 완벽히 이해합니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-윈도우-창-띄우기의-3단계-뼈대">💡 TL;DR (1분 핵심 요약): 윈도우 창 띄우기의 3단계 뼈대</h2>
+
+<ol>
+  <li><strong>객체 생성 (<code class="language-plaintext highlighter-rouge">tk.Tk()</code>)</strong>: 메모리 상에 안 보이는 투명한 윈도우 창 공책을 한 권 펼칩니다.</li>
+  <li><strong>위젯 조립 (<code class="language-plaintext highlighter-rouge">tk.Label().pack()</code>)</strong>: 글자나 버튼 등 내용물(레고 블록)을 윈도우 창 위에 턱턱 올려 스티커로 붙입니다.</li>
+  <li><strong>심장 박동 펌프 작동 (<code class="language-plaintext highlighter-rouge">root.mainloop()</code>)</strong>: 완성된 창을 모니터에 실제로 “짠!” 띄우고, <strong>프로그램이 절대로 꺼지지 않게 무한 루프</strong>를 돌려 멈춰 세웁니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-터미널의-기차-vs-gui의-무한-회전목마-1">1. 터미널의 기차 vs GUI의 무한 회전목마</h2>
+
+<p>파이썬 터미널 코드는 기차와 같습니다. 1번 줄부터 100번 줄까지 쏜살같이 달린 후 종착역에 도달하면 프로그램이 끝납니다.</p>
+
+<p>반대로 GUI 프로그램은 <strong>무한히 돌아가는 회전목마(<code class="language-plaintext highlighter-rouge">mainloop</code>)</strong>입니다. 프로그램이 종료되지 않은 채 끝없이 대기하다가, 사용자가 버튼을 누르면 그제서야 해당 톱니바퀴만 찰칵 돌아갑니다.</p>
+
+<p><img src="./img/gui_mainloop_webtoon.png" alt="GUI Mainloop Webtoon" />
+<em>(웹툰 비유: 화면 왼쪽엔 기차가 출발선부터 도착선까지 한 번 달리고 멈춰버리는 직진 선로(터미널)가 보입니다. 오른쪽 화면엔 영원히 멈추지 않고 빙글빙글 도는 거대한 회전목마(Mainloop)가 있고, 옆에서 ‘마우스 클릭’, ‘키보드 입력’이라는 귀여운 난쟁이들(Event)이 회전목마 안으로 폴짝폴짝 뛰어 들어갈 타이밍을 기다리며 대기하고 있습니다.)</em></p>
+
+<hr />
+
+<h2 id="2-hello-world-윈도우-띄우기-실전-코드">2. Hello World 윈도우 띄우기 실전 코드</h2>
+
+<p><code class="language-plaintext highlighter-rouge">tkinter</code>는 별도의 <code class="language-plaintext highlighter-rouge">pip</code> 설치 없이 파이썬을 설치하면 같이 설치되는 막강한 표준 라이브러리입니다. 코드 에디터(VS Code 등)에서 바로 타이핑해서 실행(<code class="language-plaintext highlighter-rouge">F5</code> 혹은 Run)해 봅시다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">tkinter</span> <span class="k">as</span> <span class="n">tk</span>
+
+<span class="c1"># 1. 메인 윈도우(도화지) 생성
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="p">.</span><span class="nc">Tk</span><span class="p">()</span> 
+<span class="n">root</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">"</span><span class="s">나의 첫 GUI 프로그램</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># 창의 상단 타이틀 바 이름 지정
+</span><span class="n">root</span><span class="p">.</span><span class="nf">geometry</span><span class="p">(</span><span class="sh">"</span><span class="s">300x200</span><span class="sh">"</span><span class="p">)</span>       <span class="c1"># 창의 가로x세로 해상도 크기 (띄어쓰기 없이 소문자 엑스 x 사용)
+</span>
+<span class="c1"># 2. 위젯(글자 스티커) 만들어서 도화지에 붙이기
+</span><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="p">.</span><span class="nc">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sh">"</span><span class="s">Hello, GUI World!</span><span class="sh">"</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="sh">"</span><span class="s">Helvetica</span><span class="sh">"</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">label</span><span class="p">.</span><span class="nf">pack</span><span class="p">()</span> <span class="c1"># 윈도우 화면 정중앙 최상단에 위에서부터 블록처럼 찍어 바릅니다.
+</span>
+<span class="c1"># 3. 메인 루프 (심장) 작동 시작! 
+# 주의: 이 줄 아래로는 사용자가 X(닫기) 버튼을 눌러 창을 부수기 전까지 코드가 내려오지 않습니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">이 메세지는 터미널에 윈도우 창이 켜지기 직전에만 한 번 보입니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">root</span><span class="p">.</span><span class="nf">mainloop</span><span class="p">()</span> 
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">창을 완전히 닫은 후에야 이 메세지가 터미널에 나타나며 기차가 종착역에 도달합니다.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 코드를 실행하면 까만 터미널 화면 대신 아름다운(?) 작은 윈도우 창 하나가 뜹니다.</p>
+
+<p><img src="./img/image-20260310222026151.png" alt="Hello World Result" /></p>
+
+<hr />
+
+<h2 id="-java-swing-vs--python-스나이퍼-대결">☕ Java (Swing) vs 🐍 Python 스나이퍼 대결</h2>
+
+<h3 id="1-거대한-타이핑-노동-극복">1. 거대한 타이핑 노동 극복</h3>
+<ul>
+  <li><strong>Java (<code class="language-plaintext highlighter-rouge">Swing</code>)</strong>: 창 하나를 띄우려면 <code class="language-plaintext highlighter-rouge">extends JFrame</code> 등 부모를 상속받고, 거대한 블록 클래스를 감싸고 그 안에 생성자를 파서 <code class="language-plaintext highlighter-rouge">setVisible(true)</code> 등 끝없는 명령을 지시해야 합니다.</li>
+  <li><strong>Python (<code class="language-plaintext highlighter-rouge">Tkinter</code>)</strong>: 오직 <code class="language-plaintext highlighter-rouge">root = tk.Tk()</code> 로 도화지를 까고 밑에 <code class="language-plaintext highlighter-rouge">mainloop()</code> 한 줄만 묶어주면 끝입니다. 스크립트 언어 특유의 절차적 코드 라인으로 압살하는 놀라운 스피드를 보여줍니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬 <code class="language-plaintext highlighter-rouge">Tkinter</code>를 써서 가로 세로 400x400 크기의 윈도우 창 하나를 만들어줘. 
+제목(title)은 ‘단어 암기장’으로 설정해.
+그리고 창 정중앙에 <code class="language-plaintext highlighter-rouge">tk.Label</code>을 이용해서 ‘apple: 사과’ 라는 글자를 무려 폰트 사이즈 30 크기로 아주 큼지막하고 빨간색 글씨로 띄워줘! 맨 밑에는 잊지 말고 <code class="language-plaintext highlighter-rouge">mainloop()</code>도 돌려 놔.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습--1">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Mainloop (메인루프)</strong>: 메인(주된) + 루프(무한 반복). (도화지가 사라지지 않고 투명한 쳇바퀴를 1초에 수십 바퀴씩 돌면서, 누가 내 배를 만지지는 않는지(클릭), 키보드를 누르는지 매의 눈으로 끊임없이 감시하는 GUI의 심장 코드입니다.)</li>
+  <li><strong>Widget (위젯)</strong>: 소형 장치, 레고 블록 단위. (스마트폰 앱에서 화면을 구성하는 가장 작은 부품 단위 조각입니다. 단순히 글자를 보여주는 <code class="language-plaintext highlighter-rouge">Label</code>(라벨), 클립을 인식하는 <code class="language-plaintext highlighter-rouge">Button</code>(버튼), 타이핑 입력을 받는 <code class="language-plaintext highlighter-rouge">Entry</code>(엔트리) 등이 대표적입니다.)</li>
+  <li><strong>Geometry (지오메트리)</strong>: 기하학, 부피, 크기 구도. (수학에서는 도형의 성질을 뜻하지만, 프로그래밍 GUI 에서는 “윈도우 창의 가로 사이즈 × 세로 사이즈, 그리고 모니터 화면 몇 픽셀 위치에서 팝업창을 시작시킬지”를 지정해 주는 아주 필수적인 창 크기 제어 함수 명령어입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> CLI와 GUI의 결정적인 사용자 인터랙션 방식과 프로그램 라이프사이클 차이점을 설명해 보세요.</p>
+
+<p><strong>문제 2.</strong> GUI 프로그램에서 <code class="language-plaintext highlighter-rouge">mainloop()</code> 메서드가 수행하는 무한 이벤트 루프의 역할을 운영체제 메시지 큐 관점에서 해석해 보세요.</p>
+
+<p><strong>문제 3.</strong> (심화) Tkinter를 활용하여, 화면에 이름을 입력하는 입력창(Entry)과 ‘인사’ 버튼을 배치하고, 버튼을 누르면 “안녕하세요, [입력한이름]님!”이라는 메시지 박스(MessageBox)를 띄우는 완전한 GUI 프로그램을 빌드하세요.</p>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">다이아몬드 상속과 MRO (Method Resolution Order)</text>
+  
+  <!-- Diamond Inheritance Structure -->
+  <g transform="translate(250, 80)">
+    <!-- Top Class -->
+    <rect x="0" y="0" width="100" height="50" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="50" y="30" font-family="Arial" font-size="16" text-anchor="middle">Class A</text>
+    
+    <!-- Middle Classes -->
+    <path d="M 0 50 L -100 100" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+    <path d="M 100 50 L 100 100" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+    
+    <rect x="-150" y="100" width="100" height="50" rx="10" fill="#e1f5fe" stroke="#01579b" stroke-width="2" />
+    <text x="-100" y="130" font-family="Arial" font-size="16" text-anchor="middle">Class B</text>
+    
+    <rect x="50" y="100" width="100" height="50" rx="10" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" />
+    <text x="100" y="130" font-family="Arial" font-size="16" text-anchor="middle">Class C</text>
+    
+    <!-- Bottom Class -->
+    <path d="M -100 150 L 0 200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+    <path d="M 100 150 L 0 200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+    
+    <rect x="-50" y="200" width="100" height="50" rx="10" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2" />
+    <text x="0" y="230" font-family="Arial" font-size="16" text-anchor="middle">Class D</text>
+  </g>
+  
+  <!-- MRO Path -->
+  <rect x="420" y="100" width="150" height="150" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+  <text x="495" y="130" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">MRO 탐색 순서</text>
+  <text x="495" y="160" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">D &rarr; B &rarr; C &rarr; A</text>
+  <text x="495" y="190" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">(C3 Linearization)</text>
+  <text x="495" y="220" font-family="Arial" font-size="12" text-anchor="middle" fill="#d32f2f">깊이 우선이 아닌</text>
+  <text x="495" y="240" font-family="Arial" font-size="12" text-anchor="middle" fill="#d32f2f">너비 우선 기반의 선형화</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

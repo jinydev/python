@@ -1,0 +1,33 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">TDD (Test Driven Development) 사이클</text>
+  
+  <!-- TDD Cycle -->
+  <g transform="translate(300, 150)">
+    <!-- Red -->
+    <path d="M -100 0 A 100 100 0 0 1 0 -100" stroke="#f44336" stroke-width="10" fill="none" />
+    <text x="-120" y="-80" font-family="Arial" font-size="16" font-weight="bold" fill="#f44336">1. Red (실패)</text>
+    <text x="-140" y="-60" font-family="Arial" font-size="12" fill="#666">테스트 코드 먼저 작성</text>
+    
+    <!-- Green -->
+    <path d="M 0 -100 A 100 100 0 0 1 100 0" stroke="#4caf50" stroke-width="10" fill="none" />
+    <text x="120" y="-80" font-family="Arial" font-size="16" font-weight="bold" fill="#4caf50">2. Green (성공)</text>
+    <text x="120" y="-60" font-//Arial" font-size="12" fill="#666">최소한의 기능 구현</text>
+    
+    <!-- Refactor -->
+    <path d="M 100 0 A 100 100 0 0 1 0 100" stroke="#2196f3" stroke-width="10" fill="none" />
+    <text x="120" y="40" font-family="Arial" font-size="16" font-weight="bold" fill="#2196f3">3. Refactor (개선)</text>
+    <text x="120" y="60" font-family="Arial" font-size="12" fill="#666">코드 최적화 및 정리</text>
+    
+    <path d="M 0 100 A 100 100 0 0 1 -100 0" stroke="#9e9e9e" stroke-width="10" fill="none" />
+  </g>
+  
+  <text x="300" y="280" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">"실패하는 테스트를 먼저 만들고, 이를 통과시키는 코드를 짠다"</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

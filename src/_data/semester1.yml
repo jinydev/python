@@ -1,0 +1,53 @@
+main:
+- title: '📌 [기초] 1학기: 파이썬 기초 및 CS 원리'
+  url: /semester1/
+- title: '1주차: 파이썬과 개발 환경 🐍'
+  url: /semester1/week01/
+  subitems:
+  - title: 주차 개요
+    url: /semester1/week01/
+  - title: '1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀'
+    url: /semester1/week01/session1.html
+  - title: '1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️'
+    url: /semester1/week01/session2.html
+  - title: '1주차 3세션: 파이썬 기초 문법과 문제 해결 📦'
+    url: /semester1/week01/session3.html
+- title: '2주차: 변수와 메모리의 비밀 🧠'
+  url: /semester1/week02/
+  subitems:
+  - title: 주차 개요
+    url: /semester1/week02/
+  - title: '2주차 1세션: 변수의 개념과 값 할당 📦'
+    url: /semester1/week02/session1.html
+  - title: '2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠'
+    url: /semester1/week02/session2.html
+  - title: '2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠'
+    url: /semester1/week02/session3.html
+- title: '3주차: 기본 자료형 (1) - 숫자와 문자열 🔢'
+  url: /semester1/week03/
+- title: '4주차: 기본 자료형 (2) - 컨테이너 자료형 📦'
+  url: /semester1/week04/
+- title: '5주차: 제어문 (1) - 조건문과 논리 연산 🚦'
+  url: /semester1/week05/
+- title: '6주차: 제어문 (2) - 반복문과 이터레이터 🔄'
+  url: /semester1/week06/
+- title: '7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️'
+  url: /semester1/week07/
+- title: '8주차: 1학기 중간고사 📝'
+  url: /semester1/week08/
+- title: '9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠'
+  url: /semester1/week09/
+- title: '10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦'
+  url: /semester1/week10/
+- title: '11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾'
+  url: /semester1/week11/
+- title: '12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️'
+  url: /semester1/week12/
+- title: '13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️'
+  url: /semester1/week13/
+- title: '14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍'
+  url: /semester1/week14/
+- title: '15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️'
+  url: /semester1/week15/
+- title: '16주차: 1학기 기말고사 및 마무리 🎓'
+  url: /semester1/week16/

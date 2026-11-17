@@ -1,0 +1,41 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="350" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">레이아웃 매니저 비교 (Pack vs Grid vs Place)</text>
+  
+  <!-- Pack -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="150" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="75" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">pack()</text>
+    <rect x="20" y="50" width="110" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <rect x="20" y="90" width="110" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <rect x="20" y="130" width="110" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <text x="75" y="170" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">순차적으로 쌓음</text>
+  </g>
+  
+  <!-- Grid -->
+  <g transform="translate(225, 80)">
+    <rect x="0" y="0" width="150" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="75" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">grid()</text>
+    <rect x="20" y="50" width="50" height="30" rx="5" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" />
+    <rect x="80" y="50" width="50" height="30" rx="5" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" />
+    <rect x="20" y="90" width="50" height="30" rx="5" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" />
+    <rect x="80" y="90" width="50" height="30" rx="5" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" />
+    <text x="75" y="170" font-//Arial" font-size="12" text-anchor="middle" fill="#666">행/열 격자 배치</text>
+  </g>
+  
+  <!-- Place -->
+  <g transform="translate(400, 80)">
+    <rect x="0" y="0" width="150" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="75" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">place()</text>
+    <rect x="30" y="40" width="40" height="30" rx="5" fill="#fff3e0" stroke="#ef6c00" stroke-width="1" />
+    <rect x="80" y="110" width="40" height="30" rx="5" fill="#fff3e0" stroke="#ef6c00" stroke-width="1" />
+    <text x="75" y="170" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">절대 좌표 지정</text>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

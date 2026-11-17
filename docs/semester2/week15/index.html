@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍 | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester2/week15/" />
+<meta property="og:url" content="https://python.jiny.dev/semester2/week15/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍에 대한 파이썬(Python) 강좌 문서입니다.","headline":"15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍","url":"https://python.jiny.dev/semester2/week15/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          2학기 고급 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester2/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [고급] 2학기: 객체지향(OOP) 및 설계
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week01/"
+              class="bd-links-link d-inline-block rounded ">
+              1주차: OOP 패러다임 - 객체지향 설계의 시작 🏗️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week02/"
+              class="bd-links-link d-inline-block rounded ">
+              2주차: 클래스 기초 - 인스턴스와 self의 정체 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 캡슐화와 정보 은닉 - 안전한 데이터 관리 🔒
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 상속과 다형성 - 유연하고 확장 가능한 설계 🌿
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 매직 메서드 (Dunder Methods) - 파이썬답게 만들기 ✨
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 2학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 디자인 패턴 (1) - 싱글톤과 팩토리 패턴 🏗️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 디자인 패턴 (2) - 전략과 옵저버 패턴 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 패키지 구조 설계 - 대규모 프로젝트 관리 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 타입 힌팅 (Type Hinting) - 코드의 문서화와 안정성 🏷️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 유닛 테스트 - 버그 없는 코드 만들기 🧪
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 배포 및 패키징 (1) - 내 코드를 라이브러리로 만들기 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week15/"
+              class="bd-links-link d-inline-block rounded active">
+              15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 2학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester2/">📌 [고급] 2학기: 객체지향(OOP) 및 설계</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="15주차-배포-및-패키징-2---pypi에-내-라이브러리-공개하기-">15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍</h1>
+
+<p>지난 시간에는 내 코드를 배포 가능한 형태(<code class="language-plaintext highlighter-rouge">.whl</code>)로 빌드하는 법을 배웠습니다. 이제 이 파일을 전 세계 파이썬 개발자들이 사용할 수 있도록 <strong>PyPI (Python Package Index)</strong>에 업로드하는 과정을 배웁니다.</p>
+
+<hr />
+
+<h2 id="1-pypi-python-package-index란">1. PyPI (Python Package Index)란?</h2>
+
+<p>PyPI는 파이썬의 공식 라이브러리 저장소입니다. 우리가 <code class="language-plaintext highlighter-rouge">pip install</code>을 통해 설치하는 모든 라이브러리는 기본적으로 이 PyPI 서버에서 다운로드됩니다.</p>
+
+<h3 id="11-배포-과정-workflow">1.1 배포 과정 (Workflow)</h3>
+<ol>
+  <li><strong>코드 작성 및 테스트:</strong> 기능 구현 및 유닛 테스트 완료.</li>
+  <li><strong>빌드:</strong> <code class="language-plaintext highlighter-rouge">pyproject.toml</code>을 기반으로 <code class="language-plaintext highlighter-rouge">.whl</code> 파일 생성.</li>
+  <li><strong>업로드:</strong> <code class="language-plaintext highlighter-rouge">twine</code>이라는 도구를 사용하여 PyPI 서버에 업로드.</li>
+  <li><strong>설치:</strong> 전 세계 사용자가 <code class="language-plaintext highlighter-rouge">pip install</code>로 설치.</li>
+</ol>
+
+<hr />
+
+<h2 id="2-twine을-이용한-업로드">2. Twine을 이용한 업로드</h2>
+
+<p><code class="language-plaintext highlighter-rouge">twine</code>은 빌드된 패키지를 안전하게 PyPI에 업로드하기 위한 표준 도구입니다.</p>
+
+<p><strong>업로드 단계:</strong></p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">pip install twine</code> 설치</li>
+  <li>PyPI 계정 생성 및 API 토큰 발급</li>
+  <li><code class="language-plaintext highlighter-rouge">twine upload dist/*</code> 실행</li>
+</ol>
+
+<hr />
+
+<h2 id="3-버전-관리-시맨틱-버저닝-semantic-versioning">3. 버전 관리: 시맨틱 버저닝 (Semantic Versioning)</h2>
+
+<p>라이브러리를 배포할 때 가장 중요한 것이 <strong>버전 번호</strong>입니다. 무작정 숫자를 올리는 것이 아니라, 전 세계적인 약속인 <strong>시맨틱 버저닝(SemVer)</strong>을 따릅니다.</p>
+
+<p><strong>형식: <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code> (예: 1.2.3)</strong></p>
+
+<ul>
+  <li><strong>MAJOR:</strong> 기존 버전과 호환되지 않는 <strong>파괴적 변경</strong>이 있을 때 올립니다. (예: 함수 이름 변경, 필수 인자 추가)</li>
+  <li><strong>MINOR:</strong> 기존 버전과 호환되면서 <strong>새로운 기능</strong>이 추가되었을 때 올립니다.</li>
+  <li><strong>PATCH:</strong> 기능 추가 없이 <strong>버그 수정</strong>만 이루어졌을 때 올립니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> 자신의 라이브러리에 새로운 기능을 추가하고 버그를 수정했다고 가정하고, 시맨틱 버저닝 규칙에 따라 버전 번호를 어떻게 변경해야 할지 적어보세요. (현재 버전: 0.1.0)</p>
+
+<p><strong>문제 2.</strong> PyPI 계정을 생성하고, API 토큰을 발급받는 과정을 단계별로 정리해 보세요. (실제 업로드는 선택 사항입니다.)</p>
+
+<h2 id="문제-3-심화-pypi-외에-기업-내부에서만-사용하는-사설-pypi-서버를-구축하는-방법예-nexus-artifactory에-대해-조사하고-왜-기업들은-사설-서버를-사용하는지-그-이유를-설명해-보세요"><strong>문제 3.</strong> (심화) PyPI 외에 기업 내부에서만 사용하는 ‘사설 PyPI 서버’를 구축하는 방법(예: Nexus, Artifactory)에 대해 조사하고, 왜 기업들은 사설 서버를 사용하는지 그 이유를 설명해 보세요.</h2>
+
+<h2 id="-deep-dive-시맨틱-버저닝semantic-versioning과-pypi-릴리즈-자동화의-정수">🔍 Deep Dive: 시맨틱 버저닝(Semantic Versioning)과 PyPI 릴리즈 자동화의 정수</h2>
+
+<p>안정적인 라이브러리를 운영하기 위해서는 버전 관리가 필수적입니다.</p>
+<ul>
+  <li><strong>시맨틱 버저닝 2.0.0 (SemVer)</strong>: <code class="language-plaintext highlighter-rouge">Major.Minor.Patch</code> 세 자리 숫자로 규격을 통제합니다.
+    <ul>
+      <li><strong>Major (주 버전)</strong>: 하위 호환성이 완전히 깨지는 대규모 API 개편이나 구조 파괴 시 변경합니다. (예: <code class="language-plaintext highlighter-rouge">1.0.0</code> ➡️ <code class="language-plaintext highlighter-rouge">2.0.0</code>)</li>
+      <li><strong>Minor (부 버전)</strong>: 기존 기능의 하위 호환성을 완벽히 유지하면서 유용한 새 기능을 추가할 때 올립니다. (예: <code class="language-plaintext highlighter-rouge">1.1.0</code> ➡️ <code class="language-plaintext highlighter-rouge">1.2.0</code>)</li>
+      <li><strong>Patch (패치 버전)</strong>: API 규격을 건드리지 않고 내부의 버그 수정이나 핫픽스를 적용할 때 올립니다. (예: <code class="language-plaintext highlighter-rouge">1.2.1</code> ➡️ <code class="language-plaintext highlighter-rouge">1.2.2</code>)</li>
+    </ul>
+  </li>
+  <li><strong>PyPI 배포 자동화</strong>: 개발자가 GitHub에 코드를 커밋하고 릴리즈 태그(<code class="language-plaintext highlighter-rouge">v1.2.0</code>)를 붙이면, GitHub Actions 워크플로우가 자동으로 가상 서버를 띄워 빌드하고, PyPI API 토큰을 인증해 전 세계로 모듈을 자동 배포하는 CI/CD 자동 팩토리가 현대 오픈소스 배포의 표준입니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-java-vs-python-스나이퍼-비교">☕ Java vs Python 스나이퍼 비교</h2>
+
+<h3 id="중앙-패키지-유통-마켓과-버전-관리">중앙 패키지 유통 마켓과 버전 관리</h3>
+<ul>
+  <li><strong>Java</strong>: 빌드된 아티팩트(<code class="language-plaintext highlighter-rouge">JAR</code> 또는 <code class="language-plaintext highlighter-rouge">WAR</code>)를 Maven Central, Sonatype 또는 회사 내부의 Nexus Repository 등의 원격 저장소에 배포합니다. 라이브러리의 중복 배포 방지 및 서명 검증을 위해 엄격한 PGP GPG 서명 절차를 요구합니다.</li>
+  <li><strong>Python</strong>: 전 세계 단일 중앙 포털인 <strong>PyPI(pip)</strong>로 직결되어 배포가 매우 대중적이고 간단합니다. 개발자는 <code class="language-plaintext highlighter-rouge">twine</code> 도구를 사용해 PyPI 계정 API 인증 토큰을 던지는 간단한 커맨드 명령어 한 줄만으로도 전 세계 누구나 다운받아 쓸 수 있는 글로벌 휠 패키지를 즉시 퍼블리싱할 수 있습니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬 프로젝트를 PyPI에 안전하게 릴리즈하기 위한 업로드 도구인 <code class="language-plaintext highlighter-rouge">twine</code> 사용 방법을 상세히 안내해 주고, GitHub Actions를 통해 Git 태그 릴리즈가 감지되었을 때 PyPI에 자동으로 빌드 배포를 수행하는 워크플로우 <code class="language-plaintext highlighter-rouge">.yml</code> 스크립트를 작성해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Semantic Versioning</code></strong>: 시맨틱 버저닝, 의미론적 버전 관리. (코드의 변경 규모와 호환성 수준에 따라 버전 숫자를 논리적 규칙(메이저.마이너.패치)에 맞추어 부여하는 세계적 합의 규격입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Release</code></strong>: 출시, 릴리즈. (테스트가 완전히 통과되어 최종 사용자나 다른 프로그래머가 안심하고 내려받아 사용할 수 있도록 배포판을 공식 배포 시장에 출시하는 마일스톤 단계입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">CI/CD</code> (Continuous Integration / Continuous Deployment)</strong>: 지속적 통합 / 지속적 배포. (코드가 커밋될 때마다 자동으로 빌드, 테스트를 수행하고 서비스 서버나 패키지 마켓에 자동으로 릴리즈까지 도맡아 배달하는 현대 소프트웨어 공학의 자동화 배스크 파이프라인입니다.)</li>
+</ul>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

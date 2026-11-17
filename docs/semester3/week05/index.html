@@ -1,0 +1,1897 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦 | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester3/week05/" />
+<meta property="og:url" content="https://python.jiny.dev/semester3/week05/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦에 대한 파이썬(Python) 강좌 문서입니다.","headline":"5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦","url":"https://python.jiny.dev/semester3/week05/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          3학기 심화 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester3/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [심화] 3학기: 응용 및 시스템 개발
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="false">
+              1주차: GUI 개발 기초 - 윈도우 인터페이스와 이벤트 루프 🖥️
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester3/week01/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester3/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1교시: GUI 개발 기초 - 화면에 생명력 불어넣기 (1/3) 🖥️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester3/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2교시: Tkinter 기초 - 첫 번째 윈도우 만들기 (2/3) 🖥️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester3/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3교시: 이벤트 연결과 동적 UI 업데이트 (3/3) 🖥️
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week02/"
+              class="bd-links-link d-inline-block rounded ">
+              2주차: GUI 심화 - 위젯 배치 알고리즘과 데이터 시각화 뷰어 📊
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 네트워크 프로그래밍 (1) - 소켓 통신 기초 🌐
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 네트워크 프로그래밍 (2) - HTTP와 REST API 🌐
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week05/"
+              class="bd-links-link d-inline-block rounded active">
+              5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 데이터베이스 기초 - 영구적인 데이터 저장소 🗄️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: ORM (Object Relational Mapping) - 객체와 DB의 연결 🔗
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 3학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 멀티스레딩 (Threading) - 동시성 프로그래밍 🧵
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 멀티프로세싱 (Multiprocessing) - 진정한 병렬 처리 🚀
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 비동기 프로그래밍 (1) - asyncio와 코루틴 ⚡
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 비동기 프로그래밍 (2) - 고성능 크롤러 제작 🌐
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 게임 개발 원리 - 실시간 상호작용 구현 🎮
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 최종 프로젝트 기획 - 나만의 서비스 설계 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 최종 프로젝트 구현 - 코딩과 디버깅 💻
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester3/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 최종 마무리 및 마스터 인증 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester3/">📌 [심화] 3학기: 응용 및 시스템 개발</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="5주차-데이터-처리---json과-xml-그리고-직렬화-">5주차: 데이터 처리 - JSON과 XML, 그리고 직렬화 📦</h1>
+
+<p>우리는 지난 시간 API를 통해 데이터를 주고받았습니다. 이때 사용한 JSON은 단순한 텍스트일 뿐입니다. 하지만 프로그램 내부에서는 이를 딕셔너리나 리스트 같은 ‘객체’로 다뤄야 합니다. 이번 시간에는 데이터를 저장/전송 가능한 형태로 바꾸는 <strong>직렬화</strong>와 대표적인 포맷인 <strong>JSON, XML</strong>을 배웁니다.</p>
+
+<hr />
+
+<h2 id="1-직렬화-serialization란">1. 직렬화 (Serialization)란?</h2>
+
+<p>직렬화는 <strong>메모리 속에 존재하는 객체(Object)를 파일에 저장하거나 네트워크로 전송할 수 있도록 텍스트나 바이너리 형태로 변환하는 과정</strong>을 말합니다. 반대로 변환된 데이터를 다시 객체로 만드는 것을 <strong>역직렬화(Deserialization)</strong>라고 합니다.</p>
+
+<p><img src="./img/serialization.svg" alt="직렬화 과정" /></p>
+
+<ul>
+  <li><strong>직렬화:</strong> 파이썬 딕셔너리 $\rightarrow$ JSON 문자열</li>
+  <li><strong>역직렬화:</strong> JSON 문자열 $\rightarrow$ 파이썬 딕셔너리</li>
+</ul>
+
+<hr />
+
+<h2 id="2-json-javascript-object-notation">2. JSON (JavaScript Object Notation)</h2>
+
+<p>JSON은 현재 전 세계적으로 가장 많이 쓰이는 데이터 교환 포맷입니다. 사람이 읽기 쉽고, 기계가 파싱하기 매우 빠르기 때문입니다.</p>
+
+<h3 id="21-파이썬에서-json-다루기-json-모듈">2.1 파이썬에서 JSON 다루기 (<code class="language-plaintext highlighter-rouge">json</code> 모듈)</h3>
+<p>파이썬의 <code class="language-plaintext highlighter-rouge">json</code> 모듈을 사용하면 딕셔너리와 JSON 문자열을 서로 변환할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="c1"># 1. 파이썬 객체 -&gt; JSON 문자열 (직렬화)
+</span><span class="n">user_data</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">지니</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">age</span><span class="sh">"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="sh">"</span><span class="s">city</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Seoul</span><span class="sh">"</span><span class="p">}</span>
+<span class="n">json_string</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span> 
+<span class="nf">print</span><span class="p">(</span><span class="n">json_string</span><span class="p">)</span> <span class="c1"># 결과: '{"name": "지니", "age": 15, "city": "Seoul"}'
+</span>
+<span class="c1"># 2. JSON 문자열 -&gt; 파이썬 객체 (역직렬화)
+</span><span class="n">json_input</span> <span class="o">=</span> <span class="sh">'</span><span class="s">{</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="s">: </span><span class="sh">"</span><span class="s">철수</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">age</span><span class="sh">"</span><span class="s">: 17, </span><span class="sh">"</span><span class="s">city</span><span class="sh">"</span><span class="s">: </span><span class="sh">"</span><span class="s">Busan</span><span class="sh">"</span><span class="s">}</span><span class="sh">'</span>
+<span class="n">user_obj</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">loads</span><span class="p">(</span><span class="n">json_input</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">user_obj</span><span class="p">[</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">])</span> <span class="c1"># 결과: 철수
+</span></code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">json.dumps()</code>: 객체를 문자열로 변환 (Dump String)</li>
+  <li><code class="language-plaintext highlighter-rouge">json.loads()</code>: 문자열을 객체로 변환 (Load String)</li>
+  <li><code class="language-plaintext highlighter-rouge">json.dump()</code> / <code class="language-plaintext highlighter-rouge">json.load()</code>: 파일에 직접 쓰고 읽을 때 사용</li>
+</ul>
+
+<hr />
+
+<h2 id="3-xml-extensible-markup-language">3. XML (Extensible Markup Language)</h2>
+
+<p>XML은 HTML과 비슷하게 태그(<code class="language-plaintext highlighter-rouge">&lt; &gt;</code>)를 사용하여 데이터를 구조화하는 포맷입니다. JSON보다 무겁고 복잡하지만, 데이터의 의미를 더 명확하게 정의할 수 있어 오래된 시스템이나 기업용 설정 파일에서 여전히 사용됩니다.</p>
+
+<h3 id="31-xml-예시">3.1 XML 예시</h3>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;user&gt;</span>
+    <span class="nt">&lt;name&gt;</span>지니<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;age&gt;</span>15<span class="nt">&lt;/age&gt;</span>
+    <span class="nt">&lt;city&gt;</span>Seoul<span class="nt">&lt;/city&gt;</span>
+<span class="nt">&lt;/user&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="4--deep-dive-json-vs-xml-vs-pickle">4. 🔍 Deep Dive: JSON vs XML vs Pickle</h2>
+
+<p>데이터를 직렬화하는 방법은 여러 가지가 있습니다. 상황에 맞는 선택이 중요합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">포맷</th>
+      <th style="text-align: left">특징</th>
+      <th style="text-align: left">장점</th>
+      <th style="text-align: left">단점</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>JSON</strong></td>
+      <td style="text-align: left">텍스트 기반, 키-값 쌍</td>
+      <td style="text-align: left">가볍고 범용적임 (표준)</td>
+      <td style="text-align: left">복잡한 객체 표현에 한계</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>XML</strong></td>
+      <td style="text-align: left">텍스트 기반, 태그 구조</td>
+      <td style="text-align: left">구조가 엄격하고 상세함</td>
+      <td style="text-align: left">매우 무겁고 파싱이 느림</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Pickle</strong></td>
+      <td style="text-align: left">파이썬 전용 바이너리</td>
+      <td style="text-align: left">파이썬의 모든 객체 저장 가능</td>
+      <td style="text-align: left">파이썬에서만 사용 가능, 보안 위험</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>⚠️ 주의: Pickle의 보안 위험</strong>
+<code class="language-plaintext highlighter-rouge">pickle</code> 모듈은 파이썬 객체를 그대로 저장하므로 매우 편리하지만, 신뢰할 수 없는 곳에서 받은 pickle 파일을 로드하면 <strong>악성 코드가 실행될 위험</strong>이 있습니다. 외부 데이터 교환에는 반드시 JSON을 사용하세요.</p>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> 자신의 프로필 정보(이름, 나이, 취미 리스트, 좋아하는 음식 딕셔너리)를 딕셔너리로 만들고, 이를 <code class="language-plaintext highlighter-rouge">profile.json</code> 파일로 저장한 뒤 다시 읽어오는 프로그램을 작성해 보세요.</p>
+
+<p><strong>문제 2.</strong> JSON 문자열에서 특정 키의 값만 추출하여 출력하는 함수 <code class="language-plaintext highlighter-rouge">get_value(json_str, key)</code>를 구현해 보세요.</p>
+
+<h2 id="문제-3-심화-pickle-모듈을-사용하여-파이썬의-클래스-인스턴스를-파일로-저장하고-다시-불러오는-코드를-작성해-보세요-그리고-왜-이-방식이-json보다-강력하지만-위험한지-서술해-보세요"><strong>문제 3.</strong> (심화) <code class="language-plaintext highlighter-rouge">pickle</code> 모듈을 사용하여 파이썬의 클래스 인스턴스를 파일로 저장하고 다시 불러오는 코드를 작성해 보세요. 그리고 왜 이 방식이 JSON보다 강력하지만 위험한지 서술해 보세요.</h2>
+
+<h2 id="-deep-dive-xml-트리-구조domsax와-json-직렬화의-직관성-대결">🔍 Deep Dive: XML 트리 구조(DOM/SAX)와 JSON 직렬화의 직관성 대결</h2>
+
+<p>웹 세상에서 데이터를 구조화하여 전송하는 방식은 크게 XML과 JSON이 지배해 왔습니다.</p>
+<ul>
+  <li><strong>XML</strong>: 태그 기반의 트리 구조로 엄격한 유효성 검사(Schema)가 가능하지만, <code class="language-plaintext highlighter-rouge">&lt;name&gt;Jiny&lt;/name&gt;</code> 처럼 여는 태그와 닫는 태그가 반복되어 패킷 용량이 무거워지고 가독성이 떨어집니다. 파이썬은 DOM(전체 메모리 로드) 방식과 SAX(스트리밍 파싱) 방식으로 XML을 제어합니다.</li>
+  <li><strong>JSON</strong>: 자바스크립트 객체 표기법에서 유래해 키와 값의 쌍으로만 이루어져 있으며 패킷이 가볍고 인간이 읽기 극단적으로 편합니다. 파이썬 딕셔너리와 1:1로 정확하게 매핑되는 완벽한 호환성 덕분에 현대 웹 서비스와 데이터 처리의 절대 강자가 되었습니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-java-vs-python-스나이퍼-비교">☕ Java vs Python 스나이퍼 비교</h2>
+
+<h3 id="json-직렬화-및-파싱-처리의-대조">JSON 직렬화 및 파싱 처리의 대조</h3>
+<ul>
+  <li><strong>Java</strong>: JSON을 내장 타입으로 인지하지 못합니다. 따라서 <strong>Jackson</strong> 이나 Google <strong>Gson</strong> 같은 라이브러리를 주입받아 DTO(Data Transfer Object) 자바 클래스를 먼저 매핑 선언하고, 리플렉션을 거쳐서 직렬화/역직렬화(Serialization/Deserialization)를 실행해야 하므로 코드 구조가 다소 무겁습니다.</li>
+  <li><strong>Python</strong>: 내장 모듈 <code class="language-plaintext highlighter-rouge">json</code>을 사용하여 <code class="language-plaintext highlighter-rouge">json.dumps(dic_obj)</code> 단 한 줄로 텍스트 직렬화를 완성하고, <code class="language-plaintext highlighter-rouge">json.loads(text)</code> 한 줄로 파이썬 딕셔너리 객체로 환원시킬 수 있어 JSON 처리가 세상에서 가장 간결합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬으로 여러 학생의 성적 정보(이름, 국어, 영어 점수)가 담긴 복잡한 파이썬 딕셔너리를 작성해 줘. 그리고 이 데이터를 <code class="language-plaintext highlighter-rouge">json.dump</code>를 사용하여 로컬 <code class="language-plaintext highlighter-rouge">student.json</code> 파일에 쓰기(직렬화)하는 파이썬 코드를 구현해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Serialization</code></strong>: 직렬화, 마샬링. (메모리상에 떠 있는 객체 데이터를 파일 저장이나 네트워크 전송이 가능한 평면적인 바이트 스트림(텍스트) 형태로 변환하는 가공 절차입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Deserialization</code></strong>: 역직렬화. (직렬화되어 수신된 텍스트나 바이트 스트림 데이터를 해석하여, 메모리에 객체 인스턴스로 복원하고 활성화하는 가공 작업입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">DOM</code> (Document Object Model)</strong>: 문서 객체 모델. (XML이나 HTML 문서 전체를 메모리로 통째로 로드하여 노드 트리 형태로 구성해 읽고 편집할 수 있게 구조화한 프로그래밍 모델입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="-교재-상세-학습-69-탐정의-비밀-돋보기-기초-패턴-만들기-meta-characters">📖 교재 상세 학습: 69 탐정의 비밀 돋보기: 기초 패턴 만들기 (Meta Characters)</h2>
+
+<h2 id="69-탐정의-비밀-돋보기-기초-패턴-만들기">69 탐정의 비밀 돋보기: 기초 패턴 만들기</h2>
+
+<p>파이썬에서 <code class="language-plaintext highlighter-rouge">re</code> (Regular Expression의 약자) 모듈을 불러오면(<code class="language-plaintext highlighter-rouge">import re</code>), 우리는 텍스트를 검색하는 강력한 특수 언어를 쓸 수 있습니다. 이 언어의 핵심은 바로 글자가 아니라 규칙을 의미하는 <strong>메타 문자(Meta Character)</strong>라는 비밀 기호들입니다.</p>
+
+<h3 id="1-어떤-글자를-찾을래-문자-클래스">1. 어떤 글자를 찾을래? (문자 클래스)</h3>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">[ ]</code> (선택)</strong>: 대괄호 안의 문자 중 <strong>어느 하나라도</strong> 맞으면 합격!
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[abc]</code> : “a, b, c 중 하나라도 있나?”</li>
+      <li><code class="language-plaintext highlighter-rouge">[a-z]</code> : “영어 소문자 아무거나 다 나와!”</li>
+      <li><code class="language-plaintext highlighter-rouge">[가-힣]</code> : “한글 글자는 다 걸려라!”</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">[^ ]</code> (반대/부정)</strong>: 괄호 안에 <code class="language-plaintext highlighter-rouge">^</code> 기호가 먼저 들어가면 “이것 빼고 다 가져와!”라는 뜻입니다.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[^0-9]</code> : “제발 숫자만 빼고 전부 다!”</li>
+    </ul>
+  </li>
+  <li><strong>단축키 (축약 기호)</strong>: 매번 <code class="language-plaintext highlighter-rouge">[0-9]</code> 라고 쓰기 귀찮아서 만든 친절한 단축키들!
+    <ul>
+      <li><strong><code class="language-plaintext highlighter-rouge">\d</code></strong>: 숫자 (<code class="language-plaintext highlighter-rouge">[0-9]</code>와 완전 동일, digit)</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\D</code></strong>: 숫자가 아닌 것들 (Non-digit)</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\s</code></strong>: 띄어쓰기, 엔터(<code class="language-plaintext highlighter-rouge">\n</code>), 탭(<code class="language-plaintext highlighter-rouge">\t</code>) 같은 공백들 (space)</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\w</code></strong>: 알파벳, 한글, 숫자 (특수문자 및 공백 제외, word)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="2-도대체-몇-개나-있어-수량자">2. “도대체 몇 개나 있어?” (수량자)</h3>
+
+<p>내가 찾는 문자가 연속으로 반복될 때는 수량자 기호를 뒤에 슬쩍 붙여줍니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">*</code></strong>: 0개 이상 (아예 없어도 합격이고, 엄청 많아도 OK)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">+</code></strong>: 1개 이상 (무조건 1개는 있어야 해!)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">?</code></strong>: 0개 아니면 1개 (있어도 그만, 없어도 그만 - 선택적 옵션)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">{m, n}</code></strong>: 딱 m개부터 최대 n개까지만 허용! (예: <code class="language-plaintext highlighter-rouge">\d{3,4}</code> → 숫자 3자리 혹은 4자리)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># "a 다음에 b가 무조건 1개 이상(+) 있는 패턴"
+# compile()은 내 돋보기 규칙을 세팅하는 작업입니다.
+</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">ab+</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">abbbb</span><span class="sh">"</span><span class="p">).</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># "abbbb" 한 번에 싹 다 찾음!
+# print(pattern.search("acccc"))       # b가 없어서 못 찾고 터짐(None 에러)!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="3-좌표-찍기-앵커-문자">3. 좌표 찍기 (앵커 문자)</h3>
+
+<p>내가 찾는 단어가 문장 중간에 있는 건 싫고, 꼭 첫 머리이거나 꼬리에 있어야 할 때 씁니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">^</code></strong>: 문장의 <strong>맨 처음</strong>에서만 찾아라! (<code class="language-plaintext highlighter-rouge">^Hello</code> : 첫 단어가 Hello인지 검사)
+    <ul>
+      <li><em>주의: <code class="language-plaintext highlighter-rouge">[ ]</code> 괄호 안의 <code class="language-plaintext highlighter-rouge">^</code>는 부정이지만, 괄호 밖에서는 ‘문자열의 처음’이라는 뜻입니다!</em></li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">$</code></strong>: 문장의 <strong>맨 끝</strong>에서만 찾아라! (<code class="language-plaintext highlighter-rouge">Python$</code> : 가장 마지막 단어가 Python인지 검사)</li>
+</ul>
+
+<hr />
+
+<h3 id="4-소그룹-묶어-이름표-달기-grouping">4. 소그룹 묶어 이름표 달기 (Grouping)</h3>
+
+<p>전화번호(“010-1234-5678”)를 찾을 때, 전체 번호도 찾고 싶지만 ‘앞자리’, ‘중간자리’, ‘뒷자리’를 나중에 예쁘게 따로따로 빼서 보고 싶다면 필요한 부분을 괄호 <code class="language-plaintext highlighter-rouge">( )</code>로 묶어줍니다. 이것을 그룹화라고 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># 괄호 3개로 묶어서 그룹 3개를 만듭니다. (숫자뭉치)-(숫자뭉치)-(숫자뭉치)
+</span><span class="n">phone_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">(\d+)-(\d+)-(\d+)</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">phone_pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">안녕하세요 제 폰 번호는 010-9999-8888 입니다</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># .group()은 찾은 결과를 꺼내줍니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">전체:</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># 010-9999-8888
+</span>
+<span class="c1"># 괄호별로 순서대로 빼기!
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">1번 그룹(국번):</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># 010
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2번 그룹(중간):</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 9999
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">3번 그룹(뒷번):</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># 8888
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!TIP]
+괄호 맨 앞에 특별히 <code class="language-plaintext highlighter-rouge">?P&lt;이름&gt;</code>을 붙이면 그 그룹에 숫자가 아닌 별명을 지어줄 수 있습니다!
+<code class="language-plaintext highlighter-rouge">(?P&lt;middle&gt;\d+)</code> 라고 쓰면, 나중에 <code class="language-plaintext highlighter-rouge">result.group('middle')</code> 이라는 아주 직관적인 이름으로 편하게 값을 꺼낼 수 있답니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-교재-상세-학습-70-실전-수사-돌입-re-모듈-함수와-옵션">📖 교재 상세 학습: 70 실전 수사 돌입: re 모듈 함수와 옵션</h2>
+
+<h2 id="70-실전-수사-돌입-re-모듈-함수와-옵션">70 실전 수사 돌입: <code class="language-plaintext highlighter-rouge">re</code> 모듈 함수와 옵션</h2>
+
+<p>패턴 암호(정규식)를 만들었으면, 이제 본격적으로 거대한 텍스트의 바다에 탐지기를 던져서 물고기를 낚아 올릴 차례입니다.</p>
+
+<h3 id="1-탐지기-작동-방식-패턴-검색-함수">1. 탐지기 작동 방식 (패턴 검색 함수)</h3>
+
+<p>파이썬 <code class="language-plaintext highlighter-rouge">re</code> 모듈에는 목적에 딱 맞는 3가지 주요 돋보기 탐지기가 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">match(패턴, 문자열)</code></strong>: 문장의 <strong>가장 첫 글자부터</strong> 칼같이 맞아야만 인정합니다! 첫 단어가 다르면 중간에 아무리 일치하는 게 있어도 뒤는 쳐다보지도 않고 포기(None)합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">search(패턴, 문자열)</code></strong>: 문장을 처음부터 끝까지 쭉 훑다가 <strong>가장 먼저 매칭되는 녀석 딱 1개</strong>를 찾으면 뒤도 안 돌아보고 바로 멈춥니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">findall(패턴, 문자열)</code></strong>: (가장 많이 씀) 텍스트 전체를 마지막까지 샅샅이 뒤져서 <strong>매칭되는 모든 결과</strong>를 무더기(리스트)로 주머니에 담아 가져옵니다!</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">apple, banana, cherry, apple!</span><span class="sh">"</span>
+
+<span class="c1"># 1. search는 처음 찾은 사과 하나만 뽑고 퇴근합니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="n">re</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">apple</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">).</span><span class="nf">group</span><span class="p">())</span> 
+<span class="c1"># 출력: apple
+</span>
+<span class="c1"># 2. findall은 모든 사과를 맵 싹쓸이해서 리스트로 줍니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">re</span><span class="p">.</span><span class="nf">findall</span><span class="p">(</span><span class="sh">"</span><span class="s">apple</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span> 
+<span class="c1"># 출력: ['apple', 'apple']
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">search</code>나 <code class="language-plaintext highlighter-rouge">match</code>로 찾은 결과는 단순히 글자가 아니라 <strong><code class="language-plaintext highlighter-rouge">Match</code> 객체</strong>라는 마법의 보물상자에 담겨 옵니다. 이 상자 안에는 찾은 글자 값(<code class="language-plaintext highlighter-rouge">group()</code>), 텍스트 속성에서의 정확한 위치(<code class="language-plaintext highlighter-rouge">span()</code>, <code class="language-plaintext highlighter-rouge">start()</code>, <code class="language-plaintext highlighter-rouge">end()</code>) 같은 고급 정보가 듬뿍 들어있습니다.</p>
+
+<hr />
+
+<h3 id="2-탐지-레이더-업그레이드-컴파일-옵션-플래그">2. 탐지 레이더 업그레이드 (컴파일 옵션 플래그)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">re.compile()</code>로 패턴을 미리 만들어둘 때, 뒤에 특별한 마법 부품(옵션 플래그)을 붙여주면 훨씬 똑똑해집니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">re.I</code> (<code class="language-plaintext highlighter-rouge">re.IGNORECASE</code>)</strong>: 대문자/소문자를 쿨하게 무시합니다! (‘A’를 찾으라 하면 ‘a’도 같이 찾아줌)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">re.M</code> (<code class="language-plaintext highlighter-rouge">re.MULTILINE</code>)</strong>: 엔터(<code class="language-plaintext highlighter-rouge">\n</code>)로 여러 줄이 된 삼행시 같은 글을 검사할 때, 텍스트 전체의 처음/끝이 아니라 <strong>‘각 줄’의 <code class="language-plaintext highlighter-rouge">^처음</code>과 <code class="language-plaintext highlighter-rouge">끝$</code>을 따로따로 분리해서 다 검사</strong>해줍니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">re.S</code> (<code class="language-plaintext highlighter-rouge">re.DOTALL</code>)</strong>: 기본적으로 마침표(<code class="language-plaintext highlighter-rouge">.</code>) 기호는 줄바꿈(<code class="language-plaintext highlighter-rouge">\n</code>) 문자를 제외한 모든 것을 뜻하지만, 이 옵션을 켜면 줄바꿈 문자까지 자비 없이 포함시켜서 문자 그대로 ‘모든 것’을 찾아버립니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># 'python'을 찾을 건데, 대소문자 무시(re.I) 옵션을 켰습니다!
+</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">python</span><span class="sh">"</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">I</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">I love PYTHON and PyTHon!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># 대문자 PYTHON을 거뜬히 찾아냅니다!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="3-찾아서-곧바로-묻어버리기-sub">3. 찾아서 곧바로 묻어버리기! (<code class="language-plaintext highlighter-rouge">sub</code>)</h3>
+
+<p>데이터 전처리 과정에서 너무나도 강력한 함수입니다. 단순히 찾는 걸 넘어서, 찾은 패턴의 글자들을 원하는 ‘다른 글자’로 흔적도 없이 싹 바꿔버리는 <strong><code class="language-plaintext highlighter-rouge">re.sub(패턴, 바꿀문자, 문자열)</code></strong> 함수입니다. 메모장이나 한글 파일의 ‘찾아 바꾸기’보다 100배는 더 훌륭합니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="n">secret_note</span> <span class="o">=</span> <span class="sh">"</span><span class="s">내 비밀번호는 1234, 네 비밀번호는 5678 이다!</span><span class="sh">"</span>
+
+<span class="c1"># 모든 숫자의 덩어리(\d+)를 찾아서, 강제로 "***" 로 마스킹(치환)해버립니다!
+</span><span class="n">safe_note</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sh">"</span><span class="s">\d+</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">***</span><span class="sh">"</span><span class="p">,</span> <span class="n">secret_note</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">safe_note</span><span class="p">)</span>
+<span class="c1"># 출력: 내 비밀번호는 ***, 네 비밀번호는 *** 이다!
+</span></code></pre></div></div>
+
+<p>정규 표현식은 처음 배울 때는 마치 외계어처럼 보여서 조금 까다롭지만, 한 번 익혀두면 수십 줄짜리 지저분한 파이썬 <code class="language-plaintext highlighter-rouge">if-else</code> 코드를 단 한 줄로 깔끔하게 썰어버리는 놀랍도록 아름다운 마법의 도구랍니다! 데이터 과학이나 웹 백엔드 개발을 한다면 절대 피할 수 없는 필수 과목입니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-73-편지-봉투에-담아-통신하기-json-데이터-핸들링">📖 교재 상세 학습: 73 편지 봉투에 담아 통신하기: JSON 데이터 핸들링</h2>
+
+<h2 id="73-규격화된-편지-봉투-json-인코딩과-파일-저장">73 규격화된 편지 봉투: JSON 인코딩과 파일 저장</h2>
+
+<p>이 세상 수많은 컴퓨터 서비스(웹사이트, 모바일 앱 등)끼리 정보를 통신할 때는 각자의 언어(파이썬, 자바 등)가 달라도 서로 알아먹을 수 있는 아주 표준화된 텍스트 편지가 한 장 필요합니다. 
+그래서 전 세계 개발자들이 약속한 이 예쁜 표준 규격 편지봉투가 바로 <strong>JSON (JavaScript Object Notation)</strong>입니다.</p>
+
+<p>JSON 데이터는 사실 파이썬의 <strong>딕셔너리와 리스트 구조</strong>와 거의 99% 비슷하게 생겼습니다만, 몇 가지 이름의 치환 약속이 있습니다. (예를 들어 파이썬의 <code class="language-plaintext highlighter-rouge">True</code>/<code class="language-plaintext highlighter-rouge">False</code>/<code class="language-plaintext highlighter-rouge">None</code> 은 JSON에서 무조건 소문자인 <code class="language-plaintext highlighter-rouge">true</code>/<code class="language-plaintext highlighter-rouge">false</code>/<code class="language-plaintext highlighter-rouge">null</code> 로 바뀝니다.)</p>
+
+<h3 id="1-파이썬을-json-봉투로-납작하게-누르기-dumps">1. 파이썬을 JSON 봉투로 납작하게 누르기 (<code class="language-plaintext highlighter-rouge">dumps</code>)</h3>
+
+<p>파이썬의 살아 움직이는 복잡한 딕셔너리를, 친구(다른 프로그래밍 언어 서버)에게 인터넷으로 전송하기 위해 빳빳한 단순 텍스트 문자열(JSON)로 납작하게 찍어내는 인코딩 기능이 <strong><code class="language-plaintext highlighter-rouge">json.dumps()</code></strong> 입니다. (‘s’는 문자열 string 반환을 의미합니다)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="c1"># 평범한 파이썬 딕셔너리 가방
+</span><span class="n">my_bag</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">용사</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">level</span><span class="sh">"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="sh">"</span><span class="s">is_alive</span><span class="sh">"</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="sh">"</span><span class="s">pet</span><span class="sh">"</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+
+<span class="c1"># 딕셔너리를 JSON 텍스트로 납작하게 인쇄 변환!
+</span><span class="n">json_text</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">my_bag</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">json_text</span><span class="p">))</span> <span class="c1"># &lt;class 'str'&gt; 순수한 텍스트 문자열로 바뀜!
+# 출력: {"name": "\uc6a9\uc0ac", "level": 10, "is_alive": true, "pet": null}
+# (True가 true로, None이 null로 규칙에 맞게 자동 번역된 걸 확인하세요!)
+</span></code></pre></div></div>
+<p>가끔 한글이 <code class="language-plaintext highlighter-rouge">\uc6a9\uc0ac</code> 처럼 기괴한 영어(유니코드 방어 시스템)로 다 뭉개져 나온다면, <code class="language-plaintext highlighter-rouge">ensure_ascii=False</code> 옵션을 추가해주면 한글 있는 그대로 예쁘게 나옵니다! 보기 좋게 줄바꿈 정렬을 하려면 <code class="language-plaintext highlighter-rouge">indent=4</code> 옵션을 씁니다.</p>
+
+<hr />
+
+<h3 id="2-낯선-편지-뜯어서-파이썬으로-가공하기-loads">2. 낯선 편지 뜯어서 파이썬으로 가공하기 (<code class="language-plaintext highlighter-rouge">loads</code>)</h3>
+
+<p>인터넷 너머로 날아온 혹은 친구가 던져준 낯선 JSON 문자열을 그냥 글자로 놔두면 아무 작업도 못 합니다. 이걸 다시 우리가 써먹고 마음대로 주무를 수 있는 파이썬 딕셔너리로 뻥 튀겨야 합니다. 이 주문은 <strong><code class="language-plaintext highlighter-rouge">json.loads()</code></strong> (로드s) 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="c1"># 다른 기기에서 날아온 덩어리 JSON 텍스트 편지
+</span><span class="n">incoming_json</span> <span class="o">=</span> <span class="sh">'</span><span class="s">{</span><span class="sh">"</span><span class="s">score</span><span class="sh">"</span><span class="s">: 99, </span><span class="sh">"</span><span class="s">items</span><span class="sh">"</span><span class="s">: [</span><span class="sh">"</span><span class="s">sword</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">shield</span><span class="sh">"</span><span class="s">]}</span><span class="sh">'</span>
+
+<span class="c1"># 파이썬에서 자유롭게 써먹을 수 있는 딕셔너리/리스트로 부활!
+</span><span class="n">py_data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">loads</span><span class="p">(</span><span class="n">incoming_json</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">py_data</span><span class="p">))</span>       <span class="c1"># &lt;class 'dict'&gt;
+</span><span class="nf">print</span><span class="p">(</span><span class="n">py_data</span><span class="p">[</span><span class="sh">"</span><span class="s">items</span><span class="sh">"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># 출력: sword ! (깔끔하게 리스트 인덱싱에 성공!)
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="3-디스크-창고에-json-파일로-박제-시키기-dump--load">3. 디스크 창고에 JSON 파일로 박제 시키기 (<code class="language-plaintext highlighter-rouge">dump</code> &amp; <code class="language-plaintext highlighter-rouge">load</code>)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">dumps</code>나 <code class="language-plaintext highlighter-rouge">loads</code> 끝에 붙어 있던 작은 꼬리표 <code class="language-plaintext highlighter-rouge">s</code>만 떼어내면, 메모장 허공이 아니라 <strong>진짜 컴퓨터 내 하드디스크의 깊은 곳 물리적인 <code class="language-plaintext highlighter-rouge">.json</code> 확장자 파일</strong>로 바로바로 밀어 넣거나 통째로 파일에서 파이썬 객체로 읽어오는 기능이 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">user_info</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">Hojin</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">points</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5000</span><span class="p">}</span>
+
+<span class="c1"># 1. 파일 쓰기 모드('w')로 오픈: 
+# (한글이 깨지지 않게 보장하는 ensure_ascii=False와 utf-8 옵션 조합 콤보!)
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">user_data.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="c1"># 2. 파이썬 user_info 창고를 JSON으로 압축해 곧바로 file에 밀어 던짐! (dump)
+</span>    <span class="n">json</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">user_info</span><span class="p">,</span> <span class="nb">file</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># --- 이제 저장된 창고 파일을 다시 까서 깨워볼까요? ---
+</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">user_data.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="c1"># 파일 안의 내용을 전부 빨아들여 살아 숨 쉬는 파이썬 딕셔너리로 부활! (load)
+</span>    <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">불러온 포인트:</span><span class="sh">"</span><span class="p">,</span> <span class="n">loaded_data</span><span class="p">[</span><span class="sh">'</span><span class="s">points</span><span class="sh">'</span><span class="p">])</span> <span class="c1"># 5000
+</span></code></pre></div></div>
+
+<p>복잡한 내 웹 서비스의 사용자 정보나 통계 시스템 설정들을 컴퓨터 밖의 외부 시스템과 완벽하게 저장하고 공유하고 싶다면 이 <code class="language-plaintext highlighter-rouge">JSON</code> 처리 기술이 여러분의 최고의 구원자가 될 것입니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-74-엑셀과-친구-맺기-csv-데이터-읽고-쓰기">📖 교재 상세 학습: 74 엑셀과 친구 맺기: CSV 데이터 읽고 쓰기</h2>
+
+<h2 id="74-엑셀과-친구-맺기-csv-데이터-읽고-쓰기">74 엑셀과 친구 맺기: CSV 데이터 읽고 쓰기</h2>
+
+<p>엑셀 파일 수준의 방대한 고객 리스트나 물품 데이터를 통째로 다루고 싶을 때, 파이썬에서 가장 빠르고 간편하게 쓰는 포맷이 바로 <strong>CSV (Comma-Separated Values, 쉼표로 분리된 값)</strong>입니다.</p>
+
+<p>CSV 파일 안에는 이렇게 무미건조한 텍스트만 잔뜩 들어있습니다.
+<code class="language-plaintext highlighter-rouge">이름,나이,직업</code>
+<code class="language-plaintext highlighter-rouge">파이썬,12,학생</code>
+<code class="language-plaintext highlighter-rouge">자바,14,선생님</code></p>
+
+<p>파이썬의 내장 <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 사용하면 이 문장들을 깔끔한 파이썬 리스트나 딕셔너리로 쫙쫙 뽑아낼 수 있습니다.</p>
+
+<h3 id="1-기본-리스트로-뽑아내기-reader--writer">1. 기본 리스트로 뽑아내기 (<code class="language-plaintext highlighter-rouge">reader</code> &amp; <code class="language-plaintext highlighter-rouge">writer</code>)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">csv.reader</code>를 거치면 한 줄 한 줄이 파이썬 리스트로 변신합니다.
+단, 한 번 처음부터 끝까지 다 뽑아내고 나면 텅 비어버리는 반복자(Iterator) 성질이 있으니 주의하세요!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="c1"># 1. 파일 열기 (한글 호환 옵션 장착!)
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">students.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 2. 파이썬 CSV 전용 해독기에 집어넣기
+</span>    <span class="n">data_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="c1"># 3. 한 줄씩 빙글빙글 뽑아오기
+</span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="c1"># 1회차 출력: ['이름', '나이', '직업']
+</span>        <span class="c1"># 2회차 출력: ['파이썬', '12', '학생']
+</span></code></pre></div></div>
+
+<p>새로운 데이터를 CSV 파일로 저장하려면 반대로 <strong><code class="language-plaintext highlighter-rouge">csv.writer</code></strong>를 쓰고 <code class="language-plaintext highlighter-rouge">.writerow()</code>를 반복해 주면 됩니다! (주의: 줄바꿈이 두 번씩 띄워지는 엑셀 고질병 에러를 막기 위해 <code class="language-plaintext highlighter-rouge">newline=''</code> 옵션을 꼭 열 때 넣어주세요!)</p>
+
+<hr />
+
+<h3 id="2-헷갈리는-숫자-대신-직관적인-이름표-달기-dictreader">2. 헷갈리는 숫자 대신 직관적인 이름표 달기 (<code class="language-plaintext highlighter-rouge">DictReader</code>)</h3>
+
+<p>위의 기본 리스트로 뽑으면 <code class="language-plaintext highlighter-rouge">row[0]</code>, <code class="language-plaintext highlighter-rouge">row[1]</code>처럼 인덱스 숫자로 찾아야 해서 데이터가 20개가 넘어가면 내가 뭘 뽑는지 헷갈립니다. 맨 첫 줄에 있는 “이름”, “나이” 같은 제목칸(헤더)을 활용해서 진짜 파이썬 객체인 <strong>딕셔너리처럼 통째로 뽑아주는 고급 기능</strong>이 바로 <code class="language-plaintext highlighter-rouge">DictReader</code> 입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">students.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># DictReader를 쓰면 똑똑한 딕셔너리로 변신합니다!
+</span>    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nc">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="c1"># 이제 숫자 인덱스(0,1) 대신 아주 직관적인 '이름' 태그로 꺼낼 수 있어요!
+</span>        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="sh">'</span><span class="s">이름</span><span class="sh">'</span><span class="p">],</span> <span class="sh">"</span><span class="s">학생의 나이는</span><span class="sh">"</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="sh">'</span><span class="s">나이</span><span class="sh">'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="3-쌍둥이-형제-tsv-처리와-커스텀-사투리dialect">3. 쌍둥이 형제, TSV 처리와 커스텀 사투리(Dialect)</h3>
+
+<p>쉼표(<code class="language-plaintext highlighter-rouge">,</code>) 대신 키보드의 넓은 <code class="language-plaintext highlighter-rouge">Tab</code> 키(간격 띄우기)로 데이터를 잘라놓은 파일을 <strong>TSV(Tab-Separated Values)</strong> 라고 부릅니다. 
+파이썬에서는 <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 그대로 똑같이 쓰되, “선생님, 이 파일은 쉼표가 아니라 탭(<code class="language-plaintext highlighter-rouge">\t</code>)으로 잘린 녀석이에요!” 라고 <strong><code class="language-plaintext highlighter-rouge">delimiter</code> 문자만 살짝 알려주면</strong> 완벽하게 똑같은 위력을 낼 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">data.tsv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># delimiter='\t' 로 탭 구분자라고 파이썬에게 친절히 귀띔해줍니다!
+</span>    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sh">'</span><span class="se">\t</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="c1"># 탭으로 예쁘게 찢어져서 리스트로 잘 나옵니다.
+</span></code></pre></div></div>
+
+<p>만약 여러분의 상사가 쉼표도, 탭도 아닌 뜬금없이 세로막대기(<code class="language-plaintext highlighter-rouge">|</code>) 기호로 천만 건의 데이터를 분류해 가져왔다고 쳐봅시다!
+이럴 땐 당황하지 말고, <strong>나만의 사투리 규칙을 등록(<code class="language-plaintext highlighter-rouge">csv.register_dialect</code>)</strong> 해버리면 한 큐에 처리가 가능합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="c1"># 'my_boss_style' 이라는 특수한 CSV 해독 룰을 내가 발명해 냅니다!
+</span><span class="n">csv</span><span class="p">.</span><span class="nf">register_dialect</span><span class="p">(</span>
+    <span class="sh">'</span><span class="s">my_boss_style</span><span class="sh">'</span><span class="p">,</span>         <span class="c1"># 룰 이름
+</span>    <span class="n">delimiter</span><span class="o">=</span><span class="sh">'</span><span class="s">|</span><span class="sh">'</span><span class="p">,</span>           <span class="c1"># 우리는 쉼표 대신 짝대기(|)로 분리한다!
+</span>    <span class="n">quotechar</span><span class="o">=</span><span class="sh">'"'</span><span class="p">,</span>           <span class="c1"># 글자를 묶는 따옴표 표시는 큰따옴표
+</span>    <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span>    <span class="c1"># 쓰레기 띄어쓰기가 있으면 좀 무시해!
+</span><span class="p">)</span>
+
+<span class="c1"># 파일을 열 때 dialect='my_boss_style' 이라고만 말해주면 복잡한 룰이 한방에 적용 완료!
+# reader = csv.reader(f, dialect='my_boss_style')
+</span></code></pre></div></div>
+
+<p>이렇듯 파이썬의 <code class="language-plaintext highlighter-rouge">csv</code> 모듈은 전 세계의 어떤 괴랄하고 이상한 형태의 텍스트 표일지라도, 여러분의 구미에 딱 맞게 정제된 데이터 리스트로 번역해 주는 강력한 조력자입니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-쉼표로-정리하는-마법-csv-읽기와-쓰기">📖 교재 상세 학습: 1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기</h2>
+
+<h2 id="1-쉼표로-정리하는-마법-csv-읽기와-쓰기">1. 쉼표로 정리하는 마법: CSV 읽기와 쓰기</h2>
+
+<p>CSV 파일 안에는 이렇게 무미건조한 텍스트만 잔뜩 들어있습니다.
+<code class="language-plaintext highlighter-rouge">이름,나이,직업</code>
+<code class="language-plaintext highlighter-rouge">파이썬,12,학생</code>
+<code class="language-plaintext highlighter-rouge">자바,14,선생님</code></p>
+
+<p>파이썬의 <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 사용하면 이 문장들을 깔끔한 리스트나 딕셔너리로 쫙쫙 뽑아낼 수 있습니다.</p>
+
+<h3 id="11-기본-리스트로-뽑아내기-reader--writer">1.1 기본 리스트로 뽑아내기 (<code class="language-plaintext highlighter-rouge">reader</code> &amp; <code class="language-plaintext highlighter-rouge">writer</code>)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">csv.reader</code>를 거치면 한 줄 한 줄이 파이썬 리스트로 변신합니다.</p>
+
+<blockquote>
+  <p><strong>[주의!]</strong> CSV <code class="language-plaintext highlighter-rouge">reader</code>는 “반복자(Iterator)” 입니다. 무슨 말이냐고요? 한 번 처음부터 끝까지 다 읽어내고 나면 텅 비어버립니다! 두 번 출력하고 싶다면 파일을 다시 열거나 처음 위치로 되돌려야 해요.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="c1"># 1. 파일 열기!
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">students.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 2. CSV 해독기에 넣기
+</span>    <span class="n">data_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="c1"># 3. 한 줄씩 뽑아보기
+</span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="c1"># 출력: ['이름', '나이', '직업']
+</span>        <span class="c1"># 출력: ['파이썬', '12', '학생']
+</span></code></pre></div></div>
+
+<p>새로운 데이터를 CSV 파일로 저장하려면 <code class="language-plaintext highlighter-rouge">csv.writer</code>의 <code class="language-plaintext highlighter-rouge">writerow</code>를 씁니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="n">new_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="sh">'</span><span class="s">Hero</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Level</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">HP</span><span class="sh">'</span><span class="p">],</span>
+    <span class="p">[</span><span class="sh">'</span><span class="s">Warrior</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">15</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">300</span><span class="sh">'</span><span class="p">],</span>
+    <span class="p">[</span><span class="sh">'</span><span class="s">Mage</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">12</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">150</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="c1"># newline='' 을 넣어야 줄바꿈이 두 번 일어나는 걸 막을 수 있어요!
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">game_stats.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="sh">''</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">new_data</span><span class="p">:</span>
+        <span class="n">writer</span><span class="p">.</span><span class="nf">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="12-이름표-달고-뽑기-dictreader--dictwriter">1.2 이름표 달고 뽑기 (<code class="language-plaintext highlighter-rouge">DictReader</code> &amp; <code class="language-plaintext highlighter-rouge">DictWriter</code>)</h3>
+
+<p>리스트로 보면 <code class="language-plaintext highlighter-rouge">row[0]</code>, <code class="language-plaintext highlighter-rouge">row[1]</code>처럼 숫자(인덱스)로 찾아야 해서 헷갈릴 수 있습니다. 맨 첫 줄에 있는 “이름”, “나이” 같은 제목(헤더)을 활용해서 딕셔너리처럼 뽑아주는 기능이 바로 <code class="language-plaintext highlighter-rouge">DictReader</code> 입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">students.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># DictReader를 쓰면 딕셔너리로 변신합니다!
+</span>    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nc">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="c1"># 이제 숫자 대신 직관적인 '이메일'이나 '이름' 태그로 꺼낼 수 있어요!
+</span>        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="sh">'</span><span class="s">이름</span><span class="sh">'</span><span class="p">],</span> <span class="sh">"</span><span class="s">학생의 나이는</span><span class="sh">"</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="sh">'</span><span class="s">나이</span><span class="sh">'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>반대로 저장할 때도 <code class="language-plaintext highlighter-rouge">DictWriter</code>를 쓰면 됩니다. 단, 파일 맨 앞줄에 제목표(Header)를 써주는 <code class="language-plaintext highlighter-rouge">writeheader()</code> 함수를 꼭 불러줘야 한다는 점 잊지 마세요!</p>
+
+<hr />
+
+<h3 id="13-쌍둥이-형제-tsv-파일">1.3 쌍둥이 형제, TSV 파일</h3>
+
+<p>쉼표(,) 대신 키보드의 <code class="language-plaintext highlighter-rouge">Tab</code> 키(간격 띄우기)로 데이터를 잘라놓은 파일을 <strong>TSV(Tab-Separated Values)</strong> 라고 부릅니다. 
+파이썬에서는 <code class="language-plaintext highlighter-rouge">csv</code> 모듈을 그대로 쓰되, “이 파일은 탭(<code class="language-plaintext highlighter-rouge">\t</code>)으로 잘린 파일이야!” 라고 <code class="language-plaintext highlighter-rouge">delimiter</code> 옵션만 살짝 알려주면 똑같이 마법을 부릴 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">data.tsv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># delimiter='\t' 로 탭 구분자라고 알려줍니다!
+</span>    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sh">'</span><span class="se">\t</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-내-맘대로-룰-정하기-커스텀-규칙dialect">📖 교재 상세 학습: 2. 내 맘대로 룰 정하기: 커스텀 규칙(Dialect)</h2>
+
+<h2 id="2-내-맘대로-룰-정하기-커스텀-규칙dialect">2. 내 맘대로 룰 정하기: 커스텀 규칙(Dialect)</h2>
+
+<p>프로그래밍 세상에는 수많은 사람들이 규칙을 다르게 씁니다. 어떤 사람은 데이터를 쉼표(<code class="language-plaintext highlighter-rouge">,</code>)로 떨어뜨려 놓지만, 어떤 사람은 막대기 기호(<code class="language-plaintext highlighter-rouge">|</code>)나 세미콜론(<code class="language-plaintext highlighter-rouge">;</code>)으로 떨어뜨려 놓기도 합니다.</p>
+
+<p>또한, 데이터 안에 “사과, 배” 처럼 진짜 쉼표가 들어있을 땐 어떻게 할까요? 에러를 막기 위해 보통 문자열 양쪽을 큰따옴표(<code class="language-plaintext highlighter-rouge">"</code>) 기호로 무장시켜(인용부호) 놓곤 합니다.</p>
+
+<p>이렇게 사람마다 다른 다양한 파일 작성 스타일(방언/사투리)을 파이썬에서는 <strong>Dialect(다이얼렉트)</strong> 라고 부릅니다.</p>
+
+<h3 id="21-나만의-특별한-번역-규칙-만들기">2.1 나만의 특별한 번역 규칙 만들기</h3>
+
+<p>파일을 읽거나 쓸 때마다 “이건 막대기로 구분하고, 양옆 띄어쓰기는 무시하고…” 이렇게 옵션을 다 적으려면 손가락이 아픕니다. 이럴 때 <strong>나만의 사투리 규칙을 등록(<code class="language-plaintext highlighter-rouge">register_dialect</code>)</strong>해두면, 그 이름만 불러서 한 큐에 처리가 가능합니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="c1"># 'my_style' 이라는 나만의 CSV 해독 룰을 만듭니다!
+</span><span class="n">csv</span><span class="p">.</span><span class="nf">register_dialect</span><span class="p">(</span>
+    <span class="sh">'</span><span class="s">my_style</span><span class="sh">'</span><span class="p">,</span>              <span class="c1"># 내가 지은 룰 이름
+</span>    <span class="n">delimiter</span><span class="o">=</span><span class="sh">'</span><span class="s">|</span><span class="sh">'</span><span class="p">,</span>           <span class="c1"># 우리는 쉼표 대신 짝대기(|)로 분리한다!
+</span>    <span class="n">quotechar</span><span class="o">=</span><span class="sh">'"'</span><span class="p">,</span>           <span class="c1"># 문자열을 감싸는 기호는 큰따옴표(")
+</span>    <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span>    <span class="c1"># 쉼표 뒤에 쓸데없는 띄어쓰기가 있으면 무시해!
+</span><span class="p">)</span>
+
+<span class="c1"># 룰이 잘 등록되었나 확인해 볼까요?
+</span><span class="nf">print</span><span class="p">(</span><span class="n">csv</span><span class="p">.</span><span class="nf">list_dialects</span><span class="p">())</span>
+<span class="c1"># 출력: ['excel', 'excel-tab', 'unix', 'my_style'] (내 규칙이 들어갔네요!)
+</span></code></pre></div></div>
+
+<h3 id="22-등록한-룰-사용하기">2.2 등록한 룰 사용하기</h3>
+
+<p>이제 파일을 오픈할 때 파이썬에게 “이번에 여는 파일은 <code class="language-plaintext highlighter-rouge">my_style</code> 룰에 맞춰서 해독해 줘!” 라고 말해주면 끝입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">csv</span>
+
+<span class="c1"># test_custom.csv 안에는 이런 데이터가 있다고 가정합니다.
+# 이름|나이|직업
+# 파이썬| 12 | 학생
+</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">test_custom.csv</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># dialect='my_style' 이라고 알려줍니다!
+</span>    <span class="n">data_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="sh">'</span><span class="s">my_style</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">:</span>
+        <span class="c1"># 막대기(|)로 깔끔하게 잘라서 리스트로 가져옵니다!
+</span>        <span class="nf">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>어떤 복잡하고 이상한 텍스트 파일이라도, 규칙만 딱딱 맞게 <code class="language-plaintext highlighter-rouge">dialect</code>로 정해주면 파이썬은 군말 없이 예쁜 데이터 리스트로 조립해 줍니다. 참 든든하죠?</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-편지-봉투-씌우기-json-인코딩과-디코딩">📖 교재 상세 학습: 1. 편지 봉투 씌우기: JSON 인코딩과 디코딩</h2>
+
+<h2 id="1-편지-봉투-씌우기-json-인코딩과-디코딩">1. 편지 봉투 씌우기: JSON 인코딩과 디코딩</h2>
+
+<p>JSON은 사실 아주 단순하고 긴 ‘문자열’입니다. 중괄호 <code class="language-plaintext highlighter-rouge">{ }</code> 와 대괄호 <code class="language-plaintext highlighter-rouge">[ ]</code> 만 사용해서 파이썬의 딕셔너리나 리스트와 거의 비슷하게 생겼지만, 약간의 차이가 있습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>파이썬 자료형</th>
+      <th>JSON 으로 변하면?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dict</code> (딕셔너리)</td>
+      <td><code class="language-plaintext highlighter-rouge">object</code> <code class="language-plaintext highlighter-rouge">{ }</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">list</code>, <code class="language-plaintext highlighter-rouge">tuple</code></td>
+      <td><code class="language-plaintext highlighter-rouge">array</code> <code class="language-plaintext highlighter-rouge">[ ]</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">str</code> (문자열)</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code> <code class="language-plaintext highlighter-rouge">" "</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">True</code>, <code class="language-plaintext highlighter-rouge">False</code></td>
+      <td><code class="language-plaintext highlighter-rouge">true</code>, <code class="language-plaintext highlighter-rouge">false</code> (소문자로 변형!)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">None</code></td>
+      <td><code class="language-plaintext highlighter-rouge">null</code> (아무것도 없다는 뜻)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="11-파이썬을-json-봉투에-담기-인코딩-dumps">1.1 파이썬을 JSON 봉투에 담기 (인코딩, dumps)</h3>
+
+<p>파이썬의 살아 움직이는 리스트나 딕셔너리를, 다른 컴퓨터로 전송하기 위해 텍스트 문자열(JSON)로 납작하게 찍어내는 마법 주문이 <strong><code class="language-plaintext highlighter-rouge">json.dumps()</code></strong> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">my_bag</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">용사</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">level</span><span class="sh">"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="sh">"</span><span class="s">is_alive</span><span class="sh">"</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+
+<span class="c1"># 딕셔너리를 JSON 텍스트로 납작하게 변환! (인코딩)
+</span><span class="n">json_text</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">my_bag</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">json_text</span><span class="p">))</span> <span class="c1"># &lt;class 'str'&gt; 문자열로 바뀜!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">json_text</span><span class="p">)</span>       
+<span class="c1"># 출력: {"name": "\uc6a9\uc0ac", "level": 10, "is_alive": true}
+# (True가 true로 소문자로 바뀐 걸 확인하세요!)
+</span></code></pre></div></div>
+
+<p>보기 예쁘게 줄바꿈을 하려면 <code class="language-plaintext highlighter-rouge">indent=4</code> 같은 도구를 추가하면 됩니다.</p>
+
+<hr />
+
+<h3 id="12-봉투-뜯어서-파이썬으로-조립하기-디코딩-loads">1.2 봉투 뜯어서 파이썬으로 조립하기 (디코딩, loads)</h3>
+
+<p>인터넷 너머로 날아온 낯선 JSON 문자열을 받았다면, 이걸 다시 우리가 쓰기 편한 파이썬 딕셔너리로 뻥 튀겨야 합니다. 이 주문은 <strong><code class="language-plaintext highlighter-rouge">json.loads()</code></strong> (문자열에서 로드한다는 뜻의 s가 붙어요!) 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="c1"># 다른 곳에서 날아온 JSON 텍스트 편지
+</span><span class="n">incoming_json</span> <span class="o">=</span> <span class="sh">'</span><span class="s">{</span><span class="sh">"</span><span class="s">score</span><span class="sh">"</span><span class="s">: 99, </span><span class="sh">"</span><span class="s">items</span><span class="sh">"</span><span class="s">: [</span><span class="sh">"</span><span class="s">sword</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">shield</span><span class="sh">"</span><span class="s">]}</span><span class="sh">'</span>
+
+<span class="c1"># 파이썬에서 써먹을 수 있는 딕셔너리로 부활! (디코딩)
+</span><span class="n">py_data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">loads</span><span class="p">(</span><span class="n">incoming_json</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">py_data</span><span class="p">))</span>       <span class="c1"># &lt;class 'dict'&gt;
+</span><span class="nf">print</span><span class="p">(</span><span class="n">py_data</span><span class="p">[</span><span class="sh">"</span><span class="s">items</span><span class="sh">"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># 출력: sword ! 잘 조립되었네요!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="13-내-로봇클래스도-json으로-보낼-수-있을까">1.3 내 로봇(클래스)도 JSON으로 보낼 수 있을까?</h3>
+
+<p>기본적으로 딕셔너리나 리스트만 JSON이 될 수 있습니다. 여러분이 새로 설계한 <code class="language-plaintext highlighter-rouge">로봇(클래스)</code> 객체를 넣으면 에러를 뿜어냅니다!
+이때 “야, 내 로봇 객체는 내부의 <code class="language-plaintext highlighter-rouge">__dict__</code> 라는 설명서를 보고 딕셔너리 흉내를 내서 던져라!” 라고 해결해주는 도우미 함수를 심어놓을 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="k">class</span> <span class="nc">Robot</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<span class="c1"># 도우미 함수: 클래스의 내부 속성 딕셔너리를 던져준다!
+</span><span class="k">def</span> <span class="nf">robot_to_dict</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">obj</span><span class="p">.</span><span class="n">__dict__</span> 
+
+<span class="n">my_bot</span> <span class="o">=</span> <span class="nc">Robot</span><span class="p">(</span><span class="sh">"</span><span class="s">RX-78</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 에러 없이 my_bot 객체를 JSON으로 인쇄해 냄!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="nf">dumps</span><span class="p">(</span><span class="n">my_bot</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">robot_to_dict</span><span class="p">))</span>
+<span class="c1"># 출력: {"name": "RX-78"}
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-디스크-창고에-엽서-보관하기-파일-입출력">📖 교재 상세 학습: 2. 디스크 창고에 엽서 보관하기: 파일 입출력</h2>
+
+<h2 id="2-디스크-창고에-엽서-보관하기-파일-입출력">2. 디스크 창고에 엽서 보관하기: 파일 입출력</h2>
+
+<p><code class="language-plaintext highlighter-rouge">dumps</code>나 <code class="language-plaintext highlighter-rouge">loads</code> 끝에 붙어 있던 작은 <code class="language-plaintext highlighter-rouge">s</code>는 문자열(string)의 약자였습니다! 
+만약 메모장 허공이 아니라 진짜 컴퓨터의 하드디스크 깊은 곳에 ‘파일’로 저장하고 싶거나, 거대한 JSON 파일에서 바로 딕셔너리로 깨우고 싶다면 꼬리표 <code class="language-plaintext highlighter-rouge">s</code>가 빠진 <strong><code class="language-plaintext highlighter-rouge">dump</code></strong> 와 <strong><code class="language-plaintext highlighter-rouge">load</code></strong> 를 씁니다!</p>
+
+<h3 id="21-파일로-냅다-쏘기-dump">2.1 파일로 냅다 쏘기! (<code class="language-plaintext highlighter-rouge">dump</code>)</h3>
+
+<p>파일 문을 열고 거기에 다이렉트로 JSON을 밀어 넣습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">user_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">Hojin</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">points</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">badges</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">Gold</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Silver</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># 1. user_data.json 이라는 빈 파일을 쓰기 'w' 모드로 엶
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">user_data.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="c1"># 2. user_info 파이썬 창고를 JSON으로 찌부시켜 file에 바로 던짐!
+</span>    <span class="n">json</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">user_info</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+    
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파일이 무사히 생성되었습니다!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="22-잠자는-파일-깨우기-load">2.2 잠자는 파일 깨우기! (<code class="language-plaintext highlighter-rouge">load</code>)</h3>
+
+<p>이번엔 반대로 파일 문을 열고 그 안에 잠든 JSON 텍스트를 바로 파이썬 딕셔너리로 부활시킵니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="c1"># 1. 파일 문을 읽기 'r' 모드로 엽니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">user_data.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="c1"># 2. 파일 정보를 쭈욱 빨아들여 파이썬 딕셔너리로 조립 완료!
+</span>    <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">loaded_data</span><span class="p">[</span><span class="sh">'</span><span class="s">points</span><span class="sh">'</span><span class="p">])</span> <span class="c1"># 출력: 5000
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="23--한글이-다-깨져-보인다면-유니코드-방어전">2.3 🚨 한글이 다 깨져 보인다면? (유니코드 방어전)</h3>
+
+<p>파이썬 마법사는 너무 똑똑해서, 한글 “사과”를 JSON으로 인코딩할 때 전 세계 어느 브라우저에서도 박살 나지 않으라고 <code class="language-plaintext highlighter-rouge">"\uc0ac\uacfc"</code> 같은 기괴한 유니코드 암호(이스케이프 문자)로 바꿔서 보냅니다.</p>
+
+<p>코딩 프로그램 안에서는 어차피 파이썬이 다시 예쁘게 읽어오니 상관없지만, 윈도우 메모장으로 그 파일을 직접 열어볼 여러분은 눈이 아플 수 있습니다!</p>
+
+<p>“파이썬아! 한글을 외계어로 바꾸지 말고 <strong>그냥 생긴 대로 깔끔하게 폰트 안 깨지게 저장해 줘!</strong>” 라고 명령하려면 <code class="language-plaintext highlighter-rouge">ensure_ascii=False</code> 마법과 파일의 <code class="language-plaintext highlighter-rouge">encoding='utf-8'</code> 조합을 써야 합니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">korean_data</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">과일</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">사과</span><span class="sh">'</span><span class="p">}</span>
+
+<span class="c1"># 1. 파일 열때 utf-8 로 폰트 깨짐 열쇠를 채우고
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">korean.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    
+    <span class="c1"># 2. ASCII(영어) 강제 변환을 끄라고 지시합니다!! (핵심)
+</span>    <span class="n">json</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">korean_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이제 저장된 <code class="language-plaintext highlighter-rouge">korean.json</code> 파일을 열어보면 외계어 대신 예쁜 글꼴의 “사과”가 반겨줄 것입니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-탐정의-돋보기-규칙-기초-패턴-만들기">📖 교재 상세 학습: 1. 탐정의 돋보기 규칙: 기초 패턴 만들기</h2>
+
+<h2 id="1-탐정의-돋보기-규칙-기초-패턴-만들기">1. 탐정의 돋보기 규칙: 기초 패턴 만들기</h2>
+
+<p>파이썬에서 <code class="language-plaintext highlighter-rouge">re</code> 모듈을 불러오면(<code class="language-plaintext highlighter-rouge">import re</code>), 우리는 정규표현식이라는 특수 언어를 쓸 수 있습니다. 이 언어의 핵심은 바로 <strong>메타 문자(Meta Character)</strong>라는 비밀 기호들입니다.</p>
+
+<h3 id="11-비밀-기호-사용법-문자-클래스">1.1 비밀 기호 사용법 (문자 클래스)</h3>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">[ ]</code> (선택)</strong>: 괄호 안의 문자 중 <strong>하나</strong>만 맞으면 합격!
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[abc]</code> : “a, b, c 중 하나라도 있나?”</li>
+      <li><code class="language-plaintext highlighter-rouge">[a-z]</code> : “영어 소문자 아무거나!”</li>
+      <li><code class="language-plaintext highlighter-rouge">[가-힣]</code> : “한글 아무거나!”</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">[^ ]</code> (반대)</strong>: 괄호 안에 <code class="language-plaintext highlighter-rouge">^</code>가 들어가면 “이것 빼고 다 가져와!”라는 뜻입니다.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[^0-9]</code> : “숫자 빼고 전부 다!”</li>
+    </ul>
+  </li>
+  <li><strong>단축키 (축약 기호)</strong>: 매번 <code class="language-plaintext highlighter-rouge">[0-9]</code> 쓰기 귀찮아서 만든 단축키들!
+    <ul>
+      <li><strong><code class="language-plaintext highlighter-rouge">\d</code></strong>: 숫자 (<code class="language-plaintext highlighter-rouge">[0-9]</code>와 동일)</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\D</code></strong>: 숫자 아닌 것들</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\s</code></strong>: 띄어쓰기, 엔터 같은 공백들</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">\w</code></strong>: 글자 + 숫자 (특수문자 제외)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="12-몇-개나-있어-수량자">1.2 “몇 개나 있어?” (수량자)</h3>
+
+<p>내가 찾는 문자가 반복될 때는 수량자 기호를 붙입니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">*</code></strong>: 0개 이상 (없어도 되고 엄청 많아도 OK)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">+</code></strong>: 1개 이상 (무조건 1개는 있어야 해!)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">?</code></strong>: 0개 아니면 1개 (있어도 그만, 없어도 그만)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">{m, n}</code></strong>: 딱 m개부터 n개까지만! (예: <code class="language-plaintext highlighter-rouge">\d{3,4}</code> → 숫자 3~4개)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># "a 다음에 b가 1개 이상 있는 패턴"
+</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">ab+</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">abbbb</span><span class="sh">"</span><span class="p">).</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># "abbbb" 찾음!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">acccc</span><span class="sh">"</span><span class="p">))</span>         <span class="c1"># 못 찾아서 터짐(None)!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="13-좌표-찍기-앵커-문자">1.3 좌표 찍기 (앵커 문자)</h3>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">^</code></strong>: 문장의 <strong>맨 처음</strong>에서만 찾아라! (<code class="language-plaintext highlighter-rouge">^Hello</code> : 첫 단어가 Hello인지 검사)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">$</code></strong>: 문장의 <strong>맨 끝</strong>에서만 찾아라! (<code class="language-plaintext highlighter-rouge">Python$</code> : 마지막 단어가 Python인지 검사)</li>
+</ul>
+
+<hr />
+
+<h3 id="14-소그룹-묶기와-이름-붙이기-grouping">1.4 소그룹 묶기와 이름 붙이기 (Grouping)</h3>
+
+<p>전화번호(“010-1234-5678”)를 찾을 때, 앞자리, 중간자리, 뒷자리를 나중에 따로따로 빼서 보고 싶다면 괄호 <code class="language-plaintext highlighter-rouge">( )</code>로 묶어줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># 괄호 3개로 묶어서 그룹 3개를 만듭니다.
+</span><span class="n">phone_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">(\d+)-(\d+)-(\d+)</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">phone_pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">내 번호는 010-9999-8888 이야</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 전체 찾은 결과
+</span><span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># 010-9999-8888
+</span>
+<span class="c1"># 괄호별로 빼기!
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">국번:</span><span class="sh">"</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 9999
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>[!TIP]
+괄호 맨 앞에 <code class="language-plaintext highlighter-rouge">?P&lt;이름&gt;</code>을 붙이면 그 그룹에 별명을 지어줄 수 있습니다!
+<code class="language-plaintext highlighter-rouge">(?P&lt;middle&gt;\d+)</code> 라고 쓰면, 나중에 <code class="language-plaintext highlighter-rouge">result.group('middle')</code>로 편하게 값을 꺼낼 수 있답니다.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-실전-수사-돌입-정규식-함수와-옵션">📖 교재 상세 학습: 2. 실전 수사 돌입: 정규식 함수와 옵션</h2>
+
+<h2 id="2-실전-수사-돌입-정규식-함수와-옵션">2. 실전 수사 돌입: 정규식 함수와 옵션</h2>
+
+<p>패턴 암호를 만들었으면 이제 본격적으로 텍스트 바다에 탐지기를 던져야 합니다.</p>
+
+<h3 id="21-탐지기-작동-방식-패턴-함수">2.1 탐지기 작동 방식 (패턴 함수)</h3>
+
+<p>파이썬 <code class="language-plaintext highlighter-rouge">re</code> 모듈에는 목적에 맞는 3가지 주요 탐지기가 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">match(패턴, 문자열)</code></strong>: 문장의 <strong>가장 첫 글자부터</strong> 칼같이 맞아야만 인정합니다! 첫 단어가 다르면 뒤는 보지도 않고 포기(None)합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">search(패턴, 문자열)</code></strong>: 문장을 처음부터 끝까지 훑다가 <strong>가장 먼저 매칭되는 녀석 딱 1개</strong>를 찾으면 바로 멈춥니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">findall(패턴, 문자열)</code></strong>: 텍스트 전체를 샅샅이 뒤져서 <strong>매칭되는 모든 결과</strong>를 무더기(리스트)로 가져옵니다!</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">apple, banana, cherry, apple!</span><span class="sh">"</span>
+
+<span class="c1"># 1. search는 처음 찾은 사과 하나만!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">re</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">apple</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">).</span><span class="nf">group</span><span class="p">())</span> 
+<span class="c1"># 출력: apple
+</span>
+<span class="c1"># 2. findall은 모든 사과를 싹쓸이!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">re</span><span class="p">.</span><span class="nf">findall</span><span class="p">(</span><span class="sh">"</span><span class="s">apple</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span> 
+<span class="c1"># 출력: ['apple', 'apple']
+</span></code></pre></div></div>
+
+<p>찾은 결과는 <strong>Match 객체</strong>라는 멋진 보물상자에 담겨 옵니다. 이 상자 안에는 찾은 값(<code class="language-plaintext highlighter-rouge">group()</code>), 찾은 위치의 시작점과 끝점(<code class="language-plaintext highlighter-rouge">span()</code>, <code class="language-plaintext highlighter-rouge">start()</code>, <code class="language-plaintext highlighter-rouge">end()</code>) 같은 고급 정보가 듬뿍 들어있습니다.</p>
+
+<hr />
+
+<h3 id="22-탐지-레이더-업그레이드-컴파일-옵션">2.2 탐지 레이더 업그레이드 (컴파일 옵션)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">re.compile()</code>로 패턴을 만들 때, 뒤에 특별한 마법 부품(옵션)을 붙여주면 편해집니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">re.I</code> (IGNORECASE)</strong>: 대문자/소문자를 쿨하게 무시합니다! (A를 찾으라 하면 a도 찾아줌)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">re.M</code> (MULTILINE)</strong>: 엔터(\n)로 여러 줄이 된 글을 검사할 때, 각 줄의 <code class="language-plaintext highlighter-rouge">^처음</code>과 <code class="language-plaintext highlighter-rouge">끝$</code>을 따로따로 다 검사해줍니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">re.S</code> (DOTALL)</strong>: 줄바꿈(\n) 문자도 포함시켜서 찾습니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="c1"># 'python'을 찾을건데, 대소문자 무시(re.I) 옵션을 켭니다!
+</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">"</span><span class="s">python</span><span class="sh">"</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">I</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sh">"</span><span class="s">I love PYTHON and PyTHon!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="nf">group</span><span class="p">())</span> <span class="c1"># 대문자 PYTHON을 거뜬히 찾아냅니다!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="23-찾아서-바꿔버리기-sub">2.3 찾아서 바꿔버리기! (<code class="language-plaintext highlighter-rouge">sub</code>)</h3>
+
+<p>단순히 찾는 걸 넘어서, 찾은 패턴의 글자들을 원하는 다른 글자로 싹 바꿔버리는 <code class="language-plaintext highlighter-rouge">sub</code> 함수가 있습니다. 메모장의 ‘찾아 바꾸기’보다 100배는 더 강력합니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="n">secret_note</span> <span class="o">=</span> <span class="sh">"</span><span class="s">내 비밀번호는 1234, 네 비밀번호는 5678 이다!</span><span class="sh">"</span>
+
+<span class="c1"># 모든 숫자(\d+)를 찾아서 "***" 모양으로 바꿔버립니다!
+</span><span class="n">safe_note</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sh">"</span><span class="s">\d+</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">***</span><span class="sh">"</span><span class="p">,</span> <span class="n">secret_note</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">safe_note</span><span class="p">)</span>
+<span class="c1"># 출력: 내 비밀번호는 ***, 네 비밀번호는 *** 이다!
+</span></code></pre></div></div>
+
+<p>정규표현식은 배우기는 외계어처럼 조금 까다롭지만, 한 번 익혀두면 수십 줄의 파이썬 코드를 단 한 줄로 줄여버리는 놀라운 마법의 도구랍니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-xml-왕국의-기본-법칙">📖 교재 상세 학습: 1. XML 왕국의 기본 법칙</h2>
+
+<h2 id="1-xml-왕국의-기본-법칙">1. XML 왕국의 기본 법칙</h2>
+
+<p>XML은 꺾쇠 괄호 <code class="language-plaintext highlighter-rouge">&lt; &gt;</code> 로 데이터를 예쁘게 이름표(Tag) 붙여 포장하는 방법입니다. 누구나 자기 마음대로 이름표를 만들 수 있지만, 기계들이 서로 해석하려면 깐깐한 몇 가지 규칙을 지켜야 합니다.</p>
+
+<p>이 규칙들을 완벽하게 지킨 단정한 문서를 <strong>웰 폼(Well-formed) 문서</strong>라고 부릅니다.</p>
+
+<h3 id="11-지켜야-할-철칙-3가지">1.1 지켜야 할 철칙 3가지</h3>
+
+<ol>
+  <li><strong>머리말 쓰기 (Prolog)</strong>: 문서 맨 꼭대기에 “나는 XML이고, 버전 1.0이야!”라고 외쳐야 합니다.
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>오직 단 하나의 대왕 뿌리 (Root)</strong>: 문서 전체를 감싸는 최상위 껍질(Root)은 딱 하나만 있어야 합니다.
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;root&gt;</span>
+    <span class="c">&lt;!-- 모든 데이터는 이 안에 들어가야 합니다! --&gt;</span>
+    <span class="nt">&lt;child&gt;</span>안녕하세요<span class="nt">&lt;/child&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>열었으면 반드시 닫기!</strong>: <code class="language-plaintext highlighter-rouge">&lt;태그&gt;</code>로 문을 열었으면, 반드시 <code class="language-plaintext highlighter-rouge">&lt;/태그&gt;</code>로 닫아야 합니다.
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;name&gt;</span>파이썬<span class="nt">&lt;/name&gt;</span>   <span class="c">&lt;!-- 올바름! --&gt;</span>
+<span class="nt">&lt;name&gt;</span>자바스크립트    <span class="c">&lt;!-- 틀림! 닫는 태그 부족 폭발! --&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="12-이름-충돌-막기-네임스페이스namespace">1.2 이름 충돌 막기: 네임스페이스(Namespace)</h3>
+
+<p>여러 명이 만든 데이터를 합치다 보면, 우연히 똑같은 <code class="language-plaintext highlighter-rouge">&lt;table/&gt;</code> 이라는 태그를 쓸 수도 있습니다. 하나는 ‘데이터 표(table)’고, 하나는 ‘가구 책상(table)’일 수 있죠.</p>
+
+<p>이런 충돌을 막기 위해 가문의 성씨 역할을 하는 <strong>네임스페이스</strong>를 붙입니다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;root</span> 
+  <span class="na">xmlns:html=</span><span class="s">"http://www.w3.org/TR/html14/"</span>  
+  <span class="na">xmlns:furn=</span><span class="s">"http://www.w3schools.com/furniture"</span><span class="nt">&gt;</span>
+  
+  <span class="c">&lt;!-- html 가문의 표(table) --&gt;</span>
+  <span class="nt">&lt;html:table&gt;</span>
+    <span class="nt">&lt;html:tr&gt;&lt;html:td&gt;</span>사과<span class="nt">&lt;/html:td&gt;&lt;/html:tr&gt;</span>
+  <span class="nt">&lt;/html:table&gt;</span>
+
+  <span class="c">&lt;!-- 가구 가문의 책상(table) --&gt;</span>
+  <span class="nt">&lt;furn:table&gt;</span>
+    <span class="nt">&lt;furn:name&gt;</span>멋진 나무 탁자<span class="nt">&lt;/furn:name&gt;</span>
+    <span class="nt">&lt;furn:width&gt;</span>80<span class="nt">&lt;/furn:width&gt;</span>
+  <span class="nt">&lt;/furn:table&gt;</span>
+
+<span class="nt">&lt;/root&gt;</span>
+</code></pre></div></div>
+
+<p>이렇게 하면 컴퓨터가 태그 이름이 같아도 절대 헷갈리지 않고 착착 분류해냅니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-나무를-타고-노는-법-elementtree">📖 교재 상세 학습: 2. 나무를 타고 노는 법: ElementTree</h2>
+
+<h2 id="2-나무를-타고-노는-법-elementtree">2. 나무를 타고 노는 법: ElementTree</h2>
+
+<p>파이썬에서 방대한 XML 데이터를 조작할 때 가장 사랑받는 도구가 바로 <code class="language-plaintext highlighter-rouge">xml.etree.ElementTree</code> 모듈입니다. 이 마법사는 평범한 XML 텍스트 문서를 데이터들이 구조적으로 연결된 아름다운 <strong>생명의 나무 형태(Tree)</strong>로 변신시켜 줍니다!</p>
+
+<blockquote>
+  <p><strong>팁</strong>: 편의를 위해 보통 <code class="language-plaintext highlighter-rouge">import xml.etree.ElementTree as ET</code> 로 줄여 부릅니다.</p>
+</blockquote>
+
+<h3 id="21-문서-나무-심기-parsing">2.1 문서 나무 심기 (Parsing)</h3>
+
+<p>디스크에 있는 <code class="language-plaintext highlighter-rouge">data.xml</code> 파일을 읽어 멋진 파이썬 나무 트리로 만드는 마법 주문은 <code class="language-plaintext highlighter-rouge">parse</code> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">xml.etree.ElementTree</span> <span class="k">as</span> <span class="n">ET</span>
+
+<span class="c1"># 파일에서 묘목(데이터)을 가져와 나무를 통째로 생성합니다.
+</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="sh">'</span><span class="s">country_data.xml</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># 나무의 가장 꼭대기(줄기)인 Root 요소를 가져옵니다.
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="nf">getroot</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">최상위 태그 이름:</span><span class="sh">"</span><span class="p">,</span> <span class="n">root</span><span class="p">.</span><span class="n">tag</span><span class="p">)</span>
+<span class="c1"># 출력: 최상위 태그 이름: data
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="22-거대한-나무에서-보물태그-찾기">2.2 거대한 나무에서 보물(태그) 찾기</h3>
+
+<p>나무 구조의 장점은 탐색이 무척 빠르고 직관적이라는 것입니다. 가지에서 또 다른 가지로 건너갈 수 있죠.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">for i in root:</code></strong> : 줄기 아래 달린 큰 가지(자식 노드)들을 하나씩 다 확인할 때!</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">find('태그명')</code></strong> : 수많은 가지 중에 ‘태그명’과 똑같은 <strong>첫 번째가지</strong> 딱 하나만 찾고 싶을 때.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">findall('태그명')</code></strong> : ‘태그명’과 똑같은 <strong>모든 가지</strong>를 수확해서 리스트에 몽땅 담아올 때!</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># root 아래에 있는 몬스터 정보를 다 뽑아보자!
+</span><span class="k">for</span> <span class="n">monster</span> <span class="ow">in</span> <span class="n">root</span><span class="p">.</span><span class="nf">findall</span><span class="p">(</span><span class="sh">'</span><span class="s">monster</span><span class="sh">'</span><span class="p">):</span>
+    <span class="c1"># 속성(attribute) 읽어오기
+</span>    <span class="n">name</span> <span class="o">=</span> <span class="n">monster</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="c1"># 텍스트(text) 값 가져오기
+</span>    <span class="n">hp</span> <span class="o">=</span> <span class="n">monster</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="sh">'</span><span class="s">hp</span><span class="sh">'</span><span class="p">).</span><span class="n">text</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">야생의 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">이(가) 나타났다! 체력: </span><span class="si">{</span><span class="n">hp</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="23-내-손으로-나무-기르기-xml-작성">2.3 내 손으로 나무 기르기 (XML 작성)</h3>
+
+<p>우리가 파이썬 코드상에서 새로운 노드를 덧붙여서 완전한 XML 문서를 만들어낼 수도 있습니다. 다 완성된 나무 뼈대는 <code class="language-plaintext highlighter-rouge">tostring</code>으로 텍스트로 뽑아내거나, <code class="language-plaintext highlighter-rouge">write</code>로 파일로 저장하면 끝입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">xml.etree.ElementTree</span> <span class="k">as</span> <span class="n">ET</span>
+
+<span class="c1"># 1. 뿌리 뼈대 세우기
+</span><span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nc">Element</span><span class="p">(</span><span class="sh">"</span><span class="s">game_data</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. 새로운 서브 뼈대(자식) 붙이기
+</span><span class="n">player1</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nc">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="sh">"</span><span class="s">player</span><span class="sh">"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="sh">"</span><span class="s">99</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># level은 속성!
+</span><span class="n">player1</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Dragon Slayer</span><span class="sh">"</span> 
+
+<span class="c1"># 3. 콘솔 화면에 멋지게 텍스트로 뽑아보기!
+</span><span class="n">xml_string</span> <span class="o">=</span> <span class="n">ET</span><span class="p">.</span><span class="nf">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">unicode</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">xml_string</span><span class="p">)</span>
+<span class="c1"># 출력: &lt;game_data&gt;&lt;player level="99"&gt;Dragon Slayer&lt;/player&gt;&lt;/game_data&gt;
+</span>
+<span class="c1"># + 4. 파일로 저장하고 싶다면?
+# tree = ET.ElementTree(root)
+# tree.write('my_game.xml')
+</span></code></pre></div></div>
+
+<p>XML로 튼튼한 데이터 창고를 짓는 파이썬 요정의 마법, 훌륭하죠?</p>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

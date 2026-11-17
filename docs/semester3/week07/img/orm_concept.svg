@@ -1,0 +1,41 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="350" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">ORM (Object Relational Mapping) 원리</text>
+  
+  <!-- Python Object -->
+  <g transform="translate(50, 100)">
+    <rect x="0" y="0" width="150" height="100" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="75" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">파이썬 객체</text>
+    <text x="75" y="60" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">user.name = "지니"</text>
+    <text x="75" y="80" font-//Arial" font-size="14" text-anchor="middle" fill="#666">user.save()</text>
+  </g>
+  
+  <!-- ORM Mapper -->
+  <g transform="translate(250, 100)">
+    <rect x="0" y="0" width="120" height="100" rx="10" fill="#c8e6c9" stroke="#2e7d32" stroke-width="3" />
+    <text x="60" y="55" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#2e7d32">ORM</text>
+    <text x="60" y="80" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">(Mapper)</text>
+  </g>
+  
+  <!-- DB Table -->
+  <g transform="translate(400, 100)">
+    <rect x="0" y="0" width="150" height="100" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="75" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">DB 테이블</text>
+    <text x="75" y="60" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">INSERT INTO users</text>
+    <text x="75" y="80" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">VALUES ('지니', ...)</text>
+  </g>
+  
+  <!-- Arrows -->
+  <path d="M 200 150 L 250 150" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <path d="M 370 150 L 400 150" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  <text x="300" y="220" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">SQL을 몰라도 객체 지향적으로 DB를 다룰 수 있게 함</text>
+  <text x="300" y="250" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">객체 <-> 테이블 간의 자동 매핑</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

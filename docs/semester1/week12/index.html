@@ -1,0 +1,1813 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️ | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester1/week12/" />
+<meta property="og:url" content="https://python.jiny.dev/semester1/week12/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️에 대한 파이썬(Python) 강좌 문서입니다.","headline":"12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️","url":"https://python.jiny.dev/semester1/week12/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          1학기 기초 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester1/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [기초] 1학기: 파이썬 기초 및 CS 원리
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="false">
+              1주차: 파이썬과 개발 환경 🐍
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week01/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3세션: 파이썬 기초 문법과 문제 해결 📦
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-3"
+              aria-expanded="false">
+              2주차: 변수와 메모리의 비밀 🧠
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-3">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week02/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 1세션: 변수의 개념과 값 할당 📦
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 기본 자료형 (1) - 숫자와 문자열 🔢
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 기본 자료형 (2) - 컨테이너 자료형 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 제어문 (1) - 조건문과 논리 연산 🚦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 제어문 (2) - 반복문과 이터레이터 🔄
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 1학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week12/"
+              class="bd-links-link d-inline-block rounded active">
+              12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 1학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester1/">📌 [기초] 1학기: 파이썬 기초 및 CS 원리</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="12주차-예외-처리---버그와-충돌-방어막-세우기-️">12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️</h1>
+
+<p>프로그램 실행 도중 발생하는 치명적인 예기치 못한 에러에 대응하여, 시스템 다운 없이 우아하게 비상을 선포하고 복원하는 <strong>예외 처리(Exception Handling)</strong>의 세부 구조와 예외 계층, 그리고 사용자 정의 예외와 예외 체이닝 기법을 배웁니다.</p>
+
+<hr />
+
+<h2 id="학습목표">학습목표</h2>
+<p>본 장에서는 프로그램 실행 중 발생하는 예기치 못한 에러를 안전하게 방어하고 복구하는 <strong><code class="language-plaintext highlighter-rouge">try-except</code> 예외 처리</strong> 구문의 중요성과 작동 원리를 이해합니다. 더 나아가, 무조건 실행되어야 하는 <code class="language-plaintext highlighter-rouge">finally</code> 블록의 역할과, 고의로 에러를 발생시키는 <code class="language-plaintext highlighter-rouge">raise</code> 키워드의 개념을 파악하여 실전처럼 견고한 코드를 작성하는 법을 익힙니다.</p>
+
+<hr />
+
+<h2 id="에러의-두-가지-종류-syntax-error-vs-logical-error">에러의 두 가지 종류 (Syntax Error vs Logical Error)</h2>
+
+<p>코딩을 하다 보면 숱하게 에러를 만나게 됩니다. 에러는 발생 시점에 따라, 프로그램이 실행되기 전 발생하는 <strong>문법 에러(Syntax Error)</strong>와 실행 중에 발생하는 <strong>논리/예외 에러(Logical Error, Exception)</strong>로 나뉩니다. 두 가지 에러의 차이점과 정확한 원인을 먼저 알아보겠습니다.</p>
+
+<p>👉 <a href="#01-에러의-종류">에러의 종류 상세 보기 (문법 에러 vs 논리 에러)</a></p>
+
+<p><img src="./img/syntax_vs_logic_error_webtoon.png" alt="문법 에러 vs 논리 에러 웹툰" />
+<em>(웹툰 비유: 왼쪽 로봇은 해독 불가능한 외계어(오타)가 적힌 책을 보고 뇌 정지가 와 에러 간판을 들고 있습니다(문법 에러). 오른쪽 로봇은 레시피는 완벽하게 쓰여 있어서 그대로 요리를 완성했지만, 설탕 대신 소금을 넣으라는 잘못된 논리 때문에 완성된 소금 케이크를 먹고 심사위원이 기절해 버립니다(논리 에러).)</em></p>
+
+<hr />
+
+<h2 id="든든한-안전망-try-except-예외-처리">든든한 안전망: <code class="language-plaintext highlighter-rouge">try-except</code> 예외 처리</h2>
+
+<p>에러가 발생해도 프로그램이 강제 종료(Crash)되지 않고 안전하게 복구 프로세스를 거치도록 방어하는 핵심 문법 구조입니다. 에러 종류별 분기 처리 등 기본적 실전 예시를 다룹니다.</p>
+
+<p>👉 <a href="#02-try-except-기본-구조"><code class="language-plaintext highlighter-rouge">try-except</code> 기본 구조와 사용법 알아보기</a></p>
+
+<h2 id="다양한-에러-개별적으로-잡기">다양한 에러 개별적으로 잡기</h2>
+
+<p>발생할 수 있는 예외가 여러 가지일 때 한 번에 퉁치지 않고 <code class="language-plaintext highlighter-rouge">IndexError</code>, <code class="language-plaintext highlighter-rouge">KeyError</code> 등 특정 에러마다 맞춤형으로 분기하여 잡는 다중 예외 처리 방식을 알아봅니다.</p>
+
+<p>👉 <a href="#03-다양한-에러-잡기">다양한 에러 개별 맞춤 처리 (다중 except)</a></p>
+
+<hr />
+
+<h2 id="고급-예외-처리-else와-finally">고급 예외 처리: <code class="language-plaintext highlighter-rouge">else</code>와 <code class="language-plaintext highlighter-rouge">finally</code></h2>
+
+<p><code class="language-plaintext highlighter-rouge">try-except</code> 구문에서 에러가 없을 때만 실행되는 <code class="language-plaintext highlighter-rouge">else</code> 블록과, 에러 발생 여부와 상관없이 무조건 마지막에 실행되어야 하는 <code class="language-plaintext highlighter-rouge">finally</code> 블록을 활용하여 완벽한 에러 통제 파이프라인을 구축해 봅니다.</p>
+
+<p>👉 <a href="#04-고급-예외-처리-else-finally"><code class="language-plaintext highlighter-rouge">else</code>와 <code class="language-plaintext highlighter-rouge">finally</code> 완벽 활용 가이드</a></p>
+
+<hr />
+
+<h2 id="고의로-에러-일으키기-raise">고의로 에러 일으키기 (<code class="language-plaintext highlighter-rouge">raise</code>)</h2>
+
+<p>문법적 오류는 아니지만, 서비스 기획이나 비즈니스 로직상 에러로 규정해야 하는 상황일 때 개발자가 직접 강제로 에러 비상벨을 울리는 <code class="language-plaintext highlighter-rouge">raise</code> 키워드의 활용법을 알아봅니다.</p>
+
+<p>👉 <a href="#05-고의로-에러-일으키기-raise">강제로 에러 발생시키기 (<code class="language-plaintext highlighter-rouge">raise</code>)</a></p>
+
+<hr />
+
+<h2 id="-java-vs--python-예외-처리-비교">☕ Java vs 🐍 Python 예외 처리 비교</h2>
+
+<p>두 언어의 차이점(<code class="language-plaintext highlighter-rouge">catch</code> vs <code class="language-plaintext highlighter-rouge">except</code>), 그리고 컴파일러가 강제하는 체크 예외(Checked Exception)의 유무 등 핵심적인 구조적 차이를 스나이퍼 비교를 통해 명확히 이해합니다.</p>
+
+<p>👉 <a href="#06-java-vs-python-예외-처리-비교">Java와 Python의 예외 처리 패러다임 비교</a></p>
+
+<hr />
+
+<h2 id="-단원-종합-vibe-coding">🎧 단원 종합 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“지금까지 파이썬의 예외 처리 단원(<code class="language-plaintext highlighter-rouge">try</code>, <code class="language-plaintext highlighter-rouge">except</code>, <code class="language-plaintext highlighter-rouge">else</code>, <code class="language-plaintext highlighter-rouge">finally</code>, <code class="language-plaintext highlighter-rouge">raise</code>)을 모두 공부했어. 이 5가지 핵심 키워드가 하나의 코드 안에서 전부 적절하게 활용되는 ‘종합 선물 세트’ 같은 완벽한 뱅킹(입출금) 예제 코드를 하나 작성해 줘. 그리고 이 예외 처리 구조가 실무에서 왜 중요한지 3줄 이내로 요약해 봐.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-핵심-코딩-영단어-총정리">📝 핵심 코딩 영단어 총정리</h2>
+
+<ul>
+  <li><strong>Exception</strong>: 예외. (정상적인 프로그램 실행 흐름을 깨뜨리는 이례적인 사건이나 런타임 에러 객체를 말합니다.)</li>
+  <li><strong>Try-Catch / Try-Except</strong>: 시도하고 낚아채기. (프로그래밍 세계에서 에러를 방어하는 가장 근본적인 디자인 패턴 명칭입니다.)</li>
+  <li><strong>Crash</strong>: 비정상 종료. (안전망(Except)이 없어서 프로그램이 시스템 바닥에 추락해 완전히 멈추어 버리는 현상입니다.)</li>
+  <li><strong>Throw / Raise</strong>: 던지다 / 일으키다. (개발자가 능동적으로 룰을 어긴 데이터를 발견하고 시스템에 직접 에러 경보를 울리는 통보 행위입니다.)</li>
+</ul>
+
+<hr />
+
+<p>코딩을 하다 보면 숱하게 에러를 만나게 됩니다. 에러는 크게 두 가지 범주로 나눌 수 있습니다.</p>
+
+<hr />
+
+<h2 id="1-문법-에러-syntax-error">1. 문법 에러 (Syntax Error)</h2>
+<p><code class="language-plaintext highlighter-rouge">오타</code>를 내거나 <code class="language-plaintext highlighter-rouge">들여쓰기</code>를 틀리는 등 파이썬 언어의 <strong>문법 규칙을 어겼을 때</strong> 발생합니다.</p>
+
+<p>이 경우 파이썬 인터프리터가 코드를 아예 읽지도 못하기 때문에 <code class="language-plaintext highlighter-rouge">실행조차 되지 않고</code> 곧바로 에러 문구를 뱉어냅니다.</p>
+
+<p>이는 프로그램이 시작되기도 전에 발견되므로 고치기 매우 쉽습니다.</p>
+
+<p><img src="./img/syntax_error_webtoon.png" alt="문법 에러 웹툰" />
+<em>(웹툰 비유: 코드에 콜론(<code class="language-plaintext highlighter-rouge">:</code>)이나 오타가 발생하자 파이썬 번역기 로봇이 “해독 불가!”를 외치며 거대한 빨간색 경고등(Syntax Error)을 울리는 장면입니다. 실행조차 되지 않고 즉시 차단됩니다.)</em></p>
+
+<hr />
+
+<h2 id="2-예외논리-에러-logical-error--exception">2. 예외/논리 에러 (Logical Error / Exception)</h2>
+<p>문법은 완벽해서 프로그램이 정상적으로 <strong>실행되던 도중</strong> 발생하는 에러입니다.</p>
+
+<p>“숫자 10을 0으로 나누어라” 혹은 “배열의 5번째 요소가 없는데 가져와라” 같은 <code class="language-plaintext highlighter-rouge">논리적 모순</code>이 발생했을 때 터집니다.</p>
+
+<p>우리가 제어 구조인 <code class="language-plaintext highlighter-rouge">try...except</code>로 <code class="language-plaintext highlighter-rouge">방어</code>하고 낚아채야 하는 대상이 바로 런타임에 발생하는 이 <strong>예외(Exception)</strong>입니다.</p>
+
+<p><img src="./img/logical_error_webtoon.png" alt="논리 에러 웹툰" />
+<em>(웹툰 비유: 요리사 로봇이 레시피(문법) 형태는 완벽하게 지켰지만, ‘사과’ 대신 실수로 ‘나사못’을 잔뜩 넣고 구운 ‘나사못 파이’를 심사위원에게 제출하여 심사위원이 먹고 기절하는 장면입니다. 코드는 일단 실행되었지만 결과가 논리적으로 완전히 파탄난 런타임 에러 상황을 의미합니다.)</em></p>
+
+<hr />
+
+<h2 id="-정규-학습--vibe-coding">🎧 정규 학습 &amp; Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬에서 <code class="language-plaintext highlighter-rouge">Syntax Error</code>가 발생하는 매우 단순한 예시 하나와, 문법은 맞지만 <code class="language-plaintext highlighter-rouge">Logical Error(Exception)</code> 중 하나인 <code class="language-plaintext highlighter-rouge">IndexError</code>가 발생하는 예시 코드를 각각 1개씩 작성해 줘. 그리고 각각 왜 그런 에러가 나는지 3줄 이내로 핵심만 비유를 들어서 짧게 설명해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-코딩-영단어-학습">📝 코딩 영단어 학습</h2>
+
+<ul>
+  <li><strong>Syntax</strong>: 구문, 문법. (언어의 철자법이나 문장 규칙을 뜻합니다.)</li>
+  <li><strong>Logical</strong>: 논리적인. (컴퓨터 입장에선 문법상 맞지만 인간의 기획 의도와 어긋나는 상태를 뜻합니다.)</li>
+  <li><strong>Runtime</strong>: 실행 시간. (코드를 작성하는 시간이 아니라, 실제로 프로그램이 돌아가고 있는 순간을 말합니다.)</li>
+  <li><strong>Exception</strong>: 예외. (기본적인 규칙에서 벗어나는 이례적인 런타임 에러 상황을 말합니다.)</li>
+</ul>
+
+<hr />
+
+<p>프로그램 실행 중 발생하는 에러(예외)를 우아하게 대비/처리하여, 프로그램이 의도치 않게 갑자기 강제 침몰하는 것을 막아내는 튼튼한 <code class="language-plaintext highlighter-rouge">방어 로직</code>을 배웁니다.</p>
+
+<h2 id="비정상-종류">비정상 종류</h2>
+
+<p>일반적으로 파이썬 프로그램은 예기치 못한 에러(ZeroDivisionError, IndexError 등)가 발생하면 그 즉시 <strong>비정상 종료(Crash)</strong>됩니다. 하지만 우리가 이용하는 웹 서버나 24시간 도는 봇 프로그램이 사소한 입력값 하나 잘못 받았다고 완전히 꺼져버린다면 매우 곤란할 것입니다.</p>
+
+<p><img src="./img/exception_handling_webtoon.png" alt="예외 처리 동작 웹툰" />
+<em>(웹툰 비유: 코드를 실행하며 조심조심 유리그릇을 옮기던 로봇이 돌부리(Exception)에 걸려 넘어집니다. 하지만 바닥에 부딪혀 와장창 깨지기 직전, 마법처럼 <code class="language-plaintext highlighter-rouge">except</code>라고 쓰인 푹신한 안전 그물망이 튀어나와 로봇을 안전하게 받아냅니다.)</em></p>
+
+<h2 id="안정망">안정망</h2>
+
+<p>이때 <code class="language-plaintext highlighter-rouge">안전망</code> 역할을 해주는 필수 방어적 코딩 기법이 바로 <strong><code class="language-plaintext highlighter-rouge">try-except</code></strong> 예외 처리 구문입니다.</p>
+
+<p><img src="./img/exception_anim.svg" alt="예외 처리 동작 원리: 에러가 발생하면 비상망으로 떨어지고, 무조건 최종 블록을 거쳐가는 애니메이션" />
+<em>(다이어그램: 초록색 정상 점은 <code class="language-plaintext highlighter-rouge">try</code> 블록을 무사히 거쳐 <code class="language-plaintext highlighter-rouge">finally</code> 출구로 기분 좋게 빠져나갑니다. 반면, 빨간색 에러 점은 <code class="language-plaintext highlighter-rouge">try</code> 블록 중간에 번개(에러)를 맞고 비상망(<code class="language-plaintext highlighter-rouge">except</code>)으로 튕겨져 떨어져 복구 프로세스를 거친 후, 똑같이 노란색 <code class="language-plaintext highlighter-rouge">finally</code> 출구로 빠져나가는 두 갈래의 흐름을 묘사한 애니메이션입니다.)</em></p>
+
+<h2 id="기본-구조-try-except">기본 구조: <code class="language-plaintext highlighter-rouge">try-except</code></h2>
+
+<p><strong>“일단 블록 안의 코드를 시도해봐(try). 만약 에러가 터지면(except) 이렇게 조치해.”</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># 에러가 발생할 가능성이 있는 논리 코드
+</span>    <span class="n">number</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+    <span class="c1"># 에러가 감지되었을 때 비상탈출하여 실행할 복구 코드
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">0으로 나눌 수 없습니다! (프로그램은 계속 실행됩니다)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="실행-결과">[실행 결과]</h3>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0으로 나눌 수 없습니다! (프로그램은 계속 실행됩니다)
+</code></pre></div></div>
+<p>(붉은색의 시스템 에러 메시지를 뿜지 않고, 우리가 핸들링한 문구가 출력되며 프로그램은 비정상 종료 없이 매끄럽게 계속 실행됩니다.)</p>
+
+<h2 id="실전-예제-1-입력값-변환-보호-valueerror">실전 예제 1: 입력값 변환 보호 (ValueError)</h2>
+<p>사용자가 숫자가 아닌 문자를 입력했을 때 <code class="language-plaintext highlighter-rouge">int()</code> 함수가 터지는 것을 막아냅니다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">user_input</span> <span class="o">=</span> <span class="sh">"</span><span class="s">삼백원</span><span class="sh">"</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">입력된 가격은 </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s">입니다.</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">❌ 숫자로 변환할 수 없는 입력입니다. 다시 확인해주세요.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-방어적-코딩--vibe-coding">🎧 방어적 코딩 &amp; Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬에서 사용자의 나이를 <code class="language-plaintext highlighter-rouge">input()</code>으로 입력받아 숫자로 변환하는 코드를 짜줘. 만약 사용자가 ‘스무살’처럼 텍스트를 입력해서 <code class="language-plaintext highlighter-rouge">ValueError</code>가 발생하더라도, 프로그램이 뻗지 않고(안전하게) <code class="language-plaintext highlighter-rouge">try-except</code>로 오류를 낚아채어 ‘숫자만 입력해 주세요!’라고 다시 물어보는 완성된 예제 코드를 만들어 줘. 주석도 꼼꼼히 작성해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-코딩-영단어-정복">📝 코딩 영단어 정복</h2>
+
+<ul>
+  <li><strong>Try</strong>: 시도하다. (먼저 코드를 정상적으로 실행해 보겠다는 선언입니다.)</li>
+  <li><strong>Except (또는 Catch)</strong>: ~을 제외하고, 낚아채다. (시도하다가 실패한 상황을 안전망으로 받아낸다는 의미입니다.)</li>
+  <li><strong>Crash</strong>: 충돌, 비정상 종료. (프로그램이 치명적인 오류를 만나 강제로 픽 하고 꺼져버리는 현상입니다.)</li>
+  <li><strong>Handling</strong>: 다루기, 처리. (<code class="language-plaintext highlighter-rouge">Error Handling</code>은 발생하는 에러를 적절하게 통제하고 무마시키는 방어 조작을 뜻합니다.)</li>
+</ul>
+
+<hr />
+
+<p>여러 종류의 각기 다른 에러를 하나로 퉁치지 않고 성격에 맞게 각각 다르게 분기 처리하여, 원인에 따라 맞춤형 대응이 가능하게 만들 수 있습니다.</p>
+
+<p><img src="./img/multiple_exceptions_anim.svg" alt="다중 예외 처리 라우팅 애니메이션" />
+<em>(다이어그램: 우편물을 분류하는 것처럼, 발생한 에러 객체의 종류와 일치하는 첫 번째 <code class="language-plaintext highlighter-rouge">except</code> 블록으로 떨어져 맞춤형 처리가 이루어지는 라우팅 과정을 묘사한 애니메이션입니다.)</em></p>
+
+<hr />
+
+<h2 id="-주요-예외-종류별-상세-설명">🛑 주요 예외 종류별 상세 설명</h2>
+
+<h3 id="1-keyerror-키가-없음">1. <code class="language-plaintext highlighter-rouge">KeyError</code> (키가 없음)</h3>
+<p>딕셔너리 자료형에서 내부에 존재하지 않는 키(Key) 값을 꺼내려고 시도할 때 발생합니다.
+<img src="./img/key_error_webtoon.png" alt="KeyError 웹툰" />
+<em>(웹툰 비유: 책장이나 자물쇠(딕셔너리)에 맞는 열쇠(키)가 아예 없어 들어가지 않고 쩔쩔매고 있는 답답한 상황입니다.)</em></p>
+
+<h3 id="2-indexerror-순번-초과">2. <code class="language-plaintext highlighter-rouge">IndexError</code> (순번 초과)</h3>
+<p>리스트, 튜플 등 반복 가능한(Iterable) 자료형이 가지고 있는 실제 길이(크기)를 벗어난 범위를 허공에서 찾으려 할 때 발생합니다.
+<img src="./img/index_error_webtoon.png" alt="IndexError 웹툰" />
+<em>(웹툰 비유: 딱 3칸짜리 작은 상자 안에서 10번째 물건을 꺼내려고 빈 허공을 뒤적이며 혼란에 빠진 모습입니다.)</em></p>
+
+<h3 id="3-zerodivisionerror-0으로-나누기">3. <code class="language-plaintext highlighter-rouge">ZeroDivisionError</code> (0으로 나누기)</h3>
+<p>수학적으로 정의될 수 없는 불가능한 연산인, 어떤 숫자를 분모 <code class="language-plaintext highlighter-rouge">0</code>으로 나누려고 시도할 때 터지는 에러입니다.
+<img src="./img/zero_division_error_webtoon.png" alt="ZeroDivisionError 웹툰" />
+<em>(웹툰 비유: 계산기로 10을 0으로 나누자 블랙홀이 생겨나 주변 문서와 집기들을 모두 빨아들이고 있는 치명적인 수학 법칙 파탄 장면입니다.)</em></p>
+
+<h3 id="4-exception-나머지-모든-에러-방어">4. <code class="language-plaintext highlighter-rouge">Exception</code> (나머지 모든 에러 방어)</h3>
+<p>위에서 구체적으로 지명하여 잡지 못한 미지의 예기치 않은 에러들을 전부 포괄하여 블랙홀처럼 잡아내는 최상위 방어망입니다.</p>
+
+<hr />
+
+<h2 id="-다중-예외-처리-코드-다형성-polymorphism">💻 다중 예외 처리 코드 다형성 (Polymorphism)</h2>
+
+<p>위의 개념을 바탕으로, 우선순위에 따라 순서대로 <code class="language-plaintext highlighter-rouge">except</code> 블록을 구성하면 아래와 같은 강력한 무적의 방어 구조가 완성됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># 💥 에러가 발생 가능한 복합적인 로직들
+</span>    <span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">[</span><span class="sh">"</span><span class="s">age</span><span class="sh">"</span><span class="p">])</span> <span class="c1"># -&gt; 여기서 KeyError 발생 시 곧바로 1번 블록으로 추락!
+</span>    
+    <span class="n">number</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span> <span class="c1"># -&gt; ZeroDivisionError 발생 환경 구비 완료!
+</span>    
+<span class="c1"># 1번 블록: KeyError 방어
+</span><span class="k">except</span> <span class="nb">KeyError</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">딕셔너리에 해당 키(항목)가 존재하지 않습니다!</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="c1"># 2번 블록: IndexError 방어
+</span><span class="k">except</span> <span class="nb">IndexError</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">배열의 범위를 벗어난 접근입니다!</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="c1"># 3번 블록: ZeroDivisionError 방어
+</span><span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">수학적인 오류(0으로 나누기)가 발생했습니다!</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="c1"># 4번 블록: 최후의 보루 방어망
+</span><span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># Exception은 모든 에러를 포괄하는 최상위 부모 클래스(부대장)입니다.
+</span>    <span class="c1"># 특정하지 못한 나머지 모든 에러를 흡수하기 위해 반드시 맨 마지막 맨 밑에 배치해야 합니다.
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">알 수 없는 치명적인 에러가 통보되었습니다: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>[주의 사항]</strong> 
+위 코드에서 만약 <code class="language-plaintext highlighter-rouge">except Exception:</code> 블록을 첫 줄(맨 위)에 올려두면 그 어떤 에러든 간에 첫 번째 그물망에서 모두 걸려버리므로, 아래에 있는 상세 에러들(KeyError, IndexError 등)의 블록은 영원히 도달할 수 없는 <code class="language-plaintext highlighter-rouge">Dead Code</code>(죽은 코드)가 되어버립니다!</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-다중-예외-처리--vibe-coding">🎧 다중 예외 처리 &amp; Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬에서 딕셔너리(dictionary)와 리스트(list)를 둘 다 쓰는 코드를 하나 만들어봐. 이 코드 안에서는 <code class="language-plaintext highlighter-rouge">KeyError</code>와 <code class="language-plaintext highlighter-rouge">IndexError</code>가 각각 발생할 가능성이 있어. 다중 <code class="language-plaintext highlighter-rouge">except</code> 문을 사용해서 이 두 가지 에러를 어떻게 각각 따로 라우팅하여 별도의 메시지로 처리할 수 있는지, 친절한 주석이 달린 예제 코드와 쉬운 비유 설명을 덧붙여 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-코딩-영단어-정복-1">📝 코딩 영단어 정복</h2>
+
+<ul>
+  <li><strong>Multiple</strong>: 다수의, 복합적인. (여러 가지의 예외를 한꺼번에 다루는 다중 예외 처리에서 사용됩니다.)</li>
+  <li><strong>Index</strong>: 색인, 순번. (<code class="language-plaintext highlighter-rouge">IndexError</code>는 데이터가 정렬된 순번의 범위를 벗어날 때 발생하는 에러입니다.)</li>
+  <li><strong>Key</strong>: 열쇠, 핵심 식별자. (<code class="language-plaintext highlighter-rouge">KeyError</code>는 자물쇠(딕셔너리)를 열기 위한 정확한 열쇠 이름이 없을 때 발생합니다.)</li>
+  <li><strong>Hierarchy</strong>: 계층, 서열. (예외 클래스들의 족보/서열을 나타냅니다. <code class="language-plaintext highlighter-rouge">Exception</code>은 이 서열의 가장 높은 꼭대기에 있는 보스입니다.)</li>
+</ul>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">try-except</code> 구문은 에러가 나지 않고 성공했을 때만 실행할 <code class="language-plaintext highlighter-rouge">else</code> 블록, 에러의 유무와 상관없이 무조건 마지막에 실행되어야 하는 <code class="language-plaintext highlighter-rouge">finally</code> 블록과 결합하여 완벽한 에러 통제 파이프라인을 구축할 수 있습니다.</p>
+
+<p><img src="./img/else_finally_anim.svg" alt="else finally 동작 원리 애니메이션" />
+<em>(다이어그램: 초록색 정상 경로는 <code class="language-plaintext highlighter-rouge">try</code>가 무사히 끝나면 <code class="language-plaintext highlighter-rouge">else</code> 블록을 통과하여 <code class="language-plaintext highlighter-rouge">finally</code>로 향합니다. 반면, 빨간색 에러 경로는 <code class="language-plaintext highlighter-rouge">try</code> 블록에서 번개를 맞으면 <code class="language-plaintext highlighter-rouge">except</code> 비상망으로 추락하지만 결국에는 똑같이 <code class="language-plaintext highlighter-rouge">finally</code> 출구를 통해 안전하게 빠져나가는 모습을 보여줍니다.)</em></p>
+
+<h2 id="코드-예제">코드 예제</h2>
+<p>예제를 통하여 <code class="language-plaintext highlighter-rouge">else</code>와 <code class="language-plaintext highlighter-rouge">finally</code>의 동작 원리를 알아보겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">1. 파일 열기 시도 중...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">file_data</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">document.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2. [오류] 파일을 찾을 수 없습니다. 예외가 잡혔습니다.</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># try 블록이 에러 없이 무사히 통과했을 때만 실행됨
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">3. [성공] 파일을 무사히 열었습니다. 데이터를 읽습니다.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">file_data</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
+    
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c1"># 에러가 났든 안 났든, 심지어 return으로 빠져나가려 해도 무조건 실행됨
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">4. [마무리] 자원을 해제하고 파일 시스템을 닫습니다.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">finally</code>의 중요성</strong>: 파일 시스템 닫기, 켜두었던 데이터베이스(DB) 연결 끊기 등 프로그램이 죽더라도 이 자원 처리만큼은 <strong>반드시</strong> 하고 죽으라는 최후의 보루 역할을 합니다.</li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<p>지금까지 우리는 에러를 단순히 피해야 할 두려운 존재로 여겼지만, <code class="language-plaintext highlighter-rouge">try-except-finally</code>라는 튼튼한 방어망을 치고 나면 에러마저도 프로그램의 정상적인 제어 흐름 안으로 편입시킬 수 있습니다. 특히 크롤링 머신이나 데이터를 임포트하는 기능을 24시간 가동시켜야 할 실무에서, 이 예외 처리 로직은 서버가 죽지 않고 버티게 해 주는 가장 든든한 생명줄 역할을 톡톡히 해낼 것입니다.</p>
+
+<hr />
+
+<h2 id="-고급-예외-흐름--vibe-coding">🎧 고급 예외 흐름 &amp; Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“크롤링 로봇을 파이썬으로 만든다고 가정해 줘. 타겟 웹사이트에 접속을 시도(<code class="language-plaintext highlighter-rouge">try</code>)하고, 접속에 실패하면 예외 처리(<code class="language-plaintext highlighter-rouge">except</code>)를, 무사히 접속했다면 데이터를 파싱(<code class="language-plaintext highlighter-rouge">else</code>)한 뒤, 성공 여부에 상관없이 마지막에는 무조건 인터넷 연결 자원을 종료(<code class="language-plaintext highlighter-rouge">finally</code>)하는 완벽한 4단계 파이프라인의 뼈대(구조) 코드를 작성해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-코딩-필수-영단어">📝 코딩 필수 영단어</h2>
+
+<ul>
+  <li><strong>Else</strong>: 그 밖의, 그 외에 (여기서는 “에러가 터지지 않고 무사히 넘어간다면 그 다음에” 라는 긍정적인 맥락으로 쓰입니다.)</li>
+  <li><strong>Finally</strong>: 마침내, 최종적으로. (성공하든 실패하든, 심지어 코드가 함수를 빠져나가려 해도 무조건 마지막으로 불려가는 필수 관문입니다.)</li>
+  <li><strong>Resource</strong>: 자원. (메모리, 파일, 네트워크, DB 연결 등 프로그램이 잠시 빌려 쓰는 한정된 컴퓨터 자원을 의미합니다.)</li>
+  <li><strong>Release (or Close)</strong>: 해제하다, 놓아주다. (빌려 쓴 자원을 다 쓰고 나서 컴퓨터 시스템에 다시 반납하는 행위입니다.)</li>
+</ul>
+
+<hr />
+
+<p>프로그램의 문법(Syntax)은 완벽하더라도, <strong>서비스 기획이나 비즈니스 로직상 절대 허용해서는 안 되는 상황</strong>이 발생할 수 있습니다. 예를 들어 “나이가 음수(-5살)로 입력됨” 같은 논리적 오류 상황입니다.</p>
+
+<p>문법적으로 에러가 아니기 때문에 파이썬은 정상적으로 실행해 버리려 하지만, 이대로 놔두면 나중에 데이터베이스나 중요한 시스템 로직이 완전히 꼬이게 됩니다.</p>
+
+<h2 id="raise">raise</h2>
+<p>이때 개발자가 직접 나서서 시스템 전체에 경보 비상벨을 울리고 실행을 중단시켜야 하는데, 이 행위가 바로 <strong><code class="language-plaintext highlighter-rouge">raise</code></strong> 입니다.</p>
+
+<p><img src="./img/raise_exception_webtoon.png" alt="강제 에러 발생 raise 웹툰" />
+<em>(웹툰 비유: 평단하고 조용한 시스템 제어실. 기계 자체에는 전혀 문제가 없지만, “나이는 음수가 될 수 없다!”라는 회사 수칙(기획)을 지키기 위해 로봇 관리자가 망치로 빨간색 <code class="language-plaintext highlighter-rouge">EMERGENCY(비상)</code> 버튼의 유리를 깨서 스스로 에러 경보를 강제로 터뜨리는 장면입니다.)</em></p>
+
+<blockquote>
+  <p><strong>💡 용어 비교: 다른 언어의 <code class="language-plaintext highlighter-rouge">throw</code></strong>
+Java, C++, JavaScript 등 많은 프로그래밍 언어에서는 에러를 던진다는 의미로 <strong><code class="language-plaintext highlighter-rouge">throw</code></strong> 키워드를 사용합니다. 
+하지만 파이썬에서는 동일한 역할을 수행하기 위해 에러를 끌어올린다는 의미의 <strong><code class="language-plaintext highlighter-rouge">raise</code></strong> 키워드를 사용합니다. 이름만 다를 뿐, 개발자가 강제로 예외를 발생(통보)시키는 완전하게 동일한 기능입니다!</p>
+</blockquote>
+
+<h2 id="raise-사용-예제-코드"><code class="language-plaintext highlighter-rouge">raise</code> 사용 예제 코드</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">check_age</span><span class="p">(</span><span class="n">age</span><span class="p">):</span>
+    <span class="c1"># 문법적으론 이상 없지만, 비즈니스 기획상 허용할 수 없는 '음수' 값 침입 감지!
+</span>    <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># 적절한 에러 클래스(ValueError)를 직접 생성하여 바깥으로 던짐(raise)
+</span>        <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sh">"</span><span class="s">나이는 음수가 될 수 없습니다!</span><span class="sh">"</span><span class="p">)</span>
+        
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">당신의 나이는 </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s">살 이군요.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nf">check_age</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># raise로 발생시킨 에러를 안전망에서 받아 처리합니다.
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">사용자 에러 잡힘: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이렇게 함수 안에서 <code class="language-plaintext highlighter-rouge">raise</code> 구문을 활용하면 나중에 다른 개발자가 내 코드를 호출할 때, “현재 허용되지 않는 부적절한 값이 들어왔다!”라는 사실을 강하게 통보(문구 포함)해 줄 수 있어 안전하고 견고한 애플리케이션 설계의 기초가 됩니다.</p>
+
+<hr />
+
+<h2 id="-강제-에러-방출--vibe-coding">🎧 강제 에러 방출 &amp; Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“은행 계좌(Account) 클래스의 출금(withdraw) 메서드를 파이썬으로 만들어봐. 출금하려는 금액이 현재 잔액보다 크면 문법적으론 이상 없어도 비즈니스 논리상 말이 안 되니까, 개발자가 고의로 <code class="language-plaintext highlighter-rouge">raise</code> 키워드를 써서 <code class="language-plaintext highlighter-rouge">ValueError</code>를 발생(던지는)시키는 예제 코드를 작성해. 다른 언어의 <code class="language-plaintext highlighter-rouge">throw</code>와 어떻게 비슷한지도 한 줄로 설명해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-코딩-영단어-및-동의어-정리">📝 코딩 영단어 및 동의어 정리</h2>
+
+<ul>
+  <li><strong>Raise</strong>: 들어 올리다, 일으키다. (파이썬에서 깊숙이 숨어있는 에러 상황을 수면 위로 강제로 끄집어 올려 경보를 울릴 때 씁니다.)</li>
+  <li><strong>Throw</strong>: 던지다. (Java나 JS 등 다른 언어에서 <code class="language-plaintext highlighter-rouge">raise</code>와 완벽히 동일한 의미로 쓰이는 키워드입니다. 에러를 바깥으로 던진다는 뜻입니다.)</li>
+  <li><strong>Intentional</strong>: 의도적인. (버그나 실수가 아닌 시나리오에 의해 <em>고의로</em> 발생시킨 에러를 지칭할 때 자주 쓰입니다.)</li>
+  <li><strong>Validation</strong>: 유효성 검사. (입력된 데이터가 비즈니스 규칙에 맞는지(예: 나이가 양수인지) 검증하는 방어 과정입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="-java-vs--python-스나이퍼-비교">☕ Java vs 🐍 Python 스나이퍼 비교</h2>
+
+<h3 id="1-키워드의-차이-catch-vs-except">1. 키워드의 차이 (catch vs except)</h3>
+<ul>
+  <li><strong>Java</strong>: 자바에서는 <code class="language-plaintext highlighter-rouge">try { } catch (Exception e) { } finally { }</code> 구문을 사용합니다.</li>
+  <li><strong>Python</strong>: 파이썬은 목적어 성격이 강한 <code class="language-plaintext highlighter-rouge">catch</code> 대신 전치사 성격의 <strong><code class="language-plaintext highlighter-rouge">try ... except ... finally:</code></strong> 키워드를 사용합니다. 기능은 완전히 똑같습니다. 단지 콜론(<code class="language-plaintext highlighter-rouge">:</code>)과 들여쓰기 블록을 쓴다는 점만 다릅니다.</li>
+</ul>
+
+<h3 id="2-체크-예외checked-exception의-부재">2. 체크 예외(Checked Exception)의 부재</h3>
+<ul>
+  <li><strong>Java</strong>: 파일 입출력(IOException) 등을 다룰 때 <code class="language-plaintext highlighter-rouge">try-catch</code>로 감싸거나 메서드 시그니처에 <code class="language-plaintext highlighter-rouge">throws</code>를 붙이지 않으면 아예 컴파일 자체가 안 되는 깐깐한 Checked Exception 시스템이 있습니다.</li>
+  <li><strong>Python</strong>: 파이썬에는 컴파일러가 강제하는 <strong>Checked Exception 개념이 없습니다</strong>. 파일을 열 때 <code class="language-plaintext highlighter-rouge">try-except</code>로 감싸지 않아도 문법적 오류를 내뿜지 않습니다. 전적으로 개발자의 책임과 논리(Logical)에 맡깁니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬으로 간단한 리스트의 평균을 구하는 계산기 함수를 만들어봐. 단, 빈 리스트가 들어와서 0으로 나누기 오류(<code class="language-plaintext highlighter-rouge">ZeroDivisionError</code>)가 발생하거나, 요소 중에 문자가 섞여 있어서 타입 오류(<code class="language-plaintext highlighter-rouge">TypeError</code>)가 발생할 수 있으니, <code class="language-plaintext highlighter-rouge">try-except</code> 구문으로 철저하게 예외 처리를 감싼 코드로 작성해 줘. 각 에러마다 귀여운 이모지와 함께 안내 문구를 출력해야 해.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-코딩-영단어-학습-1">📝 코딩 영단어 학습</h2>
+
+<ul>
+  <li><strong>Syntax</strong>: 구문, 문법 규칙. (<code class="language-plaintext highlighter-rouge">Syntax Error</code>는 파이썬 언어의 철자법이나 문법 체계를 틀린 것입니다.)</li>
+  <li><strong>Logic</strong>: 논리, 타당성. (<code class="language-plaintext highlighter-rouge">Logical Error</code>는 컴퓨터는 시킨 대로 잘 했는데, 시킨 사람의 생각 자체가 틀린 것입니다.)</li>
+  <li><strong>Except</strong>: ~을 제외하고. (<code class="language-plaintext highlighter-rouge">try...except</code> 구조에서는 “내가 시도해 보라(try)고 한 구문 외에 예기치 못하게 벌어진 빗나간 일들(except)은 이렇게 예외적으로 조치해”라는 의미로 쓰입니다.)</li>
+  <li><strong>Finally</strong>: 마침내, 결국. (어떤 험난한 과정이나 에러가 있었든 간에 프로그램이 종료되기 전에 ‘무조건 마지막으로’ 수행되는 약속된 공간입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> 두 숫자를 입력받아 나눗셈을 하는 함수에서, 분모가 0일 때 발생하는 <code class="language-plaintext highlighter-rouge">ZeroDivisionError</code>와 숫자가 아닌 잘못된 타입이 들어왔을 때 발생하는 <code class="language-plaintext highlighter-rouge">ValueError</code>를 각각 다른 <code class="language-plaintext highlighter-rouge">except</code> 블록으로 대응하는 함수를 구현해 보세요.</p>
+
+<p><strong>문제 2.</strong> <code class="language-plaintext highlighter-rouge">raise</code> 문을 활용하여 나이(age)가 음수이거나 150세를 초과하는 값일 때 예외를 발생시키고 이를 처리하는 코드를 작성해 보세요.</p>
+
+<p><strong>문제 3.</strong> (심화) <code class="language-plaintext highlighter-rouge">try~except~else~finally</code> 블록의 구조에서 <code class="language-plaintext highlighter-rouge">else</code>와 <code class="language-plaintext highlighter-rouge">finally</code>가 언제 실행되는지 그 결정적인 차이점을 가상환경 복구 시나리오(예: 파일 닫기, 임시 메모리 정리 등)를 바탕으로 설명해 보세요.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-19_부록_자주_만나는_오류">📖 교재 상세 학습: 19_부록_자주_만나는_오류</h2>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b3339cb1-c67d-4fd2-8b63-a6152b1bdfb6" width="400" />
+
+## 부록: 파이썬 생존 일지 - 단골 에러 완벽 대처법
+</div>
+
+<p>왕초보 구간을 갓 벗어난 신입이든 10년 차 시니어 개발자든, 코딩을 하다 보면 하루에도 수십 번씩 시뻘건 에러(오류) 폭탄을 맞게 됩니다. 에러는 여러분을 괴롭히려는 악당이 결코 아닙니다. 오히려 <strong>“주인님, 이 줄이 번역이 안 돼요! 얼른 고쳐주세요!”</strong>라며 다급하게 외치는 아주 충직한 비서입니다. 
+파이썬 여정에서 가장 자주 조우하게 될 11대 에러의 정체와, 그들이 던지는 다잉 메시지를 해독하는 노하우를 전수해 드립니다.</p>
+
+<hr />
+
+<h4 id="디버깅debugging의-2대-절대-원칙">디버깅(Debugging)의 2대 절대 원칙</h4>
+<ol>
+  <li><strong>맨 밑바닥 줄의 에러 타이틀부터 읽어라!</strong> (가장 확실한 스모킹 건입니다)</li>
+  <li><strong>에러가 터졌다고 삿대질(<code class="language-plaintext highlighter-rouge">^</code>)하는 화살표 주변이나 그 윗줄의 괄호들을 샅샅이 뒤져라!</strong></li>
+</ol>
+
+<hr />
+
+<h3 id="1-syntaxerror-문법-에러">1. SyntaxError (문법 에러)</h3>
+<p><strong>사망 원인</strong>: 파이썬이 요구하는 엄격한 문법 규칙을 대놓고 어겼을 때 터집니다. 외국인에게 한국어 어순을 엉망으로 섞어 말한 것과 같습니다.</p>
+<ul>
+  <li><strong>따옴표나 괄호의 짝이 안 맞을 때</strong> (압도적인 1위 원인)</li>
+  <li><code class="language-plaintext highlighter-rouge">if</code>나 <code class="language-plaintext highlighter-rouge">for</code> 문장 끝에 콜론(<code class="language-plaintext highlighter-rouge">:</code>)을 쿨하게 빼먹었을 때</li>
+  <li>파이썬이 혼자 쓰려고 찜해둔 예약어(<code class="language-plaintext highlighter-rouge">True</code>, <code class="language-plaintext highlighter-rouge">for</code> 등)나 숫자를 변수 이름으로 쓰려 할 때</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">반갑습니다)  # 뒤쪽 따옴표가 행방불명입니다! (EOL while scanning string literal)
+1st_rank = </span><span class="sh">"</span><span class="n">나</span><span class="sh">"</span><span class="s"> # 변수명 맨 앞자리에 숫자가 오다니, 용납할 수 없습니다!
+</span></code></pre></div></div>
+
+<h3 id="2-indentationerror--taberror-들여쓰기-에러">2. IndentationError / TabError (들여쓰기 에러)</h3>
+<p><strong>사망 원인</strong>: 파이썬의 꽃이자 생명선인 ‘들여쓰기(Indentation)’가 미세하게 엇나갔을 때 터집니다.</p>
+<ul>
+  <li>스페이스바(Space) 4칸 룰을 지키다 갑자기 손가락이 미끄러져 3칸만 쳤을 때</li>
+  <li>스페이스 띄어쓰기와 탭(Tab) 키가 눈에 보이지 않게 혼용되어 눈속임을 할 때 (TabError)</li>
+</ul>
+
+<h3 id="3-nameerror-이름-에러">3. NameError (이름 에러)</h3>
+<p><strong>사망 원인</strong>: 파이썬 엔진이 태어나서 생전 처음 들어보는 ‘이름’을 여러분이 갑자기 호출했을 때 뿜어냅니다.</p>
+<ul>
+  <li>정의한 적도 없는 변수명을 막무가내로 쓰려 할 때</li>
+  <li>변수 이름을 칠 때 치명적인 오타를 냈을 때 (예: <code class="language-plaintext highlighter-rouge">apple</code>을 <code class="language-plaintext highlighter-rouge">aple</code>로 침)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="n">score_point</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">scroe_point</span><span class="p">)</span> <span class="c1"># scroe_point라는 변수는 메모리상에 존재한 적이 없습니다! (name 'scroe_point' is not defined)
+</span></code></pre></div></div>
+
+<h3 id="4-attributeerror-속성-에러">4. AttributeError (속성 에러)</h3>
+<p><strong>사망 원인</strong>: 해당 데이터(객체)가 태생적으로 가지고 있지도 않은 기능(메서드)을 억지로 꺼내 쓰라고 강요할 때 발생합니다.</p>
+<ul>
+  <li>리스트 전용인 <code class="language-plaintext highlighter-rouge">.index()</code>를 실수로 <code class="language-plaintext highlighter-rouge">.indax()</code>로 오타 냈을 때</li>
+  <li>단순한 정수(int) 쪼가리한테 문자열 전용 칼날인 <code class="language-plaintext highlighter-rouge">.replace()</code>를 휘두르라고 명령할 때</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="n">my_number</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">my_number</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># 숫자는 리스트가 아니므로 append라는 스킬을 모릅니다! ('int' object has no attribute 'append')
+</span></code></pre></div></div>
+
+<h3 id="5-typeerror-타입-에러">5. TypeError (타입 에러)</h3>
+<p><strong>사망 원인</strong>: 특정 연산자나 함수에 전혀 어울리지 않는 ‘잘못된 종족(타입)의 데이터’를 구겨 넣었을 때 터집니다.</p>
+<ul>
+  <li>숫자 데이터와 문자열 데이터를 더하기(<code class="language-plaintext highlighter-rouge">+</code>) 기호로 무식하게 융합시키려 할 때</li>
+  <li>함수가 요구하는 매개변수 개수가 2개인데, 실수로 1개만 주거나 3개를 던졌을 때</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">제 나이는 </span><span class="sh">"</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="sh">"</span><span class="s">입니다.</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># 문자와 숫자는 물과 기름 폭탄입니다! (can only concatenate str to str)
+</span></code></pre></div></div>
+
+<h3 id="6-valueerror-값-에러">6. ValueError (값 에러)</h3>
+<p><strong>사망 원인</strong>: 데이터의 타입(종류)은 대충 들어맞는데, 그 안에 든 알맹이의 상태가 상식적으로 말이 안 될 때 발생합니다.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">int("100")</code>은 기꺼이 숫자로 변환해 주지만, <code class="language-plaintext highlighter-rouge">int("안녕")</code>은 도저히 수학적 숫자로 바꿀 방도가 없습니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="n">my_age</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="sh">"</span><span class="s">스무살</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># '스무살'이라는 한글 문자를 어떻게 아라비아 숫자로 바꿉니까!
+</span></code></pre></div></div>
+
+<h3 id="7-unboundlocalerror-지역-변수-참조-에러">7. UnboundLocalError (지역 변수 참조 에러)</h3>
+<p><strong>사망 원인</strong>: 함수 저 멀리 바깥에 선언된 전역 변수(Global)의 값을, 함수 내부에 있는 녀석이 허락(<code class="language-plaintext highlighter-rouge">global</code> 키워드)도 없이 멋대로 덮어씌우려 시도할 때 파이썬 보안관이 쏘는 경고장입니다.</p>
+
+<h3 id="8-keyerror--indexerror-접근-실패-에러">8. KeyError &amp; IndexError (접근 실패 에러)</h3>
+<p><strong>사망 원인</strong>: 보관함을 열어제꼈는데 내가 찾는 번호나 열쇠표가 없을 때 터지는 허탈한 에러입니다.</p>
+<ul>
+  <li><strong>KeyError</strong>: 딕셔너리를 뒤졌는데 내가 적은 ‘키(Key)’가 없을 때</li>
+  <li><strong>IndexError</strong>: 리스트에 방이 3개(0, 1, 2)밖에 없는데, 다짜고짜 10번째 방의 아이템을 내놓으라고 할 때</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="n">my_items</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">검</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">방패</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">포션</span><span class="sh">"</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">my_items</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="c1"># 5번 인덱스 방 따위는 애초에 공사된 적이 없습니다! (list index out of range)
+</span></code></pre></div></div>
+
+<h3 id="9-modulenotfounderror-모듈-실종-에러">9. ModuleNotFoundError (모듈 실종 에러)</h3>
+<p><strong>사망 원인</strong>: <code class="language-plaintext highlighter-rouge">import</code> 로 외부의 꿀 기능(패키지)을 불러오라 명령했는데, 파이썬이 시스템 연합을 다 뒤져도 그 파일을 찾지 못했을 때 터집니다. (이름 스펠링이 틀렸거나, <code class="language-plaintext highlighter-rouge">pip install</code> 로 설치를 깜빡했을 확률이 99%입니다)</p>
+
+<h3 id="10-recursionerror-무한-루프재귀-에러">10. RecursionError (무한 루프/재귀 에러)</h3>
+<p><strong>사망 원인</strong>: 함수 안에 함수가 자기 자신을 계속해서 부르는 굴레(재귀)에 빠져, 파이썬 엔진이 정해둔 뇌의 한계치(보통 깊이 1,000번)를 초과해 장렬히 뻗어버렸을 때 발생합니다. 정지 조건(브레이크)을 빼먹은 코드를 짰을 때 주로 만납니다.</p>
+
+<h3 id="11-zerodivisionerror-0-나누기-에러">11. ZeroDivisionError (0 나누기 에러)</h3>
+<p><strong>사망 원인</strong>: 컴퓨터 공학의 절대 금기, 즉 어떤 숫자를 감히 <code class="language-plaintext highlighter-rouge">0</code>으로 나누려고 시도할 때 파이썬 코어가 보호 모드를 발동하며 뻗습니다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 에러 폭발 예시
+</span><span class="n">result_val</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">/</span> <span class="mi">0</span> <span class="c1"># 파이썬은 우주가 무너져도 이 계산을 단호히 거부합니다! (division by zero)
+</span></code></pre></div></div>
+
+<p>에러 창이 뜨는 것에 공포를 느끼지 단호히 맞서 탐정처럼 원인을 사냥해 보세요!</p>
+
+<h3 id="-학습-목차">📖 학습 목차</h3>
+
+<hr />
+
+<h2 id="-교재-상세-학습-37-프로그램-추락을-막는-구명조끼-try--except">📖 교재 상세 학습: 37 프로그램 추락을 막는 구명조끼: try ~ except</h2>
+
+<h2 id="37-에러의-치명상을-흡수하는-방파제-try--except">37 에러의 치명상을 흡수하는 방파제: try ~ except</h2>
+
+<p>파이썬 스크립트가 돌아가다 갑작스레 픽 하고 쓰러지는(Crash) 사유는 셀 수 없이 많습니다. 텅 빈 리스트에서 무리하게 0번째 방을 열려고 할 때 터지는 <code class="language-plaintext highlighter-rouge">IndexError</code>, 혹은 명백한 한글 문자열을 우격다짐으로 숫자로 바꾸려다 발생하는 <code class="language-plaintext highlighter-rouge">ValueError</code> 등이 대표적인 주범들입니다.</p>
+
+<p><strong>코드: 끔찍한 파국 (에러 발생 상황)</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">str_data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">이백퍼센트</span><span class="sh">"</span>
+<span class="c1"># 파이썬은 한글 "이백퍼센트"를 수학적 정수로 변환할 능력이 없으므로 이 지점에서 비명을 지르며 뻗어버립니다!
+</span><span class="n">num</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">str_data</span><span class="p">)</span> 
+<span class="nf">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이런 치명적인 사태로부터 내 소중한 코드를 구출하려면, 폭발 위험이 있는 불안 불안한 코드를 일단 안전지대인 <code class="language-plaintext highlighter-rouge">try</code> (한 번 시도해 보기) 블록 안에 격리시키고, 만약 사고가 터졌을 때 대피할 플랜 B 경로를 <code class="language-plaintext highlighter-rouge">except</code> (예외 처리) 블록에 꼼꼼히 마련해 구명조끼를 채워주면 됩니다.</p>
+
+<p><strong>코드: 튼튼한 이중 방어벽 구축</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">str_data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">이백퍼센트</span><span class="sh">"</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># 일단 겁먹지 말고 담담하게 코드 실행을 시도해 봅니다.
+</span>    <span class="n">num</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">str_data</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">변환에 성공한 숫자: </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="c1"># 만일 치명적인 ValueError가 터졌다면? 프로그램이 사망하는 대신 즉각 이 대피 로직으로 피신합니다!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">경고: </span><span class="sh">'</span><span class="si">{</span><span class="n">str_data</span><span class="si">}</span><span class="sh">'</span><span class="s">는(은) 정상적인 숫자로 변환될 수 없습니다. 임시 기본값 0을 강제로 부여합니다.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+<p>이러한 <code class="language-plaintext highlighter-rouge">try-except</code> 기법을 곳곳에 잘 심어두면, 실행 도중 돌발적인 에러 폭탄이 날아들더라도 프로그램이 허무하게 뻗지 않고 유연하게 살아서 끝단까지 순항할 수 있습니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-38-정체-모를-에러에-대비하라-만능-방패-exception">📖 교재 상세 학습: 38 정체 모를 에러에 대비하라: 만능 방패 Exception</h2>
+
+<h2 id="38-어떤-에러가-터질지-막막할-때-꺼내는-마스터키-exception">38 어떤 에러가 터질지 막막할 때 꺼내는 마스터키: Exception</h2>
+
+<p>앞 장에서는 발생할 법한 <code class="language-plaintext highlighter-rouge">ValueError</code>라는 예외 이름을 우리가 미리 정확히 조준해서 방어해 냈습니다. 하지만 외부 인터넷 접속이 끊기거나, 파일 권한이 꼬여서 열리지 않는 등 도무지 어떤 유형의 돌발 에러가 터질지 짐작조차 가지 않을 땐 어떻게 대응해야 할까요?</p>
+
+<p>이럴 때 현업에서는 모든 종류의 에러를 두루뭉술하게 잡아먹는 가장 큰 물귀신, <code class="language-plaintext highlighter-rouge">Exception</code> 방패를 내세워 투망식으로 방어 라인을 구축합니다.</p>
+
+<p><strong>코드: 정체불명의 에러 포획하기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">empty_basket</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># 텅 빈 바구니에서 5번째 칸을 요구하니 다짜고짜 에러가 폭발하겠죠?
+</span>    <span class="nf">print</span><span class="p">(</span><span class="n">empty_basket</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> 
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">ex_info</span><span class="p">:</span>
+    <span class="c1"># 무슨 에러가 터질지 도통 모르겠을 땐 'Exception as 별명' 문법을 써두면,
+</span>    <span class="c1"># 친절한 파이썬 엔진이 해당 에러의 구체적 정체를 'ex_info' 객체 안에 고스란히 묶어서 바쳐줍니다.
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">앗! 시스템 런타임 중 돌발 상황이 벌어졌습니다. 분석된 에러 원인: </span><span class="si">{</span><span class="n">ex_info</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 광범위한 트릭은 365일 무정지로 돌아가야 하는 백엔드 웹 서버 등을 지탱할 때, 시스템이 뻗는 불상사만큼은 기필코 막아내야 하는 절체절명의 상황에서 무척 든든한 동아줄이 됩니다. 
+하지만 너무 이 만능 방패에만 의존해 남용하다 보면, 오히려 개발자가 “반드시 직접 보고 수술해서 고쳐야 할 진짜 고름(치명적 버그)”조차 흔적 없이 꿀꺽 삼켜버리는 독이 될 수 있으니 각별히 유의해야 합니다.</p>
+
+<hr />
+
+<h3 id="-미니-실습-0블랙홀-회피-기동-훈련">💻 미니 실습: ‘0블랙홀’ 회피 기동 훈련</h3>
+
+<p><strong>Quiz 1</strong> 수학의 룰에서 어떤 수를 ‘0’으로 나누는 행위는 강력히 금지된 불문율입니다. 파이썬 역시 이를 강행하면 고통스러운 <code class="language-plaintext highlighter-rouge">ZeroDivisionError</code>를 토해내며 장렬히 쓰러집니다. 이 끔찍한 종말을 <code class="language-plaintext highlighter-rouge">try-except</code> 구조로 세련되게 회피해 보세요.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">target_num</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="c1"># 10을 0이라는 숫자로 나누는 위험한 코드를 배치하고, 에러 감지 시 "0으로 분할할 수 없습니다!"라는 경고문이 뜨도록 코딩하세요.
+</span>
+</code></pre></div></div>
+
+<hr />
+<details>
+<summary><b>모범 답안 보기</b></summary>
+
+**풀이 1**
+```python
+target_num = 10
+try:
+    final_result = target_num / 0
+except ZeroDivisionError:
+    print("0으로 분할할 수 없습니다!")
+```
+</details>
+
+<hr />
+
+<h2 id="-교재-상세-학습-39-내가-심판이-되어-경고장-던지기-raise">📖 교재 상세 학습: 39 내가 심판이 되어 경고장 던지기: raise</h2>
+
+<h2 id="39-내가-설계자로서-직접-레드카드-뽑아-들기-raise">39 내가 설계자로서 직접 레드카드 뽑아 들기: raise</h2>
+
+<p>지금껏 우리는 파이썬 엔진이 던지는 에러를 헐떡이며 방어하는 수비수 역할만 해왔습니다. 하지만 여러분이 거대한 시스템을 직접 건축하다 보면 파이썬 문법 체계상으론 눈곱만큼도 문제가 없지만 <strong>여러분이 창조한 비즈니스 룰</strong>에는 명백히 어긋나서 당장 구동을 멈춰 세워야 할 타이밍이 필연적으로 찾아옵니다.</p>
+
+<p>가령 엄격한 ‘미성년자 출입 금지’ 로직인데 사용자 나이 칸에 ‘마이너스 5살’이라는 기괴한 값이 유입되었다면 어떡할까요?</p>
+
+<p>이럴 때 설계자인 여러분이 <strong>주도적으로 직접 에러를 터뜨려서(raise)</strong> 위기 상황을 사방에 알릴 수 있습니다.</p>
+
+<p><strong>코드: 억지로 에러를 만들어내 폭발시키기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">validate_age_logic</span><span class="p">(</span><span class="n">user_age</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user_age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># 이건 파이썬 엔진 잘못이 아니라 내 통제 규칙의 위반입니다! 시스템에 억지로 에러 수류탄을 까넣습니다.
+</span>        <span class="k">raise</span> <span class="nc">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">나이가 세상에 어떻게 음수(</span><span class="si">{</span><span class="n">user_age</span><span class="si">}</span><span class="s">살)일 수 있습니까? 재입력 해주세요!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">확인되었습니다. 당신의 나이는 </span><span class="si">{</span><span class="n">user_age</span><span class="si">}</span><span class="s">살 이군요. 환영합니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nf">validate_age_logic</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">ValueError</span> <span class="k">as</span> <span class="n">err_msg</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">시스템 입력 오류 방어됨: </span><span class="si">{</span><span class="n">err_msg</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="-진정한-고수의-시크릿-팁-개미지옥이중-반복문-초스피드-탈출법">💎 진정한 고수의 시크릿 팁: 개미지옥(이중 반복문) 초스피드 탈출법</h4>
+<p>이 <code class="language-plaintext highlighter-rouge">raise</code> 문법에는 또 다른 기상천외하고 짜릿한 쓰임새가 숨어 있습니다.
+전 장에서 배운 일반적인 <code class="language-plaintext highlighter-rouge">break</code>는 자신이 갇힌 가장 인접한 반복문 딱 1겹만 가까스로 부수고 나갑니다. 즉 겹겹이 포개진 <code class="language-plaintext highlighter-rouge">for</code>문 한가운데 있다면 고작 한 칸 탈출에 그쳐, 결국 그 바깥 바퀴가 재가동되는 악몽을 겪습니다.</p>
+
+<p>이때, 가장 바깥쪽 안전지대까지 단숨에 로켓처럼 탈출하고 싶다면 짓궂게도 고의로 에러(<code class="language-plaintext highlighter-rouge">raise</code>)를 발생시키고 제일 바깥의 <code class="language-plaintext highlighter-rouge">try</code>가 이를 부드럽게 받아 안게 만드는 고급 트릭을 구사합니다.</p>
+
+<p><strong>코드: 이중 반복문 쾌속 탈주 닌자 트릭</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">treasure_boxes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">A박스</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">몽당연필</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">너덜한 지우개</span><span class="sh">'</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">B박스</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">녹슨 가위</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">✨영롱한 다이아몬드✨</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">고장난 볼펜</span><span class="sh">'</span><span class="p">],</span>
+    <span class="sh">'</span><span class="s">C박스</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">플라스틱 자</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">커터칼</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">box_id</span><span class="p">,</span> <span class="n">inner_items</span> <span class="ow">in</span> <span class="n">treasure_boxes</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">single_item</span> <span class="ow">in</span> <span class="n">inner_items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">single_item</span> <span class="o">==</span> <span class="sh">'</span><span class="s">✨영롱한 다이아몬드✨</span><span class="sh">'</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">!!! 아싸! </span><span class="si">{</span><span class="n">box_id</span><span class="si">}</span><span class="s"> 구석에서 전설의 다이아몬드를 발굴해 냈습니다 !!!</span><span class="sh">"</span><span class="p">)</span>
+                <span class="c1"># 목표 달성 완료! 더 이상 겉바퀴인 A박스, C박스를 무의미하게 뒤적거릴 이유가 없으므로 
+</span>                <span class="c1"># 여기서 에러를 날려 반복문 2겹의 사슬을 한 방에 찢어버리고 탈출합니다.
+</span>                <span class="k">raise</span> <span class="nb">StopIteration</span> 
+            
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">box_id</span><span class="si">}</span><span class="s"> 안의 내용물 </span><span class="sh">'</span><span class="si">{</span><span class="n">single_item</span><span class="si">}</span><span class="sh">'</span><span class="s"> 탐색했으나 꽝입니다.</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">StopIteration</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">목표물을 확보하여 탐색 작전을 전면 종료하고 철수합니다.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 얄미운 트릭을 전장(실무)에서 구사하면 스파게티처럼 꼬인 로직도 칼처럼 명쾌하게 토막 낼 수 있습니다. 이로써 여러분도 위기관리의 달인 <code class="language-plaintext highlighter-rouge">try</code>, <code class="language-plaintext highlighter-rouge">except</code>, 그리고 주도적인 지휘자 <code class="language-plaintext highlighter-rouge">raise</code> 삼총사를 자유자재로 지휘하여 무너지지 않는 요새 같은 앱을 설계할 준비를 마쳤습니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-40-범인의-발자국-쫓기-traceback-추적">📖 교재 상세 학습: 40 범인의 발자국 쫓기: traceback 추적</h2>
+
+<h2 id="40-범인의-흔적을-쫓아라-traceback-트레이스백">40 범인의 흔적을 쫓아라: <code class="language-plaintext highlighter-rouge">traceback</code> (트레이스백)</h2>
+
+<p>우리가 앞서 배운 <code class="language-plaintext highlighter-rouge">try ~ except</code> 매직 그물로 에러를 잡으면, 프로그램이 튕겨서 뻗어버리는 대참사는 막을 수 있습니다. 하지만 이 그물에는 한 가지 단점이 있습니다. 파이썬이 “도대체 파일의 몇 번째 줄에서, 정확히 왜 에러가 났는지” 입을 꾹 다물어버린다는 것입니다. (에러를 꿀꺽 삼켜버렸기 때문이죠!)</p>
+
+<p>이럴 때, 범행 현장의 모든 단서(몇 번째 줄 코드, 어느 함수 등)를 적어둔 비밀 장부를 몰래 꺼내보려면 파이썬의 마법 돋보기인 <strong><code class="language-plaintext highlighter-rouge">traceback</code> (트레이스백)</strong> 모듈을 꺼내야 합니다!</p>
+
+<h3 id="1-traceback추적기가-뭔가요">1. Traceback(추적기)가 뭔가요?</h3>
+
+<p>에러 방패(<code class="language-plaintext highlighter-rouge">try</code>) 없이 에러가 파바박 터지며 프로그램이 죽을 때 콜솔 창에 주르륵 쏟아지던 무서운 빨간 글씨들을 본 적 있죠? 그 무서운 발자국들이 바로 <code class="language-plaintext highlighter-rouge">Traceback</code>입니다.
+“A 함수가 B 함수를 불렀고, B 함수가 15번째 줄에서 C를 호출하다가 펑 터졌다!”를 순서대로 기록해 놓은 비행기 블랙박스와도 같습니다.</p>
+
+<p>에러를 안전하게 <code class="language-plaintext highlighter-rouge">except</code>로 잡아먹은 상태에서도 이 블랙박스(Traceback) 내용을 몰래 출력해 보려면, <strong><code class="language-plaintext highlighter-rouge">traceback.print_exc()</code></strong> 마법 주문을 쓰면 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">traceback</span>
+
+<span class="k">def</span> <span class="nf">make_trouble</span><span class="p">():</span>
+    <span class="c1"># 고의로 수학 에러 발생시키기 (0으로 나누기)
+</span>    <span class="k">return</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">게임을 정상적으로 실행합니다...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">make_trouble</span><span class="p">()</span>
+    
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">앗, 에러를 그물로 부드럽게 잡았습니다!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">내가 잡은 에러 이름: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">하지만 돋보기로 범행 현장(블랙박스)을 상세히 분석해 보겠습니다!</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 여기서 에러의 발자국(Traceback)을 예쁘게 출력해 줍니다!
+</span>    <span class="n">traceback</span><span class="p">.</span><span class="nf">print_exc</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="-실행-결과">💻 실행 결과:</h4>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>게임을 정상적으로 실행합니다...
+
+앗, 에러를 그물로 부드럽게 잡았습니다!
+내가 잡은 에러 이름: division by zero
+
+하지만 돋보기로 범행 현장(블랙박스)을 상세히 분석해 보겠습니다!
+
+Traceback (most recent call last):
+  File "game.py", line 10, in &lt;module&gt;
+    make_trouble()
+  File "game.py", line 5, in make_trouble
+    return 10 / 0
+ZeroDivisionError: division by zero
+</code></pre></div></div>
+
+<p>보셨나요? 분명 프로그램이 강제로 튕기거나 죽지 않았는데도 불구하고 파이썬이 어디서(line 5) 터졌는지 친절하게 현장 기록을 똑같이 다 알려주고 있습니다.</p>
+
+<h3 id="2-왜-이게-중요할까">2. 왜 이게 중요할까?</h3>
+
+<p>이렇게 <code class="language-plaintext highlighter-rouge">traceback</code> 모듈을 쓰면, <strong>“에러가 나도 프로그램 멈추지 않고 계속 실행되게 하면서 ➔ 동시에 에러 발생 위치와 내역은 눈에 안 띄게 숨겨서 로그(.txt) 파일에만 꼼꼼히 기록해두는”</strong> 고오급 스킬이 가능해집니다.</p>
+
+<p>이는 고수 프로그래머들이 자신의 게임 서버나 웹사이트를 1년 365일 내내 한 번도 튕기지 않게 관리하는 최고의 비법이랍니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-11-커스텀-에러-공장장-나만의-예외-만들기">📖 교재 상세 학습: 11 커스텀 에러 공장장: 나만의 예외 만들기</h2>
+
+<h2 id="11-기성품은-가라-나만의-전용-에러-폭탄예외-빚어내기">11 기성품은 가라! 나만의 전용 에러 폭탄(예외) 빚어내기</h2>
+
+<p>기초 문법을 배우는 동안 우리는 <code class="language-plaintext highlighter-rouge">ValueError</code>나 <code class="language-plaintext highlighter-rouge">IndexError</code> 같이 파이썬 본사가 납품해 주는 기성품 에러들만 요리조리 피하며 막아냈습니다. 하지만 여러분이 실전 웹사이트의 회원가입 폼을 설계하다 보면, <code class="language-plaintext highlighter-rouge">"아이디가 이미 DB에 존재합니다"</code>, <code class="language-plaintext highlighter-rouge">"비밀번호 길이가 허접합니다"</code> 같은 프로젝트만의 스페셜한 경고 상황을 시스템적인 에러로 승격시키고 싶어집니다.</p>
+
+<p>이럴 땐 방금 전 배운 위대한 기법, ‘클래스의 상속’을 역이용하면 됩니다. 파이썬 세계관에서 모든 에러들의 최고봉 부모 격인 <code class="language-plaintext highlighter-rouge">Exception</code> 클래스를 베이스로 상속받기만 하면 <strong>세상에 단 하나뿐인 나만의 규격화된 커스텀 에러 클래스</strong>가 뚝딱 탄생합니다.</p>
+
+<p><strong>코드: 내 마음에 안 들면 내가 손수 지은 에러 수류탄 투척하기</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Exception 이라는 에러계의 단군 할아버지를 상속받아, '나만의 에러'라는 꼬리표를 합법적으로 쟁취합니다.
+</span><span class="k">class</span> <span class="nc">WeakPasswordError</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># 안에는 아무 내용이 없어도, 부모의 유전자 덕분에 완벽한 에러 취급을 받습니다.
+</span>
+<span class="k">def</span> <span class="nf">register_user</span><span class="p">(</span><span class="n">pwd_str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">pwd_str</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="c1"># 내 엄격한 보안 규칙에 걸리면, 파이썬 기본 에러가 아닌 내가 직조한 커스텀 에러를 우렁차게 터뜨립니다!
+</span>        <span class="k">raise</span> <span class="nc">WeakPasswordError</span><span class="p">(</span><span class="sh">"</span><span class="s">보안 경고: 비밀번호는 최소 4글자 이상의 길이를 확보해야 합니다.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">훌륭합니다, 회원가입이 안전하게 승인되었습니다!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 이제 try-except 함정망을 칠 때도 오직 '나의 수제 에러'만 골라서 저격 포획할 수 있는 특권이 주어집니다!
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="nf">register_user</span><span class="p">(</span><span class="sh">"</span><span class="s">123</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">WeakPasswordError</span> <span class="k">as</span> <span class="n">custom_err</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">가입 프로세스 중단됨 - 사유: </span><span class="si">{</span><span class="n">custom_err</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>나만의 규격과 이름을 가진 에러 체계를 직접 조각하기 시작하면, 대규모 프로젝트를 이끌 때 버그의 진원지를 파악하기가 숨 막히게 수월해집니다. 축하합니다! 드디어 여러분은 남이 던진 에러만 도망 다니며 막던 초보 티를 완벽히 벗고, 객체지향 프로그래밍(OOP)의 진정한 자유도를 활용해 시스템의 철통같은 아키텍처를 호령하는 설계자의 반열에 올랐습니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-에러-잡는-마법의-그물-try--except">📖 교재 상세 학습: 1. 에러 잡는 마법의 그물: try ~ except</h2>
+
+<h2 id="1-에러-잡는-마법의-그물-try--except">1. 에러 잡는 마법의 그물: <code class="language-plaintext highlighter-rouge">try ~ except</code></h2>
+
+<p>우리가 파이썬에게 일을 시키다 보면, 크게 두 가지 종류의 에러를 만납니다. 하나는 ‘말이 안 되는 문법’을 썼을 때 파이썬이 아예 이해를 못 하는 문법 에러! 다른 하나는 문법은 맞는데 실행하다가 문제가 생기는 런타임 에러입니다.</p>
+
+<h3 id="11-내가-글을-잘못-썼네-블록문-오타-에러">1.1 내가 글을 잘못 썼네! (블록문, 오타 에러)</h3>
+<p>이 에러들은 우리가 파이썬의 맞춤법을 틀렸을 때 파이썬이 처음부터 차갑게 실행을 거부하는 에러들입니다. 보통 빨간 줄이 쭉 그어집니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">SyntaxError</code> (문법 오류)</strong>: 괄호를 안 닫았거나, 콜론(<code class="language-plaintext highlighter-rouge">:</code>)을 빼먹은 경우!</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">IndentationError</code> (들여쓰기 오류)</strong>: <code class="language-plaintext highlighter-rouge">if</code>문이나 <code class="language-plaintext highlighter-rouge">for</code>문 안에 들여쓰기를 제대로 맞추지 않아 줄이 삐뚤빼뚤할 때 발생합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">NameError</code> (이름 오류)</strong>: 아직 만들지도 않은 변수 이름을 부르면 “걔가 누군데요?” 하면서 화를 냅니다.</li>
+</ul>
+
+<p>이런 에러들은 그물이 아니라, 우리 스스로 오타를 즉시 찾아내서 고쳐주어야 합니다!</p>
+
+<hr />
+
+<h3 id="12-안전-그물-던지기-try-except">1.2 안전 그물 던지기: <code class="language-plaintext highlighter-rouge">try</code>, <code class="language-plaintext highlighter-rouge">except</code></h3>
+
+<p>맞춤법(문법)은 완벽해도, 막상 코드를 돌리다 보면 유저가 이상한 값을 넣어서 에러가 터질 때가 있습니다. 이럴 땐 프로그램이 튕기지 않도록 <strong>안전 그물</strong>을 쳐야 합니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">try</code> : “일단 이 코드를 시도(Try)해 봐!”</li>
+  <li><code class="language-plaintext highlighter-rouge">except</code> : “만약 에러가 터지면 튕기지 말고, 여기 쓰인 코드를 대신 실행해!”</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># 에러가 발생할지도 모르는 위험한 구역!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">사냥을 시작해 볼까?</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span> <span class="c1"># 수학에서 0으로 나누는 건 불가능하므로 에러 발생!
+</span>    
+<span class="k">except</span> <span class="nb">ZeroDivisionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> 
+    <span class="c1"># 0으로 나눴을 때 발생하는 특별한 에러를 잡는 그물!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">삐용삐용! 에러가 잡혔습니다: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 코드를 실행하면 프로그램이 강제 종료되는 대신, 부드럽게 메시지만 남기고 다음 코드로 잘 넘어갑니다.</p>
+
+<hr />
+
+<h3 id="13-어찌됐든-무조건-실행해-finally와-else">1.3 어찌됐든 무조건 실행해! (<code class="language-plaintext highlighter-rouge">finally</code>와 <code class="language-plaintext highlighter-rouge">else</code>)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">try</code>와 <code class="language-plaintext highlighter-rouge">except</code> 뒤에 추가로 붙여서 더욱 똑똑한 에러 처리를 할 수도 있습니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">else</code> : 에러가 <strong>안 터지고 무사히 끝났을 때만</strong> 기분 좋게 실행되는 보너스 구역입니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">finally</code> : 에러가 터지든 안 터지든 <strong>마지막에 무조건 100% 실행</strong>되는 구역입니다. 주로 열려있는 파일을 닫거나 뒷정리를 할 때 꼭 씁니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">게임을 로딩합니다...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="c1"># raise 구문은 일부러 에러를 강제로 던져서 테스트할 때 씁니다!
+</span>    <span class="c1"># raise Exception("강제 에러 던지기!")
+</span><span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">에러 발생! 로딩 실패!</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">에러가 한 번도 안 터졌네? 게임 시작!</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">게임이 성공하든 터지든 이 문장은 무조건 출력돼!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 4가지 키워드만 알면 여러분은 어떤 에러 폭탄이 터져도 끄떡없는 무적의 프로그램을 짤 수 있습니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-에러-가족의-족보-예외-클래스">📖 교재 상세 학습: 2. 에러 가족의 족보: 예외 클래스</h2>
+
+<h2 id="2-에러-가족의-족보-예외-클래스">2. 에러 가족의 족보: 예외 클래스</h2>
+
+<p>에러(예외)들도 사실은 파이썬의 <strong>‘클래스(Class)’</strong> 로 만들어진 하나의 큰 가족(가문)이랍니다! 그 족보를 알면 어떤 에러를 어떤 그물(<code class="language-plaintext highlighter-rouge">except</code>)로 잡아야 할지 작전이 보입니다.</p>
+
+<h3 id="21-내장-에러-가문족보-파헤치기">2.1 내장 에러 가문(족보) 파헤치기</h3>
+
+<p>파이썬이 기본으로 가지고 있는 에러 가문의 꼭대기에는 가장 큰 할아버지인 <code class="language-plaintext highlighter-rouge">BaseException</code>과 <code class="language-plaintext highlighter-rouge">Exception</code> 클래스가 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">Exception</code> (모든 에러의 기둥)</strong>
+    <ul>
+      <li>거의 모든 런타임 에러들이 바로 이 <code class="language-plaintext highlighter-rouge">Exception</code> 이라는 아버지 클래스를 상속받아서 만들어집니다.</li>
+      <li>그래서 <code class="language-plaintext highlighter-rouge">except Exception:</code> 그물을 치면, 세상의 거의 모든 잡다한 에러를 다 걸러낼 수 있습니다!</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ArithmeticError</code> (수학 에러 가족)</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Exception</code>의 자식 중 하나입니다. 주로 수학 계산을 하다가 터지는 에러들이 속해 있습니다.</li>
+      <li>0으로 나누려 할 때 터지는 <code class="language-plaintext highlighter-rouge">ZeroDivisionError</code>가 바로 이 가족의 대표적인 손자입니다!</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">LookupError</code> (찾기 실패 에러 가족)</strong>
+    <ul>
+      <li>리스트의 칸 수를 넘어가는 곳을 찾거나(<code class="language-plaintext highlighter-rouge">IndexError</code>), 딕셔너리에 없는 키를 달라고 조를 때(<code class="language-plaintext highlighter-rouge">KeyError</code>) 발생하는 에러들입니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>이처럼 파이썬의 에러들은 꼬리에 꼬리를 무는 부모-자식 상속 구조로 이루어져 있습니다.</p>
+
+<hr />
+
+<h3 id="22-나만의-맞춤형-에러-경고장-만들기">2.2 나만의 맞춤형 에러 경고장 만들기!</h3>
+
+<p>게임에서 플레이어의 레벨이 0보다 떨어지는 것은 원래 파이썬에는 없는 오류입니다. 문법이나 수학적으로는 문제가 없지만 우리 게임 규칙에서는 <strong>엄청난 에러</strong>죠!
+이럴 때는 파이썬의 에러 족보에 ‘우리가 만든 에러’를 입양시킬 수 있습니다.</p>
+
+<p>방법은 아주 간단합니다. 파이썬의 <code class="language-plaintext highlighter-rouge">Exception</code> 클래스를 상속받는 우리만의 클래스를 만드는 것입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 나만의 '레벨 마이너스 방지' 에러 클래스 만들기
+</span><span class="k">class</span> <span class="nc">LevelMinusError</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">bad_level</span><span class="p">):</span>
+        <span class="c1"># 아버지(Exception)한테 메시지를 넘겨줌
+</span>        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">bad_level</span> <span class="o">=</span> <span class="n">bad_level</span> <span class="c1"># 잘못 입력된 레벨도 팁으로 저장해두기
+</span>
+<span class="c1"># 2. 게임에 써먹기!
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="n">player_level</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="k">if</span> <span class="n">player_level</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># 내가 만든 위험 경보 강제로 울리기! (raise)
+</span>        <span class="k">raise</span> <span class="nc">LevelMinusError</span><span class="p">(</span><span class="sh">"</span><span class="s">레벨은 음수가 될 수 없어!</span><span class="sh">"</span><span class="p">,</span> <span class="n">player_level</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">LevelMinusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># 내가 만든 특별한 에러 그물로 잡아내기!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[경고] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">입력된 이상한 레벨 값: </span><span class="si">{</span><span class="n">e</span><span class="p">.</span><span class="n">bad_level</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이렇게 하면, 파이썬이 모르는 우리만의 비즈니스 룰 기반 에러도 멋지게 방어할 수 있습니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-3-범인의-흔적을-쫓아라-traceback">📖 교재 상세 학습: 3. 범인의 흔적을 쫓아라: traceback</h2>
+
+<h2 id="3-범인의-흔적을-쫓아라-traceback">3. 범인의 흔적을 쫓아라: traceback</h2>
+
+<p>우리가 <code class="language-plaintext highlighter-rouge">try ~ except</code> 매직 그물로 에러를 잡으면, 프로그램이 튕기지 않는 것은 좋지만 파이썬이 “도대체 파일의 몇 번째 줄에서 왜 에러가 났는지” 입을 꾹 다물어버린다는 단점이 있습니다. 에러를 꿀꺽 삼켜버렸기 때문이죠!</p>
+
+<p>이럴 때, 범행 현장의 모든 단서(몇 번째 줄, 어느 함수 등)를 적어둔 비밀 장부를 꺼내보려면 마법의 돋보기, <strong><code class="language-plaintext highlighter-rouge">traceback</code> (트레이스백)</strong> 모듈을 꺼내야 합니다!</p>
+
+<h3 id="31-traceback추적기가-뭐길래">3.1 Traceback(추적기)가 뭐길래?</h3>
+
+<p>에러가 파바박 터지며 프로그램이 죽을 때 콜솔 창에 주르륵 쏟아지던 무서운 빨간 글씨들을 본 적 있죠? 그 무서운 발자국들이 바로 <code class="language-plaintext highlighter-rouge">Traceback</code>입니다.
+“A 함수가 B 함수를 불렀고, B 함수가 15번째 줄에서 C를 호출하다가 펑 터졌다!”를 순서대로 기록해 놓은 블랙박스와도 같습니다.</p>
+
+<p>에러를 <code class="language-plaintext highlighter-rouge">except</code>로 잡아먹은 상태에서도 이 블랙박스(Traceback) 내용을 출력하려면 <code class="language-plaintext highlighter-rouge">traceback.print_exc()</code> 마법 주문을 쓰면 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">traceback</span>
+
+<span class="k">def</span> <span class="nf">make_error</span><span class="p">():</span>
+    <span class="c1"># 고의로 에러 발생시키기 (0으로 나누기)
+</span>    <span class="k">return</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">실행을 시작합니다...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">make_error</span><span class="p">()</span>
+    
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">앗, 에러를 그물로 부드럽게 잡았습니다!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">하지만 돋보기로 범행 현장을 상세히 분석해야겠어!</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># 여기서 에러의 발자국(Traceback)을 예쁘게 출력해줍니다!
+</span>    <span class="n">traceback</span><span class="p">.</span><span class="nf">print_exc</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="실행-결과-1">실행 결과:</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>실행을 시작합니다...
+앗, 에러를 그물로 부드럽게 잡았습니다!
+하지만 돋보기로 범행 현장을 상세히 분석해야겠어!
+
+Traceback (most recent call last):
+  File "game.py", line 10, in &lt;module&gt;
+    make_error()
+  File "game.py", line 5, in make_error
+    return 10 / 0
+ZeroDivisionError: division by zero
+</code></pre></div></div>
+
+<p>보셨나요? 프로그램이 강제로 튕기지 않았는데도 불구하고 파이썬이 어디서 터졌는지 친절하게 다 알려주고 있습니다.</p>
+
+<p>이렇게 <code class="language-plaintext highlighter-rouge">traceback</code> 모듈을 쓰면, 프로그램은 프로그램대로 멈추지 않고 계속 실행되게 하면서, 에러 내역은 숨겨진 텍스트 파일(로그 파일)에 몰래 생생하게 기록해둘 수 있습니다. 고수 프로그래머들이 자신의 게임 서버를 24시간 내내 튕기지 않고 관리하는 최고의 비법이랍니다!</p>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">직렬화 (Serialization) 과정</text>
+  
+  <!-- Python Object -->
+  <rect x="50" y="100" width="150" height="80" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+  <text x="125" y="145" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">파이썬 객체 (Dict)</text>
+  
+  <!-- Serialization Arrow -->
+  <path d="M 200 140 L 280 140" stroke="#2196f3" stroke-width="3" marker-end="url(#arrowhead)" />
+  <text x="240" y="130" font-family="Arial" font-size="14" text-anchor="middle" fill="#2196f3">직렬화 (Serialize)</text>
+  
+  <!-- JSON String -->
+  <rect x="280" y="100" width="150" height="80" rx="10" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" />
+  <text x="355" y="145" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#ef6c00">JSON 문자열</text>
+  
+  <!-- Deserialization Arrow -->
+  <path d="M 280 160 L 200 160" stroke="#4caf50" stroke-width="3" marker-end="url(#arrowhead)" />
+  <text x="240" y="175" font-family="Arial" font-size="14" text-anchor="middle" fill="#4caf50">역직렬화 (Deserialize)</text>
+  
+  <!-- Explanation -->
+  <rect x="150" y="210" width="300" height="70" rx="10" fill="#fff" stroke="#333" stroke-width="1" />
+  <text x="300" y="235" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">메모리 상의 객체를 전송/저장 가능한</text>
+  <text x="300" y="255" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">텍스트나 바이너리 형태로 바꾸는 과정</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

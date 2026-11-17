@@ -1,0 +1,33 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">시간 복잡도 (Big-O) 그래프</text>
+  
+  <!-- Axes -->
+  <line x1="50" y1="250" x2="550" y2="250" stroke="#333" stroke-width="2" />
+  <line x1="50" y1="250" x2="50" y2="50" stroke="#333" stroke-width="2" />
+  <text x="560" y="255" font-family="Arial" font-size="14" text-anchor="end">입력 크기 (n)</text>
+  <text x="40" y="50" font-family="Arial" font-size="14" text-anchor="start">시간 (T)</text>
+  
+  <!-- O(1) -->
+  <line x1="50" y1="200" x2="550" y2="200" stroke="#4caf50" stroke-width="3" />
+  <text x="560" y="205" font-family="Arial" font-size="14" fill="#4caf50">O(1)</text>
+  
+  <!-- O(log n) -->
+  <path d="M 50 150 Q 150 120 550 100" stroke="#2196f3" stroke-width="3" fill="none" />
+  <text x="560" y="105" font-family="Arial" font-size="14" fill="#2196f3">O(log n)</text>
+  
+  <!-- O(n) -->
+  <line x1="50" y1="250" x2="550" y1="50" stroke="#ffeb3b" stroke-width="3" />
+  <text x="560" y="55" font-family="Arial" font-size="14" fill="#fbc02d">O(n)</text>
+  
+  <!-- O(n^2) -->
+  <path d="M 50 250 Q 200 250 550 50" stroke="#f44336" stroke-width="3" fill="none" />
+  <text x="560" y="45" font-family="Arial" font-size="14" fill="#f44336">O(n^2)</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

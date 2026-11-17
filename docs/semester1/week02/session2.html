@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠 | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester1/week02/session2.html" />
+<meta property="og:url" content="https://python.jiny.dev/semester1/week02/session2.html" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠에 대한 파이썬(Python) 강좌 문서입니다.","headline":"2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠","url":"https://python.jiny.dev/semester1/week02/session2.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          1학기 기초 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester1/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [기초] 1학기: 파이썬 기초 및 CS 원리
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="false">
+              1주차: 파이썬과 개발 환경 🐍
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week01/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3세션: 파이썬 기초 문법과 문제 해결 📦
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0  w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-3"
+              aria-expanded="true">
+              2주차: 변수와 메모리의 비밀 🧠
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse show" id="collapse-3">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week02/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 1세션: 변수의 개념과 값 할당 📦
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session2.html"
+                    class="bd-links-link d-inline-block rounded active">
+                    2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 기본 자료형 (1) - 숫자와 문자열 🔢
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 기본 자료형 (2) - 컨테이너 자료형 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 제어문 (1) - 조건문과 논리 연산 🚦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 제어문 (2) - 반복문과 이터레이터 🔄
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 1학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 1학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester1/">📌 [기초] 1학기: 파이썬 기초 및 CS 원리</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester1/week02/">Week02</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="2주차-2세션-cpython의-동적-타입과-메모리-구조-">2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠</h1>
+
+<h2 id="파이썬의-동적-타입-dynamic-type">파이썬의 동적 타입 (Dynamic Type)</h2>
+
+<h3 id="동적-타입의-정의와-유연성">동적 타입의 정의와 유연성</h3>
+<p>파이썬은 <strong>동적 타입(Dynamic Type) 언어</strong>입니다. 
+이는 변수를 선언할 때 데이터의 타입(정수, 문자열 등)을 미리 지정할 필요가 없다는 의미입니다. 변수의 타입은 할당되는 값에 따라 <strong>런타임(프로그램 실행 중)</strong>에 자동으로 결정되고 언제든지 바뀔 수 있습니다.</p>
+
+<p><img src="./img/dynamic_type_webtoon.png" alt="동적 타입의 유연성을 보여주는 로봇 웹툰" />
+<em>(파이썬 로봇은 값이 바뀔 때마다 상자를 새로 짜지 않습니다. 그저 이름표 스티커를 무거운 정수 블록에서 가벼운 문자열 풍선으로 휙 옮겨 붙일 뿐이죠!)</em></p>
+
+<hr />
+
+<h3 id="런타임에-결정되는-자료형의-특성">런타임에 결정되는 자료형의 특성</h3>
+<p>파이썬은 컴파일러 언어처럼 빌드 전에 모든 변수 타입을 확정 짓지 않습니다. 
+인터프리터가 코드를 한 줄씩 해석하다가 대입문(<code class="language-plaintext highlighter-rouge">=</code>)을 만나는 바로 그 순간, 우변에 평가된 객체의 속성을 룩업하여 런타임 시점에 변수가 가리킬 객체의 진짜 호적(자료형)을 결정합니다.</p>
+
+<hr />
+
+<h2 id="타-언어와의-내부-구현-비교">타 언어와의 내부 구현 비교</h2>
+
+<h3 id="php의-zval-공용체-방식">PHP의 zval 공용체 방식</h3>
+<p>웹 프로그래밍 언어인 PHP는 C언어 수준에서 변수를 구현할 때 <code class="language-plaintext highlighter-rouge">zval</code> (Zend Value) 이라는 공용 구조체를 사용합니다.
+하나의 <code class="language-plaintext highlighter-rouge">zval</code> 메모리 영역 내에 정수 필드, 실수 필드, 문자열 포인터 필드가 모두 겹쳐져 선언된 형태(Union)입니다. 변수 타입이 바뀔 때는 이 C 공용체의 타입 플래그(Type Flag) 바이트 값만 스위칭하여 같은 자리의 메모리를 재사용하므로, 메모리 주소값 자체는 유지한 채 값의 종류만 런타임에 유연하게 변경합니다.</p>
+
+<hr />
+
+<h3 id="javascript-v8-엔진의-태그-포인터-방식">JavaScript V8 엔진의 태그 포인터 방식</h3>
+<p>구글이 만든 크롬 브라우저의 JavaScript V8 엔진은 변수 참조에 있어 극단적인 효율성을 발휘하기 위해 <strong>태그된 포인터(Tagged Pointer)</strong> 아키텍처를 채택했습니다. 
+메모리 주소의 하위 1~3비트(64비트 정렬 상태에서 항상 0으로 비어있는 주소 비트들)에 특수한 비트 태그를 켜고 끔으로써, 이 변수가 가리키는 대상이 포인터 힙 메모리인지, 아니면 별도의 객체 생성 없이 즉석에서 비트 단위로 때려 넣을 수 있는 ‘작은 정수(Smi, Small Integer)’인지를 판별하여 속도를 높입니다.</p>
+
+<hr />
+
+<h2 id="cpython-내부-객체-모델-everything-is-an-object">CPython 내부 객체 모델 (Everything is an Object)</h2>
+
+<h3 id="pyobject-구조체와-cpython-헤더의-비밀">PyObject 구조체와 CPython 헤더의 비밀</h3>
+<p>CPython에서 모든 데이터는 <code class="language-plaintext highlighter-rouge">PyObject</code>라는 C 구조체를 상속하여 힙(Heap) 영역에 생성되는 완전한 독립 객체입니다. 파이썬에는 원시값(Primitive)이 아예 없습니다.</p>
+
+<p><img src="./img/python_internals_webtoon.png" alt="파이썬의 내부 객체 저장 방식 웹툰" />
+<em>(웹툰 비유: 파이썬 엔진 공장 라인에 떠 있는 에너지 큐브(<code class="language-plaintext highlighter-rouge">PyObject</code>)들은 각자 자기 타입(<code class="language-plaintext highlighter-rouge">ob_type</code>)표를 목에 걸고 있습니다. 그리고 변수 <code class="language-plaintext highlighter-rouge">a</code>는 그저 큐브를 향해 쏘는 레이저 포인터일 뿐입니다!)</em></p>
+
+<p>CPython의 core 헤더 파일인 <code class="language-plaintext highlighter-rouge">object.h</code>에는 다음과 같은 공통 헤더 매크로가 정의되어 있습니다:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_object</span> <span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">ob_refcnt</span><span class="p">;</span>        <span class="c1">// 참조 카운터</span>
+    <span class="k">struct</span> <span class="n">_typeobject</span> <span class="o">*</span><span class="n">ob_type</span><span class="p">;</span>  <span class="c1">// 타입 정보 포인터</span>
+<span class="p">}</span> <span class="n">PyObject</span><span class="p">;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="참조-횟수-카운터ob_refcnt의-원리">참조 횟수 카운터(ob_refcnt)의 원리</h3>
+<p><code class="language-plaintext highlighter-rouge">ob_refcnt</code> 변수는 해당 객체를 가리키는 활성 변수나 컨테이너 참조 밧줄의 총개수를 보관합니다.</p>
+<ul>
+  <li>변수에 객체를 새로 대입할 때마다 카운트가 <code class="language-plaintext highlighter-rouge">+1</code> 상승합니다.</li>
+  <li>변수의 연결이 끊기거나(재할당), 변수가 담긴 스코프(함수 등)가 파괴되어 소멸하면 카운트가 <code class="language-plaintext highlighter-rouge">-1</code> 감소합니다.</li>
+  <li>최종적으로 참조 카운터가 <code class="language-plaintext highlighter-rouge">0</code>에 도달하면 CPython 엔진은 이 객체를 즉각 힙 메모리에서 수거해 갑니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="객체-타입-신분증ob_type-포인터">객체 타입 신분증(ob_type) 포인터</h3>
+<p><code class="language-plaintext highlighter-rouge">ob_type</code> 포인터는 해당 데이터 객체가 어떤 자료형(클래스) 소속인지를 정의하는 진짜 타입 메타데이터 객체의 메모리 주소를 담고 있는 꼬리표 신분증입니다. 
+파이썬 가상 머신(VM)은 연산 시마다 이 <code class="language-plaintext highlighter-rouge">ob_type</code>을 확인하여 해당 데이터가 <code class="language-plaintext highlighter-rouge">int</code>인지 <code class="language-plaintext highlighter-rouge">str</code>인지 검사하고 올바른 연산 메서드를 실시간 동적 호출(Dynamic Dispatch)합니다.</p>
+
+<hr />
+
+<h3 id="변수는-포인터name-binding-화살표일-뿐이다">변수는 포인터(Name Binding) 화살표일 뿐이다</h3>
+<p>파이썬에서 변수명은 값을 쥐는 물리적 그릇이 아니라, 힙 영역에 띄워진 데이터 객체를 단지 가리키고만 있는 ‘포인터(참조 화살표)’ 주소 레이블(Name Binding)입니다.
+따라서 <code class="language-plaintext highlighter-rouge">a = 10</code> 후 <code class="language-plaintext highlighter-rouge">a = "hello"</code>로 변경하면, 기존의 10 객체를 개조 수술하는 것이 아니라, 메모리 어딘가에 새롭게 “hello”라는 문자열 객체를 힙에 올리고 <code class="language-plaintext highlighter-rouge">a</code>라는 이름표 화살표가 가리키는 연결 포인터 주소만 뚝 끊어서 새로운 “hello” 객체로 매핑을 스위칭하는 구조입니다.</p>
+
+<hr />
+
+<h2 id="이름name과-네임스페이스">이름(Name)과 네임스페이스</h2>
+
+<h3 id="이름name과-네임스페이스의-관계">이름(Name)과 네임스페이스의 관계</h3>
+<p>파이썬은 변수의 명칭인 <strong>이름(Name)</strong>과 실제 메모리에 띄워진 객체의 매핑 관계를 <strong>네임스페이스(Namespace)</strong>라고 부르는 파이썬 내부 사전(<code class="language-plaintext highlighter-rouge">dict</code>) 공간에서 독점 관리합니다. 
+우리가 변수 <code class="language-plaintext highlighter-rouge">a</code>를 불러내면 파이썬은 이 네임스페이스 사전에서 키(Key)인 <code class="language-plaintext highlighter-rouge">'a'</code>를 찾아서 연결된 주소값을 가져옵니다.</p>
+
+<hr />
+
+<h3 id="파이썬-네임스페이스-검색-규칙-legb">파이썬 네임스페이스 검색 규칙 (LEGB)</h3>
+<p>파이썬이 코드 상에서 특정 변수 이름을 탐색할 때는 다음과 같이 4단계로 스코프 사전을 조회하며, 이를 <strong>LEGB 규칙</strong>이라고 칭합니다:</p>
+<ol>
+  <li><strong>L (Local)</strong>: 현재 실행 중인 함수 내부 지역 영역</li>
+  <li><strong>E (Enclosed)</strong>: 현재 함수를 감싸고 있는 상위 중첩 함수 영역</li>
+  <li><strong>G (Global)</strong>: 현재 모듈(파일)의 최상단 전역 영역</li>
+  <li><strong>B (Built-in)</strong>: 파이썬이 기본으로 제공하는 내장 영역(예: <code class="language-plaintext highlighter-rouge">print</code>, <code class="language-plaintext highlighter-rouge">type</code> 등)</li>
+</ol>
+
+<hr />
+
+<h3 id="존재하지-않는-이름과-nameerror">존재하지 않는 이름과 NameError</h3>
+<p>네임스페이스 사전의 모든 구역(LEGB)을 다 뒤졌음에도 사용자가 호출한 변수명 키(Key)를 발견하지 못했을 때, 파이썬은 <code class="language-plaintext highlighter-rouge">NameError: name 'x' is not defined</code> 라는 구문 에러를 뿜으며 실행을 즉각 정지시킵니다. 
+이를 해결하기 위해 오타를 스캔하거나 해당 변수의 생성 스코프 범위를 적합하게 설계해야 합니다.</p>
+
+<hr />
+
+<h2 id="강한-타입strong-typing과-타입-힌트">강한 타입(Strong Typing)과 타입 힌트</h2>
+
+<h3 id="파이썬은-강한-타입strong-typing-언어다">파이썬은 강한 타입(Strong Typing) 언어다</h3>
+<p>동적 타입 언어라고 해서 아무 타입이나 마구잡이로 합산할 수 있는 것은 아닙니다. JavaScript 같은 약한 타입(Weak Typing) 언어는 <code class="language-plaintext highlighter-rouge">5 + '5'</code>를 실행하면 문자열 <code class="language-plaintext highlighter-rouge">'55'</code>로 강제 합산해 버리지만, 파이썬은 <strong>“명시적인 형변환(Casting)이 없다면 절대 암묵적 호환을 거부한다!”</strong>는 완강한 <strong>강한 타입 언어</strong> 규정을 가집니다.
+만일 타입 변환 없이 텍스트와 숫자를 산술 합산하려 하면 파이썬은 즉시 런타임에 <code class="language-plaintext highlighter-rouge">TypeError</code>를 발생시키며 보호 조치를 가합니다.</p>
+
+<hr />
+
+<h3 id="타입-힌트type-hint-도입배경과-활용">타입 힌트(Type Hint) 도입배경과 활용</h3>
+<p>프로젝트 규모가 거대해지면 변수가 가리키는 진짜 타입의 정체를 눈으로 쫓기 어려워져 동적 타입을 런타임 에러 리스크를 유발합니다. 이를 보완하기 위해 PEP 484 제안에 따라 파이썬 3.5부터 변수명이나 함수 선언부에 예상되는 타입을 명시하는 <strong>타입 힌트(Type Hint)</strong> 가 도입되었습니다:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">user_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span>
+<span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1004</span>
+</code></pre></div></div>
+<p>타입 힌트는 개발 단계에서 IDE 경고나 정적 타입 검사기(mypy)를 통해서만 활용되며, 런타임에는 파이썬 인터프리터가 완전히 무시하므로 프로그램 작동 시의 추가 연산 오버헤드(Runtime Penalty)가 전무한 것이 특징입니다.</p>
+
+<hr />
+
+<h2 id="2세션-마무리">2세션 마무리</h2>
+
+<h3 id="2세션-코딩-영단어">2세션 코딩 영단어</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Dynamic</code></strong>: 동적인. (프로그램이 실행 중인 런타임에 유연하게 변동이 가능한 속성을 지칭합니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Namespace</code></strong>: 이름공간. (변수 이름들과 그 이름들이 가리키는 실제 메모리 주소를 딕셔너리 형태로 보관하고 묶는 공간입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Strong Typing</code></strong>: 강한 타입. (서로 다른 자료형 간의 암묵적인 형변환을 허용하지 않고 문법 오류를 가혹하게 발생시키는 강력한 타입 시스템 수칙입니다.)</li>
+</ul>
+
+<hr />
+
+<h3 id="2세션-vibe-coding">2세션 Vibe Coding</h3>
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬에서 현재 파일의 전역 네임스페이스 전체를 딕셔너리로 반환해 주는 내장 함수 <code class="language-plaintext highlighter-rouge">globals()</code>와, 지역 네임스페이스를 보여주는 <code class="language-plaintext highlighter-rouge">locals()</code>의 기능적 특징을 예제 코드로 쉽게 비교 설명해 줘.”</p>
+</blockquote>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

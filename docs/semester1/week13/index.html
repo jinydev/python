@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️ | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester1/week13/" />
+<meta property="og:url" content="https://python.jiny.dev/semester1/week13/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️에 대한 파이썬(Python) 강좌 문서입니다.","headline":"13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️","url":"https://python.jiny.dev/semester1/week13/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          1학기 기초 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester1/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [기초] 1학기: 파이썬 기초 및 CS 원리
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="false">
+              1주차: 파이썬과 개발 환경 🐍
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week01/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3세션: 파이썬 기초 문법과 문제 해결 📦
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-3"
+              aria-expanded="false">
+              2주차: 변수와 메모리의 비밀 🧠
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-3">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week02/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 1세션: 변수의 개념과 값 할당 📦
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 기본 자료형 (1) - 숫자와 문자열 🔢
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 기본 자료형 (2) - 컨테이너 자료형 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 제어문 (1) - 조건문과 논리 연산 🚦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 제어문 (2) - 반복문과 이터레이터 🔄
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 1학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week13/"
+              class="bd-links-link d-inline-block rounded active">
+              13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 1학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester1/">📌 [기초] 1학기: 파이썬 기초 및 CS 원리</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="13주차-알고리즘-기초-1---시간-복잡도와-big-o-️">13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️</h1>
+
+<p>이제 우리는 코드를 ‘작동하게’ 만드는 단계를 넘어, ‘효율적으로’ 만드는 단계를 배울 것입니다. 똑같은 결과가 나오는 코드라도, 어떤 코드는 0.1초 만에 끝나고 어떤 코드는 1시간이 걸릴 수 있습니다. 이를 측정하는 기준이 바로 <strong>시간 복잡도</strong>입니다.</p>
+
+<hr />
+
+<h2 id="1-시간-복잡도-time-complexity">1. 시간 복잡도 (Time Complexity)</h2>
+
+<p>시간 복잡도는 알고리즘이 실행될 때 <strong>입력 값의 크기($n$)에 따라 연산 횟수가 어떻게 증가하는가</strong>를 나타낸 것입니다. 실제 시간을 초 단위로 재는 것이 아니라, <strong>연산 횟수</strong>를 세는 것입니다.</p>
+
+<h3 id="11-big-o-표기법">1.1 Big-O 표기법</h3>
+<p>가장 최악의 경우를 가정하여 표기하는 방식입니다. (Worst-case scenario)</p>
+
+<p><img src="./img/big_o_graph.svg" alt="Big-O 그래프" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">표기법</th>
+      <th style="text-align: left">명칭</th>
+      <th style="text-align: left">특징</th>
+      <th style="text-align: left">예시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">$O(1)$</td>
+      <td style="text-align: left">상수 시간</td>
+      <td style="text-align: left">입력 크기와 상관없이 항상 일정</td>
+      <td style="text-align: left">리스트의 인덱스로 값 찾기</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$O(\log n)$</td>
+      <td style="text-align: left">로그 시간</td>
+      <td style="text-align: left">입력이 커질수록 증가 폭이 줄어듦</td>
+      <td style="text-align: left">이진 탐색 (Binary Search)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$O(n)$</td>
+      <td style="text-align: left">선형 시간</td>
+      <td style="text-align: left">입력 크기에 비례하여 증가</td>
+      <td style="text-align: left">리스트 전체를 한 번 훑기</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$O(n \log n)$</td>
+      <td style="text-align: left">선형-로그 시간</td>
+      <td style="text-align: left">효율적인 정렬 알고리즘의 속도</td>
+      <td style="text-align: left">퀵 정렬, 병합 정렬</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$O(n^2)$</td>
+      <td style="text-align: left">제곱 시간</td>
+      <td style="text-align: left">입력 크기의 제곱으로 증가 (매우 느림)</td>
+      <td style="text-align: left">이중 for문 (버블 정렬)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="2-왜-big-o를-알아야-할까요">2. 왜 Big-O를 알아야 할까요?</h2>
+
+<p>데이터가 10개일 때는 $O(n)$이나 $O(n^2)$이나 차이가 거의 없습니다. 하지만 데이터가 100만 개가 되면 이야기가 달라집니다.</p>
+
+<ul>
+  <li>$O(n)$: 100만 번 연산 $\rightarrow$ 순식간에 종료</li>
+  <li>$O(n^2)$: 1조 번 연산 $\rightarrow$ 컴퓨터가 며칠 동안 돌아가야 함</li>
+</ul>
+
+<p>따라서 효율적인 알고리즘을 선택하는 것은 대규모 데이터를 다루는 현대 프로그래밍에서 필수적입니다.</p>
+
+<hr />
+
+<h2 id="3-간단한-시간-복잡도-분석-연습">3. 간단한 시간 복잡도 분석 연습</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 예제 1: O(1)
+</span><span class="k">def</span> <span class="nf">print_first</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 예제 2: O(n)
+</span><span class="k">def</span> <span class="nf">print_all</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 예제 3: O(n^2)
+</span><span class="k">def</span> <span class="nf">print_pairs</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-deep-dive-공간-복잡도space-complexity와-메모리-관리">🔍 Deep Dive: 공간 복잡도(Space Complexity)와 메모리 관리</h2>
+
+<p>시간만 아끼는 것이 전부는 아닙니다. 알고리즘이 실행되는 동안 얼마나 많은 메모리를 사용하는가를 나타내는 <strong>공간 복잡도(Space Complexity)</strong> 역시 중요합니다.</p>
+<ul>
+  <li><strong>$O(1)$ 공간 복잡도</strong>: 고정된 몇 개의 변수만 사용하는 알고리즘. (예: 두 변수의 스왑, 단순 카운트 변수)</li>
+  <li><strong>$O(n)$ 공간 복잡도</strong>: 입력 크기에 비례하여 새로운 메모리 공간(배열, 리스트 등)을 확보하는 알고리즘. (예: 입력 배열을 복사하여 새 배열을 생성하는 작업)</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> 다음 코드의 시간 복잡도를 Big-O 표기법으로 나타내고 그 이유를 설명해 보세요.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">find_sum</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">total</span>
+</code></pre></div></div>
+
+<p><strong>문제 2.</strong> (심화) $O(n)$ 알고리즘과 $O(n^2)$ 알고리즘의 차이를 실제 연산 횟수로 비교해 보세요. (입력 값 $n$이 10일 때와 1000일 때 각각 몇 번의 연산이 일어나는지 계산해 보세요.)</p>
+
+<p><strong>문제 3.</strong> 우리 주변의 일상생활에서 $O(1)$에 해당하는 사례와 $O(n)$에 해당하는 사례를 하나씩 찾아 적어보세요. (예: 사전에서 단어 찾기 vs 책의 모든 페이지 읽기)</p>
+
+<hr />
+
+<h2 id="-java-vs-c-vs-python-스나이퍼-비교">☕ Java vs C++ vs Python 스나이퍼 비교</h2>
+
+<h3 id="리스트배열-동적-크기-조절-메커니즘과-복잡도">리스트(배열) 동적 크기 조절 메커니즘과 복잡도</h3>
+<ul>
+  <li><strong>Java (<code class="language-plaintext highlighter-rouge">ArrayList</code>)</strong>: 배열 공간이 꽉 차면 기존 용량의 약 1.5배 크기의 새 배열을 힙 메모리에 생성하고 기존 데이터를 복사합니다. 이때 복사 작업 자체는 $O(n)$이지만, 평균적으로는 <strong>분할 상환(Amortized) $O(1)$</strong> 시간 복잡도를 가집니다.</li>
+  <li><strong>C++ (<code class="language-plaintext highlighter-rouge">std::vector</code>)</strong>: 컴파일러마다 다르지만 대개 용량이 부족하면 기존의 2배 크기로 새로운 연속 메모리 영역을 선점하여 복사합니다. 역시 분할 상환 $O(1)$ 성능을 보장합니다.</li>
+  <li><strong>Python (<code class="language-plaintext highlighter-rouge">list</code>)</strong>: CPython 엔진 내부에서 동적 배열 크기 확장 패턴은 과할당 비율을 특유의 수식(Growth Factor: <code class="language-plaintext highlighter-rouge">new_allocated = (size_t)newsize + (newsize &gt;&gt; 3) + (newsize &lt; 9 ? 3 : 6)</code>)에 따라 유동적으로 관리하여 메모리 파편화를 예방하고 최상의 평균 $O(1)$ 추가 성능을 냅니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬으로 피보나치 수열(Fibonacci)을 구하는 세 가지 방법(재귀 함수, 메모이제이션, 반복문)을 구현해 주고, 각 구현별 시간 복잡도와 공간 복잡도를 Big-O 표기법으로 상세히 분석해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Algorithm</code></strong>: 알고리즘. (문제를 해결하기 위해 정해진 논리적 단계나 절차입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Complexity</code></strong>: 복잡도. (시간이나 공간 측면에서 프로그램이 실행되는 데 소모되는 자원의 양을 계산하는 기준입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Asymptotic</code></strong>: 점근적인. (입력의 크기가 무한히 커질 때의 함수 동작 한계를 수학적으로 추적하는 방법입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="-교재-상세-학습-67-줄서기와-쌓기의-미학-스택-큐-deque-힙heap">📖 교재 상세 학습: 67 줄서기와 쌓기의 미학: 스택, 큐, deque, 힙(heap)</h2>
+
+<h2 id="67-줄서기와-쌓기의-미학-스택-큐-deque-heapq">67 줄서기와 쌓기의 미학: 스택, 큐, <code class="language-plaintext highlighter-rouge">deque</code>, <code class="language-plaintext highlighter-rouge">heapq</code></h2>
+
+<p>컴퓨터가 수많은 일들을 빠르고 에러 없이 처리할 때는, 메모리에 들어오는 데이터를 <strong>‘어떤 규칙으로 줄 세울 것인지’</strong>가 엄청나게 중요합니다. 파이썬이 제공하는 특급 <strong>데이터 줄서기 도구</strong>들을 알아봅시다!</p>
+
+<h3 id="1-스택stack과-큐queue의-기초">1. 스택(Stack)과 큐(Queue)의 기초</h3>
+
+<ul>
+  <li><strong>스택(Stack)</strong>: 프링글스 감자칩 통을 상상해 보세요! 밑이 꽉 막힌 좁은 통 모양이라, <strong>제일 마지막에 넣은 데이터가 제일 먼저 나옵니다.</strong> (LIFO: Last-In, First-Out)</li>
+  <li><strong>큐(Queue)</strong>: 놀이공원에 줄 서는 것을 생각하면 됩니다. 통의 위아래가 뚫려있어, <strong>가장 먼저 줄을 선 데이터가 가장 먼저 놀이기구를 타고 나갑니다.</strong> (FIFO: First-In, First-Out)</li>
+</ul>
+
+<p>파이썬의 기본 리스트(<code class="language-plaintext highlighter-rouge">.append()</code>, <code class="language-plaintext highlighter-rouge">.pop()</code>)를 이용해 대충 흉내 낼 수도 있지만, 파이썬은 진짜 실무 프로들이 쓰는 멋진 툴을 따로 챙겨뒀습니다.</p>
+
+<hr />
+
+<h3 id="2-양쪽이-뻥-뚫린-고속도로-파이프-collectionsdeque">2. 양쪽이 뻥 뚫린 고속도로 파이프: <code class="language-plaintext highlighter-rouge">collections.deque</code></h3>
+
+<p>양쪽으로 자유롭게 들어오고 나갈 수 있는 마법의 파이프 큐를 <strong>Deque</strong>(데크)라고 부릅니다. 일반 리스트에서 맨 앞의 데이터를 빼거나 넣는 작업(<code class="language-plaintext highlighter-rouge">.insert(0, X)</code>)은 엄청나게 느리지만, <code class="language-plaintext highlighter-rouge">deque</code>는 아주 <strong>빛의 속도로 앞뒤 양방향 어디서든 데이터를 넣고 뺄 수 있습니다!</strong> 보통 큐를 구현할 땐 무조건 이것을 씁니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="c1"># 양쪽이 뚫린 파이프(데크) 만들기
+</span><span class="n">pipe</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">pipe</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>     <span class="c1"># 오른쪽(보통)으로 밀어 넣기
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([2, 3, 4])
+</span>
+<span class="n">pipe</span><span class="p">.</span><span class="nf">appendleft</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 특별 기능! 왼쪽(맨 앞)으로 강제 밀어 넣기!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([1, 2, 3, 4])
+</span>
+<span class="n">pipe</span><span class="p">.</span><span class="nf">popleft</span><span class="p">()</span>     <span class="c1"># 왼쪽(맨 앞)에서 가장 먼저 서 있는 놈 빼기!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([2, 3, 4])
+</span></code></pre></div></div>
+<p>이 녀석은 <code class="language-plaintext highlighter-rouge">pipe.rotate(1)</code> 기능도 있어서 마치 회전초밥 기계나 컨베이어 벨트처럼 데이터를 뱅글뱅글 섞어 돌릴 수도 있답니다!</p>
+
+<hr />
+
+<h3 id="3-실전-정밀-줄서기-통제-queue-모듈">3. 실전 정밀 줄서기 통제: <code class="language-plaintext highlighter-rouge">queue</code> 모듈</h3>
+
+<p><code class="language-plaintext highlighter-rouge">deque</code>가 속도에 미친 녀석이라면, 내장 <code class="language-plaintext highlighter-rouge">queue</code> 모듈은 말 그대로 대기열을 세우는 깐깐한 전문가 도구 상자입니다. 특히, 여러 작업이 동시에 돌아가는 환경에서 <strong>수용 인원(용량)이 꽉 차거나 텅텅 비었을 때를 완벽하게 통제</strong>해 줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">queue</span>
+
+<span class="c1"># 최대 2명만 설 수 있는 깐깐한 줄(Queue)을 만듭니다!
+</span><span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="nc">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 대기열 줄 서기!
+</span><span class="n">q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># 줄 서기!
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">꽉 찼나요?</span><span class="sh">"</span><span class="p">,</span> <span class="n">q</span><span class="p">.</span><span class="nf">full</span><span class="p">())</span>  <span class="c1"># True
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">몇 명 있나요?</span><span class="sh">"</span><span class="p">,</span> <span class="n">q</span><span class="p">.</span><span class="nf">size</span><span class="p">())</span> <span class="c1"># 2
+</span>
+<span class="c1"># 맨 앞사람 빼기
+</span><span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">get</span><span class="p">())</span> <span class="c1"># 1번 데이터가 볼일을 보러 나감 (빈자리가 생김)
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="4-가장-작은-녀석만-쏙쏙-편애하기-heapq-모듈">4. 가장 작은 녀석만 쏙쏙 편애하기: <code class="language-plaintext highlighter-rouge">heapq</code> 모듈</h3>
+
+<p>만약 커다란 상자 안에 무작위로 여러 숫자가 마구잡이로 섞여 있는데, 계속해서 “상자 안에 있는 것 중 <strong>가장 작은 놈</strong> 당장 나와!”라고 지속적으로 닦달해야 한다면 어떨까요? 뽑을 때마다 리스트를 전체 정렬(<code class="language-plaintext highlighter-rouge">sort()</code>)하는 건 무식하고 느린 행동입니다.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">heapq</code> (힙 큐)</strong> 모듈은 이럴 때 쓰는 전용 정렬 마법 상자입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">heapq</span>
+
+<span class="c1"># 마구 섞인 숫자들의 모임
+</span><span class="n">box</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+
+<span class="c1"># 1. 힙 정렬 구조로 변신! (파이썬이 보이지 않는 마법의 트리 구도로 재배치합니다)
+</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heapify</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> 
+<span class="c1"># [10, 20, 30, 50, 40] -&gt; 무조건 제일 앞에 '가장 작은 값'이 언제나 튀어나옵니다!
+</span>
+<span class="c1"># 2. 제일 작은 놈 나와! (heappop)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 10이 빠져나옴! (빠져나오면 2등이 1등 자리로 대기 탐)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 20이 빠져나옴!
+</span>
+<span class="c1"># 3. 새로운 놈 추가! (heappush)
+# 박스에 15를 던져 넣으면, 알아서 자기 자리를 찾아 들어가 대기합니다.
+</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappush</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> 
+<span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 15가 스멀스멀 1등으로 빠져나옴!
+</span></code></pre></div></div>
+<p>숫자를 막 던져 넣어도, 늘 <strong>가장 우선순위가 높은(값이 작은) 데이터가 항상 출구(인덱스 0) 앞에 즉각 대기</strong>하도록 유지해주는 초강력 우선순위 정렬 상자랍니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-줄서기와-쌓기-stack-queue-heapq">📖 교재 상세 학습: 2. 줄서기와 쌓기: stack, queue, heapq</h2>
+
+<h2 id="2-줄서기와-쌓기-stack-queue-heapq">2. 줄서기와 쌓기: stack, queue, heapq</h2>
+
+<p>컴퓨터가 수많은 일들을 처리할 때는, 데이터를 어떻게 줄 세울 것인지가 엄청나게 중요합니다. 파이썬이 제공하는 특급 <strong>줄서기 도구</strong>들을 알아볼까요?</p>
+
+<h3 id="21-스택stack과-큐queue의-기초">2.1 스택(Stack)과 큐(Queue)의 기초</h3>
+
+<ul>
+  <li><strong>스택(Stack)</strong>: 프링글스 감자칩 통을 상상해 보세요! 밑이 꽉 막힌 통에 데이터를 넣기 때문에, <strong>제일 나중에 넣은 데이터가 제일 먼저 나옵니다.</strong> (LIFO: Last In First Out)</li>
+  <li><strong>큐(Queue)</strong>: 놀이공원에 줄 서는 것을 생각하면 됩니다. <strong>가장 먼저 줄을 선 데이터가 가장 먼저 놀이기구를 탑니다.</strong> (FIFO: First In First Out)</li>
+</ul>
+
+<p>파이썬의 기본 리스트(<code class="language-plaintext highlighter-rouge">.append()</code>, <code class="language-plaintext highlighter-rouge">.pop()</code>)를 이용해 대충 흉내 낼 수도 있지만, 파이썬은 진짜 프로들이 쓰는 멋진 툴을 따로 준비해 뒀습니다.</p>
+
+<hr />
+
+<h3 id="22-실전-줄서기-queue-모듈">2.2 실전 줄서기: <code class="language-plaintext highlighter-rouge">queue</code> 모듈</h3>
+
+<p><code class="language-plaintext highlighter-rouge">queue</code> 모듈은 말 그대로 줄을 세우는 전문 도구 상자입니다. 용량이 꽉 차거나 텅텅 비었을 때를 완벽하게 통제해 줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">queue</span>
+
+<span class="c1"># 최대 2명만 설 수 있는 줄(Queue)을 만듭니다!
+</span><span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="nc">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 줄 서기!
+</span><span class="n">q</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># 줄 서기!
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">full</span><span class="p">())</span>  <span class="c1"># 꽉 찼나요? -&gt; True
+</span><span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">qsize</span><span class="p">())</span> <span class="c1"># 몇 명 있나요? -&gt; 2
+</span>
+<span class="c1"># 맨 앞사람 빼기
+</span><span class="nf">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="nf">get</span><span class="p">())</span> <span class="c1"># 1번이 놀이기구 타러 나감
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="23-양쪽-뚫린-마법-터널-collectionsdeque">2.3 양쪽 뚫린 마법 터널: <code class="language-plaintext highlighter-rouge">collections.deque</code></h3>
+
+<p>양쪽으로 들어오고 나갈 수 있는 마법의 파이프 큐를 <strong>Deque</strong>(데크)라고 부릅니다. 리스트의 <code class="language-plaintext highlighter-rouge">.insert(0, X)</code>는 매우 느리지만, <code class="language-plaintext highlighter-rouge">deque</code>는 아주 빛의 속도로 앞뒤 어디서든 데이터를 넣고 뺄 수 있습니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="c1"># 양쪽 뚫린 파이프(데크) 만들기
+</span><span class="n">pipe</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">pipe</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>     <span class="c1"># 오른쪽(보통)으로 밀어 넣기
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([2, 3, 4])
+</span>
+<span class="n">pipe</span><span class="p">.</span><span class="nf">appendleft</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 특별히 왼쪽(앞)으로 밀어 넣기!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([1, 2, 3, 4])
+</span>
+<span class="n">pipe</span><span class="p">.</span><span class="nf">popleft</span><span class="p">()</span>     <span class="c1"># 왼쪽에서 빼기!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span>        <span class="c1"># deque([2, 3, 4])
+</span></code></pre></div></div>
+<p>이 녀석은 <code class="language-plaintext highlighter-rouge">rotate</code>를 써서 마치 회전초밥 기계처럼 데이터를 뱅글뱅글 위상을 섞어 돌릴 수도 있답니다!</p>
+
+<hr />
+
+<h3 id="24-가장-작은-녀석만-쏙쏙-heapq-모듈">2.4 가장 작은 녀석만 쏙쏙: <code class="language-plaintext highlighter-rouge">heapq</code> 모듈</h3>
+
+<p>만약 상자 안에 무작위로 여러 숫자가 막 섞여 있는데, 계속해서 “상자 안에 있는 것 중 <strong>가장 작은 놈</strong> 당장 나와!”라고 명령해야 한다면 어떨까요?
+<code class="language-plaintext highlighter-rouge">heapq</code>(힙 큐) 모듈은 이럴 때 쓰는 전용 도구입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">heapq</span>
+
+<span class="c1"># 섞인 숫자들의 모임
+</span><span class="n">box</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+
+<span class="c1"># 1. 힙 정렬 명령! (파이썬이 마법의 구도로 재배치합니다)
+</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heapify</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> <span class="c1"># [10, 20, 30, 50, 40] -&gt; 제일 앞에 가장 작은 값이 튀어나옵니다!
+</span>
+<span class="c1"># 2. 제일 작은 놈 나와! (heappop)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 10이 빠져나옴!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">heapq</span><span class="p">.</span><span class="nf">heappop</span><span class="p">(</span><span class="n">box</span><span class="p">))</span> <span class="c1"># 20이 빠져나옴!
+</span></code></pre></div></div>
+<p>그 외에도 <code class="language-plaintext highlighter-rouge">heappush</code>로 새로운 숫자를 상자에 던져 넣으면, 알아서 자리를 찾아 쏙쏙 들어가고 가장 작은 값을 언제나 1번으로 대기시켜주는 초강력 정렬 마법 상자랍니다!</p>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

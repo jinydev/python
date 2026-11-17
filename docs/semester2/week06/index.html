@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️ | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester2/week06/" />
+<meta property="og:url" content="https://python.jiny.dev/semester2/week06/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️에 대한 파이썬(Python) 강좌 문서입니다.","headline":"6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️","url":"https://python.jiny.dev/semester2/week06/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          2학기 고급 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester2/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [고급] 2학기: 객체지향(OOP) 및 설계
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week01/"
+              class="bd-links-link d-inline-block rounded ">
+              1주차: OOP 패러다임 - 객체지향 설계의 시작 🏗️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week02/"
+              class="bd-links-link d-inline-block rounded ">
+              2주차: 클래스 기초 - 인스턴스와 self의 정체 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 캡슐화와 정보 은닉 - 안전한 데이터 관리 🔒
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 상속과 다형성 - 유연하고 확장 가능한 설계 🌿
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week06/"
+              class="bd-links-link d-inline-block rounded active">
+              6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 매직 메서드 (Dunder Methods) - 파이썬답게 만들기 ✨
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 2학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 디자인 패턴 (1) - 싱글톤과 팩토리 패턴 🏗️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 디자인 패턴 (2) - 전략과 옵저버 패턴 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 패키지 구조 설계 - 대규모 프로젝트 관리 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 타입 힌팅 (Type Hinting) - 코드의 문서화와 안정성 🏷️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 유닛 테스트 - 버그 없는 코드 만들기 🧪
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 배포 및 패키징 (1) - 내 코드를 라이브러리로 만들기 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 2학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester2/">📌 [고급] 2학기: 객체지향(OOP) 및 설계</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="6주차-추상-클래스와-인터페이스---설계-청사진과-결합도-낮추기-️">6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️</h1>
+
+<p>구체적인 구현 대신 전체적인 규격과 약속을 제시하는 <strong>추상 클래스</strong> 및 파이썬의 <strong>인터페이스 설계 철학</strong>, 나아가 의존성을 외부에서 공급하여 코드의 결합도를 획기적으로 낮추는 <strong>의존성 주입(Dependency Injection)</strong> 기법을 마스터합니다.</p>
+
+<hr />
+
+<h2 id="학습목표">학습목표</h2>
+<p>본 장에서는 깡통(몸통) 구현 없이 오직 자식 클래스가 하늘이 두 쪽 나도 지켜야만 하는 뼈대(규칙)만 세워두는 <strong>‘추상 베이스 클래스(ABC)’</strong>의 악덕 고용주 같은 철저한 통제 시스템을 깨우칩니다. 공통적인 속성과 행위를 모아 상위 클래스를 설계하는 방법을 배웁니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-추상화란">💡 TL;DR (1분 핵심 요약): 추상화란?</h2>
+
+<ol>
+  <li><strong>추상 클래스 (Abstract Class)</strong>: 직접 붕어빵을 찍어낼 수 없도록 막아놓은 <strong>“미완성 설계도(계약서 원본)”</strong>입니다. 수십 명의 협업자들이 각자의 모양대로 클래스를 만들 때, “반드시 이 기능만큼은 빼먹지 말고 똑같은 이름으로 구현해라!”라고 강제하는 법적 장치입니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">abc</code> 모듈</strong>: 덕 타이핑의 자유로움이 가져오는 ‘휴먼 에러(메서드명 오타, 미구현)’를 막기 위해, 파이썬에서 공식적으로 제공하는 추상화 강제 모듈입니다. 에러를 런타임(실행)이 아닌 객체 생성시에 칼같이 잡아냅니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-지켜야만-하는-단단한-약속-추상화-설계">1. 지켜야만 하는 단단한 약속, 추상화 설계</h2>
+
+<p>협업 시 “도형을 만들 때는 넓이를 구하는 <code class="language-plaintext highlighter-rouge">get_area</code> 함수를 필수로 만들어 줘!”라고 말로만 부탁하면 누군가는 <code class="language-plaintext highlighter-rouge">area()</code>, 누군가는 <code class="language-plaintext highlighter-rouge">calculate_area()</code>로 각기 다르게 이름을 지어버려 결국 전체 시스템(다형성)이 붕괴됩니다. <strong>추상화는 이 약속을 코드로 서명하게 만들고, 어기면 프로그램이 강제 종료되도록 통제합니다.</strong></p>
+
+<hr />
+
+<h2 id="2-파이썬의-abc-abstract-base-classes">2. 파이썬의 <code class="language-plaintext highlighter-rouge">abc</code> (Abstract Base Classes)</h2>
+
+<p>파이썬은 공식 내장 라이브러리인 <code class="language-plaintext highlighter-rouge">abc</code> 패키지를 통해 추상Base클래스를 작성할 수 있습니다.</p>
+<ul>
+  <li>자신은 절대로 인스턴스(객체)를 허락하지 않습니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">@abstractmethod</code> 라는 왕관(데코레이터)이 씌워진 스킬은, 자식이 반드시 복사해서 구현체를 오버라이딩(채워넣기)해야만 살려줍니다.</li>
+</ul>
+
+<p><img src="./img/abstraction_webtoon.png" alt="Abstraction Webtoon" />
+<em>(웹툰 비유: 깐깐한 로봇 매니저가 일부분이 텅 비어 있는 추상적인 계약서(Shape)를 들고, 원형 로봇과 사각형 로봇에게 서명을 지시합니다. 이 계약서에는 “너희 몸통(면적)을 어떻게든 스스로 증명하라!”는 빈칸 조항이 강제되어 있습니다.)</em></p>
+
+<p><br /></p>
+
+<p><img src="./img/abstraction_concept.svg" width="100%" /></p>
+<h3 id="예제-1-추상-클래스는-실체가-아니다-에러-발생의-미학">예제 1: 추상 클래스는 실체가 아니다! (에러 발생의 미학)</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="c1"># 1. 추상 베이스 클래스 선언 (반드시 괄호 안에 ABC를 넣습니다)
+</span><span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    
+    <span class="c1"># 이 메서드는 껍데기만 존재하며, 자식이 무조건 속을 채워야 합니다!
+</span>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_area</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># 🚨 에러 폭발 테스트 🚨
+# 무지몽매한 개발자가 계약서 원본(Shape) 자체를 장난감(객체)으로 조립하려고 합니다.
+# 삐용삐용! "TypeError: 추상 클래스는 인스턴스화 될 수 없습니다!" 라며 파이썬이 즉각 차단합니다.
+</span><span class="n">s</span> <span class="o">=</span> <span class="nc">Shape</span><span class="p">()</span> 
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="3-필수-구현-의무-불이행-시의-참사">3. 필수 구현 의무 불이행 시의 참사</h2>
+
+<p>이번엔 하청업체(자식 클래스 <code class="language-plaintext highlighter-rouge">Circle</code>)가 추상 클래스(Shape)를 상속은 해놓고선, 실수로 <code class="language-plaintext highlighter-rouge">get_area</code> 구현을 빼먹었다고 가정해 봅시다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+        
+    <span class="c1"># 앗! 깜빡하고 @abstractmethod 인 get_area() 를 오버라이딩하지 않았습니다!
+</span>
+<span class="c1"># 테스트: 자식 로봇을 가동합니다.
+# c = Circle(5)
+# 🚨 폭발! TypeError: 추상 메서드 get_area 가 구현되지 않아서 조립(인스턴스화) 불가!
+</span></code></pre></div></div>
+<p>코드가 다 실행되고 나서 한참 뒤에 에러가 터지는 대참사 대신, 아예 태어나는 순간 조립을 막아버려 개발자에게 실수를 즉각 알려줍니다.</p>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬 <code class="language-plaintext highlighter-rouge">abc</code> 패키지를 이용해서 <code class="language-plaintext highlighter-rouge">Payment</code>(결제)라는 추상 클래스를 만들어줘.
+1) <code class="language-plaintext highlighter-rouge">process_payment(amount)</code> 라는 추상 메서드(@abstractmethod)를 딱 하나만 선언해.
+2) 이걸 상속받는 자식 클래스 <code class="language-plaintext highlighter-rouge">CreditCard</code> 랑 <code class="language-plaintext highlighter-rouge">Paypal</code> 두 개를 만들고, <code class="language-plaintext highlighter-rouge">process_payment</code>를 정상적으로 오버라이딩해서 알아서 콘솔에 결제수단과 금액을 출력하게 해. 
+3) 마지막으로 <code class="language-plaintext highlighter-rouge">Bitcoin</code> 클래스도 <code class="language-plaintext highlighter-rouge">Payment</code>를 상속받게 만드는데, 고의로 <code class="language-plaintext highlighter-rouge">process_payment</code> 구축을 빼먹(pass)어봐.
+4) 세 개의 클래스를 직접 다 실체화(인스턴스 생성) 하려고 시도해 보고 어떤 콘솔 에러가 터지는지, 그 이유를 내게 아주 쉽게 주석으로 타이핑해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Abstraction</strong>: 추상화. (Abstract(추상적인). 구체적인 디테일이나 계산 로직은 껍데기에 감춰버리고, 오직 바깥으로 드러나는 핵심 개념(버튼 이름, 함수 이름) 스케치만 남겨 하위 조립자들에게 “여기에 맞춰서 짜기만 해!”를 지시하는 설계 기법입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="학습목표-1">학습목표</h2>
+<p>본 장에서는 클래스와 클래스 사이의 사용 약속인 <strong>인터페이스(Interface)</strong>를 배웁니다. 파이썬만의 느슨하고 자유로운 ‘덕 타이핑(Duck Typing)’ 문화 속에서도, 대형 프로젝트의 치명적인 에러를 원천 봉쇄하기 위해 견고한 인터페이스 계약서를 어떻게 코드로 작성하고 강제하는지 실전 코드로 익힙니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-인터페이스란">💡 TL;DR (1분 핵심 요약): 인터페이스란?</h2>
+
+<ol>
+  <li><strong>인터페이스 (Interface)</strong>: “반드시 이 기능만큼은 빼먹지 말고 구현해라!”라는 기능 명세, 즉 계약서 역할을 기대하는 것입니다. 파이썬에서는 별도의 <code class="language-plaintext highlighter-rouge">interface</code> 키워드가 없기에 보통 추상 클래스(<code class="language-plaintext highlighter-rouge">abc</code>)나 덕 타이핑을 통해 이를 달성합니다.</li>
+  <li><strong>덕 타이핑 🦆 (Duck Typing)</strong>: 자바처럼 서약서(<code class="language-plaintext highlighter-rouge">implements</code>)를 명시적으로 쓰지 않아도, 꽥꽥(필수 스킬) 소리만 낼 수 있다면 시스템이 용인해 주는 파이썬 특유의 자유로운 문화입니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-인터페이스-계약-의무의-완벽한-이행과-다형성">1. 인터페이스 계약 의무의 완벽한 이행과 다형성</h2>
+
+<p>이전 장(<code class="language-plaintext highlighter-rouge">추상화</code>)의 <code class="language-plaintext highlighter-rouge">Shape</code> 추상 클래스가 제시한 안전 장치를 뚫고, 완벽하게 인터페이스 규격을 맞춘 모범 답안을 보겠습니다.</p>
+
+<p><img src="./img/interface_webtoon.png" alt="Interface Webtoon" />
+<em>(웹툰 비유: 동그라미 로봇과 네모 로봇이 겉모습은 전혀 다르지만, 둘 다 완벽히 똑같은 규격의 “220V 표준 플러그”를 번쩍 들고 환호합니다. 220V 소켓 입장에서 저 로봇이 동그라미든 네모든 알 바 아닙니다. 규격에 맞는 플러그만 꽂히면 전기를 통하게 해 줍니다.)</em></p>
+
+<p><br /></p>
+
+<p><img src="./img/interface_concept.svg" width="100%" /></p>
+
+<h3 id="예제-각자의-방식으로-계약-이행">예제: 각자의 방식으로 계약 이행</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">math</span>
+<span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_area</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># 동그라미: 자신만의 파이(π) 방식을 사용하여 완벽하게 구현을 해냈습니다!
+</span><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+        
+    <span class="k">def</span> <span class="nf">get_area</span><span class="p">(</span><span class="n">self</span><span class="p">):</span> <span class="c1"># 계약서에 명시된 이름 토시 하나 틀리지 않음
+</span>        <span class="k">return</span> <span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 네모: 자신만의 (가로 * 세로) 공식을 사용하여 완벽하게 구현을 해냈습니다!
+</span><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span>
+        
+    <span class="k">def</span> <span class="nf">get_area</span><span class="p">(</span><span class="n">self</span><span class="p">):</span> <span class="c1"># 계약서 조항 완벽 이행
+</span>        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">h</span>
+
+<span class="c1"># ✅ 통과! 에러 없이 부드럽게 실체화됩니다.
+</span><span class="n">c</span> <span class="o">=</span> <span class="nc">Circle</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">원 넓이: </span><span class="si">{</span><span class="n">c</span><span class="p">.</span><span class="nf">get_area</span><span class="p">()</span><span class="si">}</span><span class="s"> | 사각형 넓이: </span><span class="si">{</span><span class="n">r</span><span class="p">.</span><span class="nf">get_area</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 깐깐한 인터페이스(Interface) 계약서 제도가 정착되면, 메인 지휘자는 “이 도형이 원인지 네모인지” 검사할 필요 없이 눈을 감고 <code class="language-plaintext highlighter-rouge">도형.get_area()</code>를 마음껏 호출하며 다형성을 폭발시킬 수 있습니다.</p>
+
+<hr />
+
+<h2 id="2--java-vs--python-스나이퍼-비교">2. ☕ Java vs 🐍 Python 스나이퍼 비교</h2>
+
+<h3 id="1-전용-키워드의-유무">1. 전용 키워드의 유무</h3>
+<ul>
+  <li><strong>Java</strong>: <code class="language-plaintext highlighter-rouge">interface</code>, <code class="language-plaintext highlighter-rouge">implements</code>, <code class="language-plaintext highlighter-rouge">abstract</code> 라는 전용 문법 키워드가 언어 스펙에 하드코딩 되어있을 정도로 인터페이스 설계의 심장 같은 언어입니다.</li>
+  <li><strong>Python</strong>: 인터페이스라는 전용 키워드가 아예 없습니다! 오직 외부 플러그인 같은 느낌의 <code class="language-plaintext highlighter-rouge">from abc import ABC</code> 패키지를 끌어앉고 <code class="language-plaintext highlighter-rouge">class Shape(ABC):</code> 와 같이 우회하여 구현합니다.</li>
+</ul>
+
+<h3 id="2-덕-타이핑-duck-typing의-용인">2. 덕 타이핑 (Duck Typing)의 용인</h3>
+<ul>
+  <li><strong>Java</strong>: 인터페이스 계약서(<code class="language-plaintext highlighter-rouge">implements Animal</code>)에 사인하지 않은 객체는, 아무리 <code class="language-plaintext highlighter-rouge">eat()</code> 함수를 완벽하게 구현했어도 결코 다형성 리스트에 들어갈 수 없습니다. 엄청나게 고지식합니다.</li>
+  <li><strong>Python</strong>: 파이썬은 호탕합니다. 굳이 <code class="language-plaintext highlighter-rouge">Shape(ABC)</code> 가문 소속이라고 사인해주지 않았더라도, 객체 배때지에 누군가 몰래 <code class="language-plaintext highlighter-rouge">get_area()</code> 함수 하나만 끼워놓았다면, 다형성 리스트에서 군말 없이 정상 실행시켜 버립니다. “오리 소리가 나면 그냥 오리지 족보가 뭐가 중요해!” 마인드입니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding-1">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬으로 ‘오리(Duck)’와 ‘로봇 오리(RobotDuck)’ 클래스를 만들어줘. 
+공통 부모를 상속받거나 <code class="language-plaintext highlighter-rouge">abc</code>를 사용하지 말고, 둘 다 각각 <code class="language-plaintext highlighter-rouge">quack()</code> 이라는 메서드만 갖게 해. 
+외부에서 어떤 리스트에 담긴 객체들을 넘겨받아서, 그 객체들의 타입이 뭔지 전혀 확인하지 않고 무작정 <code class="language-plaintext highlighter-rouge">.quack()</code>을 호출해보는 <code class="language-plaintext highlighter-rouge">make_it_quack</code> 함수를 만들어 줘.
+그리고 이게 왜 파이썬의 ‘덕 타이핑’이라는 매력인지 초보자에게 쉽고 재치있게 주석으로 설명해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습--1">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Interface</strong>: 경계면, 소통 접점. (Inter(사이) + Face(얼굴). 자판기를 쓸 때 안에 복잡한 회로도 몰라도 ‘동전 구멍’과 ‘콜라 버튼’만 누르면 작동하듯이, 클래스와 클래스 사이의 사용 약속 계약서 명세를 의미합니다.)</li>
+  <li><strong>Duck Typing</strong>: 덕 타이핑. (“만약 어떤 동물이 오리처럼 생겼고, 오리처럼 헤엄치고, 오리처럼 꽥꽥 소리를 낸다면, 우리는 그걸 그냥 오리라고 부른다.”라는 유명한 미국 시에서 유래한 프로그래밍 언어의 쿨하고 동적인 성향을 뜻합니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="학습목표-2">학습목표</h2>
+<p>본 장에서는 클래스 간의 결합도를 획기적으로 낮추어 “언제든지 부품을 갈아 끼울 수 있는” 유연한 아키텍처를 진두지휘하는 <strong>의존성 주입(DI)</strong>의 개념을 익힙니다. 상속을 넘어선 객체지향 확장성의 끝판왕 설계 패턴을 경험합니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-의존성-주입이란">💡 TL;DR (1분 핵심 요약): 의존성 주입이란?</h2>
+
+<ol>
+  <li><strong>의존성 (Dependency)</strong>: A 클래스가 동작하기 위해 B 클래스가 반드시 필요한 상태(연결된 상태)를 말합니다. 보통 “기사가 칼을 가지고 있는 상황”과 같습니다.</li>
+  <li><strong>주입 (Injection)</strong>: 기사 몸속(코드 내부)에서 칼(객체)을 직접 생성하지 않고, <strong>밖에서(코드 외부에서) 누군가 칼을 만들어서 기사의 손에 쥐여주는(전달해 주는) 방식</strong>입니다.</li>
+  <li><strong>DI의 목적</strong>: 언제든지 녹슨 칼은 버리고 번개 칼로 무기를 교체할 수 있듯이, 코드의 수정을 최소화하고 <strong>클래스 간의 느슨한 결합(Loose Coupling)</strong>을 달성하기 위해서입니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-꽉-막힌-의존성-기사가-몸속에서-칼을-제련한다">1. 꽉 막힌 의존성: 기사가 몸속에서 칼을 제련한다?</h2>
+
+<p>의존성 주입을 쓰지 않은 끔찍한 코드를 보겠습니다.</p>
+
+<h3 id="예제-1-강한-결합-tight-coupling">예제 1: 강한 결합 (Tight Coupling)</h3>
+<p>클래스 내부에서 필요한 객체를 무작정 스스로 생성해 버리면, 평생 그 객체에만 묶이는 노예가 됩니다.</p>
+
+<p><img src="./img/di_webtoon.png" alt="Dependency Injection Webtoon" />
+<em>(웹툰 비유: 최전방에 기사 로봇 한 명이 서 있습니다. 철광석을 주워서 자기 배 속에 있는 대장간 용광로에서 낑낑대며 칼을 스스로 만들어 쓰고 있습니다(강한 결합). 옆에 있던 만렙 로봇이 기겁하며 묻습니다. “아니, 밖에서 칼을 만들어다가 네 손에 쥐여주면(주입) 되잖아?”)</em></p>
+
+<p><br /></p>
+
+<p><img src="./img/di_concept.svg" width="100%" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IronSword</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">철검으로 찌르기! 10 데미지!</span><span class="sh">"</span>
+
+<span class="k">class</span> <span class="nc">Knight</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="c1"># 🚨 최악의 설계: 기사가 직접 몸속에서 철검을 생성합니다. 
+</span>        <span class="c1"># 이 기사는 평생 철검밖에 못 쓰는 저주에 걸렸습니다.
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">weapon</span> <span class="o">=</span> <span class="nc">IronSword</span><span class="p">()</span> 
+
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">weapon</span><span class="p">.</span><span class="nf">attack</span><span class="p">())</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="nc">Knight</span><span class="p">()</span>
+<span class="n">k</span><span class="p">.</span><span class="nf">attack</span><span class="p">()</span> 
+<span class="c1"># 만약 상황이 변해 기사에게 '전설의 불꽃검'을 쥐어주고 싶다면? 
+# 안타깝게도 Knight 클래스의 내부 코드를 직접 뜯어 고쳐야(수정) 합니다.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="2-의존성-주입-di-밖에서-무기를-쥐여줘라">2. 의존성 주입 (DI): 밖에서 무기를 쥐여줘라!</h2>
+
+<p>이번엔 아주 깔끔하게 바뀐 설계입니다. 무기를 스스로 만들지 말고, 생성자(또는 메서드)를 통해 <strong>외부에서 건네받도록 설계</strong>합니다.</p>
+
+<h3 id="예제-2-느슨한-결합-loose-coupling">예제 2: 느슨한 결합 (Loose Coupling)</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 다양한 무기들 제조
+</span><span class="k">class</span> <span class="nc">IronSword</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">swing</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">챙강! 철검 치기!</span><span class="sh">"</span>
+
+<span class="k">class</span> <span class="nc">FlameSword</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">swing</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">화르륵! 불꽃의 베기!</span><span class="sh">"</span>
+
+<span class="c1"># 기사 2.0 설계
+</span><span class="k">class</span> <span class="nc">Knight</span><span class="p">:</span>
+    <span class="c1"># 💡 핵심: 외부에서 weapon을 '주입(Injection)' 받습니다!
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">weapon</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">weapon</span> <span class="o">=</span> <span class="n">weapon</span>
+
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">weapon</span><span class="p">.</span><span class="nf">swing</span><span class="p">())</span>
+
+<span class="c1"># 상황에 따라 밖(Main 로직)에서 알아서 무기를 교체해 주입합니다.
+</span><span class="n">iron_sword</span> <span class="o">=</span> <span class="nc">IronSword</span><span class="p">()</span>
+<span class="n">flame_sword</span> <span class="o">=</span> <span class="nc">FlameSword</span><span class="p">()</span>
+
+<span class="c1"># 1. 초보 기사: 철검 주입
+</span><span class="n">k1</span> <span class="o">=</span> <span class="nc">Knight</span><span class="p">(</span><span class="n">weapon</span><span class="o">=</span><span class="n">iron_sword</span><span class="p">)</span>
+<span class="n">k1</span><span class="p">.</span><span class="nf">attack</span><span class="p">()</span>
+
+<span class="c1"># 2. 만렙 기사: 불꽃검 주입 (Knight 코드 내부를 1줄도 수정하지 않았습니다!)
+</span><span class="n">k2</span> <span class="o">=</span> <span class="nc">Knight</span><span class="p">(</span><span class="n">weapon</span><span class="o">=</span><span class="n">flame_sword</span><span class="p">)</span>
+<span class="n">k2</span><span class="p">.</span><span class="nf">attack</span><span class="p">()</span>
+</code></pre></div></div>
+<p>이처럼 “내부에서 <code class="language-plaintext highlighter-rouge">new(생성)</code>하지 말고 밖에서 받자!”는 아주 단순한 원리 하나가 수만 줄짜리 엔터프라이즈 시스템의 플러그인(Plug-in) 아키텍처를 뒤받치고 있는 제1원칙입니다.</p>
+
+<hr />
+
+<h2 id="코딩-영단어-학습--2">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Dependency</strong>: 의존성. (내가 살기 위해 남에게 기대고 있는 상태. 코딩에서는 내 클래스가 돌아가기 위해 반드시 다른 클래스의 객체가 필요한 끈끈한 관계를 말합니다.)</li>
+  <li><strong>Injection</strong>: 주입, 주사. (내부에서 자체 생성하지 않고, 혈관에 주사액을 꽂아 넣듯 바깥의 프레임워크나 메인 컨트롤러가 객체를 쓱 밀어 넣어 주는 동작을 의미합니다.)</li>
+  <li><strong>Loose Coupling</strong>: 느슨한 결합. (두 객체가 서로 알긴 알지만, 언제든 다른 놈으로 갈아 치워도 시스템이 터지지 않도록 가볍게 연결된 유연한 구조를 말합니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> <code class="language-plaintext highlighter-rouge">abc</code> 모듈의 <code class="language-plaintext highlighter-rouge">@abstractmethod</code>를 사용하여 자신만의 추상 클래스 <code class="language-plaintext highlighter-rouge">Vehicle</code>을 정의하고, 이를 상속받아 세부 메서드를 필수 구현하는 <code class="language-plaintext highlighter-rouge">Car</code>와 <code class="language-plaintext highlighter-rouge">Bicycle</code> 자식 클래스를 완성해 보세요.</p>
+
+<p><strong>문제 2.</strong> 강한 결합(Tight Coupling)과 느슨한 결합(Loose Coupling)의 차이점을 실생활의 부품 대체 사례를 들어 비교 설명하고, 의존성 주입이 주는 설계상 이점을 쓰세요.</p>
+
+<p><strong>문제 3.</strong> (심화) 파이썬에서 추상 인터페이스를 보장하기 위해 덕 타이핑(Duck Typing)을 사용하는 방식과 <code class="language-plaintext highlighter-rouge">@abstractmethod</code>를 쓰는 공식적이고 엄격한 방식의 장단점을 아키텍처 관점에서 분석해 보세요.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-08-강제적인-규약-추상-클래스abstract-class">📖 교재 상세 학습: 08 강제적인 규약: 추상 클래스(Abstract Class)</h2>
+
+<h2 id="08-뼈대만-물려주고-구현은-강제하기-추상-클래스abstract-class">08 뼈대만 물려주고 구현은 강제하기: 추상 클래스(Abstract Class)</h2>
+
+<p>지금까지 우리는 부모가 완성된 기능(메서드)을 만들어 놓으면 자식이 편하게 그걸 가져다 쓰는 ‘상속’을 배웠습니다. 그렇다면 만약 부모가 <strong>“나는 어떤 입구랑 출구가 필요한지만(이름만) 껍데기로 만들어 둘 테니, 안에 들어가는 진짜 알맹이(기능)는 상속받는 자식인 너희들이 무조건 각자 알아서 새로 짜넣어라!”</strong> 하고 강제하고 싶다면 어떻게 해야 할까요?</p>
+
+<p>이때 등장하는 것이 바로 <strong>추상 클래스(Abstract Class)</strong>입니다. 메서드의 ‘이름과 인자’라는 뼈대만 존재하고, 뱃속의 실제 코드는 텅 비어있는 미완성 클래스입니다.</p>
+
+<h3 id="1-왜-이런-텅-빈-껍데기가-필요할까-다형성의-보장">1. 왜 이런 텅 빈 껍데기가 필요할까? (다형성의 보장)</h3>
+
+<p>게임을 만들 때 여러 개발자에게 “각자 몬스터를 하나씩 만들어와라”라고 지시했다고 칩시다. 
+어떤 개발자는 공격 함수를 <code class="language-plaintext highlighter-rouge">attack()</code>으로 만들고, 다른 개발자는 <code class="language-plaintext highlighter-rouge">hit()</code>, 또 다른 사람은 <code class="language-plaintext highlighter-rouge">strike()</code>로 마음대로 지어버리면 나중에 이 몬스터들을 한 번에 조종할 때 코드가 엉망진창이 됩니다.</p>
+
+<p>이때 <strong>추상 클래스</strong>를 부모로 만들어 <strong>“내 밑으로 상속받는 모든 몬스터는 무조건 <code class="language-plaintext highlighter-rouge">attack()</code>이라는 이름의 메서드를 니들이 직접 안에 코드를 채워 넣어서 구현해라. 안 그러면 에러 띄워서 게임 실행도 못하게 막을 거다!”</strong>라고 <strong>강력한 규약(Protocol)</strong>을 걸어버리는 것입니다.</p>
+
+<h3 id="2-파이썬에서-추상-클래스-만들기-abc-모듈">2. 파이썬에서 추상 클래스 만들기 (<code class="language-plaintext highlighter-rouge">abc</code> 모듈)</h3>
+
+<p>파이썬은 <code class="language-plaintext highlighter-rouge">abc</code> (Abstract Base Classes)라는 멋진 기본 모듈을 통해 추상 클래스를 지원합니다.
+추상 클래스를 만들려면 <strong>1. <code class="language-plaintext highlighter-rouge">ABC</code>라는 특별한 부모를 상속받고</strong>, <strong>2. 강제할 메서드 위에 <code class="language-plaintext highlighter-rouge">@abstractmethod</code> 데코레이터를 붙여주면</strong> 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="c1"># [미완성 뼈대] 추상 클래스 선언 (이 자체로는 인스턴스를 찍어낼 수 없습니다)
+</span><span class="k">class</span> <span class="nc">MonsterProtocol</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    
+    <span class="c1"># 자식에게 강제로 할당할 미완성 과제 (뼈대만 있고 본문은 pass)
+</span>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># [개발자 A의 바른 예]
+</span><span class="k">class</span> <span class="nc">Slime</span><span class="p">(</span><span class="n">MonsterProtocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">슬라임이 끈적한 점액을 발사합니다!</span><span class="sh">"</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">슬라임이 꾸물꾸물 기어갑니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 오케이 통과! 완벽하게 작동합니다.
+</span><span class="n">slime</span> <span class="o">=</span> <span class="nc">Slime</span><span class="p">()</span> 
+<span class="n">slime</span><span class="p">.</span><span class="nf">attack</span><span class="p">()</span> <span class="c1"># 슬라임이 끈적한 점액을 발사합니다!
+</span>
+
+<span class="c1"># [개발자 B의 잘못된 예]
+</span><span class="k">class</span> <span class="nc">Dragon</span><span class="p">(</span><span class="n">MonsterProtocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">드래곤의 거대한 브레스 파이어!!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="c1"># 앗! 실수로 move() 를 오버라이딩(구현)하는 것을 깜빡했습니다!!
+</span>
+<span class="c1"># [에러 폭발!] 부모가 지시한 숙제(move 구현)를 다 안 했다고 객체 생성 자체를 거부합니다!
+# dragon = Dragon() 
+# TypeError: Can't instantiate abstract class Dragon with abstract method move
+</span></code></pre></div></div>
+
+<h3 id="3-파이썬-코어의-숨겨진-추상-클래스들">3. 파이썬 코어의 숨겨진 추상 클래스들</h3>
+
+<p>파이썬 내부를 뜯어보면, 우리가 자주 쓰는 <code class="language-plaintext highlighter-rouge">리스트(List)</code>, <code class="language-plaintext highlighter-rouge">딕셔너리(Dict)</code> 같은 녀석들도 제멋대로 만들어진 게 아닙니다. 파이썬 코어 개발자들이 <code class="language-plaintext highlighter-rouge">collections.abc</code>라는 곳에 만들어둔 수많은 추상 클래스의 깐깐한 규약을 모두 통과한 엘리트 객체들입니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Sequence</code> 추상 클래스</strong>: “너희가 순서가 있는 리스트나 튜플 행세를 허고 싶어? 그럼 길이(<code class="language-plaintext highlighter-rouge">__len__</code>) 재는 법이랑 인덱싱(<code class="language-plaintext highlighter-rouge">__getitem__</code>) 하는 법은 무조건 구현해!”</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Mapping</code> 추상 클래스</strong>: “너희가 딕셔너리처럼 키값으로 놀고 싶다구? 그럼 키값 불러오는 방식 뼈대를 강제로 지켜!”</li>
+</ul>
+
+<p>이렇게 파이썬은 보이지 않는 곳에서 추상 클래스라는 단단한 뼈대를 통해 거대한 표준을 유지하고 있는 아주 치밀한 언어입니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-추상-클래스-기본기-abc-모듈">📖 교재 상세 학습: 1. 추상 클래스 기본기 (abc 모듈)</h2>
+
+<h2 id="1-추상-클래스-기본기-abc-모듈">1. 추상 클래스 기본기 (<code class="language-plaintext highlighter-rouge">abc</code> 모듈)</h2>
+
+<p>로봇 공장 시스템을 만든다고 상상해봅시다. 모든 ‘로봇’은 ‘움직이기’ 기능을 반드시 만들어야 한다는 공통 규칙을 정하고 싶습니다. 이때 사용하는 것이 바로 추상 클래스입니다.</p>
+
+<p>파이썬에서는 <code class="language-plaintext highlighter-rouge">abc</code> (Abstract Base Classes) 모듈을 이용해 추상 클래스를 정의합니다.</p>
+
+<h3 id="11-강제-규칙-만들기-추상-메서드">1.1 강제 규칙 만들기 (추상 메서드)</h3>
+
+<p>추상 클래스 자체는 불완전한 뼈대이므로 인스턴스(실제 로봇)를 만들 수 없습니다. 이것을 상속받는 자식 클래스(구현 클래스)가 지시사항(추상 메서드)을 모두 채워 넣어야만 비로소 완성품이 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="c1"># ABC(Abstract Base Class)를 상속받으면 추상 클래스가 됩니다.
+</span><span class="k">class</span> <span class="nc">RobotBlueprint</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    
+    <span class="c1"># "자식 클래스는 무조건 이 메서드를 구현해라!" 라는 데코레이터
+</span>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># 뼈대이므로 구현하지 않습니다.
+</span>
+<span class="c1"># 자식 클래스 (구현 클래스)
+</span><span class="k">class</span> <span class="nc">TankRobot</span><span class="p">(</span><span class="n">RobotBlueprint</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">캐터필러로 묵직하게 움직입니다!</span><span class="sh">"</span>
+</code></pre></div></div>
+<p>만약 <code class="language-plaintext highlighter-rouge">TankRobot</code>이 <code class="language-plaintext highlighter-rouge">move</code> 메서드를 빼먹고 인스턴스를 만들려고 하면 에러(TypeError)가 나면서 프로그램이 멈춥니다. 안전장치가 완벽하죠!</p>
+
+<hr />
+
+<h3 id="12-넌-이제-내-자식이다---가상-서브클래스-register">1.2 “넌 이제 내 자식이다!” - 가상 서브클래스 (<code class="language-plaintext highlighter-rouge">register</code>)</h3>
+
+<p>직접 상속(<code class="language-plaintext highlighter-rouge">class A(B):</code>)을 받지 않아도, 족보에 강제로 이름을 올려 “가상의 자식”으로 취급하는 재미있는 기능이 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+
+<span class="k">class</span> <span class="nc">PowerCore</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 배터리 클래스는 PowerCore를 상속받은 적이 없지만...
+</span><span class="k">class</span> <span class="nc">Battery</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 명부(register)에 강제 등록합니다.
+</span><span class="n">PowerCore</span><span class="p">.</span><span class="nf">register</span><span class="p">(</span><span class="n">Battery</span><span class="p">)</span>
+
+<span class="c1"># 진짜 자식이냐고 물어보면? True가 나옵니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="n">Battery</span><span class="p">,</span> <span class="n">PowerCore</span><span class="p">))</span> <span class="c1"># True
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="13-암묵적-규칙-프로토콜과-duck-typing">1.3 암묵적 규칙 (프로토콜과 Duck Typing)</h3>
+
+<p>파이썬은 아주 유연한 언어입니다. “오리처럼 걷고 오리처럼 꽥꽥대면, 그건 오리다(Duck Typing)!”라는 철학이 있죠.</p>
+
+<p>즉, 명시적으로 추상 클래스를 상속받지 않았더라도 클래스 내부에 특정 매직 메서드(예: <code class="language-plaintext highlighter-rouge">__len__</code>)를 잘 만들어 두었다면, 파이썬은 이를 길이를 잴 수 있는 <code class="language-plaintext highlighter-rouge">Sized</code> 컬렉션의 자식이라고 암묵적으로 인정해 줍니다. 이렇게 동작과 행동 패턴(메서드 유무)만으로 자격을 판단하는 방식을 ‘프로토콜 인터페이스(Protocol Interface)’라고 부릅니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-숫자들의-가계도-numbers">📖 교재 상세 학습: 2. 숫자들의 가계도 (numbers)</h2>
+
+<h2 id="2-숫자들의-가계도-numbers">2. 숫자들의 가계도 (<code class="language-plaintext highlighter-rouge">numbers</code>)</h2>
+
+<p>우리가 매일 쓰는 1, 3.14 같은 단순한 숫자들도 파이썬 내부에서는 아주 거대한 족보(추상 클래스 체계)를 가지고 있습니다. 파이썬의 <code class="language-plaintext highlighter-rouge">numbers</code> 모듈을 들여다보면 수학의 수 체계가 그대로 코드로 구현되어 있습니다.</p>
+
+<h3 id="21-숫자의-가장-큰-조상-number">2.1 숫자의 가장 큰 조상, Number</h3>
+
+<p>모든 숫자의 단군 할아버지(?) 격인 추상 클래스는 <code class="language-plaintext highlighter-rouge">Number</code>입니다. 정수(<code class="language-plaintext highlighter-rouge">int</code>), 실수(<code class="language-plaintext highlighter-rouge">float</code>), 복소수(<code class="language-plaintext highlighter-rouge">complex</code>) 등 파이썬 내의 모든 숫자 자료형은 결국 이 <code class="language-plaintext highlighter-rouge">Number</code> 소속입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numbers</span>
+
+<span class="c1"># 정수 10은 Number의 후손이 맞을까?
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">isinstance</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Number</span><span class="p">))</span> <span class="c1"># True
+</span>
+<span class="c1"># 3.14 (실수)도 Number의 후손일까?
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">isinstance</span><span class="p">(</span><span class="mf">3.14</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Number</span><span class="p">))</span> <span class="c1"># True
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="22-구체적인-숫자-계급표">2.2 구체적인 숫자 계급표</h3>
+
+<p><code class="language-plaintext highlighter-rouge">numbers</code> 모듈 안에는 점차 구체화되는 4단계의 숫자 추상 클래스 계급이 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">Number</code> (수)</strong>: 가장 큰 범주 (더하기, 빼기 등을 포괄적 정의)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Complex</code> (복소수)</strong>: 내장 <code class="language-plaintext highlighter-rouge">complex</code> 타입과 연관 (실수부, 허수부 등)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Real</code> (실수)</strong>: 내장 <code class="language-plaintext highlighter-rouge">float</code> 타입과 연관</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Rational</code> (유리수)</strong>: 분수 표기가 가능한 숫자 (예: <code class="language-plaintext highlighter-rouge">fractions.Fraction</code>)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Integral</code> (정수)</strong>: 내장 <code class="language-plaintext highlighter-rouge">int</code> 타입과 연관</li>
+</ol>
+
+<p>(아래로 내려갈수록 상위 클래스의 성질을 물려받아 더 좁은 범위의 숫자가 됩니다.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numbers</span>
+<span class="kn">import</span> <span class="n">fractions</span>
+
+<span class="c1"># int(정수)는 Integral(정수 추상 클래스)의 자식입니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Integral</span><span class="p">))</span> <span class="c1"># True
+</span>
+<span class="c1"># 분수(Fraction)는 실수(Real)의 자식입니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">issubclass</span><span class="p">(</span><span class="n">fractions</span><span class="p">.</span><span class="n">Fraction</span><span class="p">,</span> <span class="n">numbers</span><span class="p">.</span><span class="n">Real</span><span class="p">))</span> <span class="c1"># True
+</span></code></pre></div></div>
+
+<p>파이썬의 내장 함수나 연산자들은 내부적으로 숫자가 들어올 때 “아, 이 녀석이 <code class="language-plaintext highlighter-rouge">Real</code> 추상 클래스의 규격을 만족하는 (즉, 더하고 뺄 수 있는) 진짜 숫자가 맞구나!”라고 판단하여 똑똑하게 계산을 처리합니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-3-컬렉션의-뼈대-collectionsabc">📖 교재 상세 학습: 3. 컬렉션의 뼈대 (collections.abc)</h2>
+
+<h2 id="3-컬렉션의-뼈대-collectionsabc">3. 컬렉션의 뼈대 (<code class="language-plaintext highlighter-rouge">collections.abc</code>)</h2>
+
+<p>리스트, 튜플, 딕셔너리, 셋(Set) 등 여러 개의 데이터를 묶어 담는 파이썬의 주머니들을 ‘컬렉션(Collection)’이라고 합니다. 이 컬렉션들도 결국 제멋대로 만들어진 것이 아니라, <code class="language-plaintext highlighter-rouge">collections.abc</code> 라는 강력한 가이드라인에 따라 설계되었습니다.</p>
+
+<h3 id="31-삼위일체-컬렉션의-기초-조건">3.1 삼위일체: 컬렉션의 기초 조건</h3>
+
+<p>파이썬에서 ‘컬렉션’ 대접을 받으려면 (즉, <code class="language-plaintext highlighter-rouge">Collection</code> 추상 클래스가 되려면) 다음 세 가지 기능의 뼈대를 무조건 갖춰야 합니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">Sized</code></strong>: 얼마나 들어있는지 길이(<code class="language-plaintext highlighter-rouge">__len__</code>)를 잴 수 있을 것.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Iterable</code></strong>: 하나씩 차례대로 꺼낼 수(<code class="language-plaintext highlighter-rouge">__iter__</code>) 있을 것.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Container</code></strong>: 그 안에 특정 요소가 들어있는지 포함 여부(<code class="language-plaintext highlighter-rouge">__contains__</code>)를 검사할 수 있을 것.</li>
+</ol>
+
+<hr />
+
+<h3 id="32-줄-세우기-sequence-패밀리">3.2 줄 세우기: Sequence 패밀리</h3>
+
+<p>문자열(<code class="language-plaintext highlighter-rouge">str</code>), 튜플(<code class="language-plaintext highlighter-rouge">tuple</code>), 리스트(<code class="language-plaintext highlighter-rouge">list</code>)처럼 순서(인덱스)가 있는 자료형들의 부모가 바로 <code class="language-plaintext highlighter-rouge">Sequence</code> 추상 클래스입니다. 
+순서가 있으니 추가로 대괄호에서 인덱스로 찾기(<code class="language-plaintext highlighter-rouge">__getitem__</code>)가 가능해야 하죠.</p>
+
+<p>이 중에서 내용물을 수정할 수 있는 리스트(<code class="language-plaintext highlighter-rouge">list</code>) 같은 녀석들은 다시금 <code class="language-plaintext highlighter-rouge">MutableSequence</code> 라는 상위 클래스를 상속받아 요소를 삭제하거나 삽입하는 강력한 능력을 얻습니다.</p>
+
+<hr />
+
+<h3 id="33-열쇠와-자물쇠-mapping-패밀리">3.3 열쇠와 자물쇠: Mapping 패밀리</h3>
+
+<p>딕셔너리(<code class="language-plaintext highlighter-rouge">dict</code>)처럼 “이름표(Key)”로 데이터를 찾는 자료형들의 부모는 <code class="language-plaintext highlighter-rouge">Mapping</code> 추상 클래스입니다.
+역시 딕셔너리는 내부의 값을 맘대로 바꿀 수 있으므로 <code class="language-plaintext highlighter-rouge">MutableMapping</code> 클래스 아래에 소속되어 있으며, 수정을 담당하는 매직 메서드(<code class="language-plaintext highlighter-rouge">__setitem__</code> 등)를 구현하고 있습니다.</p>
+
+<hr />
+
+<h3 id="34-짝퉁-객체-view-자료형">3.4 짝퉁(?) 객체: View 자료형</h3>
+
+<p>딕셔너리의 키(<code class="language-plaintext highlighter-rouge">dict.keys()</code>)나 값(<code class="language-plaintext highlighter-rouge">dict.values()</code>)을 조회하면 나오는 결과는 리스트가 아닙니다. 이들은 데이터를 복사해서 새로 만든 게 아니라, 원본 데이터베이스에서 그 부분만 들여다볼 수 있는 ‘투명한 유리창(View)’ 역할을 합니다.</p>
+
+<p>파이썬은 이를 위해 <code class="language-plaintext highlighter-rouge">KeysView</code>, <code class="language-plaintext highlighter-rouge">ValuesView</code>, <code class="language-plaintext highlighter-rouge">ItemsView</code> 등의 추상 클래스를 따로 관리합니다. 이런 뷰(View) 형태를 쓰면 매번 덩치가 큰 데이터를 복사할 필요가 없어 컴퓨터 자원을 크게 절약할 수 있습니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-4-시퀀스를-다루는-내장-도구들">📖 교재 상세 학습: 4. 시퀀스를 다루는 내장 도구들</h2>
+
+<h2 id="4-시퀀스를-다루는-내장-도구들">4. 시퀀스를 다루는 내장 도구들</h2>
+
+<p>파이썬은 여러 개의 데이터(시퀀스)를 편리하게 가공할 수 있도록 내장형 마법 도구들을 기본 지원합니다. 이 도구들은 함수처럼 생겼지만 사실은 하나의 <strong>클래스(객체)</strong>로 작동합니다. 
+가장 큰 특징은 이들은 메모리를 아끼기 위해 “필요할 때 딱 하나씩만” 데이터를 뱉어내는 <strong>반복자(Iterator)</strong>나 <strong>반복형(Iterable)</strong> 성질을 갖고 있다는 것입니다.</p>
+
+<h3 id="41-짝-맞추기-달인-zip">4.1 짝 맞추기 달인: <code class="language-plaintext highlighter-rouge">zip</code></h3>
+
+<p>서로 다른 겉옷(리스트)에 들어있는 요소들을 순서대로 하나씩 꺼내서 예쁜 순서쌍(튜플)으로 지퍼(zip)를 채워주는 기계입니다. 
+가장 짧은 길이를 가진 리스트에 맞춰서 동작합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">Iron Man</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Spider-Man</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Hulk</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">Red</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Red-Blue</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Green</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Extra-Color</span><span class="sh">"</span><span class="p">]</span> <span class="c1"># 마지막은 짝이 없어 무시됨
+</span>
+<span class="c1"># zip 객체(반복자)가 만들어짐
+</span><span class="n">z</span> <span class="o">=</span> <span class="nf">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span> 
+
+<span class="c1"># 눈으로 보려면 리스트로 포장합니다.
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> 
+<span class="c1"># [('Iron Man', 'Red'), ('Spider-Man', 'Red-Blue'), ('Hulk', 'Green')]
+</span></code></pre></div></div>
+<blockquote>
+  <p>[!NOTE]
+반복자(Iterator) 인스턴스는 한 번 데이터를 뽑아 쓰고 나면 <strong>텅 빈 껍데기</strong>가 되므로, 다시 쓰려면 새로 만들어야 합니다!</p>
+</blockquote>
+
+<hr />
+
+<h3 id="42-내-맘대로-번호-부여기-enumerate">4.2 내 맘대로 번호 부여기: <code class="language-plaintext highlighter-rouge">enumerate</code></h3>
+
+<p>데이터들 앞에 순번 스티커를 착착 붙여주는 기계입니다. 리스트의 인덱스 번호와 실제 내용을 쌍으로 묶어줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">heroes</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">Batman</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Superman</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Flash</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># 번호 스티커를 붙입니다. (기본은 0번부터 시작)
+</span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">hero</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">heroes</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">hero</span><span class="p">)</span>
+<span class="c1"># 0 Batman / 1 Superman / 2 Flash
+</span>
+<span class="c1"># 100번부터 시작하고 싶다면?
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="nf">enumerate</span><span class="p">(</span><span class="n">heroes</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
+<span class="c1"># [(100, 'Batman'), (101, 'Superman'), (102, 'Flash')]
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="43-뒤집기-요정-reversed">4.3 뒤집기 요정: <code class="language-plaintext highlighter-rouge">reversed</code></h3>
+
+<p>주어진 데이터를 맨 끝에서부터 역순으로 집어서 던져주는 반복자를 만듭니다. 원본 자체를 거꾸로 파괴하는 것이 아니라, 꺼내는 순서만 거꾸로 해주는 아주 착한 기능입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="nf">reversed</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="c1"># [4, 3, 2, 1]
+</span></code></pre></div></div>
+
+<h3 id="44-무한의-숫자-찍어내기-range">4.4 무한의 숫자 찍어내기: <code class="language-plaintext highlighter-rouge">range</code></h3>
+
+<p><code class="language-plaintext highlighter-rouge">range</code>는 리스트처럼 전체 숫자를 한 번에 메모리에 올리지 않고 숫자들을 생성하는 규칙(시작, 끝, 보폭)만 똑똑하게 기억하는 반복형(Iterable) 객체입니다. 덕분에 <code class="language-plaintext highlighter-rouge">range(1000000)</code> 처럼 100만 길이를 만들어도 컴퓨터가 힘들어하지 않습니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-5-타입-힌트와-코드-테스트">📖 교재 상세 학습: 5. 타입 힌트와 코드 테스트</h2>
+
+<h2 id="5-타입-힌트와-코드-테스트">5. 타입 힌트와 코드 테스트</h2>
+
+<p>파이썬은 변수에 “나는 평생 정수(int)만 받을 거야!” 하고 못 박지 않는 동적인 언어입니다. 아주 편하지만, 가끔 다른 사람이 문자열을 집어넣어 프로그램이 와장창 깨지는 사고가 나기도 하죠. 
+이런 실수를 막기 위해, 코드를 실행하기 전 에디터 화면에 “이 변수는 이런 타입만 넣어줘”라고 팻말을 달아주는 기능이 바로 <strong>타입 힌트(Type Hint)</strong>입니다.</p>
+
+<h3 id="51-코드에-달아주는-명찰-type-annotation">5.1 코드에 달아주는 명찰 (Type Annotation)</h3>
+
+<p>파이썬 3.6부터 변수 뒤에 콜론(<code class="language-plaintext highlighter-rouge">:</code>)을 붙이고, 함수 화살표(<code class="language-plaintext highlighter-rouge">-&gt;</code>)를 사용하여 의도하는 데이터의 종류(타입)를 메모해둘 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># a와 b는 정수(int)를 받고, 결과 결과도 정수(int)가 나온다고 메모!
+</span><span class="k">def</span> <span class="nf">add_numbers</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 문자열을 넣어도 프로그램이 당장 멈추지는 않지만...
+# 똑똑한 백신(에디터의 타입 체커)이 빨간 줄을 그어 경고해줍니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">add_numbers</span><span class="p">(</span><span class="sh">"</span><span class="s">Hello</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">World</span><span class="sh">"</span><span class="p">))</span> 
+</code></pre></div></div>
+<p><em>주의사항: 타입 힌트는 어디까지나 ‘힌트(주석)’일 뿐이라, 실제 파이썬 엔진은 이를 쿨하게 무시하고 코드를 강제로 실행시킵니다. 따라서 코드 규칙 방어용으로 코딩 단계에서 사용합니다.</em></p>
+
+<hr />
+
+<h3 id="52-typing-모듈로-더-정교한-힌트-만들기">5.2 <code class="language-plaintext highlighter-rouge">typing</code> 모듈로 더 정교한 힌트 만들기</h3>
+
+<p>조금 더 디테일한 힌트를 주기 위해 파이썬은 <code class="language-plaintext highlighter-rouge">typing</code>이라는 별개의 모듈을 제공합니다. 
+예를 들어 그냥 리스트가 아니라 <strong>“정수만 들어있는 리스트”</strong>라고 확실히 못 박고 싶을 때 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="c1"># 이 리스트 안에는 문자열(str)만 들어와야 합니다!
+</span><span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Bob</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># 딕셔너리의 키는 문자열(str), 값은 정수(int)만 와야 합니다!
+</span><span class="n">scores</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sh">"</span><span class="s">Alice</span><span class="sh">"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="sh">"</span><span class="s">Bob</span><span class="sh">"</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="나만의-타입-만들기-typevar-generic">나만의 타입 만들기 (<code class="language-plaintext highlighter-rouge">TypeVar</code>, <code class="language-plaintext highlighter-rouge">Generic</code>)</h4>
+
+<p>어떤 함수는 “문자열과 바이트 둘 다 받을 수 있는데, 들어온 녀석의 타입을 그대로 돌려주고 싶어!” 할 때가 있습니다. 이때는 <code class="language-plaintext highlighter-rouge">TypeVar</code> (타입 변수)를 만들어서 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="c1"># T는 딱 str이나 bytes 둘 중 하나만 된다고 규칙을 만듭니다.
+</span><span class="n">T</span> <span class="o">=</span> <span class="nc">TypeVar</span><span class="p">(</span><span class="sh">'</span><span class="s">T</span><span class="sh">'</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="53-이-설명서가-참인지-확인해줘-doctest">5.3 이 설명서가 참인지 확인해줘! (<code class="language-plaintext highlighter-rouge">doctest</code>)</h3>
+
+<p>함수를 만들 때, 함수 바로 아래 큰 따옴표 3개 <code class="language-plaintext highlighter-rouge">"""</code> 로 묶어서 “이 함수는 이렇게 쓰는 거야~” 하고 작성한 설명서를 <strong>독스트링(Docstring)</strong>이라고 부릅니다.
+여기에 덤으로 Python 대화형 창(<code class="language-plaintext highlighter-rouge">&gt;&gt;&gt;</code>)에서 실행하는 예제 코드를 함께 적어두면, 파이썬이 이 주석을 눈으로 읽고 <strong>“음, 설명서에 적힌 코드의 결과가 실제 결과랑 똑같이 나오는지 내가 검사해줄게!”</strong>라고 알아서 테스트해주는 마법 기능이 <code class="language-plaintext highlighter-rouge">doctest</code>입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    이 함수는 두 숫자를 더합니다.
+</span><span class="gp">    
+    &gt;&gt;&gt;</span> <span class="nf">my_func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="mi">5</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="nf">my_func</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="mi">20</span>
+    <span class="sh">"""</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</code></pre></div></div>
+<p>이렇게 적어두고 터미널에서 <code class="language-plaintext highlighter-rouge">python -m doctest 파일명.py</code> 시스템 명령을 내리면, 만약 내 코드의 덧셈 로직이 틀렸을 경우 주석에 쓴 결과(5, 20)와 다르다며 삑- 하고 에러를 뿜어주어 아주 편리하게 디버깅이 가능합니다.</p>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

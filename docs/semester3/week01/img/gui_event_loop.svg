@@ -1,0 +1,47 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="350" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">GUI 이벤트 루프 (Event Loop) 작동 원리</text>
+  
+  <!-- Event Queue -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="200" height="150" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="100" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">이벤트 큐 (Event Queue)</text>
+    
+    <rect x="20" y="50" width="160" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <text x="100" y="70" font-family="Arial" font-size="14" text-anchor="middle" fill="#01579b">마우스 클릭 이벤트</text>
+    
+    <rect x="20" y="90" width="160" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <text x="100" y="110" font-family="Arial" font-size="14" text-anchor="middle" fill="#01579b">키보드 입력 이벤트</text>
+    
+    <rect x="20" y="130" width="160" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <text x="100" y="150" font-family="Arial" font-size="14" text-anchor="middle" fill="#01579b">윈도우 크기 조절 이벤트</text>
+  </g>
+  
+  <!-- Event Loop -->
+  <g transform="translate(300, 80)">
+    <ellipse cx="100" cy="75" rx="80" ry="50" fill="#c8e6c9" stroke="#2e7d32" stroke-width="3" />
+    <text x="100" y="70" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#2e7d32">이벤트 루프</text>
+    <text x="100" y="90" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">무한 반복하며 큐 확인</text>
+  </g>
+  
+  <!-- Handler -->
+  <g transform="translate(450, 80)">
+    <rect x="0" y="0" width="120" height="150" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="60" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">이벤트 핸들러</text>
+    <text x="60" y="70" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">함수 실행</text>
+    <text x="60" y="90" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">(Callback)</text>
+  </g>
+  
+  <!-- Flow Arrows -->
+  <path d="M 250 110 L 2, la 300 110" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <path d="M 400 110 L 450 110" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <path d="M 500 230 L 300 230 L 300 130" stroke="#333" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)" />
+  <text x="300" y="250" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">다시 루프로 돌아가 다음 이벤트 대기</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

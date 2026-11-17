@@ -1,0 +1,40 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#f9f9f9" />
+  
+  <!-- Singleton Section -->
+  <text x="150" y="40" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">싱글톤 패턴 (Singleton)</text>
+  <rect x="50" y="60" width="200" height="120" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+  <ellipse cx="150" cy="110" rx="40" ry="30" fill="#bbdefb" stroke="#1976d2" stroke-width="2" />
+  <text x="150" y="115" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#1976d2">유일한 인스턴스</text>
+  <path d="M 100 110 L 50 110" stroke="#d32f2f" stroke-width="2" marker-end="url(#arrowhead)" />
+  <text x="75" y="100" font-family="Arial" font-size="12" text-anchor="middle" fill="#d32f2f">생성 차단</text>
+  <path d="M 200 110 L 250 110" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowhead)" />
+  <text x="225" y="100" font-family="Arial" font-size="12" text-anchor="middle" fill="#2e7d32">유일한 통로</text>
+  
+  <!-- Factory Section -->
+  <text x="450" y="40" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">팩토리 패턴 (Factory)</text>
+  <rect x="350" y="60" width="200" height="120" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+  <rect x="410" y="80" width="80" height="40" rx="5" fill="#fff9c4" stroke="#fbc02d" stroke-width="2" />
+  <text x="450" y="105" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#fbc02d">Factory</text>
+  
+  <path d="M 410 100 L 370 140" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <rect x="340" y="140" width="60" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+  <text x="370" y="160" font-family="Arial" font-size="12" text-anchor="middle">Product A</text>
+  
+  <path d="M 490 100 L 490 140" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+  <rect x="460" y="140" width="60" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+  <text x="490" y="160" font-family="Arial" font-size="12" text-anchor="middle">Product B</text>
+  
+  <!-- Summary -->
+  <rect x="100" y="220" width="400" height="140" rx="10" fill="#fff" stroke="#333" stroke-width="1" />
+  <text x="300" y="250" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">디자인 패턴의 목적</text>
+  <text x="300" y="280" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">반복되는 설계 문제에 대한 "검증된 해결책"</text>
+  <text x="300" y="300" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">유지보수성 향상 &amp; 코드 중복 제거</text>
+  <text x="300" y="320" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">객체 생성 로직의 캡슐화</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️ | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester2/week05/" />
+<meta property="og:url" content="https://python.jiny.dev/semester2/week05/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️에 대한 파이썬(Python) 강좌 문서입니다.","headline":"5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️","url":"https://python.jiny.dev/semester2/week05/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          2학기 고급 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester2/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [고급] 2학기: 객체지향(OOP) 및 설계
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week01/"
+              class="bd-links-link d-inline-block rounded ">
+              1주차: OOP 패러다임 - 객체지향 설계의 시작 🏗️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week02/"
+              class="bd-links-link d-inline-block rounded ">
+              2주차: 클래스 기초 - 인스턴스와 self의 정체 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 캡슐화와 정보 은닉 - 안전한 데이터 관리 🔒
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 상속과 다형성 - 유연하고 확장 가능한 설계 🌿
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week05/"
+              class="bd-links-link d-inline-block rounded active">
+              5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 추상 클래스와 인터페이스 - 설계 청사진과 결합도 낮추기 🗺️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 매직 메서드 (Dunder Methods) - 파이썬답게 만들기 ✨
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 2학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 디자인 패턴 (1) - 싱글톤과 팩토리 패턴 🏗️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 디자인 패턴 (2) - 전략과 옵저버 패턴 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week11/"
+              class="bd-links-link d-inline-block rounded ">
+              11주차: 패키지 구조 설계 - 대규모 프로젝트 관리 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 타입 힌팅 (Type Hinting) - 코드의 문서화와 안정성 🏷️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 유닛 테스트 - 버그 없는 코드 만들기 🧪
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 배포 및 패키징 (1) - 내 코드를 라이브러리로 만들기 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 배포 및 패키징 (2) - PyPI에 내 라이브러리 공개하기 🌍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester2/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 2학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester2/">📌 [고급] 2학기: 객체지향(OOP) 및 설계</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="5주차-다중-상속과-mro---복잡한-계층-구조-해결-️">5주차: 다중 상속과 MRO - 복잡한 계층 구조 해결 🕸️</h1>
+
+<p>지난 시간에는 하나의 부모로부터 상속받는 단일 상속을 배웠습니다. 하지만 파이썬은 여러 개의 부모 클래스로부터 동시에 상속받는 <strong>다중 상속(Multiple Inheritance)</strong>을 지원합니다. 여기서 아주 흥미롭고 복잡한 문제가 발생하는데, 바로 <strong>MRO</strong>입니다.</p>
+
+<hr />
+
+<h2 id="1-다중-상속-multiple-inheritance">1. 다중 상속 (Multiple Inheritance)</h2>
+
+<p>다중 상속은 한 클래스가 두 개 이상의 부모 클래스로부터 속성과 메서드를 물려받는 것입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Flyer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">fly</span><span class="p">(</span><span class="n">self</span><span class="p">):</span> <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">하늘을 납니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Swimmer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">swim</span><span class="p">(</span><span class="n">self</span><span class="p">):</span> <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">물속을 헤엄칩니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 두 클래스를 모두 상속받음
+</span><span class="k">class</span> <span class="nc">Duck</span><span class="p">(</span><span class="n">Flyer</span><span class="p">,</span> <span class="n">Swimmer</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">donald</span> <span class="o">=</span> <span class="nc">Duck</span><span class="p">()</span>
+<span class="n">donald</span><span class="p">.</span><span class="nf">fly</span><span class="p">()</span>  <span class="c1"># 결과: 하늘을 납니다.
+</span><span class="n">donald</span><span class="p">.</span><span class="nf">swim</span><span class="p">()</span> <span class="c1"># 결과: 물속을 헤엄칩니다.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="2-다이아몬드-문제-the-diamond-problem">2. 다이아몬드 문제 (The Diamond Problem)</h2>
+
+<p>다중 상속에서 가장 문제가 되는 상황이 바로 <strong>다이아몬드 상속</strong>입니다.</p>
+
+<p><img src="./img/mro_diamond.svg" alt="다이아몬드 상속과 MRO" /></p>
+
+<p><strong>상황:</strong></p>
+<ol>
+  <li>클래스 <code class="language-plaintext highlighter-rouge">A</code>에 <code class="language-plaintext highlighter-rouge">greet()</code> 메서드가 있습니다.</li>
+  <li>클래스 <code class="language-plaintext highlighter-rouge">B</code>와 <code class="language-plaintext highlighter-rouge">C</code>가 <code class="language-plaintext highlighter-rouge">A</code>를 상속받고, 각각 <code class="language-plaintext highlighter-rouge">greet()</code>를 오버라이딩했습니다.</li>
+  <li>클래스 <code class="language-plaintext highlighter-rouge">D</code>가 <code class="language-plaintext highlighter-rouge">B</code>와 <code class="language-plaintext highlighter-rouge">C</code>를 모두 상속받았습니다.</li>
+</ol>
+
+<p><strong>질문:</strong> <code class="language-plaintext highlighter-rouge">D</code>의 객체에서 <code class="language-plaintext highlighter-rouge">greet()</code>를 호출하면, <code class="language-plaintext highlighter-rouge">B</code>의 것이 실행될까요, <code class="language-plaintext highlighter-rouge">C</code>의 것이 실행될까요?</p>
+
+<hr />
+
+<h2 id="3-mro-method-resolution-order">3. MRO (Method Resolution Order)</h2>
+
+<p>파이썬은 이 문제를 해결하기 위해 <strong>MRO (메서드 결정 순서)</strong>라는 규칙을 사용합니다. 파이썬은 <strong>C3 Linearization</strong>이라는 알고리즘을 통해 상속 계층을 하나의 선형 리스트로 만듭니다.</p>
+
+<h3 id="31-mro-탐색-규칙">3.1 MRO 탐색 규칙</h3>
+<p>파이썬의 MRO는 기본적으로 다음과 같은 원칙을 따릅니다.</p>
+<ol>
+  <li><strong>자식 클래스</strong>를 가장 먼저 확인합니다.</li>
+  <li><strong>부모 클래스</strong>들을 <strong>왼쪽에서 오른쪽 순서</strong>로 확인합니다.</li>
+  <li><strong>상위 클래스</strong>로 올라가기 전에 모든 <strong>형제 클래스</strong>를 먼저 확인합니다.</li>
+</ol>
+
+<p><strong>위 다이아몬드 구조의 MRO 순서:</strong>
+<code class="language-plaintext highlighter-rouge">D</code> $\rightarrow$ <code class="language-plaintext highlighter-rouge">B</code> $\rightarrow$ <code class="language-plaintext highlighter-rouge">C</code> $\rightarrow$ <code class="language-plaintext highlighter-rouge">A</code></p>
+
+<h3 id="32-mro-확인-방법">3.2 MRO 확인 방법</h3>
+<p>파이썬에서는 <code class="language-plaintext highlighter-rouge">__mro__</code> 속성이나 <code class="language-plaintext highlighter-rouge">mro()</code> 메서드를 통해 이 순서를 직접 확인할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="n">Duck</span><span class="p">.</span><span class="nf">mro</span><span class="p">())</span> 
+<span class="c1"># 결과: [&lt;class '__main__.Duck'&gt;, &lt;class '__main__.Flyer'&gt;, &lt;class '__main__.Swimmer'&gt;, &lt;class 'object'&gt;]
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="4--deep-dive-super와-mro의-관계">4. 🔍 Deep Dive: <code class="language-plaintext highlighter-rouge">super()</code>와 MRO의 관계</h2>
+
+<p>우리가 4주차에 배운 <code class="language-plaintext highlighter-rouge">super()</code>는 단순히 “내 부모”를 호출하는 것이 아닙니다. 실제로는 <strong>MRO 리스트에서 내 다음 순서에 있는 클래스</strong>를 호출하는 것입니다.</p>
+
+<p>따라서 다중 상속 구조에서 <code class="language-plaintext highlighter-rouge">super().method()</code>를 호출하면, 설계된 MRO 순서에 따라 체인처럼 메서드들이 호출됩니다. 이를 통해 다이아몬드 구조에서도 중복 호출 없이 모든 부모의 기능을 안전하게 실행할 수 있습니다.</p>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> <code class="language-plaintext highlighter-rouge">Flyer</code>, <code class="language-plaintext highlighter-rouge">Walker</code>, <code class="language-plaintext highlighter-rouge">Swimmer</code> 세 가지 클래스를 만들고, 이를 모두 상속받는 <code class="language-plaintext highlighter-rouge">SuperAnimal</code> 클래스를 구현해 보세요.</p>
+
+<p><strong>문제 2.</strong> 다음 상속 구조에서 <code class="language-plaintext highlighter-rouge">D</code> 객체의 <code class="language-plaintext highlighter-rouge">mro()</code> 결과가 어떻게 나올지 예측하고, 실제 코드로 확인해 보세요.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">A</code> $\rightarrow$ <code class="language-plaintext highlighter-rouge">B(A)</code>, <code class="language-plaintext highlighter-rouge">C(A)</code>, <code class="language-plaintext highlighter-rouge">D(B, C)</code></li>
+</ul>
+
+<h2 id="문제-3-심화-mro의-c3-linearization-알고리즘이-왜-단순한-깊이-우선-탐색dfs보다-우수한지-다이아몬드-상속-상황을-예로-들어-설명해-보세요"><strong>문제 3.</strong> (심화) MRO의 ‘C3 Linearization’ 알고리즘이 왜 단순한 깊이 우선 탐색(DFS)보다 우수한지, 다이아몬드 상속 상황을 예로 들어 설명해 보세요.</h2>
+
+<h2 id="-deep-dive-c3-선형화linearization-알고리즘과-super의-진정한-정체">🔍 Deep Dive: C3 선형화(Linearization) 알고리즘과 super()의 진정한 정체</h2>
+
+<p>다중 상속에서 부모 클래스의 메서드 탐색 순서를 결정하는 것은 생각보다 매우 복잡합니다. 파이썬은 C3 선형화(C3 Linearization) 알고리즘을 사용합니다.</p>
+<ul>
+  <li><strong>C3 선형화</strong>: 다음의 세 가지 규칙을 완벽하게 만족하는 하나의 순서 리스트를 도출하는 수학적 절차입니다.
+    <ol>
+      <li><strong>자식 클래스</strong>가 부모 클래스보다 먼저 탐색되어야 한다.</li>
+      <li>여러 부모 클래스를 상속받을 때, <strong>상속 목록에 적힌 순서(왼쪽 ➡️ 오른쪽)</strong>를 그대로 지켜야 한다.</li>
+      <li>부모 클래스가 공유하는 공통 조상(예: <code class="language-plaintext highlighter-rouge">object</code> 또는 공통 부모)은 모든 분기가 끝나기 전까지 먼저 탐색되어서는 안 된다. (다이아몬드 상속 구조 해결)</li>
+    </ol>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">super()</code>의 재정의</strong>: <code class="language-plaintext highlighter-rouge">super()</code>는 단순한 “내 직계 부모”를 호출하는 함수가 아닙니다. <strong>“이 인스턴스의 MRO 리스트에서 내 바로 다음(Next) 클래스를 찾아라”</strong>라는 화살표 역할을 합니다. 다중 상속 하에서 <code class="language-plaintext highlighter-rouge">super()</code>는 다이아몬드의 반대편 날개 클래스를 호출할 수 있음을 명심해야 합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-java-vs-python-스나이퍼-비교">☕ Java vs Python 스나이퍼 비교</h2>
+
+<h3 id="다중-상속-모델의-비교">다중 상속 모델의 비교</h3>
+<ul>
+  <li><strong>Java</strong>: 클래스의 다중 상속을 허용하지 않습니다(단일 상속만 지원). 대신 <strong>인터페이스(Interface)</strong>를 여러 개 구현(implements)하는 방식을 통해 다중 상속에서 오는 모호성 문제(예: 다이아몬드 문제 - 어떤 부모의 메서드를 써야 할지 결정 곤란한 문제)를 원천적으로 배제합니다.</li>
+  <li><strong>Python</strong>: 유연성을 극대화하여 클래스의 다중 상속을 전적으로 허용합니다. 대신 이로 인해 발생할 수 있는 다이아몬드 충돌은 인터프리터가 <strong>MRO(Method Resolution Order)</strong>를 통해 C3 알고리즘에 기초하여 단일 탐색 리스트로 깔끔히 정제하고 단선적으로 메서드를 처리합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“다이아몬드 상속 구조(A ➡️ B, C ➡️ D)를 파이썬 코드로 구성해 줘. 그리고 각 클래스의 생성자에서 <code class="language-plaintext highlighter-rouge">super().__init__()</code>을 호출했을 때 생성자가 실행되는 정확한 순서를 보여주고, <code class="language-plaintext highlighter-rouge">D.__mro__</code> 결과를 통해 왜 그렇게 흐르는지 설명해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Multiple Inheritance</code></strong>: 다중 상속. (하나의 자식 클래스가 두 개 이상의 서로 다른 부모 클래스로부터 기능을 동시에 물려받는 상속 기법입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">MRO</code> (Method Resolution Order)</strong>: 메서드 탐색 순서. (다중 상속된 복잡한 계층 구조 속에서 호출된 메서드를 어느 클래스부터 순서대로 찾아가 확인해야 할지 결정하는 인터프리터의 검색 로드맵입니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Linearization</code></strong>: 선형화. (복잡하게 얽힌 트리/그래프 상속 구조를 일렬(1차원 배열)로 순차 정돈하는 수학적 처리 과정입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="-교재-상세-학습-8-메타-클래스의-이해">📖 교재 상세 학습: 8. 메타 클래스의 이해</h2>
+
+<h2 id="8-메타-클래스의-이해">8. 메타 클래스의 이해</h2>
+
+<p>지금까지 우리는 붕어빵 틀(클래스)로 붕어빵(인스턴스)을 찍어냈습니다. 그런데 문득 궁금증이 생깁니다. <strong>“도대체 그 붕어빵 ‘틀’ 자체는 누가 찍어내는 거지?”</strong> 
+이 호기심의 종착지에 바로 <strong>메타 클래스(Metaclass)</strong>라는 개념이 기다리고 있습니다.</p>
+
+<h3 id="81-붕어빵-틀-공장-type">8.1 붕어빵 틀 공장: <code class="language-plaintext highlighter-rouge">type</code></h3>
+
+<p>우리가 객체의 자료형을 확인할 때 무심결에 쓰는 <code class="language-plaintext highlighter-rouge">type()</code> 함수는 사실 함수가 아니라 <strong>파이썬의 가장 거대한 공장(메타 클래스)</strong>입니다.</p>
+
+<p>우리가 에디터에 <code class="language-plaintext highlighter-rouge">class MyClass:</code> 라고 치면, 파이썬은 내부적으로 몰래 <code class="language-plaintext highlighter-rouge">type</code> 공장을 가동시켜 <code class="language-plaintext highlighter-rouge">MyClass</code>라는 붕어빵 틀을 쇳물에서 주조해냅니다. 즉, 파이썬의 모든 클래스는 <code class="language-plaintext highlighter-rouge">type</code>이 만들어낸 하나의 인스턴스에 불과합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반적인 붕어빵 틀(클래스) 정의
+</span><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sh">"</span><span class="s">강아지</span><span class="sh">"</span>
+
+<span class="c1"># 이 '틀' 자체의 자료형(누가 만들었지?)을 물어봄
+# [결과] &lt;class 'type'&gt; -&gt; "type 이라는 메타 클래스가 만들었습니다."
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">Dog</span><span class="p">))</span> 
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="82-코딩-없이-클래스-찍어내기">8.2 코딩 없이 클래스 찍어내기</h3>
+
+<p>메타 클래스 <code class="language-plaintext highlighter-rouge">type</code>의 진짜 힘은 코드 문자열과 딕셔너리만으로 <strong>런타임(실행 중)에 동적으로 새로운 클래스를 창조</strong>할 수 있다는 점입니다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">type(이름, 상속받을부모튜플, 속성딕셔너리)</code> 형태로 설계도를 넘겨주면, 눈 깜짝할 새에 새로운 클래스가 뚝딱 튀어나옵니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 속성들을 담은 딕셔너리 준비
+</span><span class="n">namespace</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">스카이넷</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">hp</span><span class="sh">'</span><span class="p">:</span> <span class="mi">9999</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. type 메타 클래스를 가동하여 'Robot' 이라는 새로운 클래스 창조!
+# (상속받을 튜플이 비어있으므로 (object,) 가 기본값)
+</span><span class="n">RobotClass</span> <span class="o">=</span> <span class="nf">type</span><span class="p">(</span><span class="sh">'</span><span class="s">Robot</span><span class="sh">'</span><span class="p">,</span> <span class="p">(),</span> <span class="n">namespace</span><span class="p">)</span>
+
+<span class="c1"># 마치 'class Robot:' 으로 만든 것과 똑같이 완벽하게 작동합니다.
+</span><span class="n">terminator</span> <span class="o">=</span> <span class="nc">RobotClass</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">terminator</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="c1"># 스카이넷
+</span><span class="nf">print</span><span class="p">(</span><span class="n">terminator</span><span class="p">.</span><span class="n">hp</span><span class="p">)</span>   <span class="c1"># 9999
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="83-나만의-메타-클래스-만들기">8.3 나만의 메타 클래스 만들기</h3>
+
+<p>기본 공장인 <code class="language-plaintext highlighter-rouge">type</code> 대신 우리가 직접 <strong>맞춤형 붕어빵 틀 공장(Custom Metaclass)</strong>을 지을 수도 있습니다. 
+<code class="language-plaintext highlighter-rouge">type</code>을 상속받아 나만의 메타 클래스를 작성한 뒤, 일반 클래스를 만들 때 <code class="language-plaintext highlighter-rouge">metaclass=</code> 옵션을 달아주면 파이썬은 기본 공장 대신 내 공장으로 주문서를 넘깁니다.</p>
+
+<p>이 기법은 웹 프레임워크(Django 등) 핵심 개발자들이 ORM 테이블 구조를 마법같이 생성할 때 사용하는 궁극기 중 하나입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 나만의 붕어빵 틀 공장 건축 (반드시 type을 상속)
+</span><span class="k">class</span> <span class="nc">MyCustomMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="c1"># 클래스가 탄생(?)하기 직전에 호출됨
+</span>    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">namespace</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[메타 공장] </span><span class="sh">'</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="sh">'</span><span class="s"> 클래스 조립을 시작합니다...</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nf">super</span><span class="p">().</span><span class="nf">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+
+<span class="c1"># 2. 클래스 주문 시 내 공장에 하청 주기
+</span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">MyCustomMeta</span><span class="p">):</span>
+    <span class="k">pass</span>
+    
+<span class="c1"># 화면 출력: [메타 공장] 'User' 클래스 조립을 시작합니다...
+</span></code></pre></div></div>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

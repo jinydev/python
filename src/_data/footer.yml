@@ -1,0 +1,62 @@
+brand:
+  title: 파이썬 마스터 클래스
+  description: 파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지
+    체계적으로 정복하는 오픈 강의 노트입니다.
+  badges:
+  - '#Python'
+  - '#CS_Basics'
+  - '#OOP_Design'
+  - '#PEP8'
+  - '#AsyncIO'
+family_sites:
+- name: 파이썬
+  domain: python.jiny.dev
+  url: https://python.jiny.dev
+  icon: 🐍
+  is_current: true
+- name: 인공지능기초
+  domain: ai.jiny.dev
+  url: https://ai.jiny.dev
+  icon: 🤖
+- name: 딥러닝
+  domain: deep.ai.jiny.dev
+  url: https://deep.ai.jiny.dev
+  icon: 🧠
+- name: 밑바닥 딥러닝 3 (DeZero)
+  domain: dezero.ai.jiny.dev
+  url: https://dezero.ai.jiny.dev
+  icon: 🌱
+- name: 강화학습
+  domain: rl.ai.jiny.dev
+  url: https://rl.ai.jiny.dev
+  icon: 🎯
+- name: 파이토치
+  domain: pytoch.ai.jiny.dev
+  url: https://pytoch.ai.jiny.dev
+  icon: 🔥
+curriculum_links:
+- title: 🐍 파이썬 언어 소개
+  url: /intro/
+- title: 📋 전체 강의계획서 (Syllabus)
+  url: /syllabus/
+- title: '1학기: 기초 및 CS 원리'
+  url: /semester1/
+- title: '2학기: 고급 OOP 및 설계'
+  url: /semester2/
+- title: '3학기: 심화 시스템 개발'
+  url: /semester3/
+- title: 🐍 PEP 8 스타일 가이드
+  url: /pep8/
+- title: 🧭 탐험대 캐릭터 소개
+  url: /character/
+- title: 💻 GitHub 저장소
+  url: https://github.com/jinydev
+  external: true
+- title: ✉️ 문의 및 피드백 (Contact)
+  url: mailto:infohojin@naver.com
+  external: true
+copyright:
+  years: 2017~2026
+  owner: JinyDev
+  rights: All Rights Reserved.
+  author: Prof. Hojin Lee

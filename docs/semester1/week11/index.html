@@ -1,0 +1,1946 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾 | 파이썬 마스터 클래스</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾" />
+<meta name="author" content="Hojin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾에 대한 파이썬(Python) 강좌 문서입니다." />
+<meta name="twitter:description" property="og:description" content="11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾에 대한 파이썬(Python) 강좌 문서입니다." />
+<link rel="canonical" href="https://python.jiny.dev/semester1/week11/" />
+<meta property="og:url" content="https://python.jiny.dev/semester1/week11/" />
+<meta property="og:site_name" content="파이썬 마스터 클래스" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Hojin"},"description":"11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾에 대한 파이썬(Python) 강좌 문서입니다.","headline":"11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾","url":"https://python.jiny.dev/semester1/week11/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/docs.css" rel="stylesheet" />
+  <link href="/assets/css/highlight.css" rel="stylesheet" />
+
+  <style>
+    blockquote {
+      border-left: solid 5px #dee2e6;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+
+  <style>
+    h1 a {
+      text-decoration: none;
+    }
+
+    h2 a {
+      text-decoration: none;
+    }
+
+    h3 a {
+      text-decoration: none;
+    }
+
+    h4 a {
+      text-decoration: none;
+    }
+
+    h5 a {
+      text-decoration: none;
+    }
+
+    h6 a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: top
+    }
+
+    strong a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 스크롤바 커스텀 */
+    /* 임의의 영역 생성 */
+    .scrollBar {}
+
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+      width: 7px;
+      /* 스크롤바의 너비 */
+    }
+
+    .scrollBar::-webkit-scrollbar-thumb {
+      height: 30%;
+      /* 스크롤바의 길이 */
+      background: #cccccc;
+      /* 스크롤바의 색상 */
+
+      border-radius: 5px;
+    }
+
+    .scrollBar::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);
+      /*스크롤바 뒷 배경 색상*/
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4VBPCT3CR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R4VBPCT3CR');
+  </script>
+
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap position-relative" aria-label="Main navigation">
+
+      <!-- Mobile: Left Toggle (Browse) -->
+      <div class="bd-navbar-toggle d-lg-none">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar"
+          aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="bi" fill="currentColor"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
+            </path>
+          </svg>
+          <span class="d-none fs-6 pe-1">Browse</span>
+        </button>
+      </div>
+
+      <!-- Brand: Desktop & Mobile -->
+      <a class="navbar-brand p-0 me-0 me-lg-3 d-none d-lg-flex align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-4 me-2">🐍</span>
+        <span class="fw-bold fs-5 text-white">파이썬 마스터 클래스</span>
+      </a>
+      <a class="navbar-brand p-0 me-0 position-absolute top-50 start-50 translate-middle d-flex d-lg-none align-items-center text-decoration-none" href="/" aria-label="파이썬 마스터 클래스">
+        <span class="fs-5 me-1">🐍</span>
+        <span class="fw-bold fs-6 text-white">파이썬 마스터</span>
+      </a>
+
+      <!-- Mobile: Right Toggle (Menu) -->
+      <div class="d-flex d-lg-none ms-auto">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar"
+          aria-controls="bdNavbar" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
+            viewBox="0 0 16 16">
+            <path
+              d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- OffCanvas -->
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar"
+        aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+        <!-- OffCanver Header -->
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Jiny</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-bs-target="#bdNavbar">
+          </button>
+        </div>
+
+        <!-- OffCanver Body -->
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+          <hr class="d-lg-none text-white-50">
+
+          
+          <ul class="navbar-nav flex-column flex-lg-row bd-navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/intro/">소개</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 active"
+                href="/semester1/">기초(1학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester2/">고급(2학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/semester3/">심화(3학기)</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/pep8/">PEP 8</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/syllabus/">강의계획서</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link py-2 px-0 px-lg-2 "
+                href="/character/">캐릭터</a>
+            </li>
+            
+          </ul>
+
+          <hr class="d-lg-none text-white-50">
+
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li class="nav-item col-6 col-lg-auto">
+              <a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/jinydev" target="_blank"
+                rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="navbar-nav-svg"
+                  viewBox="0 0 512 499.36" role="img">
+                  <title>GitHub</title>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z">
+                  </path>
+                </svg>
+                <small class="d-lg-none ms-2">GitHub</small>
+              </a>
+            </li>
+
+            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
+
+            <li class="nav-item dropdown">
+              <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle text-white-50"
+                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                패밀리 사이트
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://ai.jiny.dev" target="_blank">🤖 인공지능기초</a></li>
+                <li><a class="dropdown-item" href="https://deep.ai.jiny.dev" target="_blank">🧠 딥러닝</a></li>
+                <li><a class="dropdown-item" href="https://dezero.ai.jiny.dev" target="_blank">🌱 밑바닥 딥러닝 3</a></li>
+                <li><a class="dropdown-item" href="https://rl.ai.jiny.dev" target="_blank">🎯 강화학습</a></li>
+                <li><a class="dropdown-item" href="https://pytoch.ai.jiny.dev" target="_blank">🔥 파이토치</a></li>
+                <li><a class="dropdown-item active" href="https://python.jiny.dev">🐍 파이썬</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+    <aside class="bd-sidebar scrollBar">
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+            aria-labelledby="bdSidebarOffcanvasLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">학습목차</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                    data-bs-target="#bdSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body">
+                <!-- 네비게이션 -->
+                <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
+  
+  
+  
+
+  
+
+  
+
+  <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+    <li class="bd-links-group py-2">
+      <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+        
+          1학기 기초 목차
+        
+      </strong>
+      <ul class="list-unstyled fw-normal pb-2 small">
+
+        
+        <li>
+          
+            <a href="/semester1/"
+              class="bd-links-link d-inline-block rounded ">
+              📌 [기초] 1학기: 파이썬 기초 및 CS 원리
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-2"
+              aria-expanded="false">
+              1주차: 파이썬과 개발 환경 🐍
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-2">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week01/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 1세션: 파이썬 소개 및 인터프리터 원리 🚀
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 2세션: 파이썬 설치 및 개발 환경 구축 🛠️
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week01/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    1주차 3세션: 파이썬 기초 문법과 문제 해결 📦
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            
+            
+            <button
+              class="bd-links-link bd-links-btn btn d-inline-flex align-items-center rounded border-0 collapsed w-100"
+              data-bs-toggle="collapse" data-bs-target="#collapse-3"
+              aria-expanded="false">
+              2주차: 변수와 메모리의 비밀 🧠
+              <svg class="bi ms-auto" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+            <div class="collapse " id="collapse-3">
+              <ul class="list-unstyled fw-normal pb-1 small ms-3">
+                
+                <li>
+                  <a href="/semester1/week02/"
+                    class="bd-links-link d-inline-block rounded ">
+                    주차 개요
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session1.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 1세션: 변수의 개념과 값 할당 📦
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session2.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 2세션: CPython의 동적 타입과 메모리 구조 🧠
+                  </a>
+                </li>
+                
+                <li>
+                  <a href="/semester1/week02/session3.html"
+                    class="bd-links-link d-inline-block rounded ">
+                    2주차 3세션: 다중 대입(Swap)과 메모리 라이프사이클 & PEP 8 작명 가이드 🧠
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week03/"
+              class="bd-links-link d-inline-block rounded ">
+              3주차: 기본 자료형 (1) - 숫자와 문자열 🔢
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week04/"
+              class="bd-links-link d-inline-block rounded ">
+              4주차: 기본 자료형 (2) - 컨테이너 자료형 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week05/"
+              class="bd-links-link d-inline-block rounded ">
+              5주차: 제어문 (1) - 조건문과 논리 연산 🚦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week06/"
+              class="bd-links-link d-inline-block rounded ">
+              6주차: 제어문 (2) - 반복문과 이터레이터 🔄
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week07/"
+              class="bd-links-link d-inline-block rounded ">
+              7주차: 함수 기초 - 모듈화와 매개변수의 원리 ⚙️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week08/"
+              class="bd-links-link d-inline-block rounded ">
+              8주차: 1학기 중간고사 📝
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week09/"
+              class="bd-links-link d-inline-block rounded ">
+              9주차: 함수 심화 - 고급 매개변수와 함수형 프로그래밍 🧠
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week10/"
+              class="bd-links-link d-inline-block rounded ">
+              10주차: 모듈과 패키지 - 대규모 프로젝트 개발의 기초 📦
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week11/"
+              class="bd-links-link d-inline-block rounded active">
+              11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week12/"
+              class="bd-links-link d-inline-block rounded ">
+              12주차: 예외 처리 - 버그와 충돌 방어막 세우기 🛡️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week13/"
+              class="bd-links-link d-inline-block rounded ">
+              13주차: 알고리즘 기초 (1) - 시간 복잡도와 Big-O ⏱️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week14/"
+              class="bd-links-link d-inline-block rounded ">
+              14주차: 알고리즘 기초 (2) - 정렬과 탐색 🔍
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week15/"
+              class="bd-links-link d-inline-block rounded ">
+              15주차: 1학기 종합 프로젝트 - CLI 프로그램 제작 🛠️
+            </a>
+          
+        </li>
+        
+        <li>
+          
+            <a href="/semester1/week16/"
+              class="bd-links-link d-inline-block rounded ">
+              16주차: 1학기 기말고사 및 마무리 🎓
+            </a>
+          
+        </li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+            </div>
+        </div>
+    </aside>
+
+    <main class="bd-main order-1">
+        <nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item"><a href="/semester1/">📌 [기초] 1학기: 파이썬 기초 및 CS 원리</a></li>
+        
+        
+        
+        
+        
+        
+        <li class="breadcrumb-item active" aria-current="page">11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾</li>
+        
+        
+        
+    </ol>
+</nav>
+
+        <div class="bd-content ps-lg-4">
+            <h1 id="11주차-파일-입출력---데이터-영구-보관과-파이썬-데이터-분석-실습-">11주차: 파일 입출력 - 데이터 영구 보관과 파이썬 데이터 분석 실습 💾</h1>
+
+<p>데이터를 영구 보관하기 위해 하드디스크에 파일을 읽고 쓰는 원리와 파이썬의 안전장치인 <strong>컨텍스트 매니저</strong>, 그리고 읽어온 문자열을 다듬고 클렌징하는 <strong>문자열 가공(정규 표현식 등)</strong>과 <strong>Matplotlib 시각화</strong> 기법을 마스터합니다.</p>
+
+<hr />
+
+<p><img src="./img/data_viz_prep_intro.png" alt="데이터 시각화 아티스트" /></p>
+
+<p>지금까지 배운 파이썬의 변수, 리스트, 제어문은 모두 컴퓨터의 <strong>메모리(RAM)</strong> 위에서 임시로 돌아가다가 프로그램이 꺼지면 흔적도 없이 증발하는 지식이었습니다.</p>
+
+<h2 id="학습목표">학습목표</h2>
+<p>본 장부터는 데이터 분석의 진정한 첫걸음인 <strong>파일 입출력(File I/O)</strong>을 배웁니다. 내 하드디스크에 영구적으로 누적된 텍스트나 엑셀(CSV) 파일을 파이썬 공장으로 빨아들이고(<code class="language-plaintext highlighter-rouge">Read</code>), 파이썬에서 계산된 결과를 다시 하드디스크 창고에 단단히 박아넣는(<code class="language-plaintext highlighter-rouge">Write</code>) 스킬을 학습합니다. 나아가 이렇게 빨아들인 무미건조한 데이터를 파이썬 시각화의 대모(Mother) 격인 <strong><code class="language-plaintext highlighter-rouge">Matplotlib</code></strong> 붓을 이용해 아름다운 차트로 변환하는 짜릿한 종합 예술 실습을 완수합니다.</p>
+
+<hr />
+
+<h2 id="-세부-학습-목차">📑 세부 학습 목차</h2>
+
+<h3 id="361-파일-입출력의-개념과-필요성"><a href="#361-파일-입출력의-개념과-필요성">3.6.1 파일 입출력의 개념과 필요성</a></h3>
+<p>프로그램(휘발성 RAM)과 하드디스크(비휘발성 SSD) 사이를 가로막고 있는 거대한 성벽을 이해합니다. 왜 우리가 코드를 짤 때 귀찮게 ‘파일 파이프(Stream) 뚫기’와 ‘닫기’ 절차를 거쳐야만 하는지, 그 단기 기억상실증(휘발성) 극복의 근본 원리를 깨우칩니다.</p>
+
+<h3 id="362-파일-열기와-닫기-open-with"><a href="#362-파일-열기와-닫기-open-with">3.6.2 파일 열기와 닫기 (open, with)</a></h3>
+<p>파이썬의 마스터키 <code class="language-plaintext highlighter-rouge">open()</code> 함수로 스트림 문을 여는 3가지 모드(<code class="language-plaintext highlighter-rouge">r</code> 읽기, <code class="language-plaintext highlighter-rouge">w</code> 새로 쓰기, <code class="language-plaintext highlighter-rouge">a</code> 이어 쓰기)를 장착합니다. 특히 개발자가 깜빡하고 파이프를 닫지(<code class="language-plaintext highlighter-rouge">close</code>) 않아 발생하는 끔찍한 메모리 누수 재앙을 원천 방어하기 위해 설계된 파이썬 최고의 우아한 안전장치, <strong><code class="language-plaintext highlighter-rouge">with open()</code> 라이프사이클 컨텍스트(Context Manager)</strong>의 위력을 감상합니다. 자바의 지저분한 <code class="language-plaintext highlighter-rouge">try-catch-finally</code>와의 1:1 비교는 덤입니다.</p>
+
+<h3 id="363-데이터-분석-실습-matplotlib-맛보기"><a href="#363-데이터-분석-실습-matplotlib-맛보기">3.6.3 데이터 분석 실습 (Matplotlib 맛보기)</a></h3>
+<p>이제 진짜 하드디스크에 있는 <code class="language-plaintext highlighter-rouge">sales.csv</code> 영업 장부를 파이썬 세계로 소환합니다. 한 줄 한 줄 읽어와 콤마(<code class="language-plaintext highlighter-rouge">,</code>)를 기준으로 썰어 리스트(<code class="language-plaintext highlighter-rouge">List</code>)에 예쁘게 포장하는 전처리(Preprocessing) 훈련을 수행합니다. 그리고 정제된 그 숫자 리스트를 꺼내 시각화의 캔버스(<code class="language-plaintext highlighter-rouge">Figure</code>)와 액자(<code class="language-plaintext highlighter-rouge">Axes</code>) 위에 물감을 뿌리듯 우아한 꺾은선 차트로 뽑아내는 1석 2조의 쾌감을 맛봅니다.</p>
+
+<hr />
+
+<h2 id="-정리">🎉 정리</h2>
+<p>파일 입출력의 관문을 넘었다는 것은, 이제 남이 던져준 한두 개의 변수가 아니라 세상에 존재하는 수백만 줄의 진짜 현실(Real-world) 빅데이터를 씹어먹을 수 있는 강력한 이빨을 얻었다는 뜻입니다. 여기에 화면에 선을 그리는 시각화(<code class="language-plaintext highlighter-rouge">Matplotlib</code>) 마법까지 손에 넣었으니, 다음 장(GUI 프로그래밍)에서는 이 멋진 결과물을 검은 터미널이 향기가 아닌, 화려한 윈도우 그래픽 창으로 예쁘게 포장하여 고객에게 배달하는 법을 터득하게 될 것입니다!</p>
+
+<hr />
+
+<h2 id="학습목표-1">학습목표</h2>
+<p>코딩 초보자들이 흔히 간과하는 <strong>램(RAM)의 휘발성</strong> 문제를 자각하고, 데이터가 영구히 저장되는 <strong>하드디스크(SSD/HDD)</strong> 공간에서 파이썬 프로그램 안으로 데이터를 밀어넣고(Input) 빼내는(Output) <strong>스트림(Stream)</strong>의 원리를 이해합니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-왜-파일을-열고-닫아야-할까">💡 TL;DR (1분 핵심 요약): 왜 파일을 열고 닫아야 할까?</h2>
+
+<ol>
+  <li><strong>메모리 증발 (RAM)</strong>: 파이썬에서 <code class="language-plaintext highlighter-rouge">a = 10</code> 이라는 변수를 만들었더라도, 터미널 프로그램을 끄거나 컴퓨터 코드가 종료되면 메모리에 있던 <code class="language-plaintext highlighter-rouge">10</code>은 영원히 허공으로 사라집니다. (휘발성)</li>
+  <li><strong>영구 보존 (Disk)</strong>: 내일 컴퓨터를 다시 켜도 데이터(<code class="language-plaintext highlighter-rouge">10</code>)가 살아있게 하려면, 전원이 끊겨도 데이터가 남아있는 하드디스크의 <strong>파일(<code class="language-plaintext highlighter-rouge">.txt</code>, <code class="language-plaintext highlighter-rouge">.csv</code> 등)</strong> 형태로 저장해 두어야 합니다. (비휘발성)</li>
+  <li><strong>입출력 (I/O)</strong>: 따라서 프로그램(RAM)과 하드디스크(File) 사이에는 데이터를 실어 나르는 거대한 파이프가 필요한데, 데이터를 빨아들이는 것을 <strong>Input (입력/Read)</strong>, 다시 밀어내는 것을 <strong>Output (출력/Write)</strong>이라고 부릅니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-기억-상실증에-걸린-프로그램과-일기장">1. 기억 상실증에 걸린 프로그램과 일기장</h2>
+
+<p>우리가 지금까지 작성한 파이썬 코드는 전원이 꺼지면 모든 기억을 잃는 단기 기억상실증 환자와 같습니다.</p>
+
+<p>아무리 복잡한 데이터 분석 코드를 짜서 주식 환율의 최저점 타이밍을 계산해 냈더라도, 그 결과값이 화면(Console)에만 한 번 찍히고 파이썬이 종료돼버리면 그 귀중한 계산 결과는 영원히 소멸합니다.</p>
+
+<p>그래서 우리는 외장 뇌(일기장)인 <strong>파일(File)</strong>을 꺼내와야 합니다. 하드디스크에 <code class="language-plaintext highlighter-rouge">.txt</code> 나 <code class="language-plaintext highlighter-rouge">.csv</code> 파일을 만들어 파이썬이 계산해 낸 데이터를 펜으로 꾹꾹 눌러 써서 영구 기록으로 남기는 과정을 <strong>파일 출력(Write)</strong>이라고 합니다. 반대로, 어제 기록해 둔 일기장을 열어 오늘 파이썬 코드에서 다시 그 수치를 가져다 계산하는 것을 <strong>파일 입력(Read)</strong>이라고 합니다.</p>
+
+<hr />
+
+<h2 id="2-파일-io-파이프스트림의-작동-원리">2. 파일 I/O 파이프(스트림)의 작동 원리</h2>
+
+<p>하드디스크는 파이썬 프로그램과 완전히 분리된 거대한 요새입니다. 성벽 너머에 있는 데이터를 가져오기 위해 파이썬은 <strong>스트림(Stream)</strong>이라는 한 방향으로 흐르는 기다란 파이프 관을 꽂아야 합니다.</p>
+
+<p><img src="./img/file_io_with_webtoon.png" alt="File IO Pipeline" />
+<em>(웹툰 비유: 화면 왼쪽에 파이썬 프로그램이라는 거대한 공장이 돌아가고 있습니다. 오른쪽에는 성벽으로 둘러싸인 안전한 금고(하드디스크)가 있고, 그 안에 파일이라는 일기장이 들어 있습니다. 공장장이 파이프(open)를 성벽 건너편 일기장에 강제로 꽂고, 펌프질(Read/Write)을 통해 텍스트 구슬들을 빨아들이고 내보냅니다. 하지만 파이프를 뽑지 않고(close를 생략하고) 방치하면, 쥐가 파이프를 갉아먹거나 쓰레기가 유입되어 일기장이 망가지는 끔찍한 사태(Error)가 벌어집니다.)</em></p>
+
+<hr />
+
+<h2 id="-vibe-coding">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 질문해 보세요):</strong>
+“램(RAM)과 하드디스크(HDD)의 차이점을, 요리사가 요리하는 ‘주방의 도마’와 재료를 보관하는 ‘초대형 냉장고’의 비유를 들어서 초등학생도 이해할 수 있게 짧은 만화 대본처럼 설명해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습-">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>I/O (Input / Output)</strong>: 입력과 출력. (컴퓨터 입장에서 외부 소스로부터 데이터를 빨아들이는 행위를 인풋(Input, 키보드 치기, 파일 읽기), 밖으로 뱉어내는 행위를 아웃풋(Output, 모니터에 그리기, 파일 쓰기)이라고 부르는 가장 근본적인 프로그래밍 단어입니다.)</li>
+  <li><strong>Volatile (휘발성의)</strong>: 날아가 버리기 쉬운. (RAM 메모리처럼 전기 공급이 끊어지는 즉시 저장된 데이터가 흔적도 없이 사라지는 특성을 말합니다. 알코올이 공기 중으로 휘발되어 날아가는 것을 연상하면 됩니다.)</li>
+  <li><strong>Stream (스트림)</strong>: 시냇물, 물줄기. (하드디스크 파일에서 파이썬 코드로 데이터가 이동할 때 뭉텅이로 순간이동하는 것이 아니라, 수도꼭지를 틀어놓은 것처럼 바이트(Byte) 조각들이 한 줄로 졸졸졸 끊임없이 흘러들어오는 통로를 뜻합니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="학습목표-2">학습목표</h2>
+<p>파이썬 내장 함수인 <code class="language-plaintext highlighter-rouge">open()</code>을 사용하여 하드디스크의 파일을 열고 데이터를 읽고(<code class="language-plaintext highlighter-rouge">r</code>) 쓰는(<code class="language-plaintext highlighter-rouge">w</code>, <code class="language-plaintext highlighter-rouge">a</code>) 모드의 차이를 학습합니다. 특히, 열려 있는 파이프 관을 닫는 <code class="language-plaintext highlighter-rouge">close()</code> 함수의 100% 실행 보장을 위해 자바의 무거운 <code class="language-plaintext highlighter-rouge">finally</code> 블록 대신, 파이썬만의 가장 아름답고 안전한 문법 인프라인 <strong><code class="language-plaintext highlighter-rouge">with open()</code> 구문</strong>을 마스터합니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-파이프-관리법">💡 TL;DR (1분 핵심 요약): 파이프 관리법</h2>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">open("파일명", "모드")</code></strong>: 하드디스크 파일에 파이프 관을 꽂습니다. 
+(<code class="language-plaintext highlighter-rouge">r</code>=읽기, <code class="language-plaintext highlighter-rouge">w</code>=다 지우고 새로 쓰기, <code class="language-plaintext highlighter-rouge">a</code>=덧붙여 쓰기)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">close()</code> 생략의 재앙</strong>: 파이프를 꽂았으면 반드시 <code class="language-plaintext highlighter-rouge">close()</code>로 뽑아줘야 합니다. 안 뽑으면 다른 프로그램이 해당 파일을 만질 수 없는 심각한 데드락 상태가 옵니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">with open(...) as f:</code> (컨텍스트 매니저)</strong>: <code class="language-plaintext highlighter-rouge">close()</code>를 까먹는 인간의 실수를 원천 차단하기 위해, 들여쓰기 공간이 끝나면 <strong>“설령 치명적인 에러가 터지더라도 알아서 파이프를 뽑아주는”</strong> 파이썬 최고의 마법 문법입니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-파일-열기-모드의-3대장-r-w-a">1. 파일 열기 모드의 3대장 (r, w, a)</h2>
+
+<p>파일에 파이프를 꽂을 때, 내가 데이터를 빨아들일지 뱉어낼지 그 성격을 명확히 지정해 주어야 합니다.</p>
+
+<p><img src="./img/file_io_ex1_modes.svg" width="100%" /></p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">r</code> (Read, 읽기)</strong>: 이미 존재하는 일기장을 눈으로 읽기만 합니다. (파일이 없으면 빨간줄 에러가 납니다!)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">w</code> (Write, 쓰기)</strong>: 펜을 들고 일기장에 글을 씁니다. 주의할 점은, 예전에 적어둔 글씨가 있다면 <strong>전부 폭파시키고 백지상태에서 새로 씁니다.</strong> (파일이 없으면 친절하게 자기가 새로 만들어냅니다.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">a</code> (Append, 추가)</strong>: 도장 깨기처럼, 기존 일기장 내용을 보호한 채 <strong>맨 끝 꼬리에 글을 살포시 이어 덧붙입니다.</strong> (로그 기록 남길 때 필수입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="2-파일-io의-암묵적-규칙과-with의-마법">2. 파일 I/O의 암묵적 규칙과 <code class="language-plaintext highlighter-rouge">with</code>의 마법</h2>
+
+<p>파일을 열고(open), 읽고(read), 닫는(close) 아주 고전적이고 원시적인 방법입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># (주의) 이렇게 짜면 하수입니다.
+</span><span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">w</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">오늘은 파이썬 시각화를 배우는 날이다.</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 만약 여기서 컴퓨터에 벼락이 쳐서 코드가 에러로 팅긴다면?
+</span><span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span> <span class="c1"># &lt;- 영원히 이 코드는 실행되지 못하고 좀비 파일이 됩니다.
+</span></code></pre></div></div>
+
+<h3 id="-고수의-방식-with-컨텍스트-매니저">✨ 고수의 방식: <code class="language-plaintext highlighter-rouge">with</code> (컨텍스트 매니저)</h3>
+<p>파이썬 개발자들은 위와 같은 좀비 파이프 사태를 막기 위해 <code class="language-plaintext highlighter-rouge">with</code> 라는 마법의 영역을 창조했습니다.</p>
+
+<p><img src="./img/file_io_ex2_read.svg" width="100%" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 'with' 들여쓰기 공간이 끝나는 순간, 에러가 터지든 정상 종료되든 f.close()를 무조건 자동 실행해버립니다!
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">w</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">나는 절대 망가지지 않는 안전한 파일에 글을 적고 있다.</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">with 블록 최고!</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># 여기서 들여쓰기가 끝났으므로 f.close() 자동 발동! 이 파일은 안전하게 저장되었습니다.
+</span>
+<span class="c1"># 방금 쓴 파일 읽어오기
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>  <span class="c1"># 파일 통째로 다 빨아오기
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">터미널에 방금 적은 글 출력:</span><span class="se">\n</span><span class="sh">"</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-java-vs--python-스나이퍼-대결">☕ Java vs 🐍 Python 스나이퍼 대결</h2>
+
+<h3 id="try-catch-finally의-저주를-푸는-파이썬"><code class="language-plaintext highlighter-rouge">try-catch-finally</code>의 저주를 푸는 파이썬</h3>
+<ul>
+  <li><strong>Java</strong>: 파일 하나를 읽고 안전하게 닫으려면 입에서 험한 말이 나옵니다. <code class="language-plaintext highlighter-rouge">BufferedReader br = null;</code> 선언부터 시작해 <code class="language-plaintext highlighter-rouge">try { br = new BufferedReader(...) } catch(Exception e) {} finally { if(br != null) try { br.close(); } catch(Exception e) {} }</code> 라는 미친 듯이 흉측하고 장황한 20줄짜리 뼈대 코드를 피눈물 흘리며 작성해야 파이프 누수를 막을 수 있습니다.</li>
+  <li><strong>Python</strong>: 오직 <code class="language-plaintext highlighter-rouge">with open("파일") as f:</code> 한 줄로 끝납니다. 이 <code class="language-plaintext highlighter-rouge">with</code> 블록을 빠져나가는 순간 내부 깊은 곳의 <code class="language-plaintext highlighter-rouge">__exit__</code> 매직 메서드가 발동하여 하늘이 무너져도 <code class="language-plaintext highlighter-rouge">close()</code>를 보장해 줍니다. 인간의 실수 확률을 0%로 떨어뜨리는 파이썬 문법의 대용단입니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="코딩-영단어-학습--1">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Context Manager (컨텍스트 매니저)</strong>: 문맥(상황) 관리자. (<code class="language-plaintext highlighter-rouge">with</code> 구문과 연결된 파이썬의 핵심 기법. 파일 열기나 DB 접속처럼 “무조건 마지막에 안전하게 닫고 정리(Clean up)해 줘야 하는 위험한 파이프”들을 관리하기 위해, 블록이 끝날 때 뒷수습을 자동화해 주는 스마트한 비서입니다.)</li>
+  <li><strong>Encoding (인코딩)</strong>: 암호화 조립. (우리가 쓰는 ‘한글’을 0과 1로 된 하드디스크 파일에 적어넣을 때 사용하는 번역 사전입니다. 윈도우 한글과 맥 한글이 깨지는 것을 막기 위해 전 세계 표준인 <code class="language-plaintext highlighter-rouge">encoding="utf-8"</code> 파라미터를 무조건 습관적으로 달아주는 것이 좋습니다.)</li>
+  <li><strong>Append (어펜드)</strong>: 살포시 덧붙이다. (파이썬 리스트 파트에서 <code class="language-plaintext highlighter-rouge">.append()</code>로 맨 뒤에 데이터를 밀어 넣던 것과 똑같은 원리입니다. 파일 모드 <code class="language-plaintext highlighter-rouge">"a"</code>를 쓰면 기존 파일을 죽이지 않고 엉덩이 뒤에 글씨를 쓰기 시작합니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="학습목표-3">학습목표</h2>
+<p>앞서 배운 파이썬의 핵심 3대장 (제어문, 리스트, 그리고 파일 <code class="language-plaintext highlighter-rouge">open()</code>)을 총동원하여 미니 데이터 분석을 수행합니다. 내 하드디스크에 저장된 <code class="language-plaintext highlighter-rouge">sales.csv</code> 매출 데이터를 가져와 파이썬 리스트로 정제한 뒤, 데이터 시각화의 꽃인 <strong><code class="language-plaintext highlighter-rouge">Matplotlib</code></strong> 차트로 띄워보는 황홀한 경험을 해봅니다.</p>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약-하드디스크에서-예쁜-차트까지">💡 TL;DR (1분 핵심 요약): 하드디스크에서 예쁜 차트까지</h2>
+
+<ol>
+  <li><strong>파일 읽기 (<code class="language-plaintext highlighter-rouge">open</code>)</strong>: <code class="language-plaintext highlighter-rouge">sales.csv</code> 파일을 스트림으로 엽니다.</li>
+  <li><strong>데이터 파싱 (<code class="language-plaintext highlighter-rouge">split</code>)</strong>: 엑셀의 한 줄(문자열)을 쪼개서 <code class="language-plaintext highlighter-rouge">[일자, 매출액]</code> 두 덩어리 숫자로 변환하고 리스트에 쌓습니다.</li>
+  <li><strong>도화지 깔기 (<code class="language-plaintext highlighter-rouge">plt.subplots()</code>)</strong>: 텅 빈 거대한 캔버스(<code class="language-plaintext highlighter-rouge">Figure</code>) 위에 차트를 그릴 액자 영역(<code class="language-plaintext highlighter-rouge">Axes</code>)을 배정합니다.
+다음 코드를 실행하기 전에, VS Code 하단 터미널을 열어 1차 시각화 라이브러리인 <code class="language-plaintext highlighter-rouge">matplotlib</code>을 반드시 설치해야 합니다. 파이썬은 이런 모듈을 쉽게 깔 수 있는 <code class="language-plaintext highlighter-rouge">pip</code> 라는 훌륭한 앱스토어를 가지고 있습니다.</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install </span>matplotlib
+</code></pre></div></div>
+
+<p>데이터가 7줄짜리이므로 가볍게 파이썬 기본 기능(<code class="language-plaintext highlighter-rouge">open</code>)으로 읽어보겠습니다.</p>
+<ol>
+  <li><strong>그림 그리기 (<code class="language-plaintext highlighter-rouge">ax.plot</code>)</strong>: 리스트를 들이부어 아름다운 꺾은선(Plot) 차트를 생성합니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="1-뼈대-잡기-화가와-도화지-figure--axes">1. 뼈대 잡기: 화가와 도화지 (Figure &amp; Axes)</h2>
+
+<p>하드디스크에서 데이터를 긁어왔다면, 이제 그림을 그려야 합니다. <code class="language-plaintext highlighter-rouge">Matplotlib</code>이 그리는 방식을 완벽히 이해해 봅시다.</p>
+
+<p><img src="./img/matplotlib_anatomy_webtoon.png" alt="Matplotlib Anatomy Webtoon" /></p>
+
+<p><em>(웹툰 비유: 화면 왼쪽에는 좌표 픽셀을 일일이 C언어 코드로 찍느라 땀을 삐질삐질 흘리는 학생이 있습니다. 오른쪽에는 ‘Matplotlib’ 베레모를 쓴 프로 학생이 상단에 거대한 빈 캔버스(<code class="language-plaintext highlighter-rouge">Figure</code>)를 이젤에 올려놓고, 그 위에 예쁜 눈금자가 쳐진 차트 프레임(<code class="language-plaintext highlighter-rouge">Axes</code>)을 딱! 붙인 뒤 여유롭게 붓(<code class="language-plaintext highlighter-rouge">plot</code>)을 들고 데이터를 슥슥 문지르고 있습니다.)</em></p>
+
+<ul>
+  <li>코딩을 할 때 항상 “먼저 도화지(<code class="language-plaintext highlighter-rouge">Figure</code>)를 깔고, 그 위에 차트 한 장(<code class="language-plaintext highlighter-rouge">Axes</code>)을 올린다!”라고 속으로 되뇌어야 합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="2-통합-실습-csv-읽어서-차트-띄우기">2. 통합 실습: CSV 읽어서 차트 띄우기</h2>
+
+<p><strong>사전 준비 (터미널)</strong>: 가상환경을 켜고 <code class="language-plaintext highlighter-rouge">pip install matplotlib</code> 패키지를 설치해야 그래프 마법을 부릴 수 있습니다. 그리고 같은 위치에 아래의 <code class="language-plaintext highlighter-rouge">sales.csv</code> 샘플 데이터 파일이 있어야 합니다.</p>
+
+<h3 id="가상-데이터-salescsv">[가상 데이터: <code class="language-plaintext highlighter-rouge">sales.csv</code>]</h3>
+<pre><code class="language-csv">Day,Sales
+1,100
+2,110
+3,105
+4,120
+5,135
+6,180
+</code></pre>
+
+<h3 id="파이썬-스크립트-데이터-분석과-시각화">[파이썬 스크립트: 데이터 분석과 시각화]</h3>
+
+<p><img src="./img/matplotlib_vs_java_plot.svg" width="100%" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">days</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sales</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># 1. 파일 열어 데이터 읽어오기 (안전한 with 파이프)
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">sales.csv</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">readline</span><span class="p">()</span> <span class="c1"># 첫 번째 줄(Day,Sales 헤더)은 숫자 연산을 못하니 날려버림
+</span>    
+    <span class="c1"># 2. 파일의 끝까지 한 줄씩 읽기 (for 루프의 폭탄 세일)
+</span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="c1"># 공백 제거 후 쉼표(,) 쪼개기 -&gt; ['1', '100'] 배열 탄생
+</span>        <span class="n">row</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="nf">strip</span><span class="p">().</span><span class="nf">split</span><span class="p">(</span><span class="sh">'</span><span class="s">,</span><span class="sh">'</span><span class="p">)</span> 
+        
+        <span class="c1"># 문자를 숫자로 형변환(Casting)하여 리스트 비커에 조심스럽게 담기
+</span>        <span class="n">days</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">sales</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># 3. 도화지(fig)와 액자(ax) 한 번에 생성하기 (마법의 문법)
+</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># 4. 액자 위에 리스트 들이붓고 그림 그리기 (Plot)
+# marker: 점 / color: 선 색 / linestyle: 점선
+</span><span class="n">ax</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">sales</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sh">'</span><span class="s">o</span><span class="sh">'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sh">'</span><span class="s">red</span><span class="sh">'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="sh">'</span><span class="s">--</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># 5. 차트 화장하기
+</span><span class="n">ax</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">"</span><span class="s">1 Week Sales Analysis</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="nf">set_xlabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Day</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="nf">set_ylabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Sales ($)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 6. 완성된 캔버스 화면에 대공개!
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span> 
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-java-vs--python-스나이퍼-대결-1">☕ Java vs 🐍 Python 스나이퍼 대결</h2>
+
+<h3 id="데이터-파일-파싱부터-시각화까지의-험난함-차이">데이터 파일 파싱부터 시각화까지의 험난함 차이</h3>
+<ul>
+  <li><strong>Java</strong>: 파일 하나를 한 줄씩 쪼개려면 <code class="language-plaintext highlighter-rouge">BufferedReader</code>부터 시작해서 <code class="language-plaintext highlighter-rouge">while(readline() != null)</code> 루프를 돌고, <code class="language-plaintext highlighter-rouge">Integer.parseInt</code> 하다 에러나면 또 <code class="language-plaintext highlighter-rouge">try-catch</code>를 발라야 합니다. 거기에 외부 시각화 패키지(<code class="language-plaintext highlighter-rouge">JFreeChart</code>)를 엎으면 <code class="language-plaintext highlighter-rouge">DataSet</code> 도메인을 생성하고 50줄의 인터페이스 지옥에 빠져 허우적거리다 차트 보기도 전에 수강생의 멘탈이 깨집니다.</li>
+  <li><strong>Python (<code class="language-plaintext highlighter-rouge">Matplotlib</code>)</strong>: 위 예제처럼, 기본 내장함수 <code class="language-plaintext highlighter-rouge">open</code>에 <code class="language-plaintext highlighter-rouge">split()</code> 하나 얹어 던지면 파싱이 끝납니다. 그리고 그 파싱된 파이썬 순정 리스트를 그대로 <code class="language-plaintext highlighter-rouge">ax.plot()</code> 함수 입속으로 곧바로 다이렉트로 집어던져버리면 차트가 렌더링 됩니다. 이 미칠듯한 호환성과 짧은 코드가 파이썬이 데이터 분석계를 천하 통일한 이유입니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vibe-coding-1">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 피드백해보세요):</strong>
+“방금 썼던 파이썬 시각화 코드에서 꺾은선 그래프 아래 빈 공간을 빨간색 투명한 물감으로 꽉 채워서 색칠해진 면적 그래프(Area chart)처럼 만들고 싶어! <code class="language-plaintext highlighter-rouge">ax.fill_between()</code> 이라는 함수를 써야 할 것 같은데 수정해 줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습--2">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Parse (파싱)</strong>: 구문 분석, 뜯어고치다. (하나의 거대하고 더러운 텍스트 문자열 데이터 덩어리(<code class="language-plaintext highlighter-rouge">"1,100\n"</code>)를 컴퓨터 시스템이 씹어 넘길 수 있도록 가치 있는 숫자나 변수 형태(<code class="language-plaintext highlighter-rouge">1</code>, <code class="language-plaintext highlighter-rouge">100</code>)로 해체하고 소화하는 전처리 작업을 뜻합니다.)</li>
+  <li><strong>Figure (피겨)</strong>: 도면, 공간, 전체 도화지. (Matplotlib 세계관에서 모든 차트들을 품는 가장 거대한 캔버스 윈도우 창 그 자체를 부르는 말입니다. 흔히 <code class="language-plaintext highlighter-rouge">fig</code>로 줄여 씁니다.)</li>
+  <li><strong>Axes (액시즈)</strong>: Axis(축)의 복수형. (단순한 선반이 아니라, <code class="language-plaintext highlighter-rouge">X-Y</code> 이중 축 레이더를 가지고 있어 데이터를 실질적으로 그려내는 ‘진짜 차트 영역 액자’ 전체를 지칭합니다. 흔히 <code class="language-plaintext highlighter-rouge">ax</code> 로 줄여 쓰며 파이썬 객체지향 시각화의 99%를 차지합니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="학습목표-4">학습목표</h2>
+<p>실무 데이터 분석의 80%는 지저분한 텍스트를 청소하는 ‘데이터 클렌징(Data Cleansing)’ 작업입니다. 본 장에서는 파이썬이 제공하는 강력하고 다채로운 내장 문자열 메서드(<code class="language-plaintext highlighter-rouge">split</code>, <code class="language-plaintext highlighter-rouge">join</code>, <code class="language-plaintext highlighter-rouge">strip</code>, <code class="language-plaintext highlighter-rouge">replace</code>)를 마스터하여, 웹 스크래핑이나 엑셀에서 긁어온 엉망진창인 데이터를 깔끔한 리스트 구조로 정제하는 피지컬을 기릅니다. 더불어 텍스트 처리의 끝판왕인 <strong>정규표현식(Regular Expressions)</strong>의 기초를 맛봅니다.</p>
+
+<p><img src="./img/concept_webtoon.png" alt="데이터 클렌징 개념" /></p>
+<div align="center">
+  <img src="./img/concept_anim.svg" alt="String Cleansing Pipeline" width="100%" />
+</div>
+
+<hr />
+
+<h2 id="-tldr-1분-핵심-요약">💡 TL;DR (1분 핵심 요약)</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">split(구분자)</code></strong>: 하나의 긴 문장(String)을 칼로 썰어서 리스트(List)로 분해합니다. (CSV 파싱의 핵심)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">join(리스트)</code></strong>: 흩어진 리스트(List)의 조각들을 접착제(구분자)로 발라 하나의 문장(String)으로 이어 붙입니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">strip()</code></strong>: 문자열 양끝에 묻은 더러운 공백이나 줄바꿈(<code class="language-plaintext highlighter-rouge">\n</code>) 찌꺼기를 세탁합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">replace(A, B)</code></strong>: 오타나 불필요한 단어 A를 찾아 B로 일괄 치환(교체)합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="1-텍스트-세탁소-파이썬-문자열-4대장">1. 텍스트 세탁소: 파이썬 문자열 4대장</h2>
+
+<p>파이썬은 문자열 그 자체를 하나의 객체로 취급하며, 내부에 무수히 많은 청소 도구(메서드)를 가지고 있습니다.</p>
+
+<h3 id="1-자르기-split">1) 자르기: <code class="language-plaintext highlighter-rouge">split()</code></h3>
+<p>띄어쓰기나 쉼표(,) 같은 특정 기호를 기준으로 문자열을 조각내어 <strong>리스트(List)</strong> 타입으로 반환합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 공백 기준 자르기 (기본값)
+</span><span class="n">sentence</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Python is very powerful</span><span class="sh">"</span>
+<span class="n">words</span> <span class="o">=</span> <span class="n">sentence</span><span class="p">.</span><span class="nf">split</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="c1"># 출력: ['Python', 'is', 'very', 'powerful']
+</span>
+<span class="c1"># 2. 쉼표(,) 기준 자르기 (CSV 데이터 찢을 때 필수)
+</span><span class="n">csv_data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">홍길동,25,seoul,010-1234-5678</span><span class="sh">"</span>
+<span class="n">user_info</span> <span class="o">=</span> <span class="n">csv_data</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">,</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">user_info</span><span class="p">)</span> <span class="c1"># 출력: ['홍길동', '25', 'seoul', '010-1234-5678']
+</span></code></pre></div></div>
+
+<h3 id="2-붙이기-join">2) 붙이기: <code class="language-plaintext highlighter-rouge">join()</code></h3>
+<p><code class="language-plaintext highlighter-rouge">split</code>의 정확히 반대 역할입니다. <strong>문자열(접착제)</strong>.join(리스트) 형태로 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">010</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">1234</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">5678</span><span class="sh">"</span><span class="p">]</span>
+<span class="c1"># 조각들을 휴대전화 번호 형식(-)으로 조립하기
+</span><span class="n">phone_number</span> <span class="o">=</span> <span class="sh">"</span><span class="s">-</span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">phone_number</span><span class="p">)</span> <span class="c1"># 출력: 010-1234-5678
+</span>
+<span class="c1"># 띄어쓰기로 이어 붙이기
+</span><span class="n">sentence</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="sh">"</span><span class="s">Hello</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">World</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Python</span><span class="sh">"</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="c1"># 출력: Hello World Python
+</span></code></pre></div></div>
+
+<h3 id="3-벗겨내기-strip">3) 벗겨내기: <code class="language-plaintext highlighter-rouge">strip()</code></h3>
+<p>인터넷에서 긁어온 데이터는 양옆에 쓰레기 공백이 묻어있는 경우가 많습니다. <code class="language-plaintext highlighter-rouge">strip()</code>은 양옆의 공백, 탭(<code class="language-plaintext highlighter-rouge">\t</code>), 줄바꿈(<code class="language-plaintext highlighter-rouge">\n</code>) 기호를 싹 벗겨냅니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dirty_text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">   </span><span class="se">\n\t</span><span class="s">  불가사리 </span><span class="se">\n</span><span class="s">  </span><span class="sh">"</span>
+<span class="n">clean_text</span> <span class="o">=</span> <span class="n">dirty_text</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">청소 전: </span><span class="sh">'</span><span class="si">{</span><span class="n">dirty_text</span><span class="si">}</span><span class="sh">'"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">청소 후: </span><span class="sh">'</span><span class="si">{</span><span class="n">clean_text</span><span class="si">}</span><span class="sh">'"</span><span class="p">)</span> <span class="c1"># 출력: '불가사리'
+</span>
+<span class="c1"># 참고: lstrip()은 왼쪽만, rstrip()은 오른쪽만 지웁니다.
+</span></code></pre></div></div>
+
+<h3 id="4-교체하기-replaceold-new">4) 교체하기: <code class="language-plaintext highlighter-rouge">replace(old, new)</code></h3>
+<p>특정 문자열을 찾아 다른 문자열로 바꿉니다. 데이터에서 특정 불순물을 제거할 때 빈 문자열(<code class="language-plaintext highlighter-rouge">""</code>)로 치환하는 꼼수로 많이 쓰입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">typo_text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">I hxte bug, hxte error!</span><span class="sh">"</span>
+<span class="n">fixed_text</span> <span class="o">=</span> <span class="n">typo_text</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="s">hxte</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">love</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">fixed_text</span><span class="p">)</span> <span class="c1"># 출력: I love bug, love error!
+</span>
+<span class="c1"># 불필요한 문자 제거 꼼수 (달러 기호 날리기)
+</span><span class="n">price</span> <span class="o">=</span> <span class="sh">"</span><span class="s">$1,500</span><span class="sh">"</span>
+<span class="n">clean_price</span> <span class="o">=</span> <span class="n">price</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="s">$</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="s">,</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">clean_price</span><span class="p">))</span> <span class="c1"># 출력: 1500 (성공적인 정수 변환)
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="2-실전-클렌징-파이프라인-체인-액션">2. 실전 클렌징 파이프라인 (체인 액션)</h2>
+
+<p>파이썬의 문자열 메서드들은 실행 결과로 또다시 문자열을 반환하기 때문에, 꼬리에 꼬리를 무는 <strong>체인(Chain)</strong> 형태로 한 줄에 몰아 쓸 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 웹에서 스크래핑한 더러운 데이터
+</span><span class="n">raw_data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">   </span><span class="se">\n</span><span class="s"> [속보] 파이썬, 우주 정복... 가격은 $99,999 </span><span class="se">\n\n</span><span class="s"> </span><span class="sh">"</span>
+
+<span class="c1"># 1. 양옆 쓰레기 제거 (strip)
+# 2. '[속보] ' 제거 (replace)
+# 3. '$' 기호 제거 (replace)
+# 4. ',' 쉼표 제거 (replace)
+</span>
+<span class="n">clean_data</span> <span class="o">=</span> <span class="n">raw_data</span><span class="p">.</span><span class="nf">strip</span><span class="p">().</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="s">[속보] </span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="s">$</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="s">,</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">원래 데이터: </span><span class="si">{</span><span class="n">raw_data</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">정제 데이터: </span><span class="si">{</span><span class="n">clean_data</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span> 
+<span class="c1"># 출력: 파이썬 우주 정복... 가격은 99999
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="-java-vs--python-스나이퍼-대결-2">☕ Java vs 🐍 Python 스나이퍼 대결</h2>
+
+<p><strong>문자열 조작 편의성 비교</strong></p>
+
+<ul>
+  <li><strong>Java</strong>: 자바에서 문자열(<code class="language-plaintext highlighter-rouge">String</code>)은 불변 객체인데다 메모리 성능 이슈 때문에 무지성으로 <code class="language-plaintext highlighter-rouge">+</code> 연산이나 <code class="language-plaintext highlighter-rouge">replace</code> 체인을 쓰면 앱이 느려집니다. 그래서 번거롭게 <code class="language-plaintext highlighter-rouge">StringBuilder</code> 나 <code class="language-plaintext highlighter-rouge">StringBuffer</code> 객체를 만들어서 써야 하는 함정이 널려 있습니다. 배열을 하나로 합치기도(join) 꽤 귀찮습니다.</li>
+  <li><strong>Python</strong>: 그런 거 없습니다. 체인 함수를 마음대로 덕지덕지 붙여서 <code class="language-plaintext highlighter-rouge">raw_data.strip().replace().lower()</code> 형태로 마구 써도 짧고 우아하게 동작합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="3-끝판왕-정규표현식regex-기초-맛보기">3. 끝판왕: 정규표현식(Regex) 기초 맛보기</h2>
+
+<p>만약 텍스트 안에서 <strong>“숫자 3자리-숫자 4자리-숫자 4자리”</strong>로 생긴 전화번호 형식만 다 뽑아내야 한다면 어떨까요? <code class="language-plaintext highlighter-rouge">split</code>과 <code class="language-plaintext highlighter-rouge">replace</code>만으로는 수십 줄의 짜증 나는 <code class="language-plaintext highlighter-rouge">if</code>문이 필요합니다. 
+이때 파이썬의 <code class="language-plaintext highlighter-rouge">re</code> (Regular Expression) 내장 모듈을 쓰면 패턴 탐지를 단 한 줄로 끝냅니다.</p>
+
+<blockquote>
+  <p>정규표현식은 하나의 거대한 프로그래밍 언어 수준이므로, 여기서는 그 강력함의 맛만 봅니다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">제 연락처는 010-1234-5678 이고, 업무용 폰은 010-9876-5432입니다. 메일은 info@test.com 입니다.</span><span class="sh">"</span>
+
+<span class="c1"># 1. 전화번호 패턴 정의 (\d는 숫자를 의미)
+</span><span class="n">phone_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="sh">"</span><span class="s">\d{3}-\d{3,4}-\d{4}</span><span class="sh">"</span>
+
+<span class="c1"># 2. findall() 로 텍스트 싹쓸이
+</span><span class="n">phones</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">findall</span><span class="p">(</span><span class="n">phone_pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">phones</span><span class="p">)</span> <span class="c1"># 출력: ['010-1234-5678', '010-9876-5432']
+</span>
+<span class="c1"># 3. sub() 로 패턴을 뭉개서 치환하기 (개인정보 마스킹)
+</span><span class="n">masked_text</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="n">phone_pattern</span><span class="p">,</span> <span class="sh">"</span><span class="s">***-****-****</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">masked_text</span><span class="p">)</span> 
+<span class="c1"># 출력: 제 연락처는 ***-****-**** 이고, 업무용 폰은 ***-****-****입니다. 메일은 info@test.com 입니다.
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="-vibe-coding-2">🎧 Vibe Coding</h2>
+
+<blockquote>
+  <p><strong>🗣️ 학생 프롬프트 (AI에게 이렇게 명령해 보세요):</strong>
+“파이썬으로 더러운 이메일 주소 데이터를 청소하는 정규표현식 코드를 짜줘. 
+문자열 리스트 안에는 <code class="language-plaintext highlighter-rouge">['  user1@gmail.com\n', 'USER2@NAVER.COM  ', 'invalid-email', '  user3@daum.net']</code> 이 들어있어. 
+1) 양옆 공백 싹 날리고, 2) 전부 소문자로 바꾸고, 3) 정규표현식으로 진짜 이메일 형식(골뱅이와 점이 있는)에 맞는 놈들만 추려서 새로운 리스트로 만들어줘.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="코딩-영단어-학습--3">코딩 영단어 학습 📝</h2>
+
+<ul>
+  <li><strong>Cleanse (클렌즈)</strong>: 세척하다, 정화하다. (화장 지울 때 쓰는 클렌징 폼이랑 똑같습니다. 데이터에 묻은 더러운 문자열 화장을 지워 생얼(정수/실수/깔끔한 텍스트)로 만드는 과정을 Data Cleansing이라 부릅니다.)</li>
+  <li><strong>Strip (스트립)</strong>: 껍질을 벗기다. (과일 껍질 까듯 문자열 양 끝단의 쓸데없는 빈 공간(공백)이나 엔터키 흔적을 확 벗겨내는 파이썬 메서드입니다.)</li>
+  <li><strong>Regex / Regular Expression (레젝스 / 레귤러 익스프레션)</strong>: 정규표현식. (‘규칙(패턴)’을 가진 문장 표현법. “숫자 3개 연달아 나오는 것 다 잡아와!” 같은 수배 전단을 <code class="language-plaintext highlighter-rouge">\d{3}</code>이라는 암호 같은 규칙으로 명령하는 기술입니다.)</li>
+</ul>
+
+<hr />
+
+<h2 id="️-이번-주-연습-문제">✍️ 이번 주 연습 문제</h2>
+
+<p><strong>문제 1.</strong> <code class="language-plaintext highlighter-rouge">my_diary.txt</code>라는 파일을 생성하고, 오늘 날짜와 기분을 기록하는 프로그램을 작성해 보세요. (<code class="language-plaintext highlighter-rouge">'w'</code> 모드 사용)</p>
+
+<p><strong>문제 2.</strong> 위에서 만든 <code class="language-plaintext highlighter-rouge">my_diary.txt</code> 파일에 새로운 내용을 추가로 기록하는 프로그램을 작성해 보세요. (<code class="language-plaintext highlighter-rouge">'a'</code> 모드 사용)</p>
+
+<p><strong>문제 3.</strong> (심화) 텍스트 파일에 저장된 여러 줄의 숫자들을 읽어와서, 그 숫자들의 합계를 계산하여 출력하는 프로그램을 작성해 보세요. (각 줄에 숫자 하나씩 적혀 있다고 가정)</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-71-창고의-규칙-텍스트-파일-io와-마법-주문-with">📖 교재 상세 학습: 71 창고의 규칙: 텍스트 파일 IO와 마법 주문 with</h2>
+
+<h2 id="71-창고의-규칙-텍스트-파일-io와-마법-주문-with">71 창고의 규칙: 텍스트 파일 IO와 마법 주문 <code class="language-plaintext highlighter-rouge">with</code></h2>
+
+<p>컴퓨터의 창고에 파일을 꺼내오거나(Input) 새 파일을 만들어 넣는(Output) 작업을 합쳐서 <strong>IO 처리(Input/Output)</strong> 라고 부릅니다.</p>
+
+<h3 id="1-파이썬-도서관의-열람증-파일-모드mode">1. 파이썬 도서관의 열람증: 파일 모드(Mode)</h3>
+
+<p>파일을 열 때는 파이썬에게 어떤 목적으로 열 것인지 ‘열람증’ 같은 것을 제출해야 합니다. 이를 <strong>파일 모드(File Mode)</strong>라고 합니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">r</code> (Read, 읽기)</strong>: 파일을 눈으로만 읽을 때 씁니다. (파일이 없으면 “에러!”를 냅니다)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">w</code> (Write, 쓰기)</strong>: 새 공책(파일)을 사서 글을 씁니다. 만약 이름이 똑같은 파일이 원래 있었다면, <strong>기존 내용을 다 지워버리고(리셋) 처음부터 새로 씁니다!</strong> (주의 요망)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">a</code> (Append, 이어 쓰기)</strong>: 리셋하지 않고, 원래 써진 내용의 <strong>맨 뒷장부터 이어서</strong> 글을 더 적고 싶을 때 씁니다. 로그 기록 등에 유용합니다.</li>
+</ul>
+
+<p>여기에 추가로 데이터의 생김새(파일 종류)에 따라 옵션이 붙습니다.</p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">t</code> (Text)</strong>: 우리가 읽을 수 있는 обы 글자(예: “안녕하세요”) 메모장 모드! (기본값)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">b</code> (Binary)</strong>: 기계어(바이트) 모드. 사진, 음악, 엑셀 등을 열 때 씁니다.
+    <blockquote>
+      <p>파이썬에서는 두 기호를 엮어서 <code class="language-plaintext highlighter-rouge">rt</code> (텍스트 읽기 모드), <code class="language-plaintext highlighter-rouge">wb</code> (바이너리 쓰기 모드)처럼 조합해 사용합니다!</p>
+    </blockquote>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="2-문단속을-철저히-마법의-키워드-with">2. 문단속을 철저히! 마법의 키워드 <code class="language-plaintext highlighter-rouge">with</code></h3>
+
+<p>파일을 열었(<code class="language-plaintext highlighter-rouge">open</code>)으면 반드시 프로그램 메모리를 비우기 위해 뚜껑을 닫아줘야(<code class="language-plaintext highlighter-rouge">close()</code>) 합니다. 안 닫으면 좀비처럼 파일 찌꺼기가 남아 나중에 에러를 뿜어냅니다. 그런데 매번 <code class="language-plaintext highlighter-rouge">f.close()</code> 치는 걸 사람들은 참 잘 까먹습니다.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">with</code></strong> 라는 마법 주문을 상단에 쓰면, 파이썬이 “아! 이 들여쓰기 구역(블록)이 끝나는 순간 내가 알아서 자동으로 파일 문을 완벽히 닫아줄게!” 라고 약속해 줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 파일을 엽니다. as f는 '이 열린 파일을 f라는 별명으로 부를게'라는 뜻입니다.
+# 한글 깨짐을 막으려면 encoding="utf-8" 을 습관처럼 달아줍시다!
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">오늘은 파이썬 코딩을 했다. 정말 재미있다!</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">내일도 화이팅!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="c1"># 이 구역(블록)을 빠져나가는 순간 f.close()가 알아서 조용히 실행됩니다!
+</span>
+<span class="c1"># 확인차 읽어보기 (r 모드)
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="3-돋보기로-위치-콕-찍기-seek와-tell">3. 돋보기로 위치 콕 찍기 (<code class="language-plaintext highlighter-rouge">seek</code>와 <code class="language-plaintext highlighter-rouge">tell</code>)</h3>
+
+<p>파일.txt 내부에도 동영상 재생 바처럼 읽고 있는 커서(위치)가 존재합니다.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">f.tell()</code>: “지금 내 읽기 커서 번호(바이트 단위)가 어딘지 콘솔에 말해줘!”</li>
+  <li><code class="language-plaintext highlighter-rouge">f.seek(번호)</code>: “야, 0번째 글자(맨 처음) 위치로 묻지도 따지지도 말고 바로 뒤로 감기(순간이동) 해!”</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">원래 첫 번째 라인:</span><span class="sh">"</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">readline</span><span class="p">())</span> 
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">지금 내 커서 위치 번호:</span><span class="sh">"</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">tell</span><span class="p">())</span>
+    
+    <span class="c1"># 영상 뒤로 감기처럼 0번 커서위치(맨 처음) 으로 강제 순간이동!
+</span>    <span class="n">f</span><span class="p">.</span><span class="nf">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># 다시 처음부터 읽힐 것입니다!
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">두 번째로 시도한 라인:</span><span class="sh">"</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">readline</span><span class="p">())</span> 
+</code></pre></div></div>
+
+<blockquote>
+  <p>[!WARNING] 파일이 존재하는지 묻기!
+만약 <code class="language-plaintext highlighter-rouge">rt</code> (읽기) 모드로 열려는데 진짜 내 컴퓨터에 그 파일이 없다면 프로그램이 폭발합니다! 문을 벌컥 열기 전에 미리 똑똑하게 확인해 봐야 합니다.
+<code class="language-plaintext highlighter-rouge">os.path.exists("파일이름.txt")</code>를 쓰면 진짜 그 파일이 폴더 안에 있는지 진실을 가려낼 수 있습니다!</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-교재-상세-학습-72-컴퓨터의-진짜-언어-바이너리바이트-파일과-메모리-뷰">📖 교재 상세 학습: 72 컴퓨터의 진짜 언어: 바이너리(바이트) 파일과 메모리 뷰</h2>
+
+<h2 id="72-컴퓨터의-진짜-언어-바이너리바이트-파일과-메모리-뷰">72 컴퓨터의 진짜 언어: 바이너리(바이트) 파일과 메모리 뷰</h2>
+
+<p>사람은 “가, 나, 다” 같은 문자를 보지만, 예쁜 이미지나 화려한 게임 저장 파일을 뜯어보면 컴퓨터는 오직 “01010111” 이런 전기 신호(바이트) 덩어리로만 저장하고 이해합니다.
+글자가 아닌 파일들을 있는 형태 그대로 파괴 없이 다룰 때는 글자 번역기가 빠지고 날것을 다루는 <strong>바이너리 모드(<code class="language-plaintext highlighter-rouge">b</code>)</strong>를 써야 합니다.</p>
+
+<h3 id="1-바이너리로-읽고-쓰기">1. 바이너리로 읽고 쓰기</h3>
+
+<p>바이너리 모드로 글씨를 쓰려면, 파이썬에게 “이건 우리가 읽을 글씨가 아니라 그냥 1바이트짜리 기호 덩어리(Raw Bytes)야!” 라고 알려주기 위해 따옴표 앞에 <code class="language-plaintext highlighter-rouge">b</code>를 꼭 붙여야 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># wb 모드 (Write Binary): 바이너리로 기계어 쓰기
+# 텍스트가 기계어로 번역(인코딩)된 상태라고 생각하면 됩니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_raw.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">Hello! I am a robot binary sequence!</span><span class="se">\x00</span><span class="sh">"</span><span class="p">)</span> 
+
+<span class="c1"># rb 모드 (Read Binary): 바이너리로 원래 형태 그대로 읽어오기
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_raw.bin</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f2</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">f2</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  
+    <span class="c1"># 출력: b'Hello! I am a robot binary sequence!\x00'
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="2-허공에-임시-파일-만들기-대작전-bytesio">2. 허공에 임시 파일 만들기 대작전 (<code class="language-plaintext highlighter-rouge">BytesIO</code>)</h3>
+
+<p>프로그램을 만들다 보면, “진짜 내 하드디스크 C드라이브에 파일을 썼다 지웠다 만들기는 속도도 느리고 너무 찌꺼기가 남아 부담스러워. 그냥 <strong>허공(메모리)에 임시 가짜 파일을 만들어서 잠깐만 쓰고 확 버릴 순 없을까?</strong>” 할 때가 자주 찾아옵니다.</p>
+
+<p>이럴 때 쓰는 아주 놀라운 파이썬 마법이 바로 <strong><code class="language-plaintext highlighter-rouge">io.BytesIO</code></strong> (임시 버퍼) 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">io</span>
+
+<span class="c1"># 하드디스크를 건드리지 않고 허공 임시 메모리에 텅 빈 공책 펼치기!
+</span><span class="n">memory_file</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="nc">BytesIO</span><span class="p">()</span>
+
+<span class="c1"># 진짜 파일인 것처럼 막 써넣기 (눈에 보이는 파일은 생성되지 않음!)
+</span><span class="n">memory_file</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">It</span><span class="sh">'</span><span class="s">s fake memory file!</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">memory_file</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s"> So fast and clean!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 다 쓴 다음 어떤 내용이 담겼나 전체 쏟아보기 (getvalue())
+</span><span class="nf">print</span><span class="p">(</span><span class="n">memory_file</span><span class="p">.</span><span class="nf">getvalue</span><span class="p">())</span> 
+<span class="c1"># 출력: b"It's fake memory file! So fast and clean!"
+</span>
+<span class="c1"># 허공의 임시 공책을 쓰레기통에 폐기
+</span><span class="n">memory_file</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span> 
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">BytesIO</code>를 쓰면 굳이 컴퓨터 하드디스크 수명을 줄여가며 파일들을 저장했다가 지울 필요 없이, 빛의 속도로 램(RAM) 안에서 데이터를 썼다 전송했다 버릴 수 있어서 네트워크 통신 등에서 엄청 자주 씁니다!</p>
+
+<hr />
+
+<h3 id="3-메모리-뻥튀기-막기-복제의-마법-거울-memoryview">3. 메모리 뻥튀기 막기! 복제의 마법 거울 <code class="language-plaintext highlighter-rouge">memoryview</code></h3>
+
+<p>만약 10GB짜리 엄청 크고 무거운 동영상 파일 데이터를 리스트 슬라이싱(<code class="language-plaintext highlighter-rouge">[0:1000]</code>)해서 편집한다고 쳐 봅시다. 보통 파이썬 리스트에서는 슬라이싱을 하는 순간 똑같은 크기의 복사본 창고가 메모리에 하나 더 생겨서 순식간에 컴퓨터가 뻗고 멈춰버립니다.</p>
+
+<p>이때 구세주처럼 등장하는 것이 바로 <strong><code class="language-plaintext highlighter-rouge">memoryview</code> (메모리뷰)</strong> 마법의 전신 거울입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 엄청 크고 방대한 바이트 데이터가 메모리에 있다고 상상해봅시다.
+</span><span class="n">giant_data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">abcdefghijklmnopqrstuvwxyz</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 10GB를 그대로 복사하는 대신, 
+# 마법 거울(memoryview)을 꺼내 데이터를 그저 '비춰보기만' 합니다!
+</span><span class="n">view</span> <span class="o">=</span> <span class="nf">memoryview</span><span class="p">(</span><span class="n">giant_data</span><span class="p">)</span>
+
+<span class="c1"># 거울에 비친 상을 조종해서 바꿔볼까요? 맨 앞 글자에 대문자 'A' 아바타 주입!
+</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nf">ord</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">A</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># 원본 데이터를 확인하면 놀랍게도 같이 조작되어 있습니다!
+</span><span class="nf">print</span><span class="p">(</span><span class="n">giant_data</span><span class="p">)</span>
+<span class="c1"># 출력: bytearray(b'Abcdefghijklmnopqrstuvwxyz')
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">memoryview</code>는 데이터를 새로 무겁게 복사하지 않고 껍데기만 씌워 “저 멀리 있는 큰 원본 데이터를 바로 투시해서 조작할게!” 라는 뜻입니다. 아무리 크고 무거운 몬스터급 빅데이터라도 아주 가볍고 번개처럼 다룰 수 있게 해줍니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-3-바이트-bytes">📖 교재 상세 학습: 3. 바이트 (Bytes)</h2>
+
+<h2 id="3-바이트-bytes">3. 바이트 (Bytes)</h2>
+
+<p>파이썬 3으로 넘어오면서 기본 문자열 체계가 유니코드(Unicode)로 통합됨에 따라, 메모리, 네트워크 송수신, 바이너리 파일 입출력 등 기계 친화적인 로우레벨 작업을 위해 <strong>바이트(Bytes)</strong> 자료형이 철저하게 분리되었습니다.</p>
+
+<p>바이트 자료형 역시 시퀀스의 한 종류이므로 내부 요소를 개별적으로 조회할 수 있으며, 문자열(<code class="language-plaintext highlighter-rouge">str</code>)과 마찬가지로 내부 요소가 변하지 않는 <strong>변경 불가능(Immutable)</strong>한 특성을 가집니다.</p>
+
+<h3 id="31-바이트-생성">3.1 바이트 생성</h3>
+
+<p>영문이나 숫자의 경우, 문자열 앞에 리터럴 기호 <code class="language-plaintext highlighter-rouge">b</code>를 붙여서 직관적으로 순수 바이트 배열을 생성할 수 있습니다. (ASCII 기반)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 리터럴을 이용한 생성
+</span><span class="n">ascii_bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">hello</span><span class="sh">"</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">ascii_bytes</span><span class="p">))</span> <span class="c1"># &lt;class 'bytes'&gt;
+</span><span class="nf">print</span><span class="p">(</span><span class="n">ascii_bytes</span><span class="p">)</span>       <span class="c1"># b'hello'
+</span>
+<span class="c1"># 2. 한글처럼 아스키코드 범위를 넘어서는 문자열은 encode()를 동반해야 합니다.
+</span><span class="n">korean_str</span> <span class="o">=</span> <span class="sh">"</span><span class="s">파이썬</span><span class="sh">"</span>
+<span class="c1"># korean_bytes = b"파이썬" -&gt; SyntaxError 발생! 
+</span><span class="n">korean_bytes</span> <span class="o">=</span> <span class="n">korean_str</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">korean_bytes</span><span class="p">)</span>      <span class="c1"># b'\xed\x8c\x8c\xec\x9d\xb4\xec\x8d\xac'
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="32-바이트만의-특수-메서드-hex">3.2 바이트만의 특수 메서드 (hex)</h3>
+
+<p>바이트 자료형은 시퀀스의 일종이므로 문자열이 제공하는 <code class="language-plaintext highlighter-rouge">count</code>, <code class="language-plaintext highlighter-rouge">find</code>, <code class="language-plaintext highlighter-rouge">split</code> 등의 유용한 가공 메서드들을 거의 그대로 제공합니다. 하지만 바이너리 형태를 시각적으로 다루기 위해 문자열에는 없는 <code class="language-plaintext highlighter-rouge">hex</code> 관련 메서드가 추가로 존재합니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">hex()</code></strong>: 바이트 데이터를 16진수 형태의 “문자열(str)”로 예쁘게 변환하여 출력해줍니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">fromhex()</code></strong>: 순수한 16진수 문자열을 다시 “바이트(bytes)” 객체로 복원합니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 순수 바이트
+</span><span class="n">secret_byte</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">Hello</span><span class="sh">"</span>
+
+<span class="c1"># 1. 바이트를 16진수 텍스트로 변환
+</span><span class="n">hex_str</span> <span class="o">=</span> <span class="n">secret_byte</span><span class="p">.</span><span class="nf">hex</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">hex_str</span><span class="p">)</span> <span class="c1"># "48656c6c6f"
+</span>
+<span class="c1"># 2. 16진수 텍스트를 다시 바이트로 복원
+</span><span class="n">restored_byte</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">.</span><span class="nf">fromhex</span><span class="p">(</span><span class="sh">"</span><span class="s">48656c6c6f</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">restored_byte</span><span class="p">)</span> <span class="c1"># b'Hello'
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="33-문자열str과-바이트bytes의-통합-변환">3.3 문자열(str)과 바이트(bytes)의 통합 변환</h3>
+
+<p>인터넷 너머로 “안녕하세요”라는 텍스트를 전송하려면, 반드시 출발지에서 문자열을 바이트로 <code class="language-plaintext highlighter-rouge">encode()</code> 하고, 도착지에서 바이트를 문자열로 <code class="language-plaintext highlighter-rouge">decode()</code> 하는 암호화/복호화 규격이 성립되어야 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 송신: 유니코드(Str) -&gt; 바이트 배열(Bytes) 변환
+</span><span class="n">message</span> <span class="o">=</span> <span class="sh">"</span><span class="s">데이터 전송</span><span class="sh">"</span>
+<span class="n">packet</span> <span class="o">=</span> <span class="n">message</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">type</span><span class="p">(</span><span class="n">packet</span><span class="p">))</span> <span class="c1"># &lt;class 'bytes'&gt;
+</span>
+<span class="c1"># ======== (네트워크/파일 입출력 전송 중) ========
+</span>
+<span class="c1"># 2. 수신: 바이트 배열(Bytes) -&gt; 유니코드(Str) 복원
+</span><span class="n">received_message</span> <span class="o">=</span> <span class="n">packet</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">received_message</span><span class="p">)</span> <span class="c1"># "데이터 전송"
+</span></code></pre></div></div>
+
+<p>파이썬의 가장 강력한 특징 중 하나는 이처럼 <code class="language-plaintext highlighter-rouge">str</code> 객체와 <code class="language-plaintext highlighter-rouge">bytes</code> 객체 간의 경계를 명확하게 구분하여 데이터 인코딩 버그를 원천적으로 차단한다는 점입니다.</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-4-바이트-어레이-bytearray">📖 교재 상세 학습: 4. 바이트 어레이 (Bytearray)</h2>
+
+<h2 id="4-바이트-어레이-bytearray">4. 바이트 어레이 (Bytearray)</h2>
+
+<p>순수 바이트(<code class="language-plaintext highlighter-rouge">bytes</code>) 자료형은 한 번 생성되면 절대로 갱신할 수 없지만, 파이썬은 대용량 파일의 바이트 읽기/쓰기나 네트워크 통신 시 자유자재로 편집할 수 있는 <strong>바이트 어레이(<code class="language-plaintext highlighter-rouge">bytearray</code>)</strong>라는 임시 버퍼 공간을 추가로 제공합니다.</p>
+
+<p>바이트 어레이는 이름 그대로 바이트들을 모아둔 가변 배열이므로, 파이썬의 리스트(<code class="language-plaintext highlighter-rouge">list</code>)와 매우 유사하게 내부 원소들을 자유롭게 변경, 추가, 삭제할 수 있는 강력한 <strong>변경 가능(Mutable)</strong> 자료형입니다.</p>
+
+<h3 id="41-바이트-어레이-생성-및-할당">4.1 바이트 어레이 생성 및 할당</h3>
+
+<p>기존에 만들어둔 바이트나 문자열을 <code class="language-plaintext highlighter-rouge">bytearray</code> 생성자로 감싸면 곧바로 변경 가능한 버퍼 묶음으로 변신합니다. 또한, 빈 공간을 미리 예약하여 버퍼 크기를 확보할 수도 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 불변 바이트를 가변 바이트 어레이로 변환
+</span><span class="n">b_data</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">abcde</span><span class="sh">"</span>
+<span class="n">ba_data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">b_data</span><span class="p">)</span> 
+<span class="nf">print</span><span class="p">(</span><span class="n">ba_data</span><span class="p">)</span> <span class="c1"># bytearray(b'abcde')
+</span>
+<span class="c1"># 2. 지정된 크기만큼 빈 버퍼 공간 0(\x00)으로 채워 생성
+</span><span class="nb">buffer</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span> <span class="c1"># 20개의 0 영역이 잡힘
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="42-바이트-어레이-갱신-규칙-요소-수정">4.2 바이트 어레이 갱신 규칙 (요소 수정)</h3>
+
+<p>바이트 어레이가 불변 바이트와 가장 결정적으로 차이나는 부분이자 강력한 능력은 내부 요소를 입맛대로 뜯어고칠 수 있다는 점입니다.</p>
+
+<h4 id="슬라이스를-이용한-덩어리-교체">슬라이스를 이용한 덩어리 교체</h4>
+<p>슬라이싱(<code class="language-plaintext highlighter-rouge">[:]</code>)을 이용해 특정 구간을 잡으면 파이썬 문자열이나 바이트 객체를 통째로 집어넣어 내용을 덮어씌울 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 20칸짜리 버퍼의 맨 앞 5칸을 b'abcde' 로 교체
+</span><span class="nb">buffer</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="sa">b</span><span class="sh">"</span><span class="s">abcde</span><span class="sh">"</span>
+<span class="nf">print</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span> 
+<span class="c1"># 출력 결과 앞부분에 데이터가 씌워지고 뒷부분 15칸은 비어있게 됨
+# bytearray(b'abcde\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+</span></code></pre></div></div>
+
+<h4 id="단일-인덱스-요소-교체-시의-주의사항">단일 인덱스 요소 교체 시의 주의사항</h4>
+<p>단, 덩어리 단위가 아니라 <code class="language-plaintext highlighter-rouge">buffer[0]</code> 처럼 정확히 하나의 칸(Index)을 집어내어 값을 교체하려 할 때는 <strong>반드시 0부터 255 사이의 정수(아스키 번호)</strong>를 직접 넣어주어야 합니다. 바이트 문자를 직접 밀어넣으려 하면 에러가 발생합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># buffer[0] = b'a' -&gt; TypeError: an integer is required 예외 폭발!
+</span><span class="nb">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">97</span>  <span class="c1"># 소문자 'a'의 아스키코드 정수 배정 (성공)
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="43-리스트와-동일한-컬렉션-편집-메서드">4.3 리스트와 동일한 컬렉션 편집 메서드</h3>
+
+<p>바이트 어레이는 파이썬의 리스트(List)와 동일한 메커니즘을 상속받았기 때문에, 데이터를 조작하는 유용한 메서드들을 빠짐없이 지원합니다.</p>
+
+<ul>
+  <li><strong>데이터 추가</strong>: <code class="language-plaintext highlighter-rouge">append(정수)</code>, <code class="language-plaintext highlighter-rouge">extend(순회가능객체)</code></li>
+  <li><strong>데이터 중간 삽입</strong>: <code class="language-plaintext highlighter-rouge">insert(인덱스, 정수)</code></li>
+  <li><strong>데이터 뽑아내어 삭제</strong>: <code class="language-plaintext highlighter-rouge">pop(인덱스)</code> -&gt; 지정된 인덱스의 데이터를 버퍼에서 제거하고 값을 반환합니다.</li>
+  <li><strong>순역 배열</strong>: <code class="language-plaintext highlighter-rouge">reverse()</code></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_array</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">Hello</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 맨 뒤에 감탄사(아스키코드 33 -&gt; '!') 추가하기
+</span><span class="n">test_array</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">test_array</span><span class="p">)</span> <span class="c1"># bytearray(b'Hello!')
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-기계들의-빡빡한-규칙-array와-memoryview">📖 교재 상세 학습: 1. 기계들의 빡빡한 규칙: array와 memoryview</h2>
+
+<h2 id="1-기계들의-빡빡한-규칙-array와-memoryview">1. 기계들의 빡빡한 규칙: <code class="language-plaintext highlighter-rouge">array</code>와 <code class="language-plaintext highlighter-rouge">memoryview</code></h2>
+
+<p>파이썬의 리스트(<code class="language-plaintext highlighter-rouge">list</code>)는 정말 편리한 가방입니다. 숫자, 글자, 심지어 다른 가방까지 막 섞어서 넣을 수 있죠. 하지만 컴퓨터 입장에서는 이 가방이 너무 무겁고 메모리 낭비가 심합니다. 그래서 아주 빠르고 가벼운 ‘전용 금고’가 필요합니다.</p>
+
+<h3 id="11-오직-한-종류만-arrayarray">1.1 오직 한 종류만! <code class="language-plaintext highlighter-rouge">array.array</code></h3>
+
+<p><code class="language-plaintext highlighter-rouge">array</code> 모듈의 배열은 아주 깐깐한 수문장이 지키는 창고입니다. “여기엔 정수만 들어올 수 있어!” 또는 “여기엔 소수(float)만 올 수 있어!” 하고 <strong>타입 코드(Type Code)</strong>를 정해놓고 그것만 넣을 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">array</span>
+
+<span class="c1"># 'i'는 정수(integer)만 들어올 수 있는 비밀기지 암호(타입 코드)입니다!
+</span><span class="n">my_arr</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="sh">"</span><span class="s">i</span><span class="sh">"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">my_arr</span><span class="p">)</span>
+<span class="c1"># 출력: array('i', [1, 2, 3, 4, 5])
+</span>
+<span class="c1"># 파이썬 리스트의 append, pop 다 쓸 수 있습니다.
+</span><span class="n">my_arr</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">my_arr</span><span class="p">)</span>
+
+<span class="c1"># 하지만 글자를 몰래 넣으려고 하면? 에러 폭탄 쾅!
+# my_arr.append("스파이") -&gt; TypeError 발생!
+</span></code></pre></div></div>
+
+<p>이 방식은 엄청나게 정교하게 컴퓨터의 메모리를 아낄 수 있어서 네트워크나 대규모 데이터를 다룰 때 사랑받습니다. 문자를 다루는 <code class="language-plaintext highlighter-rouge">'u'</code>, 큰 숫자를 다루는 <code class="language-plaintext highlighter-rouge">'q'</code> 등 다양한 비밀 코드들이 존재합니다!</p>
+
+<hr />
+
+<h3 id="12-메모리-분신술-memoryview">1.2 메모리 분신술! <code class="language-plaintext highlighter-rouge">memoryview</code></h3>
+
+<p>만약 10GB짜리 엄청 큰 영화 파일 데이터를 슬라이싱(<code class="language-plaintext highlighter-rouge">[0:100]</code>)해서 편집한다고 쳐 봅시다. 보통 파이썬 리스트에서는 슬라이싱을 하면 똑같은 크기의 복사본 창고가 하나 더 생겨서 순식간에 컴퓨터가 멈춰버립니다.</p>
+
+<p>이때 구세주처럼 등장하는 것이 <strong><code class="language-plaintext highlighter-rouge">memoryview</code> (메모리뷰)</strong> 마법의 거울입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 엄청 큰 바이트 데이터를 상상해봅시다.
+</span><span class="n">giant_data</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">abcdefghijklmnopqrstuvwxyz</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 거울(memoryview)을 꺼내 데이터를 비춰봅니다. (복사가 아님!)
+</span><span class="n">view</span> <span class="o">=</span> <span class="nf">memoryview</span><span class="p">(</span><span class="n">giant_data</span><span class="p">)</span>
+
+<span class="c1"># 거울 안의 모습을 바꿔볼까요? 0번째 글자를 대문자 'A'로!
+</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nf">ord</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">A</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># 원본 데이터를 확인하면?
+</span><span class="nf">print</span><span class="p">(</span><span class="n">giant_data</span><span class="p">)</span>
+<span class="c1"># 출력: bytearray(b'Abcdefghijklmnopqrstuvwxyz')
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">memoryview</code>는 데이터를 새로 복사하는 대신, “저기 있는 저 데이터를 거울로 비춰서 바로 조작할게!” 라는 뜻입니다. 아무리 큰 몬스터 데이터라도 아주 빠르고 가볍게 조작할 수 있는 엄청난 마법 스킬입니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-텍스트의-변신과-압축-유니코드와-struct">📖 교재 상세 학습: 2. 텍스트의 변신과 압축: 유니코드와 struct</h2>
+
+<h2 id="2-텍스트의-변신과-압축-유니코드와-struct">2. 텍스트의 변신과 압축: 유니코드와 struct</h2>
+
+<p>우리가 키보드로 친 “안녕”이라는 예쁜 글씨들. 사실 기계 안에서는 이리저리 코드가 쪼개지고 숫자로 변신하며 돌아다니고 있습니다. 그 신비한 변신의 세계를 슬쩍 들여다보죠!</p>
+
+<h3 id="21-문자들의-전-세계-공용어-유니코드">2.1 문자들의 전 세계 공용어: 유니코드</h3>
+
+<p>“A”는 숫자 65번, “B”는 66번. 옛날에는 이렇게 영어를 숫자로 바꿨지만, 한글이나 이모지(😀)는 어떻게 할까요? 
+전 세계 사람들이 회의를 해서 “지구상의 모든 문자에 고유한 숫자(코드)를 부여하자!”라고 만든 거대한 사전이 바로 <strong>유니코드(Unicode)</strong>입니다.</p>
+
+<p>파이썬의 글자들은 기본적으로 이 유니코드 사전의 번호표를 당당히 달고 있습니다.</p>
+
+<p>하지만 이 글자들을 컴퓨터 하드웨어나 인터넷 선에 밀어 넣으려면 더 잘게, 0과 1로 된 ‘바이트(Byte)’ 스트림 가루로 빻아야 합니다. 이걸 <strong>인코딩(Encoding)</strong>이라고 부릅니다. 
+가장 유명한 인코딩 규칙이 바로 <code class="language-plaintext highlighter-rouge">UTF-8</code>입니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_word</span> <span class="o">=</span> <span class="sh">"</span><span class="s">파이썬!</span><span class="sh">"</span>
+
+<span class="c1"># 유니코드를 마법의 가루통(UTF-8)에 넣고 바이트(기계어)로 빻기! (인코딩)
+</span><span class="n">machine_code</span> <span class="o">=</span> <span class="n">my_word</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">기계어 변신:</span><span class="sh">"</span><span class="p">,</span> <span class="n">machine_code</span><span class="p">)</span>
+<span class="c1"># 출력: b'\xed\x8c\x8c\xec\x9d\xb4\xec\x8d\xac!' (사람이 읽을 수 없음)
+</span>
+<span class="c1"># 이 기계어를 가져와 다시 사람이 읽을 수 있는 유니코드로 조립! (디코딩)
+</span><span class="n">human_code</span> <span class="o">=</span> <span class="n">machine_code</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">사람 말로 복구:</span><span class="sh">"</span><span class="p">,</span> <span class="n">human_code</span><span class="p">)</span>
+<span class="c1"># 출력: 파이썬!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="22-부품들을-압축-포장하는-공장-struct-모듈">2.2 부품들을 압축 포장하는 공장: <code class="language-plaintext highlighter-rouge">struct</code> 모듈</h3>
+
+<p>가끔 “정수 1, 2, 3을 가장 작은 바이트 박스에 빈틈없이 구겨 넣어서 다른 컴퓨터로 전송하라!”는 명령이 떨어집니다. 이럴 때 자르고 붙이는 포장 공장 역할을 하는 것이 <strong><code class="language-plaintext highlighter-rouge">struct</code></strong> 모듈입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">struct</span>
+
+<span class="c1"># 'hhl' 이 암호는 설계도(Format String)입니다. 
+# h는 작은 상자(2바이트 정수), l은 큰 상자(4바이트 정수)입니다.
+# 즉 "작은 상자 2개, 큰 상자 1개"로 포장하라는 뜻!
+</span>
+<span class="c1"># 1, 2, 3 이라는 데이터를 진짜로 포장(packing)합니다.
+</span><span class="n">packed_data</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="sh">'</span><span class="s">hhl</span><span class="sh">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">포장 완료:</span><span class="sh">"</span><span class="p">,</span> <span class="n">packed_data</span><span class="p">)</span>
+<span class="c1"># 출력: b'\x01\x00\x02\x00\x03\x00\x00\x00\x00\x00\x00\x00' (전기 신호들)
+</span>
+<span class="c1"># 이 찌그러진 박스를 받아서 다시 원래 모습으로 뜯어내기! (unpacking)
+</span><span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="sh">'</span><span class="s">hhl</span><span class="sh">'</span><span class="p">,</span> <span class="n">packed_data</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">박스 뜯기 완료:</span><span class="sh">"</span><span class="p">,</span> <span class="n">unpacked_data</span><span class="p">)</span>
+<span class="c1"># 출력: (1, 2, 3)
+</span></code></pre></div></div>
+
+<p>게임에서 아주 적은 데이터로 플레이어의 좌표, 체력, 마나 등을 동시에 포장해서 인터넷으로 휙 쏴버릴 때 아주 유용하게 쓰이는 고급 스킬입니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-3-파이썬-전용-수축-광선-총-pickle-모듈">📖 교재 상세 학습: 3. 파이썬 전용 수축 광선 총: pickle 모듈</h2>
+
+<h2 id="3-파이썬-전용-수축-광선-총-pickle-모듈">3. 파이썬 전용 수축 광선 총: <code class="language-plaintext highlighter-rouge">pickle</code> 모듈</h2>
+
+<p><code class="language-plaintext highlighter-rouge">struct</code>는 엄청 작고 효율적이게 C언어 기계들과 대화하는 용도라면, 파이썬이 독자적으로 만든 궁극의 수축 광선 총이 있습니다. 바로 <strong><code class="language-plaintext highlighter-rouge">pickle</code> (피클)</strong> 모듈입니다.</p>
+
+<p>오직 다른 파이썬 프로그램들과 교류할 때만 쓰는 마법인데, 딕셔너리, 리스트 심지어 여러분이 만든 복잡한 몬스터 ‘클래스 객체’까지 그 모습 그대로 피클(절임 병)에 쏙 담아서 파일로 저장해버릴 수 있습니다!</p>
+
+<p>이를 <strong>직렬화(Serialization)</strong>라고 부릅니다.</p>
+
+<hr />
+
+<h3 id="31-얍-피클로-얼려서-보관하기-덤프-dump">3.1 얍! 피클로 얼려서 보관하기 (덤프, Dump)</h3>
+
+<p>복잡한 데이터 꾸러미를 바이트 코드로 수축시켜 디스크 창고에 던져 넣는 마법은 <code class="language-plaintext highlighter-rouge">dump</code> 라고 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pickle</span>
+
+<span class="c1"># 복잡한 파이썬 전용 데이터 덩어리
+</span><span class="n">my_bag</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">멋진 기사</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">level</span><span class="sh">'</span><span class="p">:</span> <span class="mi">99</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">items</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="sh">'</span><span class="s">전설의 검</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">물약</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">갑옷</span><span class="sh">'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># 피클 보관용 병(파일)을 바이트 쓰기('wb') 모드로 엽니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">save_data.pkl</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 수축 광선총 발사! 객체를 병 f 에 완전히 던져(dump) 넣습니다.
+</span>    <span class="n">pickle</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">my_bag</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">서랍 속에 안전하게 세이브 완료!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="32-봉인-해제-원래-모습으로-되돌리기-로드-load">3.2 봉인 해제! 원래 모습으로 되돌리기 (로드, Load)</h3>
+
+<p>저장해둔 세이브 파일을 불러와 원래의 파이썬 객체로 소환(봉인 해제)하는 마법은 <code class="language-plaintext highlighter-rouge">load</code> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pickle</span>
+
+<span class="c1"># 피클 병(파일)을 바이트 읽기('rb') 모드로 엽니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">save_data.pkl</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># 짠! 파일 안의 바이트들을 원래 객체로 통째로 부활시킵니다!
+</span>    <span class="n">loaded_bag</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">로드된 데이터:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">이름:</span><span class="sh">"</span><span class="p">,</span> <span class="n">loaded_bag</span><span class="p">[</span><span class="sh">'</span><span class="s">name</span><span class="sh">'</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">가진 아이템:</span><span class="sh">"</span><span class="p">,</span> <span class="n">loaded_bag</span><span class="p">[</span><span class="sh">'</span><span class="s">items</span><span class="sh">'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>인터넷 너머로 다른 파이썬 컴퓨터에 데이터를 고스란히 쏴주거나, 머신러닝의 어마어마한 학습 결과(가중치)들을 세이브하고 로드할 때 이 <code class="language-plaintext highlighter-rouge">pickle</code> 광선총은 파이썬 최고 존엄의 무기가 된답니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-1-창고의-규칙-파일-io의-기초">📖 교재 상세 학습: 1. 창고의 규칙: 파일 IO의 기초</h2>
+
+<h2 id="1-창고의-규칙-파일-io의-기초">1. 창고의 규칙: 파일 IO의 기초</h2>
+
+<p>컴퓨터의 창고에서 파일을 꺼내오거나(Input) 새 파일을 집어넣는(Output) 작업을 합쳐서 <strong>IO 처리(Input/Output)</strong> 라고 부릅니다.</p>
+
+<h3 id="11-파이썬-도서관의-열람증-파일-모드mode">1.1 파이썬 도서관의 열람증: 파일 모드(Mode)</h3>
+
+<p>파일을 열 때는 파이썬에게 어떤 목적으로 열 것인지 ‘목적’을 확실히 말해줘야 문을 열어줍니다. 이를 <strong>파일 모드(File Mode)</strong>라고 합니다.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">r</code> (Read, 읽기)</strong>: 책을 눈으로만 읽을 때 씁니다. (파일이 없으면 “없는데요?” 하고 에러를 냅니다)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">w</code> (Write, 쓰기)</strong>: 새 공책을 사서 글을 씁니다. 만약 이미 있는 공책(파일)이라면 내용을 다 찢어버리고(삭제하고) 처음부터 새로 씁니다!</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">a</code> (Append, 이어 쓰기)</strong>: 이미 글씨가 써진 공책의 맨 뒷장부터 이어서 글을 적습니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">x</code> (eXclusive, 오직 새 것만)</strong>: 이미 그 이름의 파일이 있으면 절대로 열지 않고 화를 내는 모드입니다. 덮어쓰기 사고를 막을 때 씁니다.</li>
+</ul>
+
+<p>여기에 추가로 데이터의 ‘생김새’에 따라 두 가지 모드가 더 붙습니다.</p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">t</code> (Text)</strong>: 우리가 읽을 수 있는 обы 글자(예: “안녕”) 모드! (안 쓰면 무조건 기본으로 설정됩니다)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">b</code> (Binary)</strong>: 기계어(바이트) 모드. 사진이나 음악을 열 때 씁니다.</li>
+</ul>
+
+<blockquote>
+  <p><em>합체 예시</em>: <code class="language-plaintext highlighter-rouge">rt</code> (글자를 읽기 모드로 열기), <code class="language-plaintext highlighter-rouge">wb</code> (이미지를 쓰기 모드로 열기)</p>
+</blockquote>
+
+<hr />
+
+<h3 id="12-파이썬의-io-클래스-족보-iobase">1.2 파이썬의 IO 클래스 족보 (IOBase)</h3>
+
+<p>우리가 파일을 열면(Open), 파이썬은 내부적으로 멋진 객체 도구들을 생성해 줍니다. 모든 파일 도구의 왕조본가는 <code class="language-plaintext highlighter-rouge">io.IOBase</code>라는 클래스입니다. 이 할아버지 밑으로 크게 세 명의 자식이 있습니다.</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">RawIOBase</code></strong> : 가장 밑바닥, 가공되지 않은 기계어 자체를 다룰 때 아주 가끔 씁니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">BufferedIOBase</code></strong> : 바이트(Bytes) 단위의 데이터를 한꺼번에 묶음(버퍼)으로 빠르게 처리하는 녀석입니다. 이미지/음악 파일을 열면 출동합니다.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">TextIOBase</code></strong> : 이 바이트를 우리가 읽을 수 있는 한글, 알파벳 등 ‘텍스트’로 멋지게 번역해주는 똑똑한 자식입니다. 우리가 <code class="language-plaintext highlighter-rouge">.txt</code> 파일을 열면 이 녀석이 일합니다.</li>
+</ol>
+
+<p>결국, 우리가 무심코 <code class="language-plaintext highlighter-rouge">open('note.txt', 'rt')</code>라고 치는 순간 파이썬은 내부에서 <code class="language-plaintext highlighter-rouge">TextIOBase</code> 구조를 빌려와 여러분에게 가장 편안한 텍스트 편집 기능을 제공하는 것입니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-2-컴퓨터의-언어-바이너리바이트-처리">📖 교재 상세 학습: 2. 컴퓨터의 언어: 바이너리(바이트) 처리</h2>
+
+<h2 id="2-컴퓨터의-언어-바이너리바이트-처리">2. 컴퓨터의 언어: 바이너리(바이트) 처리</h2>
+
+<p>사람은 “가, 나, 다” 문자를 보지만, 컴퓨터는 오직 “01010111” 이런 전기 신호 덩어리만 이해합니다. 사진 파일이나 게임 세이브 파일처럼 글자가 아닌 파일들을 다룰 때는 <strong>바이너리 모드(<code class="language-plaintext highlighter-rouge">b</code>)</strong>를 써야 합니다.</p>
+
+<h3 id="21-bufferedreader와-bufferedwriter">2.1 BufferedReader와 BufferedWriter</h3>
+
+<p>바이너리 파일을 읽거나 쓸 때는 데이터를 하나하나 옮기지 않고 바구니(버퍼, Buffer)에 적당량을 듬뿍 담아서 한 번에 옮깁니다. 이쪽이 훨씬 속도가 빠르거든요!</p>
+
+<ul>
+  <li>파일을 <code class="language-plaintext highlighter-rouge">rb</code> (읽기 전용 바이너리)로 열면 <strong><code class="language-plaintext highlighter-rouge">BufferedReader</code></strong>라는 요정이 튀어나와 데이터를 읽어옵니다.</li>
+  <li>파일을 <code class="language-plaintext highlighter-rouge">wb</code> (쓰기 전용 바이너리)로 열면 <strong><code class="language-plaintext highlighter-rouge">BufferedWriter</code></strong>라는 요정이 출동합니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">io</span>
+
+<span class="c1"># wb 모드: 바이너리로 글씨 쓰기 (글자 앞에 b를 꼭 붙여야 합니다!)
+# 텍스트가 기계어로 번역(인코딩)된 상태라고 생각하면 됩니다.
+</span><span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_binary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">Hello! Im binary!</span><span class="sh">"</span><span class="p">)</span> 
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+
+<span class="c1"># rb 모드: 바이너리로 읽어오기
+</span><span class="n">f2</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">my_binary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rb</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">f2</span><span class="p">.</span><span class="nf">read</span><span class="p">())</span>  <span class="c1"># 출력: b'Hello! Im binary!'
+</span><span class="n">f2</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="22-가짜-파일-만들기-대작전-bytesio">2.2 가짜 파일 만들기 대작전: BytesIO</h3>
+
+<p>프로그램을 만들다 보면, “진짜 하드디스크에 파일(C드라이브)을 만들기는 좀 부담스럽고 찌꺼기가 남는데… 메모리 허공에 가짜 파일을 만들어서 잠깐만 쓰고 버릴 순 없을까?” 할 때가 있습니다.</p>
+
+<p>이럴 때 쓰는 아주 놀라운 마법이 바로 <strong><code class="language-plaintext highlighter-rouge">BytesIO</code></strong> 입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">io</span>
+
+<span class="c1"># 하드디스크를 쓰지 않고 허공(메모리)에 빈 공책 펼치기!
+</span><span class="n">memory_file</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="nc">BytesIO</span><span class="p">()</span>
+
+<span class="c1"># 파일처럼 막 써넣기
+</span><span class="n">memory_file</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">It</span><span class="sh">'</span><span class="s">s fake file!</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">memory_file</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s"> So fast!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 다 쓴 다음 어떤 내용이 담겼나 훔쳐보기 (getvalue)
+</span><span class="nf">print</span><span class="p">(</span><span class="n">memory_file</span><span class="p">.</span><span class="nf">getvalue</span><span class="p">())</span> 
+<span class="c1"># 출력: b"It's fake file! So fast!"
+</span>
+<span class="c1"># 허공의 공책 쓰레기통에 버리기
+</span><span class="n">memory_file</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span> 
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">BytesIO</code>를 쓰면 굳이 컴퓨터에 쓰레기 파일들을 남기지 않고 빛의 속도로 썼다 지웠다 할 수 있어서, 네트워크 통신 등에서 데이터를 쏠 때 엄청 자주 쓴답니다!</p>
+
+<hr />
+
+<h2 id="-교재-상세-학습-3-우리의-언어-텍스트-파일과-마법-주문-with">📖 교재 상세 학습: 3. 우리의 언어: 텍스트 파일과 마법 주문 with</h2>
+
+<h2 id="3-우리의-언어-텍스트-파일과-마법-주문-with">3. 우리의 언어: 텍스트 파일과 마법 주문 with</h2>
+
+<p>이번엔 진짜 우리가 읽을 수 있는 일반 메모장 텍스트 파일 다루기입니다. 사실 너무 간단하지만, 실수하지 말아야 할 초보자 필수 스킬들이 숨어있습니다.</p>
+
+<h3 id="31-텍스트-처리와-인코딩-textiowrapper">3.1 텍스트 처리와 인코딩 (TextIOWrapper)</h3>
+
+<p>읽기 전용 텍스트 파일(<code class="language-plaintext highlighter-rouge">rt</code>)을 열면 <code class="language-plaintext highlighter-rouge">TextIOWrapper</code>가 등장합니다. 이 기능은 안쪽에 있는 더러운 기계어를 유니코드라는 아주 예쁘고 일관된 글꼴로 바꾸어서 파이썬 화면에 뿌려주는 역할을 합니다.</p>
+
+<p>특히 한글이 깨지는 것을 막으려면 외계어처럼 이상한 글자가 나오지 않도록 <code class="language-plaintext highlighter-rouge">encoding='utf-8'</code> 옵션을 습관적으로 걸어주는 것이 좋습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 한글이 절대 안깨지는 방탄 텍스트 파일 열기!
+</span><span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">오늘은 파이썬 IO를 배웠다. 재미있다!</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="32-허공의-진짜-메모장-stringio">3.2 허공의 진짜 메모장: StringIO</h3>
+
+<p>바이너리 쪽에 <code class="language-plaintext highlighter-rouge">BytesIO</code>가 있었다면 텍스트 쪽에는 똑같은 역할을 하는 녀석이 있습니다. 파일은 안 남기면서 파이썬 화면 메모리 상에서만 글자를 썼다 지우는 마법의 칠판, 바로 <strong><code class="language-plaintext highlighter-rouge">StringIO</code></strong>입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">io</span>
+
+<span class="n">fake_memo</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="nc">StringIO</span><span class="p">()</span>
+<span class="n">fake_memo</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">이건 허공에 쓴 일기야.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">fake_memo</span><span class="p">.</span><span class="nf">getvalue</span><span class="p">())</span> <span class="c1"># 읽어오기!
+</span><span class="n">fake_memo</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="33-문단속을-철저히-마법의-키워드-with">3.3 문단속을 철저히! 마법의 키워드 <code class="language-plaintext highlighter-rouge">with</code></h3>
+
+<p>파일을 열었으면 반드시 닫아야(<code class="language-plaintext highlighter-rouge">close()</code>) 합니다. 안 닫으면 좀비처럼 파일이 켜진 채 남아 에러를 뿜어냅니다. 그런데 매번 닫는 걸 까먹기 십상이죠?</p>
+
+<p><code class="language-plaintext highlighter-rouge">with</code> 라는 마법 주문을 앞에 쓰면, 파이썬이 “아! 들여쓰기가 끝나는 순간 내가 알아서 자동으로 파일 문을 닫아줄게!” 라고 약속해 줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 파일을 엽니다. as f는 '이 파일을 f라는 별명으로 부를게'라는 뜻입니다.
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파일 내용:</span><span class="sh">"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="c1"># 이 구역(블록)을 빠져나가는 순간 f.close()가 알아서 실행됩니다!
+</span>
+<span class="c1"># 파일이 이미 잘 닫혔습니다!
+# print(f.read())  # 이렇게 블럭 밖에서 다시 읽으려 시도하면 에러가 납니다!
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="34-돋보기로-위치-콕-seek-tell">3.4 돋보기로 위치 콕! (<code class="language-plaintext highlighter-rouge">seek</code>, <code class="language-plaintext highlighter-rouge">tell</code>)</h3>
+
+<p>공책을 처음 열면 읽는 눈동자의 커서가 맨 처음에 있습니다. <code class="language-plaintext highlighter-rouge">tell</code>은 “지금 내 커서 번호가 어딘지 말해줘!” 이고, <code class="language-plaintext highlighter-rouge">seek</code>은 “야, 10번째 글자 뒤로 바로 순간이동 해!”라는 명령입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">rt</span><span class="sh">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">내 위치:</span><span class="sh">"</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">tell</span><span class="p">())</span> <span class="c1"># 0 출력
+</span>    
+    <span class="c1"># 0번(처음) 으로 강제 이동해!
+</span>    <span class="n">f</span><span class="p">.</span><span class="nf">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># 라인 하나만 쓱 읽어오기
+</span>    <span class="nf">print</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="nf">readline</span><span class="p">())</span> 
+</code></pre></div></div>
+
+<h4 id="-시작-전-확인-진짜-파일이-존재할까">🚨 시작 전 확인: 진짜 파일이 존재할까?</h4>
+<p>만약 <code class="language-plaintext highlighter-rouge">rt</code> 모드로 열려는데 파일이 없다면 프로그램이 터집니다! 그러니 문을 벌컥 열기 전 똑똑하게 확인해 봐야 합니다.
+<code class="language-plaintext highlighter-rouge">os.path.exists()</code>를 쓰면 진짜 그 파일이 폴더 안에 있는지 진실을 말해줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="sh">"</span><span class="s">diary.txt</span><span class="sh">"</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">파일 찾았어! 열게!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="c1"># 파일 열기 진행 ... 
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">아무것도 없어. 창고가 비었네!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+
+            <!-- 구글 애드센스 출력 -->
+            <div class="mt-5">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3321560028329475"
+    crossorigin="anonymous"></script>
+<!-- jinydev-java -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3321560028329475" data-ad-slot="9323221865"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            </div>
+        </div>
+
+        <div class="bd-toc mt-3 mb-5 my-lg-0 ps-xl-3 mb-lg-5 text-body-secondary">
+
+  <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button"
+    data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+    서브목차
+    <svg class="bi d-md-none ms-2" aria-hidden="true">
+      <use xlink:href="#chevron-expand"></use>
+    </svg>
+  </button>
+
+  <strong class="d-none d-md-block h6 my-2">서브목차</strong>
+
+  <div class="collapse bd-toc-collapse" id="tocContents">
+    <nav id="TableOfContents">
+      <!--
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#cdn-links">CDN links</a></li>
+        <li><a href="#next-steps">Next steps</a></li>
+        <li><a href="#js-components">JS components</a></li>
+        <li><a href="#important-globals">Important globals</a>
+          <ul>
+            <li><a href="#html5-doctype">HTML5 doctype</a></li>
+            <li><a href="#responsive-meta-tag">Responsive meta tag</a></li>
+            <li><a href="#box-sizing">Box-sizing</a></li>
+            <li><a href="#reboot">Reboot</a></li>
+          </ul>
+        </li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      -->
+    </nav>
+  </div>
+</div>
+    </main>
+</div>
+
+<!-- 공용 대화 오디오 플레이어 컨트롤러 스크립트 -->
+<script src="/assets/js/audio.js" defer></script>
+
+  
+<footer class="border-top mt-5 pt-5 pb-4 bg-light text-secondary">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <!-- 브랜드 및 강의 소개 -->
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 me-2">🐍</span>
+          <span class="fs-5 fw-bold text-dark">파이썬 마스터 클래스</span>
+        </div>
+        <p class="small text-secondary mb-3 pe-lg-4 lh-base">
+          파이썬 기초부터 컴퓨터 과학(CS) 원리, 객체지향(OOP) 소프트웨어 설계, 시스템 및 GUI·네트워크·비동기 응용 프로그래밍까지 체계적으로 정복하는 오픈 강의 노트입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#Python</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#CS_Basics</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#OOP_Design</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#PEP8</span>
+          
+          <span class="badge rounded-pill bg-white text-dark border px-2 py-1 small">#AsyncIO</span>
+          
+        </div>
+      </div>
+
+      <!-- 관련 패밀리 사이트 -->
+      <div class="col-6 col-lg-4">
+        <h6 class="fw-bold text-dark mb-3">🔗 관련 학습 패밀리 사이트</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            
+            <span class="badge bg-primary me-1">현재</span>
+            <span class="me-1">🐍</span>
+            <strong>파이썬</strong> <span class="text-muted ms-1">(python.jiny.dev)</span>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🤖</span>
+              <span><strong>인공지능기초</strong> <span class="text-muted ms-1">(ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://deep.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🧠</span>
+              <span><strong>딥러닝</strong> <span class="text-muted ms-1">(deep.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://dezero.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🌱</span>
+              <span><strong>밑바닥 딥러닝 3 (DeZero)</strong> <span class="text-muted ms-1">(dezero.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://rl.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🎯</span>
+              <span><strong>강화학습</strong> <span class="text-muted ms-1">(rl.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+          <li class="mb-2">
+            
+            <a href="https://pytoch.ai.jiny.dev" target="_blank" rel="noopener" class="text-secondary text-decoration-none hover-primary d-flex align-items-center">
+              <span class="me-2">🔥</span>
+              <span><strong>파이토치</strong> <span class="text-muted ms-1">(pytoch.ai.jiny.dev)</span></span>
+            </a>
+            
+          </li>
+          
+        </ul>
+      </div>
+
+      <!-- 커리큘럼 및 안내 -->
+      <div class="col-6 col-lg-3">
+        <h6 class="fw-bold text-dark mb-3">🧭 커리큘럼 및 안내</h6>
+        <ul class="list-unstyled small mb-0">
+          
+          <li class="mb-2">
+            <a href="/intro/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 파이썬 언어 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/syllabus/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              📋 전체 강의계획서 (Syllabus)
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester1/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              1학기: 기초 및 CS 원리
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester2/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              2학기: 고급 OOP 및 설계
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/semester3/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              3학기: 심화 시스템 개발
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/pep8/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🐍 PEP 8 스타일 가이드
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="/character/"
+               
+               class="text-secondary text-decoration-none hover-primary">
+              🧭 탐험대 캐릭터 소개
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="https://github.com/jinydev"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              💻 GitHub 저장소
+            </a>
+          </li>
+          
+          <li class="mb-2">
+            <a href="mailto:infohojin@naver.com"
+               target="_blank" rel="noopener"
+               class="text-secondary text-decoration-none hover-primary">
+              ✉️ 문의 및 피드백 (Contact)
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <!-- 하단 카피라이트 & 크레딧 -->
+    <hr class="my-3 text-muted">
+    <div class="row align-items-center small">
+      <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-secondary">
+          Copyright &copy; 2017~2026 <strong>JinyDev</strong>. All Rights Reserved.
+          <span class="d-none d-sm-inline mx-1">|</span>
+          <span class="text-muted">Directed & Created with ❤️ by Prof. Hojin Lee.</span>
+        </p>
+      </div>
+      <div class="col-md-5 text-center text-md-end">
+        <a href="#" class="text-decoration-none text-secondary me-3" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+          맨 위로 가기 ↑
+        </a>
+        <a href="https://github.com/jinydev" target="_blank" rel="noopener" class="text-decoration-none text-secondary me-3">GitHub</a>
+        <a href="mailto:infohojin@naver.com" class="text-decoration-none text-secondary">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    window.addEventListener('load', async function () {
+      mermaid.initialize({ startOnLoad: false });
+
+      const mermaidCodes = document.querySelectorAll('pre code.language-mermaid');
+      const mermaidDivs = [];
+
+      mermaidCodes.forEach(codeBlock => {
+        const mermaidDefinition = codeBlock.textContent.trim();
+        const container = codeBlock.closest('div.highlighter-rouge');
+
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidDefinition;
+
+        if (container) {
+          container.replaceWith(mermaidDiv);
+        } else {
+          const pre = codeBlock.parentElement;
+          if (pre) pre.replaceWith(mermaidDiv);
+        }
+        mermaidDivs.push(mermaidDiv);
+      });
+
+      if (mermaidDivs.length > 0) {
+        await mermaid.run({ nodes: mermaidDivs });
+      }
+    });
+  </script>
+  <script src="/assets/js/toc.js"></script>
+
+</body>
+
+</html>

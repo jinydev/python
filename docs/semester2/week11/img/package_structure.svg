@@ -1,0 +1,39 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">파이썬 패키지 구조 (Package Structure)</text>
+  
+  <!-- Folder Structure -->
+  <g transform="translate(100, 80)">
+    <rect x="0" y="0" width="200" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="100" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">my_app/ (Package)</text>
+    
+    <text x="20" y="60" font-family="Arial" font-size="14" fill="#666">📄 __init__.py (초기화)</text>
+    <text x="20" y="90" font-family="Arial" font-size="14" fill="#666">📄 core.py (핵심 로직)</text>
+    <text x="20" y="120" font-family="Arial" font-size="14" fill="#666">📄 utils.py (유틸리티)</text>
+    
+    <rect x="20" y="140" width="160" height="30" rx="5" fill="#e1f5fe" stroke="#01579b" stroke-width="1" />
+    <text x="100" y="160" font-//Arial" font-size="12" text-anchor="middle" fill="#01579b">sub_package/ (하위 패키지)</text>
+  </g>
+  
+  <!-- Import Types -->
+  <g transform="translate(350, 80)">
+    <rect x="0" y="0" width="200" height="180" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="100" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">임포트 방식</text>
+    
+    <text x="20" y="60" font-family="Arial" font-size="14" fill="#333">1. 절대 경로 (Absolute)</text>
+    <text x="30" y="80" font-family="Arial" font-size="12" fill="#666">from my_app.core import run</text>
+    
+    <text x="20" y="110" font-family="Arial" font-size="14" fill="#333">2. 상대 경로 (Relative)</text>
+    <text x="30" y="130" font-family="Arial" font-size="12" fill="#666">from .core import run</text>
+    
+    <text x="20" y="160" font-family="Arial" font-size="14" fill="#333">3. 별칭 사용 (Alias)</text>
+    <text x="30" y="180" font-//Arial" font-size="12" fill="#666">import my_app.core as core</text>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

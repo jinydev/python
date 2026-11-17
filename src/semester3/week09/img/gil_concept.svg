@@ -1,0 +1,43 @@
+<svg width="600" height="350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="350" fill="#f9f9f9" />
+  
+  <text x="300" y="40" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">파이썬의 GIL (Global Interpreter Lock) 원리</text>
+  
+  <!-- CPU and GIL -->
+  <g transform="translate(100, 80)">
+    <rect x="0" y="0" width="400" height="200" rx="10" fill="#fff" stroke="#333" stroke-width="2" />
+    <text x="200" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">파이썬 인터프리터 (CPython)</text>
+    
+    <!-- GIL Lock -->
+    <rect x="150" y="50" width="100" height="40" rx="5" fill="#ffcdd2" stroke="#d32f2f" stroke-width="3" />
+    <text x="200" y="75" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#d32f2f">GIL (Lock)</text>
+    
+    <!-- Threads -->
+    <g transform="translate(50, 120)">
+      <circle cx="30" cy="30" r="20" fill="#e1f5fe" stroke="#01579b" stroke-width="2" />
+      <text x="30" y="65" font-family="Arial" font-size="12" text-anchor="middle">스레드 1</text>
+      
+      <circle cx="100" cy="30" r="20" fill="#e1f5fe" stroke="#01579b" stroke-width="2" />
+      <text x="100" y="65" font-family="Arial" font-size="12" text-anchor="middle">스레드 2</text>
+      
+      <circle cx="170" cy="30" r="20" fill="#e1f5fe" stroke="#01579b" stroke-width="2" />
+      <text x="170" y="65" font-family="Arial" font-size="12" text-anchor="middle">스레드 3</text>
+    </g>
+    
+    <!-- Execution Path -->
+    <path d="M 80 120 L 150 80" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+    <text x="110" y="90" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Lock 획득 시도</text>
+    
+    <path d="M 250 80 L 220 120" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+    <text x="260" y="90" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">한 번에 하나만 실행</text>
+  </g>
+  
+  <rect x="150" y="300" width="300" height="40" rx="10" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" />
+  <text x="300" y="325" font-family="Arial" font-size="14" text-anchor="middle" fill="#ef6c00">멀티코어 CPU라도 파이썬 스레드는 한 번에 하나만 작동!</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+</svg>

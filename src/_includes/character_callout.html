@@ -1,0 +1,67 @@
+{% assign c_id = include.char | default: "dorothy" %}
+{% assign c_name = include.name %}
+{% assign c_role = include.role %}
+
+{% if c_id == "dorothy" %}
+  {% assign c_name = c_name | default: "도로시 (Dorothy)" %}
+  {% assign c_role = c_role | default: "주니어 메이커" %}
+  {% assign c_avatar = "/assets/img/dorothy_front_view.jpg" %}
+  {% assign c_border = "border-warning" %}
+  {% assign c_badge = "bg-warning text-dark" %}
+  {% assign c_icon = "👧" %}
+{% elsif c_id == "hojin" %}
+  {% assign c_name = c_name | default: "이호진 교수님" %}
+  {% assign c_role = c_role | default: "AI & CS 멘토" %}
+  {% assign c_avatar = "/assets/img/hojin_master_face.jpg" %}
+  {% assign c_border = "border-primary" %}
+  {% assign c_badge = "bg-primary text-white" %}
+  {% assign c_icon = "👨‍🏫" %}
+{% elsif c_id == "jiny" %}
+  {% assign c_name = c_name | default: "수석 조교 지니" %}
+  {% assign c_role = c_role | default: "천재 연구실 냥이" %}
+  {% assign c_avatar = "/assets/img/jiny_profile.jpg" %}
+  {% assign c_border = "border-dark" %}
+  {% assign c_badge = "bg-dark text-white" %}
+  {% assign c_icon = "🐱" %}
+{% elsif c_id == "toto" %}
+  {% assign c_name = c_name | default: "조수 토토" %}
+  {% assign c_role = c_role | default: "비타민 파트너" %}
+  {% assign c_avatar = "/assets/img/toto_profile.jpg" %}
+  {% assign c_border = "border-info" %}
+  {% assign c_badge = "bg-info text-dark" %}
+  {% assign c_icon = "🐶" %}
+{% elsif c_id == "tinny" %}
+  {% assign c_name = c_name | default: "오즈봇 틴맨" %}
+  {% assign c_role = c_role | default: "피지컬 AI 로봇" %}
+  {% assign c_avatar = "/assets/img/robot_tinny_profile.jpg" %}
+  {% assign c_border = "border-secondary" %}
+  {% assign c_badge = "bg-secondary text-white" %}
+  {% assign c_icon = "🤖" %}
+{% else %}
+  {% assign c_name = c_name | default: "탐험대 가이드" %}
+  {% assign c_role = c_role | default: "멘토" %}
+  {% assign c_avatar = "/assets/img/dorothy_front_view.jpg" %}
+  {% assign c_border = "border-primary" %}
+  {% assign c_badge = "bg-primary text-white" %}
+  {% assign c_icon = "🧭" %}
+{% endif %}
+
+<div class="card my-3 shadow-sm border-start {{ c_border }} border-start-4 border-top-0 border-end-0 border-bottom-0 bg-white">
+  <div class="card-body p-3">
+    <div class="d-flex align-items-start gap-3">
+      <img src="{{ site.baseurl }}{{ c_avatar }}" alt="{{ c_name }}" class="rounded-circle border shadow-sm flex-shrink-0" style="width: 54px; height: 54px; object-fit: cover;">
+      <div class="flex-grow-1">
+        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+          <span class="fw-bold text-dark">{{ c_icon }} {{ c_name }}</span>
+          <span class="badge {{ c_badge }} small">{{ c_role }}</span>
+          {% if include.title %}
+            <span class="text-secondary small fw-semibold">| {{ include.title }}</span>
+          {% endif %}
+        </div>
+        <div class="small text-secondary mb-0 line-height-base">
+          {{ include.text | markdownify | remove: '<p>' | remove: '</p>' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
